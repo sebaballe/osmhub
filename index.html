@@ -25,6 +25,7 @@
     --text-dim: #4A5A6E;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
+
   body { font-family:'Barlow',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
 
   /* NAV */
@@ -295,8 +296,9 @@
           <div class="pill">Top</div>
         </div>
       </div>
-
-      <div class="tactic-card featured" onclick="showScreen('detail',document.querySelectorAll('.tab')[1])">
+      <div id="tactics-feed">
+        <div style="text-align:center;padding:40px;color:var(--text-dim)">Cargando tácticas...</div>
+      </div>
         <div class="card-top">
           <div class="vote-col">
             <button class="vote-btn up">▲</button>
@@ -420,28 +422,20 @@
             </div>
           </div>
         </div>
-        <div class="card-footer">
-          <span>💬 34 comments</span>
-          <span>👁 1.4k views</span>
-        </div>
-      </div>
     </div>
 
     <div class="sidebar">
       <div class="sidebar-card">
         <div class="sidebar-title">🏆 Top Formations</div>
-        <div class="top-formation"><div class="rank-num" style="color:var(--yellow)">1</div><div class="tf-name">4-3-3-A</div><div class="tf-pct">87%</div></div>
-        <div class="top-formation"><div class="rank-num" style="color:#C0C0C0">2</div><div class="tf-name">4-4-2-B</div><div class="tf-pct">79%</div></div>
-        <div class="top-formation"><div class="rank-num" style="color:#CD7F32">3</div><div class="tf-name">4-2-3-1</div><div class="tf-pct">76%</div></div>
-        <div class="top-formation"><div class="rank-num">4</div><div class="tf-name">3-5-2</div><div class="tf-pct">64%</div></div>
-        <div class="top-formation"><div class="rank-num">5</div><div class="tf-name">5-2-3-A</div><div class="tf-pct">61%</div></div>
+        <div class="top-formation"><div class="rank-num" style="color:var(--yellow)">1</div><div class="tf-name">4-3-3-A</div><div class="tf-pct">–</div></div>
+        <div class="top-formation"><div class="rank-num" style="color:#C0C0C0">2</div><div class="tf-name">4-4-2-B</div><div class="tf-pct">–</div></div>
+        <div class="top-formation"><div class="rank-num" style="color:#CD7F32">3</div><div class="tf-name">4-2-3-1</div><div class="tf-pct">–</div></div>
+        <div class="top-formation"><div class="rank-num">4</div><div class="tf-name">3-5-2</div><div class="tf-pct">–</div></div>
+        <div class="top-formation"><div class="rank-num">5</div><div class="tf-name">5-2-3-A</div><div class="tf-pct">–</div></div>
       </div>
       <div class="sidebar-card">
-        <div class="sidebar-title">📊 This Week</div>
-        <div class="stat-row"><span>Tactics shared</span><span>1,204</span></div>
-        <div class="stat-row"><span>Votes cast</span><span>47,892</span></div>
-        <div class="stat-row"><span>Active users</span><span>8,341</span></div>
-        <div class="stat-row"><span>Top country</span><span>🇧🇷 Brazil</span></div>
+        <div class="sidebar-title">📊 Stats</div>
+        <div class="stat-row"><span>Be the first!</span><span>🚀</span></div>
       </div>
     </div>
   </div>
@@ -452,20 +446,20 @@
   <div class="detail-page">
     <div class="detail-hero">
       <div class="detail-hero-top">
-        <div class="formation-big">4-3-3-A</div>
+        <div class="formation-big" id="detail-formation">–</div>
         <div class="detail-info">
-          <div class="detail-title-big">High Press Attacking — Dominate midfield & wings</div>
-          <div class="detail-author">by @TacticMaster_ES · 2 days ago · 4,218 views</div>
+          <div class="detail-title-big" id="detail-title">Cargando...</div>
+          <div class="detail-author" id="detail-author"></div>
           <div class="big-eff">
-            <div class="big-eff-num">87%</div>
-            <div class="big-eff-label"><strong>Effectiveness Rate</strong>Based on 847 votes from real OSM players</div>
+            <div class="big-eff-num" id="detail-pct">–%</div>
+            <div class="big-eff-label"><strong>Effectiveness Rate</strong><span id="detail-eff-sub">Loading...</span></div>
           </div>
         </div>
       </div>
       <div class="stats-grid">
-        <div class="stat-cell"><span class="stat-val" style="color:var(--green)">847</span><div class="stat-lbl">Total Votes</div></div>
-        <div class="stat-cell"><span class="stat-val" style="color:var(--yellow)">738</span><div class="stat-lbl">👍 It Works</div></div>
-        <div class="stat-cell"><span class="stat-val" style="color:var(--red)">109</span><div class="stat-lbl">👎 Didn't Work</div></div>
+        <div class="stat-cell"><span class="stat-val" id="detail-votes-total" style="color:var(--green)">0</span><div class="stat-lbl">Total Votes</div></div>
+        <div class="stat-cell"><span class="stat-val" id="detail-votes-yes" style="color:var(--yellow)">0</span><div class="stat-lbl">👍 It Works</div></div>
+        <div class="stat-cell"><span class="stat-val" id="detail-votes-no" style="color:var(--red)">0</span><div class="stat-lbl">👎 Didn't Work</div></div>
       </div>
       <div class="pitch-wrap">
         <div class="pitch">
@@ -534,14 +528,7 @@
       <div id="vote-step3" style="display:none">
         <div class="vote-question">✅ ¡Voto registrado!</div>
         <div class="vote-sub" style="margin-bottom:16px">Así se ve la táctica con tu contexto:</div>
-        <div class="context-stats">
-          <div class="cstat"><div class="cstat-label">🏠 De local</div><div class="cstat-bar"><div class="cstat-fill" style="width:92%"></div></div><div class="cstat-val high">92%</div></div>
-          <div class="cstat"><div class="cstat-label">✈️ De visitante</div><div class="cstat-bar"><div class="cstat-fill" style="width:61%"></div></div><div class="cstat-val mid">61%</div></div>
-          <div class="cstat-divider"></div>
-          <div class="cstat"><div class="cstat-label">📈 Equipo superior</div><div class="cstat-bar"><div class="cstat-fill" style="width:89%"></div></div><div class="cstat-val high">89%</div></div>
-          <div class="cstat"><div class="cstat-label">⚖️ Equipo similar</div><div class="cstat-bar"><div class="cstat-fill" style="width:74%"></div></div><div class="cstat-val high">74%</div></div>
-          <div class="cstat"><div class="cstat-label">📉 Equipo inferior</div><div class="cstat-bar"><div class="cstat-fill" style="width:41%"></div></div><div class="cstat-val low">41%</div></div>
-        </div>
+        <div class="context-stats" id="context-stats-detail"></div>
       </div>
     </div>
 
@@ -549,38 +536,9 @@
     <div class="comments-section">
       <div class="comments-header">
         <div class="comments-title">COMMENTS</div>
-        <div class="comments-count">124</div>
+        <div class="comments-count" id="comments-count">0</div>
       </div>
-      <div class="comment">
-        <div class="comment-header">
-          <div class="avatar" style="background:rgba(0,230,118,0.2);color:var(--green)">JR</div>
-          <div class="comment-user">JuanRivas_CO</div>
-          <div class="comment-time">hace 3 horas</div>
-        </div>
-        <div class="comment-context">🏠 Local · 📈 Superior · 🥇 Liga</div>
-        <div class="comment-text">Funcionó perfectamente. Las alas son clave, si tenés buenos extremos esta táctica es devastadora. Subí 8 posiciones en una semana.</div>
-        <div class="comment-actions"><div class="comment-action">▲ 42</div><div class="comment-action">💬 Reply</div></div>
-      </div>
-      <div class="comment">
-        <div class="comment-header">
-          <div class="avatar" style="background:rgba(255,214,0,0.2);color:var(--yellow)">MK</div>
-          <div class="comment-user">MikelKaplan_TR</div>
-          <div class="comment-time">hace 6 horas</div>
-        </div>
-        <div class="comment-context">✈️ Visitante · ⚖️ Similar · 🏆 Copa</div>
-        <div class="comment-text">With big budget teams this is unstoppable. The CM trio is the secret — high stamina is key. Won the league 3 times with this setup.</div>
-        <div class="comment-actions"><div class="comment-action">▲ 31</div><div class="comment-action">💬 Reply</div></div>
-      </div>
-      <div class="comment">
-        <div class="comment-header">
-          <div class="avatar" style="background:rgba(255,61,87,0.2);color:var(--red)">PT</div>
-          <div class="comment-user">Pedro_Tático_BR</div>
-          <div class="comment-time">hace 1 día</div>
-        </div>
-        <div class="comment-context">✈️ Visitante · 📉 Inferior · 🥇 Liga</div>
-        <div class="comment-text">No funcionó siendo inferior de visitante. Los extremos se desgastan rápido y quedás expuesto al contraataque. Con equipo chico mejor el 4-4-2.</div>
-        <div class="comment-actions"><div class="comment-action">▲ 18</div><div class="comment-action">💬 Reply</div></div>
-      </div>
+      <div id="comments-list"></div>
     </div>
   </div>
 </div>
@@ -674,7 +632,11 @@
             <div class="lt-dot" onclick="setLineTactic('def',2,['Defend deep','Normal','High line'])"></div>
           </div>
         </div>
-        <button class="btn-share">🚀 SHARE TACTIC</button>
+        <button class="btn-share" onclick="shareTactic()">🚀 SHARE TACTIC</button>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;">
+          <input id="tactic-title-input" type="text" placeholder="Título de tu táctica..." style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;">
+          <input id="tactic-author-input" type="text" placeholder="Tu nombre / usuario..." style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;">
+        </div>
       </div>
     </div>
   </div>
@@ -691,29 +653,8 @@
       <div class="ranking-row header">
         <div>#</div><div>Formation</div><div style="text-align:center">Eff%</div><div style="text-align:center">Votes</div><div style="text-align:center">↕</div>
       </div>
-      <div class="ranking-row" onclick="showScreen('detail',document.querySelectorAll('.tab')[1])">
-        <div class="rank-pos p1">1</div><div><div class="rank-formation">4-3-3-A</div><div class="rank-sub">High Press · Attack</div></div>
-        <div class="rank-eff" style="color:var(--green)">87%</div><div class="rank-votes">8,472</div><div class="rank-trend">📈</div>
-      </div>
-      <div class="ranking-row">
-        <div class="rank-pos p2">2</div><div><div class="rank-formation">4-4-2-B</div><div class="rank-sub">Counter · Classic</div></div>
-        <div class="rank-eff" style="color:var(--green)">79%</div><div class="rank-votes">6,201</div><div class="rank-trend">➡️</div>
-      </div>
-      <div class="ranking-row">
-        <div class="rank-pos p3">3</div><div><div class="rank-formation">4-2-3-1</div><div class="rank-sub">Balanced · Control</div></div>
-        <div class="rank-eff" style="color:var(--green)">76%</div><div class="rank-votes">5,834</div><div class="rank-trend">📈</div>
-      </div>
-      <div class="ranking-row">
-        <div class="rank-pos">4</div><div><div class="rank-formation">3-5-2</div><div class="rank-sub">Possession · Mid</div></div>
-        <div class="rank-eff" style="color:var(--yellow)">64%</div><div class="rank-votes">4,312</div><div class="rank-trend">📉</div>
-      </div>
-      <div class="ranking-row">
-        <div class="rank-pos">5</div><div><div class="rank-formation">5-2-3-A</div><div class="rank-sub">Defensive · Solid</div></div>
-        <div class="rank-eff" style="color:var(--yellow)">61%</div><div class="rank-votes">3,901</div><div class="rank-trend">➡️</div>
-      </div>
-      <div class="ranking-row">
-        <div class="rank-pos">6</div><div><div class="rank-formation">5-4-1-A</div><div class="rank-sub">Ultra Defensive</div></div>
-        <div class="rank-eff" style="color:var(--red)">41%</div><div class="rank-votes">2,100</div><div class="rank-trend">📉</div>
+      <div id="rankings-body">
+        <div style="padding:20px;text-align:center;color:var(--text-dim)">Cargando rankings...</div>
       </div>
     </div>
   </div>
@@ -723,17 +664,150 @@
   <p><strong>OSM Hub</strong> · Fan-made tactic platform · Not affiliated with GameBasics or OSM · Built by the community, for the community</p>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+  // ===== SUPABASE CONFIG =====
+  const SUPABASE_URL = 'https://dyazsdbmdbnmjjpcttnw.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5YXpzZGJtZGJubWpqcGN0dG53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4ODE0MTIsImV4cCI6MjA5MjQ1NzQxMn0.CbmYy-9XILk99DkuKi5CFIqQBDvADcLvozvIX46c5zQ';
+  const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // ===== NAVIGATION =====
   function showScreen(id, tabEl) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
     document.getElementById('screen-' + id).classList.add('active');
     if (tabEl) tabEl.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (id === 'feed') loadTactics();
+    if (id === 'ranking') loadRankings();
   }
 
-  // Vote flow
+  // ===== LOAD TACTICS FEED =====
+  async function loadTactics() {
+    const feed = document.getElementById('tactics-feed');
+    if (!feed) return;
+    feed.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-dim)">Cargando tácticas...</div>';
+    const { data, error } = await db.from('tactics').select('*').order('votes_yes', { ascending: false }).limit(20);
+    if (error || !data || data.length === 0) {
+      feed.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-dim)">Aún no hay tácticas. ¡Sé el primero en compartir una!</div>';
+      return;
+    }
+    feed.innerHTML = data.map(t => {
+      const total = t.votes_yes + t.votes_no;
+      const pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
+      const effClass = pct >= 70 ? 'high' : pct >= 50 ? 'mid' : 'low';
+      return `
+        <div class="tactic-card" onclick="loadTacticDetail('${t.id}')">
+          <div class="card-top">
+            <div class="vote-col">
+              <button class="vote-btn up">▲</button>
+              <div class="vote-count ${pct >= 70 ? 'positive' : ''}">${t.votes_yes}</div>
+              <button class="vote-btn down">▼</button>
+            </div>
+            <div class="card-body">
+              <div class="card-header">
+                <div class="formation-badge">${t.formation}</div>
+                <div>
+                  <div class="card-title">${t.title}</div>
+                  <div class="card-meta">by @${t.author} · ${timeAgo(t.created_at)}</div>
+                </div>
+              </div>
+              <div class="effectiveness-bar">
+                <span class="eff-label">EFFECTIVENESS</span>
+                <div class="bar-track"><div class="bar-fill ${effClass}" style="width:${pct}%"></div></div>
+                <span class="eff-pct ${effClass}">${pct}%</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span>👍 ${t.votes_yes} yes</span>
+            <span>👎 ${t.votes_no} no</span>
+            <span>👁 ${t.views || 0} views</span>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // ===== LOAD TACTIC DETAIL =====
+  let currentTacticId = null;
+  async function loadTacticDetail(id) {
+    currentTacticId = id;
+    showScreen('detail', document.querySelectorAll('.tab')[1]);
+    const { data: t } = await db.from('tactics').select('*').eq('id', id).single();
+    if (!t) return;
+    const total = t.votes_yes + t.votes_no;
+    const pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
+    document.getElementById('detail-formation').textContent = t.formation;
+    document.getElementById('detail-title').textContent = t.title;
+    document.getElementById('detail-author').textContent = by @${t.author} · ${timeAgo(t.created_at)} · ${t.views || 0} views;
+    document.getElementById('detail-pct').textContent = pct + '%';
+    document.getElementById('detail-eff-sub').textContent = Based on ${total} votes from real OSM players;
+    document.getElementById('detail-votes-total').textContent = total;
+    document.getElementById('detail-votes-yes').textContent = t.votes_yes;
+    document.getElementById('detail-votes-no').textContent = t.votes_no;
+    // Reset vote steps
+    document.getElementById('vote-step1').style.display = 'block';
+    document.getElementById('vote-step2').style.display = 'none';
+    document.getElementById('vote-step3').style.display = 'none';
+    // Update DB views
+    await db.from('tactics').update({ views: (t.views || 0) + 1 }).eq('id', id);
+    loadComments(id);
+    loadContextStats(id);
+  }
+
+  // ===== LOAD COMMENTS =====
+  async function loadComments(tacticId) {
+    const container = document.getElementById('comments-list');
+    const countEl = document.getElementById('comments-count');
+    if (!container) return;
+    const { data } = await db.from('comments').select('*').eq('tactic_id', tacticId).order('created_at', { ascending: false }).limit(20);
+    if (countEl) countEl.textContent = data ? data.length : 0;
+    if (!data || data.length === 0) {
+      container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-dim);font-size:13px">Sé el primero en comentar esta táctica</div>';
+      return;
+    }
+    container.innerHTML = data.map(c => `
+      <div class="comment">
+        <div class="comment-header">
+          <div class="avatar" style="background:rgba(0,230,118,0.2);color:var(--green)">${c.author.substring(0,2).toUpperCase()}</div>
+          <div class="comment-user">${c.author}</div>
+          <div class="comment-time">${timeAgo(c.created_at)}</div>
+        </div>
+        ${c.location || c.strength || c.competition ? <div class="comment-context">${[c.location, c.strength, c.competition].filter(Boolean).join(' · ')}</div> : ''}
+        <div class="comment-text">${c.text}</div>
+        <div class="comment-actions"><div class="comment-action">▲ ${c.likes || 0}</div></div>
+      </div>`).join('');
+  }
+
+  // ===== LOAD CONTEXT STATS =====
+  async function loadContextStats(tacticId) {
+    const { data } = await db.from('votes').select('*').eq('tactic_id', tacticId);
+    if (!data || data.length === 0) return;
+    const calc = (filter) => {
+      const filtered = data.filter(filter);
+      const yes = filtered.filter(v => v.result === 'yes').length;
+      return filtered.length > 0 ? Math.round((yes / filtered.length) * 100) : 0;
+    };
+    const stats = [
+      { label: '🏠 De local', pct: calc(v => v.location === '🏠 Local') },
+      { label: '✈️ De visitante', pct: calc(v => v.location === '✈️ Visitante') },
+      { label: '📈 Equipo superior', pct: calc(v => v.strength === '📈 Superior') },
+      { label: '⚖️ Equipo similar', pct: calc(v => v.strength === '⚖️ Similar') },
+      { label: '📉 Equipo inferior', pct: calc(v => v.strength === '📉 Inferior') },
+    ];
+    document.getElementById('context-stats-detail').innerHTML = stats.map((s, i) => `
+      ${i === 2 ? '<div class="cstat-divider"></div>' : ''}
+      <div class="cstat">
+        <div class="cstat-label">${s.label}</div>
+        <div class="cstat-bar"><div class="cstat-fill" style="width:${s.pct}%"></div></div>
+        <div class="cstat-val ${s.pct >= 70 ? 'high' : s.pct >= 50 ? 'mid' : 'low'}">${s.pct}%</div>
+      </div>`).join('');
+  }
+
+  // ===== VOTE FLOW =====
+  let currentVoteResult = null;
   function showVoteContext(result) {
+    currentVoteResult = result;
     document.getElementById('vote-step1').style.display = 'none';
     document.getElementById('vote-step2').style.display = 'block';
     document.getElementById('vote-result-title').textContent = result === 'yes' ? '👍 ¡Gracias! Contanos el contexto' : '👎 Gracias igual. ¿En qué contexto?';
@@ -742,12 +816,81 @@
     el.closest('.context-opts').querySelectorAll('.ctx-opt').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected');
   }
-  function submitVote() {
+  async function submitVote() {
+    if (!currentTacticId) return;
+    const getSelected = (group) => {
+      const el = document.querySelector(.context-opts [data-group="${group}"].selected);
+      return el ? el.textContent.trim() : null;
+    };
+    const location = document.querySelector('.ctx-opt[onclick*="location"].selected')?.textContent.trim() || null;
+    const strength = document.querySelector('.ctx-opt[onclick*="strength"].selected')?.textContent.trim() || null;
+    const comp = document.querySelector('.ctx-opt[onclick*="comp"].selected')?.textContent.trim() || null;
+    // Save vote
+    await db.from('votes').insert({ tactic_id: currentTacticId, result: currentVoteResult, location, strength, competition: comp });
+    // Update tactic counts
+    const field = currentVoteResult === 'yes' ? 'votes_yes' : 'votes_no';
+    const { data: t } = await db.from('tactics').select(field).eq('id', currentTacticId).single();
+    await db.from('tactics').update({ [field]: (t[field] || 0) + 1 }).eq('id', currentTacticId);
     document.getElementById('vote-step2').style.display = 'none';
     document.getElementById('vote-step3').style.display = 'block';
+    loadContextStats(currentTacticId);
   }
 
-  // Sliders
+  // ===== SHARE TACTIC =====
+  async function shareTactic() {
+    const formation = document.querySelector('.form-btn.active')?.textContent.trim();
+    const title = document.getElementById('tactic-title-input')?.value.trim();
+    const author = document.getElementById('tactic-author-input')?.value.trim();
+    const pressing = document.getElementById('pressing-num')?.textContent;
+    const style = document.getElementById('style-num')?.textContent;
+    const tempo = document.getElementById('tempo-num')?.textContent;
+    if (!title || !author) { alert('Por favor completá el título y tu nombre'); return; }
+    const { error } = await db.from('tactics').insert({
+      formation, title, author,
+      description: Pressing: ${pressing} | Style: ${style} | Tempo: ${tempo}
+    });
+    if (error) { alert('Error al guardar. Intentá de nuevo.'); return; }
+    alert('¡Táctica compartida! Ya aparece en el feed.');
+    showScreen('feed', document.querySelectorAll('.tab')[0]);
+    loadTactics();
+  }
+
+  // ===== LOAD RANKINGS =====
+  async function loadRankings() {
+    const table = document.getElementById('rankings-body');
+    if (!table) return;
+    const { data } = await db.from('tactics').select('*').order('votes_yes', { ascending: false }).limit(10);
+    if (!data || data.length === 0) {
+      table.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-dim)">Aún no hay datos suficientes</div>';
+      return;
+    }
+    const medals = ['p1','p2','p3'];
+    table.innerHTML = data.map((t, i) => {
+      const total = t.votes_yes + t.votes_no;
+      const pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
+      const effClass = pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--yellow)' : 'var(--red)';
+      return `<div class="ranking-row" onclick="loadTacticDetail('${t.id}')">
+        <div class="rank-pos ${medals[i] || ''}">${i+1}</div>
+        <div><div class="rank-formation">${t.formation}</div><div class="rank-sub">${t.title.substring(0,30)}...</div></div>
+        <div class="rank-eff" style="color:${effClass}">${pct}%</div>
+        <div class="rank-votes">${total}</div>
+        <div class="rank-trend">${i < 3 ? '📈' : '➡️'}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // ===== HELPERS =====
+  function timeAgo(dateStr) {
+    const diff = Date.now() - new Date(dateStr).getTime();
+    const mins = Math.floor(diff/60000);
+    if (mins < 60) return hace ${mins} min;
+    const hrs = Math.floor(mins/60);
+    if (hrs < 24) return hace ${hrs}h;
+    const days = Math.floor(hrs/24);
+    return hace ${days} días;
+  }
+
+  // ===== SLIDERS =====
   const sliderLabels = {
     pressing: ['Retreating','Defending','Balanced','Pressing','High pressing'],
     style: ['Very defensive','Defensive','Balanced','Attacking','Very attacking'],
@@ -758,30 +901,29 @@
     document.getElementById(type+'-num').textContent = val;
     const idx = Math.min(4, Math.floor((val-1)/20));
     document.getElementById(type+'-label').textContent = sliderLabels[type][idx];
-    document.getElementById(type+'-slider').style.background = `linear-gradient(to right, #2979FF 0%, #2979FF ${val}%, #243040 ${val}%, #243040 100%)`;
+    document.getElementById(type+'-slider').style.background = linear-gradient(to right, #2979FF 0%, #2979FF ${val}%, #243040 ${val}%, #243040 100%);
   }
-
-  // Line tactics
   function setLineTactic(type, idx, options) {
     document.getElementById(type+'-row').querySelectorAll('.lt-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
     document.getElementById(type+'-label').textContent = options[idx];
   }
 
-  // Formation selector
+  // ===== INIT =====
   document.querySelectorAll('.form-btn').forEach(btn => {
     btn.addEventListener('click', function() {
       document.querySelectorAll('.form-btn').forEach(b => b.classList.remove('active'));
       this.classList.add('active');
     });
   });
-
-  // Sort pills
   document.querySelectorAll('.pill').forEach(pill => {
     pill.addEventListener('click', function() {
       document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
       this.classList.add('active');
     });
   });
+
+  // Load feed on start
+  loadTactics();
 </script>
 </body>
 </html>
