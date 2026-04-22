@@ -459,7 +459,7 @@
       </div>
       <div class="tactic-settings">
         <div class="setting-row">
-          <div class="setting-label">PRESIÓN</div>
+          <div class="setting-label" id="label-pressing">PRESIÓN</div>
           <div class="setting-value" id="pressing-label">Equilibrado</div>
           <div class="osm-slider-wrap">
             <input type="range" class="osm-slider" id="pressing-slider" min="1" max="100" value="54" oninput="updateSlider('pressing',this.value)" style="background:linear-gradient(to right,var(--blue) 0%,var(--blue) 54%,var(--border2) 54%,var(--border2) 100%)">
@@ -467,7 +467,7 @@
           </div>
         </div>
         <div class="setting-row">
-          <div class="setting-label">ESTILO</div>
+          <div class="setting-label" id="label-style">ESTILO</div>
           <div class="setting-value" id="style-label">Atacante</div>
           <div class="osm-slider-wrap">
             <input type="range" class="osm-slider" id="style-slider" min="1" max="100" value="67" oninput="updateSlider('style',this.value)" style="background:linear-gradient(to right,var(--blue) 0%,var(--blue) 67%,var(--border2) 67%,var(--border2) 100%)">
@@ -475,7 +475,7 @@
           </div>
         </div>
         <div class="setting-row">
-          <div class="setting-label">RITMO</div>
+          <div class="setting-label" id="label-tempo">RITMO</div>
           <div class="setting-value" id="tempo-label">Pase veloz</div>
           <div class="osm-slider-wrap">
             <input type="range" class="osm-slider" id="tempo-slider" min="1" max="100" value="67" oninput="updateSlider('tempo',this.value)" style="background:linear-gradient(to right,var(--blue) 0%,var(--blue) 67%,var(--border2) 67%,var(--border2) 100%)">
@@ -483,9 +483,9 @@
           </div>
         </div>
         <hr class="section-divider">
-        <div class="setting-label" style="margin-bottom:12px">TÁCTICAS DE LÍNEA</div>
+        <div class="setting-label" id="label-linetactics" style="margin-bottom:12px">TÁCTICAS DE LÍNEA</div>
         <div class="line-tactic-row" id="fwd-row">
-          <div class="lt-label">DELANTEROS</div>
+          <div class="lt-label" id="label-fwd">DELANTEROS</div>
           <div class="lt-value" id="fwd-label">Solo ataque</div>
           <div class="lt-dots">
             <div class="lt-dot active" onclick="setLineTactic('fwd',0,['Solo ataque','Atacar y defender','Apoyo'])"></div>
@@ -494,7 +494,7 @@
           </div>
         </div>
         <div class="line-tactic-row" id="mid-row">
-          <div class="lt-label">MEDIOCAMPISTAS</div>
+          <div class="lt-label" id="label-mid">MEDIOCAMPISTAS</div>
           <div class="lt-value" id="mid-label">Proteger defensa</div>
           <div class="lt-dots">
             <div class="lt-dot active" onclick="setLineTactic('mid',0,['Proteger defensa','Mixto','Atacar'])"></div>
@@ -503,7 +503,7 @@
           </div>
         </div>
         <div class="line-tactic-row" id="def-row">
-          <div class="lt-label">DEFENSORES</div>
+          <div class="lt-label" id="label-def">DEFENSORES</div>
           <div class="lt-value" id="def-label">Defensa profunda</div>
           <div class="lt-dots">
             <div class="lt-dot active" onclick="setLineTactic('def',0,['Defensa profunda','Normal','Línea alta'])"></div>
@@ -918,6 +918,13 @@
       'superior': '📈 Equipo superior',
       'similar': '⚖️ Equipo similar',
       'inferior': '📉 Equipo inferior',
+      'label-pressing': 'PRESIÓN',
+      'label-style': 'ESTILO',
+      'label-tempo': 'RITMO',
+      'label-linetactics': 'TÁCTICAS DE LÍNEA',
+      'label-fwd': 'DELANTEROS',
+      'label-mid': 'MEDIOCAMPISTAS',
+      'label-def': 'DEFENSORES',
     },
     en: {
       'nav-share': '+ Share Tactic',
@@ -971,6 +978,13 @@
       'superior': '📈 Superior team',
       'similar': '⚖️ Similar team',
       'inferior': '📉 Inferior team',
+      'label-pressing': 'PRESSING',
+      'label-style': 'STYLE',
+      'label-tempo': 'TEMPO',
+      'label-linetactics': 'LINE TACTICS',
+      'label-fwd': 'FORWARDS',
+      'label-mid': 'MIDFIELDERS',
+      'label-def': 'DEFENDERS',
     }
   };
 
@@ -1016,6 +1030,11 @@
     if (ctxLabels[0]) ctxLabels[0].textContent = t('ctx-q-location');
     if (ctxLabels[1]) ctxLabels[1].textContent = t('ctx-q-strength');
     if (ctxLabels[2]) ctxLabels[2].textContent = t('ctx-q-comp');
+    // Builder labels
+    ['pressing','style','tempo','linetactics','fwd','mid','def'].forEach(function(k) {
+      var el = document.getElementById('label-' + k);
+      if (el) el.textContent = t('label-' + k);
+    });
     // Reload feed with new language
     loadTactics();
     updateSliderLabels();
