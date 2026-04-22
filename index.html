@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OSM Hub — Fan-made Tactic Platform</title>
-<meta name="description" content="The #1 community-driven tactic platform for OSM players. Real effectiveness ratings based on real votes.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0A0E14">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -26,277 +26,275 @@
     --text-dim: #4A5A6E;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-html { background: #0A0E14 !important; }
-body { font-family:'Barlow',sans-serif; background:#0A0E14 !important; color:#E8EDF5 !important; min-height:100vh; 
+  html { background: #0A0E14 !important; }
+  body { font-family:'Barlow',sans-serif; background:#0A0E14 !important; color:#E8EDF5 !important; min-height:100vh; }
 
-/* NAV */
-nav {
-position:fixed; top:0; left:0; right:0; z-index:100;
-background:rgba(10,14,20,0.96); backdrop-filter:blur(16px);
-border-bottom:1px solid var(–border);
-height:56px; display:flex; align-items:center; padding:0 20px; gap:12px;
-}
-.logo { font-family:‘Barlow Condensed’,sans-serif; font-size:22px; font-weight:900; color:var(–text); letter-spacing:1px; }
-.logo span { color:var(–green); }
-.logo-sub { font-size:10px; color:var(–text-dim); font-weight:400; letter-spacing:0.3px; margin-top:1px; }
-.logo-wrap { display:flex; flex-direction:column; line-height:1; }
-.nav-badge { background:var(–green-glow); border:1px solid var(–green); color:var(–green); font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:1px; }
-.nav-right { margin-left:auto; display:flex; gap:8px; align-items:center; }
-.btn-ghost { background:transparent; border:1px solid var(–border2); color:var(–text-mid); padding:6px 14px; border-radius:6px; font-size:13px; font-weight:500; cursor:pointer; font-family:‘Barlow’,sans-serif; transition:all 0.15s; }
-.btn-ghost:hover { border-color:var(–green); color:var(–green); }
-.btn-primary { background:var(–green); color:var(–bg); border:none; padding:7px 16px; border-radius:6px; font-size:13px; font-weight:700; cursor:pointer; font-family:‘Barlow’,sans-serif; transition:all 0.15s; }
-.btn-primary:hover { background:var(–green-dim); }
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(10,14,20,0.96); backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--border);
+    height:56px; display:flex; align-items:center; padding:0 20px; gap:12px;
+  }
+  .logo { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--text); letter-spacing:1px; }
+  .logo span { color:var(--green); }
+  .logo-sub { font-size:10px; color:var(--text-dim); font-weight:400; letter-spacing:0.3px; margin-top:1px; }
+  .logo-wrap { display:flex; flex-direction:column; line-height:1; }
+  .nav-badge { background:var(--green-glow); border:1px solid var(--green); color:var(--green); font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:1px; }
+  .nav-right { margin-left:auto; display:flex; gap:8px; align-items:center; }
+  .btn-ghost { background:transparent; border:1px solid var(--border2); color:var(--text-mid); padding:6px 14px; border-radius:6px; font-size:13px; font-weight:500; cursor:pointer; font-family:'Barlow',sans-serif; transition:all 0.15s; }
+  .btn-ghost:hover { border-color:var(--green); color:var(--green); }
+  .btn-primary { background:var(--green); color:var(--bg); border:none; padding:7px 16px; border-radius:6px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Barlow',sans-serif; transition:all 0.15s; }
+  .btn-primary:hover { background:var(--green-dim); }
 
-/* TABS */
-.tabs { position:fixed; top:56px; left:0; right:0; z-index:90; background:var(–surface); border-bottom:1px solid var(–border); display:flex; padding:0 20px; overflow-x:auto; }
-.tabs::-webkit-scrollbar { display:none; }
-.tab { padding:12px 18px; font-size:13px; font-weight:600; color:var(–text-dim); cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; transition:all 0.15s; letter-spacing:0.3px; }
-.tab.active { color:var(–green); border-bottom-color:var(–green); }
-.tab:hover:not(.active) { color:var(–text-mid); }
+  /* TABS */
+  .tabs { position:fixed; top:56px; left:0; right:0; z-index:90; background:var(--surface); border-bottom:1px solid var(--border); display:flex; padding:0 20px; overflow-x:auto; }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tab { padding:12px 18px; font-size:13px; font-weight:600; color:var(--text-dim); cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; transition:all 0.15s; letter-spacing:0.3px; }
+  .tab.active { color:var(--green); border-bottom-color:var(--green); }
+  .tab:hover:not(.active) { color:var(--text-mid); }
 
-.screen { display:none; padding-top:100px; min-height:100vh; }
-.screen.active { display:block; }
+  .screen { display:none; padding-top:100px; min-height:100vh; }
+  .screen.active { display:block; }
 
-/* ===== FEED ===== */
-.feed-layout { max-width:900px; margin:0 auto; padding:24px 16px; display:grid; grid-template-columns:1fr 280px; gap:20px; }
-@media(max-width:700px){ .feed-layout{grid-template-columns:1fr;} .sidebar{display:none;} }
+  /* ===== FEED ===== */
+  .feed-layout { max-width:900px; margin:0 auto; padding:24px 16px; display:grid; grid-template-columns:1fr 280px; gap:20px; }
+  @media(max-width:700px){ .feed-layout{grid-template-columns:1fr;} .sidebar{display:none;} }
 
-.feed-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
-.feed-title { font-family:‘Barlow Condensed’,sans-serif; font-size:20px; font-weight:800; letter-spacing:0.5px; }
-.sort-pills { display:flex; gap:6px; }
-.pill { padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; border:1px solid var(–border2); color:var(–text-dim); transition:all 0.15s; }
-.pill.active { background:var(–green); color:var(–bg); border-color:var(–green); }
+  .feed-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .feed-title { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:800; letter-spacing:0.5px; }
+  .sort-pills { display:flex; gap:6px; }
+  .pill { padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; border:1px solid var(--border2); color:var(--text-dim); transition:all 0.15s; }
+  .pill.active { background:var(--green); color:var(--bg); border-color:var(--green); }
 
-/* TACTIC CARD */
-.tactic-card { background:var(–surface); border:1px solid var(–border); border-radius:12px; margin-bottom:12px; overflow:hidden; transition:all 0.2s; cursor:pointer; }
-.tactic-card:hover { border-color:var(–border2); transform:translateY(-1px); box-shadow:0 4px 20px rgba(0,0,0,0.3); }
-.tactic-card.featured { border-color:rgba(0,230,118,0.4); }
-.card-top { display:flex; }
-.vote-col { width:52px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:16px 0; gap:4px; border-right:1px solid var(–border); }
-.vote-btn { background:none; border:none; cursor:pointer; font-size:16px; line-height:1; padding:4px; transition:transform 0.1s; color:var(–text-dim); }
-.vote-btn:hover { transform:scale(1.2); }
-.vote-btn.up:hover { color:var(–green); }
-.vote-btn.down:hover { color:var(–red); }
-.vote-count { font-family:‘Barlow Condensed’,sans-serif; font-size:18px; font-weight:800; color:var(–text); }
-.vote-count.positive { color:var(–green); }
-.card-body { flex:1; padding:14px 16px; }
-.card-header { display:flex; align-items:flex-start; gap:10px; margin-bottom:8px; }
-.formation-badge { font-family:‘Barlow Condensed’,sans-serif; font-size:20px; font-weight:900; background:var(–green-glow); color:var(–green); border:1px solid rgba(0,230,118,0.3); padding:4px 10px; border-radius:6px; white-space:nowrap; }
-.card-title { font-size:15px; font-weight:600; color:var(–text); line-height:1.3; }
-.card-meta { font-size:12px; color:var(–text-dim); margin-top:2px; }
-.effectiveness-bar { display:flex; align-items:center; gap:10px; margin:10px 0; }
-.eff-label { font-size:11px; font-weight:700; color:var(–text-mid); letter-spacing:0.5px; white-space:nowrap; }
-.bar-track { flex:1; height:6px; background:var(–border2); border-radius:3px; overflow:hidden; }
-.bar-fill { height:100%; border-radius:3px; }
-.bar-fill.high { background:linear-gradient(90deg,var(–green-dim),var(–green)); }
-.bar-fill.mid { background:linear-gradient(90deg,#F5A623,var(–yellow)); }
-.bar-fill.low { background:linear-gradient(90deg,#E53E3E,var(–red)); }
-.eff-pct { font-family:‘Barlow Condensed’,sans-serif; font-size:18px; font-weight:800; min-width:44px; text-align:right; }
-.eff-pct.high { color:var(–green); }
-.eff-pct.mid { color:var(–yellow); }
-.eff-pct.low { color:var(–red); }
-.card-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
-.tag { font-size:11px; font-weight:600; padding:2px 8px; border-radius:4px; }
-.tag.attack { background:rgba(255,61,87,0.15); color:var(–red); }
-.tag.defense { background:rgba(41,121,255,0.15); color:var(–blue); }
-.tag.balanced { background:rgba(0,230,118,0.1); color:var(–green); }
-.tag.pressing { background:rgba(255,214,0,0.15); color:var(–yellow); }
-.card-footer { display:flex; gap:16px; padding:10px 16px; border-top:1px solid var(–border); font-size:12px; color:var(–text-dim); }
+  /* TACTIC CARD */
+  .tactic-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; margin-bottom:12px; overflow:hidden; transition:all 0.2s; cursor:pointer; }
+  .tactic-card:hover { border-color:var(--border2); transform:translateY(-1px); box-shadow:0 4px 20px rgba(0,0,0,0.3); }
+  .tactic-card.featured { border-color:rgba(0,230,118,0.4); }
+  .card-top { display:flex; }
+  .vote-col { width:52px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:16px 0; gap:4px; border-right:1px solid var(--border); }
+  .vote-btn { background:none; border:none; cursor:pointer; font-size:16px; line-height:1; padding:4px; transition:transform 0.1s; color:var(--text-dim); }
+  .vote-btn:hover { transform:scale(1.2); }
+  .vote-btn.up:hover { color:var(--green); }
+  .vote-btn.down:hover { color:var(--red); }
+  .vote-count { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:800; color:var(--text); }
+  .vote-count.positive { color:var(--green); }
+  .card-body { flex:1; padding:14px 16px; }
+  .card-header { display:flex; align-items:flex-start; gap:10px; margin-bottom:8px; }
+  .formation-badge { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:900; background:var(--green-glow); color:var(--green); border:1px solid rgba(0,230,118,0.3); padding:4px 10px; border-radius:6px; white-space:nowrap; }
+  .card-title { font-size:15px; font-weight:600; color:var(--text); line-height:1.3; }
+  .card-meta { font-size:12px; color:var(--text-dim); margin-top:2px; }
+  .effectiveness-bar { display:flex; align-items:center; gap:10px; margin:10px 0; }
+  .eff-label { font-size:11px; font-weight:700; color:var(--text-mid); letter-spacing:0.5px; white-space:nowrap; }
+  .bar-track { flex:1; height:6px; background:var(--border2); border-radius:3px; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:3px; }
+  .bar-fill.high { background:linear-gradient(90deg,var(--green-dim),var(--green)); }
+  .bar-fill.mid { background:linear-gradient(90deg,#F5A623,var(--yellow)); }
+  .bar-fill.low { background:linear-gradient(90deg,#E53E3E,var(--red)); }
+  .eff-pct { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:800; min-width:44px; text-align:right; }
+  .eff-pct.high { color:var(--green); }
+  .eff-pct.mid { color:var(--yellow); }
+  .eff-pct.low { color:var(--red); }
+  .card-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+  .tag { font-size:11px; font-weight:600; padding:2px 8px; border-radius:4px; }
+  .tag.attack { background:rgba(255,61,87,0.15); color:var(--red); }
+  .tag.defense { background:rgba(41,121,255,0.15); color:var(--blue); }
+  .tag.balanced { background:rgba(0,230,118,0.1); color:var(--green); }
+  .tag.pressing { background:rgba(255,214,0,0.15); color:var(--yellow); }
+  .card-footer { display:flex; gap:16px; padding:10px 16px; border-top:1px solid var(--border); font-size:12px; color:var(--text-dim); }
 
-/* SIDEBAR */
-.sidebar { position:sticky; top:110px; height:fit-content; }
-.sidebar-card { background:var(–surface); border:1px solid var(–border); border-radius:12px; padding:16px; margin-bottom:14px; }
-.sidebar-title { font-family:‘Barlow Condensed’,sans-serif; font-size:13px; font-weight:800; letter-spacing:1px; color:var(–text-mid); text-transform:uppercase; margin-bottom:12px; }
-.top-formation { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(–border); }
-.top-formation:last-child { border-bottom:none; padding-bottom:0; }
-.rank-num { font-family:‘Barlow Condensed’,sans-serif; font-size:18px; font-weight:900; color:var(–text-dim); width:20px; text-align:center; }
-.tf-name { font-family:‘Barlow Condensed’,sans-serif; font-size:16px; font-weight:700; color:var(–text); flex:1; }
-.tf-pct { font-size:12px; font-weight:600; color:var(–green); }
-.stat-row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(–border); font-size:13px; }
-.stat-row:last-child { border-bottom:none; }
-.stat-row span:first-child { color:var(–text-mid); }
-.stat-row span:last-child { font-weight:600; color:var(–text); }
+  /* SIDEBAR */
+  .sidebar { position:sticky; top:110px; height:fit-content; }
+  .sidebar-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; margin-bottom:14px; }
+  .sidebar-title { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:800; letter-spacing:1px; color:var(--text-mid); text-transform:uppercase; margin-bottom:12px; }
+  .top-formation { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
+  .top-formation:last-child { border-bottom:none; padding-bottom:0; }
+  .rank-num { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; color:var(--text-dim); width:20px; text-align:center; }
+  .tf-name { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; color:var(--text); flex:1; }
+  .tf-pct { font-size:12px; font-weight:600; color:var(--green); }
+  .stat-row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border); font-size:13px; }
+  .stat-row:last-child { border-bottom:none; }
+  .stat-row span:first-child { color:var(--text-mid); }
+  .stat-row span:last-child { font-weight:600; color:var(--text); }
 
-/* ===== DETAIL ===== */
-.detail-page { max-width:800px; margin:0 auto; padding:24px 16px; }
-.detail-hero { background:var(–surface); border:1px solid var(–border); border-radius:16px; overflow:hidden; margin-bottom:20px; }
-.detail-hero-top { padding:24px; background:linear-gradient(135deg,rgba(0,230,118,0.05) 0%,transparent 60%); border-bottom:1px solid var(–border); display:flex; gap:20px; align-items:flex-start; }
-.formation-big { font-family:‘Barlow Condensed’,sans-serif; font-size:52px; font-weight:900; color:var(–green); line-height:1; text-shadow:0 0 40px rgba(0,230,118,0.3); }
-.detail-info { flex:1; }
-.detail-title-big { font-family:‘Barlow Condensed’,sans-serif; font-size:26px; font-weight:800; color:var(–text); line-height:1.2; margin-bottom:6px; }
-.detail-author { font-size:13px; color:var(–text-dim); margin-bottom:12px; }
-.big-eff { display:flex; align-items:center; gap:12px; }
-.big-eff-num { font-family:‘Barlow Condensed’,sans-serif; font-size:48px; font-weight:900; color:var(–green); line-height:1; text-shadow:0 0 30px rgba(0,230,118,0.4); }
-.big-eff-label { font-size:12px; color:var(–text-dim); line-height:1.6; }
-.big-eff-label strong { color:var(–text); display:block; font-size:14px; }
-.stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(–border); border-bottom:1px solid var(–border); }
-.stat-cell { background:var(–surface); padding:16px; text-align:center; }
-.stat-val { font-family:‘Barlow Condensed’,sans-serif; font-size:28px; font-weight:900; display:block; }
-.stat-lbl { font-size:11px; color:var(–text-dim); margin-top:2px; letter-spacing:0.5px; }
+  /* ===== DETAIL ===== */
+  .detail-page { max-width:800px; margin:0 auto; padding:24px 16px; }
+  .detail-hero { background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin-bottom:20px; }
+  .detail-hero-top { padding:24px; background:linear-gradient(135deg,rgba(0,230,118,0.05) 0%,transparent 60%); border-bottom:1px solid var(--border); display:flex; gap:20px; align-items:flex-start; }
+  .formation-big { font-family:'Barlow Condensed',sans-serif; font-size:52px; font-weight:900; color:var(--green); line-height:1; text-shadow:0 0 40px rgba(0,230,118,0.3); }
+  .detail-info { flex:1; }
+  .detail-title-big { font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:800; color:var(--text); line-height:1.2; margin-bottom:6px; }
+  .detail-author { font-size:13px; color:var(--text-dim); margin-bottom:12px; }
+  .big-eff { display:flex; align-items:center; gap:12px; }
+  .big-eff-num { font-family:'Barlow Condensed',sans-serif; font-size:48px; font-weight:900; color:var(--green); line-height:1; text-shadow:0 0 30px rgba(0,230,118,0.4); }
+  .big-eff-label { font-size:12px; color:var(--text-dim); line-height:1.6; }
+  .big-eff-label strong { color:var(--text); display:block; font-size:14px; }
+  .stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border-bottom:1px solid var(--border); }
+  .stat-cell { background:var(--surface); padding:16px; text-align:center; }
+  .stat-val { font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:900; display:block; }
+  .stat-lbl { font-size:11px; color:var(--text-dim); margin-top:2px; letter-spacing:0.5px; }
 
-/* PITCH */
-.pitch-wrap { padding:20px; display:flex; justify-content:center; background:var(–surface2); }
-.pitch { width:240px; height:340px; background:#0d2a1a; border-radius:8px; position:relative; border:2px solid #1a4030; overflow:hidden; }
-.pitch-lines { position:absolute; inset:0; background:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px); background-size:40px 40px; }
-.pitch-center-line { position:absolute; top:50%; left:0; right:0; height:1px; background:rgba(255,255,255,0.1); }
-.pitch-center-circle { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:60px; height:60px; border:1px solid rgba(255,255,255,0.1); border-radius:50%; }
-.pitch-box-top { position:absolute; top:0; left:50%; transform:translateX(-50%); width:100px; height:50px; border:1px solid rgba(255,255,255,0.1); border-top:none; }
-.pitch-box-bottom { position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:100px; height:50px; border:1px solid rgba(255,255,255,0.1); border-bottom:none; }
-.player-dot { position:absolute; width:28px; height:28px; background:var(–green); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:8px; font-weight:800; color:var(–bg); transform:translate(-50%,-50%); box-shadow:0 0 10px rgba(0,230,118,0.5); z-index:2; }
-.player-dot.gk { background:var(–yellow); box-shadow:0 0 10px rgba(255,214,0,0.5); }
+  /* PITCH */
+  .pitch-wrap { padding:20px; display:flex; justify-content:center; background:var(--surface2); }
+  .pitch { width:240px; height:340px; background:#0d2a1a; border-radius:8px; position:relative; border:2px solid #1a4030; overflow:hidden; }
+  .pitch-lines { position:absolute; inset:0; background:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px); background-size:40px 40px; }
+  .pitch-center-line { position:absolute; top:50%; left:0; right:0; height:1px; background:rgba(255,255,255,0.1); }
+  .pitch-center-circle { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:60px; height:60px; border:1px solid rgba(255,255,255,0.1); border-radius:50%; }
+  .pitch-box-top { position:absolute; top:0; left:50%; transform:translateX(-50%); width:100px; height:50px; border:1px solid rgba(255,255,255,0.1); border-top:none; }
+  .pitch-box-bottom { position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:100px; height:50px; border:1px solid rgba(255,255,255,0.1); border-bottom:none; }
+  .player-dot { position:absolute; width:28px; height:28px; background:var(--green); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:8px; font-weight:800; color:var(--bg); transform:translate(-50%,-50%); box-shadow:0 0 10px rgba(0,230,118,0.5); z-index:2; }
+  .player-dot.gk { background:var(--yellow); box-shadow:0 0 10px rgba(255,214,0,0.5); }
 
-/* VOTE SECTION */
-.vote-section { background:var(–surface); border:1px solid var(–border); border-radius:16px; padding:20px; margin-bottom:20px; text-align:center; }
-.vote-question { font-family:‘Barlow Condensed’,sans-serif; font-size:18px; font-weight:700; margin-bottom:6px; }
-.vote-sub { font-size:13px; color:var(–text-dim); margin-bottom:20px; }
-.vote-buttons { display:flex; gap:12px; justify-content:center; }
-.vote-yes { flex:1; max-width:160px; background:var(–green-glow); border:1.5px solid var(–green); color:var(–green); padding:14px; border-radius:10px; font-family:‘Barlow Condensed’,sans-serif; font-size:18px; font-weight:800; cursor:pointer; transition:all 0.15s; }
-.vote-yes:hover { background:var(–green); color:var(–bg); }
-.vote-no { flex:1; max-width:160px; background:rgba(255,61,87,0.08); border:1.5px solid var(–red); color:var(–red); padding:14px; border-radius:10px; font-family:‘Barlow Condensed’,sans-serif; font-size:18px; font-weight:800; cursor:pointer; transition:all 0.15s; }
-.vote-no:hover { background:var(–red); color:white; }
-.vote-counts { display:flex; justify-content:center; gap:32px; margin-top:12px; font-size:12px; color:var(–text-dim); }
-.vote-counts span strong { color:var(–text); }
+  /* VOTE SECTION */
+  .vote-section { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:20px; margin-bottom:20px; text-align:center; }
+  .vote-question { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:700; margin-bottom:6px; }
+  .vote-sub { font-size:13px; color:var(--text-dim); margin-bottom:20px; }
+  .vote-buttons { display:flex; gap:12px; justify-content:center; }
+  .vote-yes { flex:1; max-width:160px; background:var(--green-glow); border:1.5px solid var(--green); color:var(--green); padding:14px; border-radius:10px; font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:800; cursor:pointer; transition:all 0.15s; }
+  .vote-yes:hover { background:var(--green); color:var(--bg); }
+  .vote-no { flex:1; max-width:160px; background:rgba(255,61,87,0.08); border:1.5px solid var(--red); color:var(--red); padding:14px; border-radius:10px; font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:800; cursor:pointer; transition:all 0.15s; }
+  .vote-no:hover { background:var(--red); color:white; }
+  .vote-counts { display:flex; justify-content:center; gap:32px; margin-top:12px; font-size:12px; color:var(--text-dim); }
+  .vote-counts span strong { color:var(--text); }
 
-/* CONTEXT VOTE */
-.context-grid { display:flex; flex-direction:column; gap:14px; margin-bottom:16px; text-align:left; }
-.context-label { font-size:12px; font-weight:700; color:var(–text-mid); margin-bottom:7px; letter-spacing:0.3px; }
-.context-opts { display:flex; gap:8px; flex-wrap:wrap; }
-.ctx-opt { padding:7px 14px; border-radius:8px; border:1px solid var(–border2); color:var(–text-dim); font-size:13px; font-weight:600; cursor:pointer; transition:all 0.15s; background:var(–surface2); }
-.ctx-opt:hover { border-color:var(–green); color:var(–green); }
-.ctx-opt.selected { background:var(–green-glow); border-color:var(–green); color:var(–green); }
-.btn-submit-vote { width:100%; background:var(–green); color:var(–bg); border:none; border-radius:10px; padding:13px; font-family:‘Barlow Condensed’,sans-serif; font-size:18px; font-weight:800; cursor:pointer; transition:all 0.2s; margin-top:4px; }
-.btn-submit-vote:hover { background:var(–green-dim); }
+  /* CONTEXT VOTE */
+  .context-grid { display:flex; flex-direction:column; gap:14px; margin-bottom:16px; text-align:left; }
+  .context-label { font-size:12px; font-weight:700; color:var(--text-mid); margin-bottom:7px; letter-spacing:0.3px; }
+  .context-opts { display:flex; gap:8px; flex-wrap:wrap; }
+  .ctx-opt { padding:7px 14px; border-radius:8px; border:1px solid var(--border2); color:var(--text-dim); font-size:13px; font-weight:600; cursor:pointer; transition:all 0.15s; background:var(--surface2); }
+  .ctx-opt:hover { border-color:var(--green); color:var(--green); }
+  .ctx-opt.selected { background:var(--green-glow); border-color:var(--green); color:var(--green); }
+  .btn-submit-vote { width:100%; background:var(--green); color:var(--bg); border:none; border-radius:10px; padding:13px; font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:800; cursor:pointer; transition:all 0.2s; margin-top:4px; }
+  .btn-submit-vote:hover { background:var(--green-dim); }
 
-/* CONTEXT STATS */
-.context-stats { text-align:left; }
-.cstat { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
-.cstat-label { font-size:12px; color:var(–text-mid); min-width:160px; }
-.cstat-bar { flex:1; height:6px; background:var(–border2); border-radius:3px; overflow:hidden; }
-.cstat-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,var(–green-dim),var(–green)); }
-.cstat-val { font-family:‘Barlow Condensed’,sans-serif; font-size:16px; font-weight:900; min-width:36px; text-align:right; }
-.cstat-val.high { color:var(–green); }
-.cstat-val.mid { color:var(–yellow); }
-.cstat-val.low { color:var(–red); }
-.cstat-divider { height:1px; background:var(–border); margin:6px 0 10px; width:100%; }
+  /* CONTEXT STATS */
+  .context-stats { text-align:left; }
+  .cstat { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .cstat-label { font-size:12px; color:var(--text-mid); min-width:160px; }
+  .cstat-bar { flex:1; height:6px; background:var(--border2); border-radius:3px; overflow:hidden; }
+  .cstat-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,var(--green-dim),var(--green)); }
+  .cstat-val { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; min-width:36px; text-align:right; }
+  .cstat-val.high { color:var(--green); }
+  .cstat-val.mid { color:var(--yellow); }
+  .cstat-val.low { color:var(--red); }
+  .cstat-divider { height:1px; background:var(--border); margin:6px 0 10px; width:100%; }
 
-/* COMMENTS */
-.comments-section { background:var(–surface); border:1px solid var(–border); border-radius:16px; overflow:hidden; }
-.comments-header { padding:16px 20px; border-bottom:1px solid var(–border); display:flex; align-items:center; gap:8px; }
-.comments-title { font-family:‘Barlow Condensed’,sans-serif; font-size:16px; font-weight:800; letter-spacing:0.5px; }
-.comments-count { font-size:12px; color:var(–text-dim); background:var(–border2); padding:2px 8px; border-radius:10px; }
-.comment { padding:16px 20px; border-bottom:1px solid var(–border); }
-.comment:last-child { border-bottom:none; }
-.comment-header { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
-.avatar { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; }
-.comment-user { font-size:13px; font-weight:600; color:var(–text); }
-.comment-time { font-size:11px; color:var(–text-dim); margin-left:auto; }
-.comment-context { display:inline-flex; align-items:center; gap:4px; background:rgba(41,121,255,0.1); color:var(–blue); font-size:11px; font-weight:600; padding:2px 8px; border-radius:4px; margin-bottom:8px; }
-.comment-text { font-size:14px; color:var(–text-mid); line-height:1.6; }
-.comment-actions { display:flex; gap:16px; margin-top:10px; }
-.comment-action { font-size:12px; color:var(–text-dim); cursor:pointer; display:flex; align-items:center; gap:4px; transition:color 0.15s; }
-.comment-action:hover { color:var(–green); }
+  /* COMMENTS */
+  .comments-section { background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+  .comments-header { padding:16px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:8px; }
+  .comments-title { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:800; letter-spacing:0.5px; }
+  .comments-count { font-size:12px; color:var(--text-dim); background:var(--border2); padding:2px 8px; border-radius:10px; }
+  .comment { padding:16px 20px; border-bottom:1px solid var(--border); }
+  .comment:last-child { border-bottom:none; }
+  .comment-header { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .avatar { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; }
+  .comment-user { font-size:13px; font-weight:600; color:var(--text); }
+  .comment-time { font-size:11px; color:var(--text-dim); margin-left:auto; }
+  .comment-context { display:inline-flex; align-items:center; gap:4px; background:rgba(41,121,255,0.1); color:var(--blue); font-size:11px; font-weight:600; padding:2px 8px; border-radius:4px; margin-bottom:8px; }
+  .comment-text { font-size:14px; color:var(--text-mid); line-height:1.6; }
+  .comment-actions { display:flex; gap:16px; margin-top:10px; }
+  .comment-action { font-size:12px; color:var(--text-dim); cursor:pointer; display:flex; align-items:center; gap:4px; transition:color 0.15s; }
+  .comment-action:hover { color:var(--green); }
 
-/* ===== BUILDER ===== */
-.builder-page { max-width:800px; margin:0 auto; padding:24px 16px; }
-.builder-title { font-family:‘Barlow Condensed’,sans-serif; font-size:22px; font-weight:900; margin-bottom:16px; letter-spacing:0.5px; }
-.formation-selector { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
-.form-btn { padding:6px 10px; border-radius:6px; font-family:‘Barlow Condensed’,sans-serif; font-size:13px; font-weight:700; cursor:pointer; border:1px solid var(–border2); color:var(–text-dim); background:var(–surface); transition:all 0.15s; white-space:nowrap; }
-.form-btn.active { background:var(–green-glow); border-color:var(–green); color:var(–green); }
-.form-btn:hover:not(.active) { color:var(–text); border-color:var(–border2); }
-.builder-layout { display:grid; grid-template-columns:1fr 260px; gap:20px; }
-@media(max-width:650px){ .builder-layout{grid-template-columns:1fr;} }
+  /* ===== BUILDER ===== */
+  .builder-page { max-width:800px; margin:0 auto; padding:24px 16px; }
+  .builder-title { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; margin-bottom:16px; letter-spacing:0.5px; }
+  .formation-selector { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
+  .form-btn { padding:6px 10px; border-radius:6px; font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; cursor:pointer; border:1px solid var(--border2); color:var(--text-dim); background:var(--surface); transition:all 0.15s; white-space:nowrap; }
+  .form-btn.active { background:var(--green-glow); border-color:var(--green); color:var(--green); }
+  .form-btn:hover:not(.active) { color:var(--text); border-color:var(--border2); }
+  .builder-layout { display:grid; grid-template-columns:1fr 260px; gap:20px; }
+  @media(max-width:650px){ .builder-layout{grid-template-columns:1fr;} }
 
-.big-pitch { width:100%; aspect-ratio:0.7; background:linear-gradient(180deg,#0a2818 0%,#0d3020 50%,#0a2818 100%); border-radius:12px; position:relative; border:2px solid #1a4030; overflow:hidden; }
-.big-pitch-lines { position:absolute; inset:0; background:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:15% 15%; }
-.big-center-line { position:absolute; top:50%; left:5%; right:5%; height:1px; background:rgba(255,255,255,0.12); }
-.big-center-circle { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:22%; height:0; padding-bottom:22%; border-radius:50%; border:1px solid rgba(255,255,255,0.12); }
-.big-box-top { position:absolute; top:0; left:25%; right:25%; height:16%; border:1px solid rgba(255,255,255,0.12); border-top:none; }
-.big-box-bot { position:absolute; bottom:0; left:25%; right:25%; height:16%; border:1px solid rgba(255,255,255,0.12); border-bottom:none; }
-.big-player { position:absolute; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; transition:all 0.15s; z-index:2; }
-.big-player:hover .bp-dot { transform:scale(1.15); box-shadow:0 0 20px rgba(0,230,118,0.6); }
-.bp-dot { width:36px; height:36px; border-radius:50%; background:var(–green); display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:800; color:var(–bg); box-shadow:0 0 12px rgba(0,230,118,0.4); transition:all 0.15s; }
-.bp-dot.gk { background:var(–yellow); box-shadow:0 0 12px rgba(255,214,0,0.4); }
-.bp-name { font-size:9px; font-weight:700; color:white; text-shadow:0 1px 3px rgba(0,0,0,0.8); white-space:nowrap; letter-spacing:0.3px; }
+  .big-pitch { width:100%; aspect-ratio:0.7; background:linear-gradient(180deg,#0a2818 0%,#0d3020 50%,#0a2818 100%); border-radius:12px; position:relative; border:2px solid #1a4030; overflow:hidden; }
+  .big-pitch-lines { position:absolute; inset:0; background:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:15% 15%; }
+  .big-center-line { position:absolute; top:50%; left:5%; right:5%; height:1px; background:rgba(255,255,255,0.12); }
+  .big-center-circle { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:22%; height:0; padding-bottom:22%; border-radius:50%; border:1px solid rgba(255,255,255,0.12); }
+  .big-box-top { position:absolute; top:0; left:25%; right:25%; height:16%; border:1px solid rgba(255,255,255,0.12); border-top:none; }
+  .big-box-bot { position:absolute; bottom:0; left:25%; right:25%; height:16%; border:1px solid rgba(255,255,255,0.12); border-bottom:none; }
+  .big-player { position:absolute; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; transition:all 0.15s; z-index:2; }
+  .big-player:hover .bp-dot { transform:scale(1.15); box-shadow:0 0 20px rgba(0,230,118,0.6); }
+  .bp-dot { width:36px; height:36px; border-radius:50%; background:var(--green); display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:800; color:var(--bg); box-shadow:0 0 12px rgba(0,230,118,0.4); transition:all 0.15s; }
+  .bp-dot.gk { background:var(--yellow); box-shadow:0 0 12px rgba(255,214,0,0.4); }
+  .bp-name { font-size:9px; font-weight:700; color:white; text-shadow:0 1px 3px rgba(0,0,0,0.8); white-space:nowrap; letter-spacing:0.3px; }
 
-/* OSM SLIDERS */
-.tactic-settings { background:var(–surface); border:1px solid var(–border); border-radius:12px; padding:16px; }
-.setting-row { margin-bottom:18px; }
-.setting-label { font-size:11px; font-weight:700; color:var(–blue); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
-.setting-value { font-size:15px; font-weight:700; color:var(–text); margin-bottom:8px; }
-.osm-slider-wrap { display:flex; align-items:center; gap:10px; }
-.osm-slider { -webkit-appearance:none; appearance:none; flex:1; height:6px; border-radius:3px; outline:none; cursor:pointer; }
-.osm-slider::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:white; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.4); }
-.slider-num { font-family:‘Barlow Condensed’,sans-serif; font-size:18px; font-weight:900; color:var(–text); min-width:32px; text-align:right; background:var(–surface2); border-radius:6px; padding:2px 6px; }
-.section-divider { border:none; border-top:1px solid var(–border); margin:16px 0; }
-.line-tactic-row { margin-bottom:14px; }
-.lt-label { font-size:11px; font-weight:700; color:var(–yellow); letter-spacing:1px; text-transform:uppercase; margin-bottom:2px; }
-.lt-value { font-size:14px; font-weight:700; color:var(–text); margin-bottom:6px; }
-.lt-dots { display:flex; gap:6px; }
-.lt-dot { width:10px; height:10px; border-radius:50%; background:var(–border2); cursor:pointer; transition:all 0.15s; }
-.lt-dot.active { background:var(–text); }
-.btn-share { width:100%; background:var(–green); color:var(–bg); border:none; border-radius:8px; padding:14px; font-family:‘Barlow Condensed’,sans-serif; font-size:18px; font-weight:800; letter-spacing:0.5px; cursor:pointer; margin-top:16px; transition:all 0.2s; }
-.btn-share:hover { background:var(–green-dim); transform:translateY(-1px); }
+  /* OSM SLIDERS */
+  .tactic-settings { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; }
+  .setting-row { margin-bottom:18px; }
+  .setting-label { font-size:11px; font-weight:700; color:var(--blue); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+  .setting-value { font-size:15px; font-weight:700; color:var(--text); margin-bottom:8px; }
+  .osm-slider-wrap { display:flex; align-items:center; gap:10px; }
+  .osm-slider { -webkit-appearance:none; appearance:none; flex:1; height:6px; border-radius:3px; outline:none; cursor:pointer; }
+  .osm-slider::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:white; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.4); }
+  .slider-num { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; color:var(--text); min-width:32px; text-align:right; background:var(--surface2); border-radius:6px; padding:2px 6px; }
+  .section-divider { border:none; border-top:1px solid var(--border); margin:16px 0; }
+  .line-tactic-row { margin-bottom:14px; }
+  .lt-label { font-size:11px; font-weight:700; color:var(--yellow); letter-spacing:1px; text-transform:uppercase; margin-bottom:2px; }
+  .lt-value { font-size:14px; font-weight:700; color:var(--text); margin-bottom:6px; }
+  .lt-dots { display:flex; gap:6px; }
+  .lt-dot { width:10px; height:10px; border-radius:50%; background:var(--border2); cursor:pointer; transition:all 0.15s; }
+  .lt-dot.active { background:var(--text); }
+  .btn-share { width:100%; background:var(--green); color:var(--bg); border:none; border-radius:8px; padding:14px; font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:800; letter-spacing:0.5px; cursor:pointer; margin-top:16px; transition:all 0.2s; }
+  .btn-share:hover { background:var(--green-dim); transform:translateY(-1px); }
 
-/* ===== RANKINGS ===== */
-.ranking-page { max-width:700px; margin:0 auto; padding:24px 16px; }
-.ranking-header { background:var(–surface); border:1px solid var(–border); border-radius:16px; padding:24px; margin-bottom:20px; text-align:center; background:linear-gradient(135deg,rgba(0,230,118,0.05),transparent); }
-.ranking-title { font-family:‘Barlow Condensed’,sans-serif; font-size:32px; font-weight:900; letter-spacing:1px; }
-.ranking-sub { font-size:13px; color:var(–text-dim); margin-top:4px; }
-.ranking-table { background:var(–surface); border:1px solid var(–border); border-radius:12px; overflow:hidden; }
-.ranking-row { display:grid; grid-template-columns:44px 1fr 80px 80px 60px; align-items:center; padding:14px 16px; border-bottom:1px solid var(–border); transition:background 0.15s; cursor:pointer; }
-.ranking-row:last-child { border-bottom:none; }
-.ranking-row:hover { background:var(–surface2); }
-.ranking-row.header { background:var(–surface2); cursor:default; font-size:11px; font-weight:700; color:var(–text-dim); letter-spacing:0.5px; text-transform:uppercase; }
-.ranking-row.header:hover { background:var(–surface2); }
-.rank-pos { font-family:‘Barlow Condensed’,sans-serif; font-size:20px; font-weight:900; }
-.rank-pos.p1 { color:var(–yellow); }
-.rank-pos.p2 { color:#C0C0C0; }
-.rank-pos.p3 { color:#CD7F32; }
-.rank-formation { font-family:‘Barlow Condensed’,sans-serif; font-size:18px; font-weight:800; }
-.rank-sub { font-size:11px; color:var(–text-dim); }
-.rank-eff { font-family:‘Barlow Condensed’,sans-serif; font-size:20px; font-weight:900; text-align:center; }
-.rank-votes { font-size:13px; color:var(–text-mid); text-align:center; font-weight:600; }
-.rank-trend { font-size:16px; text-align:center; }
+  /* ===== RANKINGS ===== */
+  .ranking-page { max-width:700px; margin:0 auto; padding:24px 16px; }
+  .ranking-header { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:20px; text-align:center; background:linear-gradient(135deg,rgba(0,230,118,0.05),transparent); }
+  .ranking-title { font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:900; letter-spacing:1px; }
+  .ranking-sub { font-size:13px; color:var(--text-dim); margin-top:4px; }
+  .ranking-table { background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+  .ranking-row { display:grid; grid-template-columns:44px 1fr 80px 80px 60px; align-items:center; padding:14px 16px; border-bottom:1px solid var(--border); transition:background 0.15s; cursor:pointer; }
+  .ranking-row:last-child { border-bottom:none; }
+  .ranking-row:hover { background:var(--surface2); }
+  .ranking-row.header { background:var(--surface2); cursor:default; font-size:11px; font-weight:700; color:var(--text-dim); letter-spacing:0.5px; text-transform:uppercase; }
+  .ranking-row.header:hover { background:var(--surface2); }
+  .rank-pos { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:900; }
+  .rank-pos.p1 { color:var(--yellow); }
+  .rank-pos.p2 { color:#C0C0C0; }
+  .rank-pos.p3 { color:#CD7F32; }
+  .rank-formation { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:800; }
+  .rank-sub { font-size:11px; color:var(--text-dim); }
+  .rank-eff { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:900; text-align:center; }
+  .rank-votes { font-size:13px; color:var(--text-mid); text-align:center; font-weight:600; }
+  .rank-trend { font-size:16px; text-align:center; }
 
-/* FOOTER */
-footer { background:var(–surface); border-top:1px solid var(–border); padding:20px; text-align:center; margin-top:40px; }
-footer p { font-size:12px; color:var(–text-dim); }
-footer strong { color:var(–green); }
+  /* FOOTER */
+  footer { background:var(--surface); border-top:1px solid var(--border); padding:20px; text-align:center; margin-top:40px; }
+  footer p { font-size:12px; color:var(--text-dim); }
+  footer strong { color:var(--green); }
 </style>
-
 </head>
 <body>
 
 <nav>
   <div class="logo-wrap">
     <div class="logo">OSM <span>HUB</span></div>
-    <div class="logo-sub">fan-made tactic platform</div>
+    <div class="logo-sub">plataforma táctica creada por fans</div>
   </div>
   <div class="nav-badge">FAN-MADE</div>
   <div class="nav-right">
-    <button class="btn-ghost">🌐 EN / ES</button>
-    <button class="btn-primary" onclick="showScreen('builder',document.querySelectorAll('.tab')[2])">+ Share Tactic</button>
+    <button class="btn-ghost" id="lang-btn" onclick="toggleLang()">🌐 EN / ES</button>
+    <button class="btn-primary" id="btn-share-nav" onclick="showScreen('builder',document.querySelectorAll('.tab')[2])">+ Compartir Táctica</button>
   </div>
 </nav>
 
 <div class="tabs">
-  <div class="tab active" onclick="showScreen('feed',this)">🔥 Trending</div>
-  <div class="tab" onclick="showScreen('detail',this)">📋 Tactic Detail</div>
-  <div class="tab" onclick="showScreen('builder',this)">⚽ Lineup Builder</div>
+  <div class="tab active" onclick="showScreen('feed',this)">🔥 Tendencia</div>
+  <div class="tab" onclick="showScreen('detail',this)">📋 Detalle</div>
+  <div class="tab" onclick="showScreen('builder',this)">⚽ Alineaciones</div>
   <div class="tab" onclick="showScreen('ranking',this)">🏆 Rankings</div>
 </div>
 
 <!-- ===== FEED ===== -->
-
 <div id="screen-feed" class="screen active">
   <div class="feed-layout">
     <div class="main-feed">
       <div class="feed-header">
-        <div class="feed-title">TRENDING TACTICS</div>
+        <div class="feed-title">TÁCTICAS DE MODA</div>
         <div class="sort-pills">
-          <div class="pill active">Hot</div>
-          <div class="pill">New</div>
-          <div class="pill">Top</div>
+          <div class="pill active">Caliente</div>
+          <div class="pill">Nuevo</div>
+          <div class="pill">Arriba</div>
         </div>
       </div>
       <div id="tactics-feed">
@@ -304,26 +302,24 @@ footer strong { color:var(–green); }
       </div>
     </div>
 
-<div class="sidebar">
-  <div class="sidebar-card">
-    <div class="sidebar-title">🏆 Top Formations</div>
-    <div class="top-formation"><div class="rank-num" style="color:var(--yellow)">1</div><div class="tf-name">4-3-3-A</div><div class="tf-pct">–</div></div>
-    <div class="top-formation"><div class="rank-num" style="color:#C0C0C0">2</div><div class="tf-name">4-4-2-B</div><div class="tf-pct">–</div></div>
-    <div class="top-formation"><div class="rank-num" style="color:#CD7F32">3</div><div class="tf-name">4-2-3-1</div><div class="tf-pct">–</div></div>
-    <div class="top-formation"><div class="rank-num">4</div><div class="tf-name">3-5-2</div><div class="tf-pct">–</div></div>
-    <div class="top-formation"><div class="rank-num">5</div><div class="tf-name">5-2-3-A</div><div class="tf-pct">–</div></div>
-  </div>
-  <div class="sidebar-card">
-    <div class="sidebar-title">📊 Stats</div>
-    <div class="stat-row"><span>Be the first!</span><span>🚀</span></div>
-  </div>
-</div>
-
+    <div class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-title">🏆 Top Formations</div>
+        <div class="top-formation"><div class="rank-num" style="color:var(--yellow)">1</div><div class="tf-name">4-3-3-A</div><div class="tf-pct">–</div></div>
+        <div class="top-formation"><div class="rank-num" style="color:#C0C0C0">2</div><div class="tf-name">4-4-2-B</div><div class="tf-pct">–</div></div>
+        <div class="top-formation"><div class="rank-num" style="color:#CD7F32">3</div><div class="tf-name">4-2-3-1</div><div class="tf-pct">–</div></div>
+        <div class="top-formation"><div class="rank-num">4</div><div class="tf-name">3-5-2</div><div class="tf-pct">–</div></div>
+        <div class="top-formation"><div class="rank-num">5</div><div class="tf-name">5-2-3-A</div><div class="tf-pct">–</div></div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sidebar-title">📊 Stats</div>
+        <div class="stat-row"><span>Be the first!</span><span>🚀</span></div>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- ===== DETAIL ===== -->
-
 <div id="screen-detail" class="screen">
   <div class="detail-page">
     <div class="detail-hero">
@@ -365,72 +361,69 @@ footer strong { color:var(–green); }
       </div>
     </div>
 
-<!-- VOTE -->
-<div class="vote-section" id="vote-section">
-  <div id="vote-step1">
-    <div class="vote-question">¿Te funcionó esta táctica?</div>
-    <div class="vote-sub">Tu voto ayuda a la comunidad a encontrar las mejores tácticas</div>
-    <div class="vote-buttons">
-      <button class="vote-yes" onclick="showVoteContext('yes')">👍 SÍ, FUNCIONÓ</button>
-      <button class="vote-no" onclick="showVoteContext('no')">👎 NO FUNCIONÓ</button>
+    <!-- VOTE -->
+    <div class="vote-section" id="vote-section">
+      <div id="vote-step1">
+        <div class="vote-question">¿Te funcionó esta táctica?</div>
+        <div class="vote-sub">Tu voto ayuda a la comunidad a encontrar las mejores tácticas</div>
+        <div class="vote-buttons">
+          <button class="vote-yes" onclick="showVoteContext('yes')">👍 SÍ, FUNCIONÓ</button>
+          <button class="vote-no" onclick="showVoteContext('no')">👎 NO FUNCIONÓ</button>
+        </div>
+      </div>
+      <div id="vote-step2" style="display:none">
+        <div class="vote-question" id="vote-result-title">👍 ¡Gracias! Contanos el contexto</div>
+        <div class="vote-sub">Opcional pero muy útil para la comunidad</div>
+        <div class="context-grid">
+          <div class="context-group">
+            <div class="context-label">📍 ¿De local o visitante?</div>
+            <div class="context-opts">
+              <div class="ctx-opt" onclick="selectCtx(this,'location')">🏠 Local</div>
+              <div class="ctx-opt" onclick="selectCtx(this,'location')">✈️ Visitante</div>
+              <div class="ctx-opt" onclick="selectCtx(this,'location')">↔️ Ambos</div>
+            </div>
+          </div>
+          <div class="context-group">
+            <div class="context-label">⚡ ¿Tu equipo vs el rival?</div>
+            <div class="context-opts">
+              <div class="ctx-opt" onclick="selectCtx(this,'strength')">📈 Superior</div>
+              <div class="ctx-opt" onclick="selectCtx(this,'strength')">⚖️ Similar</div>
+              <div class="ctx-opt" onclick="selectCtx(this,'strength')">📉 Inferior</div>
+            </div>
+          </div>
+          <div class="context-group">
+            <div class="context-label">🏆 ¿En qué competición?</div>
+            <div class="context-opts">
+              <div class="ctx-opt" onclick="selectCtx(this,'comp')">🥇 Liga</div>
+              <div class="ctx-opt" onclick="selectCtx(this,'comp')">🏆 Copa</div>
+              <div class="ctx-opt" onclick="selectCtx(this,'comp')">⭐ Partido clave</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-submit-vote" onclick="submitVote()">Enviar voto →</button>
+      </div>
+      <div id="vote-step3" style="display:none">
+        <div class="vote-question">✅ ¡Voto registrado!</div>
+        <div class="vote-sub" style="margin-bottom:16px">Así se ve la táctica con tu contexto:</div>
+        <div class="context-stats" id="context-stats-detail"></div>
+      </div>
     </div>
-    <div class="vote-counts"><span><strong>738</strong> dicen que sí</span><span><strong>109</strong> dicen que no</span></div>
-  </div>
-  <div id="vote-step2" style="display:none">
-    <div class="vote-question" id="vote-result-title">👍 ¡Gracias! Contanos el contexto</div>
-    <div class="vote-sub">Opcional pero muy útil para la comunidad</div>
-    <div class="context-grid">
-      <div class="context-group">
-        <div class="context-label">📍 ¿De local o visitante?</div>
-        <div class="context-opts">
-          <div class="ctx-opt" onclick="selectCtx(this,'location')">🏠 Local</div>
-          <div class="ctx-opt" onclick="selectCtx(this,'location')">✈️ Visitante</div>
-          <div class="ctx-opt" onclick="selectCtx(this,'location')">↔️ Ambos</div>
-        </div>
+
+    <!-- COMMENTS -->
+    <div class="comments-section">
+      <div class="comments-header">
+        <div class="comments-title">COMENTARIOS</div>
+        <div class="comments-count" id="comments-count">0</div>
       </div>
-      <div class="context-group">
-        <div class="context-label">⚡ ¿Tu equipo vs el rival?</div>
-        <div class="context-opts">
-          <div class="ctx-opt" onclick="selectCtx(this,'strength')">📈 Superior</div>
-          <div class="ctx-opt" onclick="selectCtx(this,'strength')">⚖️ Similar</div>
-          <div class="ctx-opt" onclick="selectCtx(this,'strength')">📉 Inferior</div>
-        </div>
-      </div>
-      <div class="context-group">
-        <div class="context-label">🏆 ¿En qué competición?</div>
-        <div class="context-opts">
-          <div class="ctx-opt" onclick="selectCtx(this,'comp')">🥇 Liga</div>
-          <div class="ctx-opt" onclick="selectCtx(this,'comp')">🏆 Copa</div>
-          <div class="ctx-opt" onclick="selectCtx(this,'comp')">⭐ Partido clave</div>
-        </div>
-      </div>
+      <div id="comments-list"></div>
     </div>
-    <button class="btn-submit-vote" onclick="submitVote()">Enviar voto →</button>
-  </div>
-  <div id="vote-step3" style="display:none">
-    <div class="vote-question">✅ ¡Voto registrado!</div>
-    <div class="vote-sub" style="margin-bottom:16px">Así se ve la táctica con tu contexto:</div>
-    <div class="context-stats" id="context-stats-detail"></div>
-  </div>
-</div>
-
-<!-- COMMENTS -->
-<div class="comments-section">
-  <div class="comments-header">
-    <div class="comments-title">COMMENTS</div>
-    <div class="comments-count" id="comments-count">0</div>
-  </div>
-  <div id="comments-list"></div>
-</div>
-
   </div>
 </div>
 
 <!-- ===== BUILDER ===== -->
-
 <div id="screen-builder" class="screen">
   <div class="builder-page">
-    <div class="builder-title">⚽ LINEUP BUILDER</div>
+    <div class="builder-title">⚽ CREADOR DE ALINEACIONES</div>
     <div class="formation-selector">
       <div class="form-btn active">4-3-3-A</div><div class="form-btn">4-3-3-B</div><div class="form-btn">4-5-1</div>
       <div class="form-btn">4-2-3-1</div><div class="form-btn">4-4-2-A</div><div class="form-btn">4-4-2-B</div>
@@ -516,7 +509,7 @@ footer strong { color:var(–green); }
             <div class="lt-dot" onclick="setLineTactic('def',2,['Defend deep','Normal','High line'])"></div>
           </div>
         </div>
-        <button class="btn-share" onclick="shareTactic()">🚀 SHARE TACTIC</button>
+        <button class="btn-share" onclick="shareTactic()">🚀 COMPARTIR TÁCTICA</button>
         <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;">
           <input id="tactic-title-input" type="text" placeholder="Título de tu táctica..." style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;">
           <input id="tactic-author-input" type="text" placeholder="Tu nombre / usuario..." style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;">
@@ -527,12 +520,11 @@ footer strong { color:var(–green); }
 </div>
 
 <!-- ===== RANKINGS ===== -->
-
 <div id="screen-ranking" class="screen">
   <div class="ranking-page">
     <div class="ranking-header">
-      <div class="ranking-title">🏆 FORMATION RANKINGS</div>
-      <div class="ranking-sub">Based on real votes from 47,892 OSM players this week</div>
+      <div class="ranking-title">🏆 RANKING DE FORMACIONES</div>
+      <div class="ranking-sub">Basado en votos reales de jugadores de OSM</div>
     </div>
     <div class="ranking-table">
       <div class="ranking-row header">
@@ -546,11 +538,10 @@ footer strong { color:var(–green); }
 </div>
 
 <footer>
-  <p><strong>OSM Hub</strong> · Fan-made tactic platform · Not affiliated with GameBasics or OSM · Built by the community, for the community</p>
+  <p><strong>OSM Hub</strong> · Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM · Construida por la comunidad, para la comunidad</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
   // ===== SUPABASE CONFIG =====
   const SUPABASE_URL = 'https://dyazsdbmdbnmjjpcttnw.supabase.co';
@@ -793,8 +784,158 @@ footer strong { color:var(–green); }
     document.getElementById(type+'-label').textContent = options[idx];
   }
 
-  // ===== INIT =====
-  document.querySelectorAll('.form-btn').forEach(btn => {
+  // ===== BILINGUAL SYSTEM =====
+  var currentLang = 'es';
+  var translations = {
+    es: {
+      'nav-share': '+ Compartir Táctica',
+      'tab-trending': '🔥 Tendencia',
+      'tab-detail': '📋 Detalle',
+      'tab-builder': '⚽ Alineaciones',
+      'tab-ranking': '🏆 Rankings',
+      'feed-title': 'TÁCTICAS DE MODA',
+      'pill-hot': 'Caliente',
+      'pill-new': 'Nuevo',
+      'pill-top': 'Arriba',
+      'no-tactics': 'Aún no hay tácticas. ¡Sé el primero en compartir una!',
+      'effectiveness': 'EFICACIA',
+      'total-votes': 'Total Votos',
+      'it-works': '👍 Funcionó',
+      'didnt-work': '👎 No Funcionó',
+      'vote-question': '¿Te funcionó esta táctica?',
+      'vote-sub': 'Tu voto ayuda a la comunidad a encontrar las mejores tácticas',
+      'vote-yes': '👍 SÍ, FUNCIONÓ',
+      'vote-no': '👎 NO FUNCIONÓ',
+      'ctx-local': '🏠 Local',
+      'ctx-away': '✈️ Visitante',
+      'ctx-both': '↔️ Ambos',
+      'ctx-superior': '📈 Superior',
+      'ctx-similar': '⚖️ Similar',
+      'ctx-inferior': '📉 Inferior',
+      'ctx-league': '🥇 Liga',
+      'ctx-cup': '🏆 Copa',
+      'ctx-key': '⭐ Partido clave',
+      'ctx-q-location': '📍 ¿De local o visitante?',
+      'ctx-q-strength': '⚡ ¿Tu equipo vs el rival?',
+      'ctx-q-comp': '🏆 ¿En qué competición?',
+      'vote-submit': 'Enviar voto →',
+      'vote-registered': '✅ ¡Voto registrado!',
+      'vote-registered-sub': 'Así se ve la táctica con tu contexto:',
+      'comments-title': 'COMENTARIOS',
+      'builder-title': '⚽ CREADOR DE ALINEACIONES',
+      'share-tactic-btn': '🚀 COMPARTIR TÁCTICA',
+      'tactic-title-ph': 'Título de tu táctica...',
+      'tactic-author-ph': 'Tu nombre / usuario...',
+      'ranking-title': '🏆 RANKING DE FORMACIONES',
+      'ranking-sub': 'Basado en votos reales de jugadores de OSM',
+      'top-formations': '🏆 Top Formaciones',
+      'stats-title': '📊 Stats',
+      'be-first': '¡Sé el primero!',
+      'footer': 'OSM Hub · Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM',
+      'logo-sub': 'plataforma táctica creada por fans',
+      'loading': 'Cargando tácticas...',
+      'local-home': '🏠 De local',
+      'local-away': '✈️ De visitante',
+      'superior': '📈 Equipo superior',
+      'similar': '⚖️ Equipo similar',
+      'inferior': '📉 Equipo inferior',
+    },
+    en: {
+      'nav-share': '+ Share Tactic',
+      'tab-trending': '🔥 Trending',
+      'tab-detail': '📋 Tactic Detail',
+      'tab-builder': '⚽ Lineup Builder',
+      'tab-ranking': '🏆 Rankings',
+      'feed-title': 'TRENDING TACTICS',
+      'pill-hot': 'Hot',
+      'pill-new': 'New',
+      'pill-top': 'Top',
+      'no-tactics': 'No tactics yet. Be the first to share one!',
+      'effectiveness': 'EFFECTIVENESS',
+      'total-votes': 'Total Votes',
+      'it-works': '👍 It Works',
+      'didnt-work': '👎 Didn\'t Work',
+      'vote-question': 'Did this tactic work for you?',
+      'vote-sub': 'Your vote helps the community find the best tactics',
+      'vote-yes': '👍 YES, IT WORKED',
+      'vote-no': '👎 DIDN\'T WORK',
+      'ctx-local': '🏠 Home',
+      'ctx-away': '✈️ Away',
+      'ctx-both': '↔️ Both',
+      'ctx-superior': '📈 Superior',
+      'ctx-similar': '⚖️ Similar',
+      'ctx-inferior': '📉 Inferior',
+      'ctx-league': '🥇 League',
+      'ctx-cup': '🏆 Cup',
+      'ctx-key': '⭐ Key match',
+      'ctx-q-location': '📍 Home or away?',
+      'ctx-q-strength': '⚡ Your team vs rival?',
+      'ctx-q-comp': '🏆 What competition?',
+      'vote-submit': 'Submit vote →',
+      'vote-registered': '✅ Vote registered!',
+      'vote-registered-sub': 'Here\'s how this tactic performs in context:',
+      'comments-title': 'COMMENTS',
+      'builder-title': '⚽ LINEUP BUILDER',
+      'share-tactic-btn': '🚀 SHARE TACTIC',
+      'tactic-title-ph': 'Tactic title...',
+      'tactic-author-ph': 'Your name / username...',
+      'ranking-title': '🏆 FORMATION RANKINGS',
+      'ranking-sub': 'Based on real votes from OSM players',
+      'top-formations': '🏆 Top Formations',
+      'stats-title': '📊 Stats',
+      'be-first': 'Be the first!',
+      'footer': 'OSM Hub · Fan-made tactic platform · Not affiliated with GameBasics or OSM',
+      'logo-sub': 'fan-made tactic platform',
+      'loading': 'Loading tactics...',
+      'local-home': '🏠 Home',
+      'local-away': '✈️ Away',
+      'superior': '📈 Superior team',
+      'similar': '⚖️ Similar team',
+      'inferior': '📉 Inferior team',
+    }
+  };
+
+  function t(key) {
+    return translations[currentLang][key] || key;
+  }
+
+  function toggleLang() {
+    currentLang = currentLang === 'es' ? 'en' : 'es';
+    document.getElementById('lang-btn').textContent = currentLang === 'es' ? '🌐 EN / ES' : '🌐 ES / EN';
+    applyTranslations();
+  }
+
+  function applyTranslations() {
+    document.querySelector('.logo-sub').textContent = t('logo-sub');
+    document.getElementById('btn-share-nav').textContent = t('nav-share');
+    document.querySelectorAll('.tab')[0].textContent = t('tab-trending');
+    document.querySelectorAll('.tab')[1].textContent = t('tab-detail');
+    document.querySelectorAll('.tab')[2].textContent = t('tab-builder');
+    document.querySelectorAll('.tab')[3].textContent = t('tab-ranking');
+    document.querySelector('.feed-title').textContent = t('feed-title');
+    document.querySelectorAll('.pill')[0].textContent = t('pill-hot');
+    document.querySelectorAll('.pill')[1].textContent = t('pill-new');
+    document.querySelectorAll('.pill')[2].textContent = t('pill-top');
+    document.querySelector('.vote-question').textContent = t('vote-question');
+    document.querySelector('.vote-sub').textContent = t('vote-sub');
+    document.querySelector('.vote-yes').textContent = t('vote-yes');
+    document.querySelector('.vote-no').textContent = t('vote-no');
+    document.querySelector('.comments-title').textContent = t('comments-title');
+    document.querySelector('.builder-title').textContent = t('builder-title');
+    document.querySelector('.btn-share').textContent = t('share-tactic-btn');
+    document.getElementById('tactic-title-input').placeholder = t('tactic-title-ph');
+    document.getElementById('tactic-author-input').placeholder = t('tactic-author-ph');
+    document.querySelector('.ranking-title').textContent = t('ranking-title');
+    document.querySelector('.ranking-sub').textContent = t('ranking-sub');
+    document.querySelector('footer p').textContent = t('footer');
+    // Context labels
+    var ctxLabels = document.querySelectorAll('.context-label');
+    if (ctxLabels[0]) ctxLabels[0].textContent = t('ctx-q-location');
+    if (ctxLabels[1]) ctxLabels[1].textContent = t('ctx-q-strength');
+    if (ctxLabels[2]) ctxLabels[2].textContent = t('ctx-q-comp');
+    // Reload feed with new language
+    loadTactics();
+  }
     btn.addEventListener('click', function() {
       document.querySelectorAll('.form-btn').forEach(b => b.classList.remove('active'));
       this.classList.add('active');
@@ -810,6 +951,5 @@ footer strong { color:var(–green); }
   // Load feed on start
   loadTactics();
 </script>
-
 </body>
 </html>
