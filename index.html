@@ -459,56 +459,56 @@
       </div>
       <div class="tactic-settings">
         <div class="setting-row">
-          <div class="setting-label">PRESSING</div>
-          <div class="setting-value" id="pressing-label">Balanced</div>
+          <div class="setting-label">PRESIÓN</div>
+          <div class="setting-value" id="pressing-label">Equilibrado</div>
           <div class="osm-slider-wrap">
             <input type="range" class="osm-slider" id="pressing-slider" min="1" max="100" value="54" oninput="updateSlider('pressing',this.value)" style="background:linear-gradient(to right,var(--blue) 0%,var(--blue) 54%,var(--border2) 54%,var(--border2) 100%)">
             <div class="slider-num" id="pressing-num">54</div>
           </div>
         </div>
         <div class="setting-row">
-          <div class="setting-label">STYLE</div>
-          <div class="setting-value" id="style-label">Attacking</div>
+          <div class="setting-label">ESTILO</div>
+          <div class="setting-value" id="style-label">Atacante</div>
           <div class="osm-slider-wrap">
             <input type="range" class="osm-slider" id="style-slider" min="1" max="100" value="67" oninput="updateSlider('style',this.value)" style="background:linear-gradient(to right,var(--blue) 0%,var(--blue) 67%,var(--border2) 67%,var(--border2) 100%)">
             <div class="slider-num" id="style-num">67</div>
           </div>
         </div>
         <div class="setting-row">
-          <div class="setting-label">TEMPO</div>
-          <div class="setting-value" id="tempo-label">High-speed passing</div>
+          <div class="setting-label">RITMO</div>
+          <div class="setting-value" id="tempo-label">Pase veloz</div>
           <div class="osm-slider-wrap">
             <input type="range" class="osm-slider" id="tempo-slider" min="1" max="100" value="67" oninput="updateSlider('tempo',this.value)" style="background:linear-gradient(to right,var(--blue) 0%,var(--blue) 67%,var(--border2) 67%,var(--border2) 100%)">
             <div class="slider-num" id="tempo-num">67</div>
           </div>
         </div>
         <hr class="section-divider">
-        <div class="setting-label" style="margin-bottom:12px">LINE TACTICS</div>
+        <div class="setting-label" style="margin-bottom:12px">TÁCTICAS DE LÍNEA</div>
         <div class="line-tactic-row" id="fwd-row">
-          <div class="lt-label">FORWARDS</div>
-          <div class="lt-value" id="fwd-label">Attack only</div>
+          <div class="lt-label">DELANTEROS</div>
+          <div class="lt-value" id="fwd-label">Solo ataque</div>
           <div class="lt-dots">
-            <div class="lt-dot active" onclick="setLineTactic('fwd',0,['Attack only','Attack & defend','Support'])"></div>
-            <div class="lt-dot" onclick="setLineTactic('fwd',1,['Attack only','Attack & defend','Support'])"></div>
-            <div class="lt-dot" onclick="setLineTactic('fwd',2,['Attack only','Attack & defend','Support'])"></div>
+            <div class="lt-dot active" onclick="setLineTactic('fwd',0,['Solo ataque','Atacar y defender','Apoyo'])"></div>
+            <div class="lt-dot" onclick="setLineTactic('fwd',1,['Solo ataque','Atacar y defender','Apoyo'])"></div>
+            <div class="lt-dot" onclick="setLineTactic('fwd',2,['Solo ataque','Atacar y defender','Apoyo'])"></div>
           </div>
         </div>
         <div class="line-tactic-row" id="mid-row">
-          <div class="lt-label">MIDFIELDERS</div>
-          <div class="lt-value" id="mid-label">Protect the defence</div>
+          <div class="lt-label">MEDIOCAMPISTAS</div>
+          <div class="lt-value" id="mid-label">Proteger defensa</div>
           <div class="lt-dots">
-            <div class="lt-dot active" onclick="setLineTactic('mid',0,['Protect the defence','Mixed','Attack'])"></div>
-            <div class="lt-dot" onclick="setLineTactic('mid',1,['Protect the defence','Mixed','Attack'])"></div>
-            <div class="lt-dot" onclick="setLineTactic('mid',2,['Protect the defence','Mixed','Attack'])"></div>
+            <div class="lt-dot active" onclick="setLineTactic('mid',0,['Proteger defensa','Mixto','Atacar'])"></div>
+            <div class="lt-dot" onclick="setLineTactic('mid',1,['Proteger defensa','Mixto','Atacar'])"></div>
+            <div class="lt-dot" onclick="setLineTactic('mid',2,['Proteger defensa','Mixto','Atacar'])"></div>
           </div>
         </div>
         <div class="line-tactic-row" id="def-row">
-          <div class="lt-label">DEFENDERS</div>
-          <div class="lt-value" id="def-label">Defend deep</div>
+          <div class="lt-label">DEFENSORES</div>
+          <div class="lt-value" id="def-label">Defensa profunda</div>
           <div class="lt-dots">
-            <div class="lt-dot active" onclick="setLineTactic('def',0,['Defend deep','Normal','High line'])"></div>
-            <div class="lt-dot" onclick="setLineTactic('def',1,['Defend deep','Normal','High line'])"></div>
-            <div class="lt-dot" onclick="setLineTactic('def',2,['Defend deep','Normal','High line'])"></div>
+            <div class="lt-dot active" onclick="setLineTactic('def',0,['Defensa profunda','Normal','Línea alta'])"></div>
+            <div class="lt-dot" onclick="setLineTactic('def',1,['Defensa profunda','Normal','Línea alta'])"></div>
+            <div class="lt-dot" onclick="setLineTactic('def',2,['Defensa profunda','Normal','Línea alta'])"></div>
           </div>
         </div>
         <button class="btn-share" onclick="shareTactic()">🚀 COMPARTIR TÁCTICA</button>
@@ -770,9 +770,9 @@
 
   // ===== SLIDERS =====
   const sliderLabels = {
-    pressing: ['Retreating','Defending','Balanced','Pressing','High pressing'],
-    style: ['Very defensive','Defensive','Balanced','Attacking','Very attacking'],
-    tempo: ['Short passing','Slow build-up','Balanced','Fast passing','High-speed passing']
+    pressing: ['Replegado','Defensivo','Equilibrado','Presionando','Alta presión'],
+    style: ['Muy defensivo','Defensivo','Equilibrado','Atacante','Muy atacante'],
+    tempo: ['Pase corto','Construcción lenta','Equilibrado','Pase rápido','Pase veloz']
   };
   function updateSlider(type, val) {
     val = parseInt(val);
