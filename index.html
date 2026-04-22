@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OSM Hub — Fan-made Tactic Platform</title>
+<meta name="description" content="The #1 community-driven tactic platform for OSM players. Real effectiveness ratings based on real votes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0E14;
+    --surface: #111720;
+    --surface2: #161D28;
+    --border: #1E2A38;
+    --border2: #243040;
+    --green: #00E676;
+    --green-dim: #00C563;
+    --green-glow: rgba(0,230,118,0.12);
+    --red: #FF3D57;
+    --yellow: #FFD600;
+    --blue: #2979FF;
+    --text: #E8EDF5;
+    --text-mid: #8A9BB0;
+    --text-dim: #4A5A6E;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:'Barlow',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
+
+  /* NAV */
+  nav {
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(10,14,20,0.96); backdrop-filter:blur(16px);
+    border-bottom:1px solid var(--border);
+    height:56px; display:flex; align-items:center; padding:0 20px; gap:12px;
+  }
+  .logo { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--text); letter-spacing:1px; }
+  .logo span { color:var(--green); }
+  .logo-sub { font-size:10px; color:var(--text-dim); font-weight:400; letter-spacing:0.3px; margin-top:1px; }
+  .logo-wrap { display:flex; flex-direction:column; line-height:1; }
+  .nav-badge { background:var(--green-glow); border:1px solid var(--green); color:var(--green); font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:1px; }
+  .nav-right { margin-left:auto; display:flex; gap:8px; align-items:center; }
+  .btn-ghost { background:transparent; border:1px solid var(--border2); color:var(--text-mid); padding:6px 14px; border-radius:6px; font-size:13px; font-weight:500; cursor:pointer; font-family:'Barlow',sans-serif; transition:all 0.15s; }
+  .btn-ghost:hover { border-color:var(--green); color:var(--green); }
+  .btn-primary { background:var(--green); color:var(--bg); border:none; padding:7px 16px; border-radius:6px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Barlow',sans-serif; transition:all 0.15s; }
+  .btn-primary:hover { background:var(--green-dim); }
+
+  /* TABS */
+  .tabs { position:fixed; top:56px; left:0; right:0; z-index:90; background:var(--surface); border-bottom:1px solid var(--border); display:flex; padding:0 20px; overflow-x:auto; }
+  .tabs::-webkit-scrollbar { display:none; }
+  .tab { padding:12px 18px; font-size:13px; font-weight:600; color:var(--text-dim); cursor:pointer; border-bottom:2px solid transparent; white-space:nowrap; transition:all 0.15s; letter-spacing:0.3px; }
+  .tab.active { color:var(--green); border-bottom-color:var(--green); }
+  .tab:hover:not(.active) { color:var(--text-mid); }
+
+  .screen { display:none; padding-top:100px; min-height:100vh; }
+  .screen.active { display:block; }
+
+  /* ===== FEED ===== */
+  .feed-layout { max-width:900px; margin:0 auto; padding:24px 16px; display:grid; grid-template-columns:1fr 280px; gap:20px; }
+  @media(max-width:700px){ .feed-layout{grid-template-columns:1fr;} .sidebar{display:none;} }
+
+  .feed-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:16px; }
+  .feed-title { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:800; letter-spacing:0.5px; }
+  .sort-pills { display:flex; gap:6px; }
+  .pill { padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600; cursor:pointer; border:1px solid var(--border2); color:var(--text-dim); transition:all 0.15s; }
+  .pill.active { background:var(--green); color:var(--bg); border-color:var(--green); }
+
+  /* TACTIC CARD */
+  .tactic-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; margin-bottom:12px; overflow:hidden; transition:all 0.2s; cursor:pointer; }
+  .tactic-card:hover { border-color:var(--border2); transform:translateY(-1px); box-shadow:0 4px 20px rgba(0,0,0,0.3); }
+  .tactic-card.featured { border-color:rgba(0,230,118,0.4); }
+  .card-top { display:flex; }
+  .vote-col { width:52px; display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:16px 0; gap:4px; border-right:1px solid var(--border); }
+  .vote-btn { background:none; border:none; cursor:pointer; font-size:16px; line-height:1; padding:4px; transition:transform 0.1s; color:var(--text-dim); }
+  .vote-btn:hover { transform:scale(1.2); }
+  .vote-btn.up:hover { color:var(--green); }
+  .vote-btn.down:hover { color:var(--red); }
+  .vote-count { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:800; color:var(--text); }
+  .vote-count.positive { color:var(--green); }
+  .card-body { flex:1; padding:14px 16px; }
+  .card-header { display:flex; align-items:flex-start; gap:10px; margin-bottom:8px; }
+  .formation-badge { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:900; background:var(--green-glow); color:var(--green); border:1px solid rgba(0,230,118,0.3); padding:4px 10px; border-radius:6px; white-space:nowrap; }
+  .card-title { font-size:15px; font-weight:600; color:var(--text); line-height:1.3; }
+  .card-meta { font-size:12px; color:var(--text-dim); margin-top:2px; }
+  .effectiveness-bar { display:flex; align-items:center; gap:10px; margin:10px 0; }
+  .eff-label { font-size:11px; font-weight:700; color:var(--text-mid); letter-spacing:0.5px; white-space:nowrap; }
+  .bar-track { flex:1; height:6px; background:var(--border2); border-radius:3px; overflow:hidden; }
+  .bar-fill { height:100%; border-radius:3px; }
+  .bar-fill.high { background:linear-gradient(90deg,var(--green-dim),var(--green)); }
+  .bar-fill.mid { background:linear-gradient(90deg,#F5A623,var(--yellow)); }
+  .bar-fill.low { background:linear-gradient(90deg,#E53E3E,var(--red)); }
+  .eff-pct { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:800; min-width:44px; text-align:right; }
+  .eff-pct.high { color:var(--green); }
+  .eff-pct.mid { color:var(--yellow); }
+  .eff-pct.low { color:var(--red); }
+  .card-tags { display:flex; gap:6px; flex-wrap:wrap; margin-top:8px; }
+  .tag { font-size:11px; font-weight:600; padding:2px 8px; border-radius:4px; }
+  .tag.attack { background:rgba(255,61,87,0.15); color:var(--red); }
+  .tag.defense { background:rgba(41,121,255,0.15); color:var(--blue); }
+  .tag.balanced { background:rgba(0,230,118,0.1); color:var(--green); }
+  .tag.pressing { background:rgba(255,214,0,0.15); color:var(--yellow); }
+  .card-footer { display:flex; gap:16px; padding:10px 16px; border-top:1px solid var(--border); font-size:12px; color:var(--text-dim); }
+
+  /* SIDEBAR */
+  .sidebar { position:sticky; top:110px; height:fit-content; }
+  .sidebar-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; margin-bottom:14px; }
+  .sidebar-title { font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:800; letter-spacing:1px; color:var(--text-mid); text-transform:uppercase; margin-bottom:12px; }
+  .top-formation { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
+  .top-formation:last-child { border-bottom:none; padding-bottom:0; }
+  .rank-num { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; color:var(--text-dim); width:20px; text-align:center; }
+  .tf-name { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:700; color:var(--text); flex:1; }
+  .tf-pct { font-size:12px; font-weight:600; color:var(--green); }
+  .stat-row { display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px solid var(--border); font-size:13px; }
+  .stat-row:last-child { border-bottom:none; }
+  .stat-row span:first-child { color:var(--text-mid); }
+  .stat-row span:last-child { font-weight:600; color:var(--text); }
+
+  /* ===== DETAIL ===== */
+  .detail-page { max-width:800px; margin:0 auto; padding:24px 16px; }
+  .detail-hero { background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; margin-bottom:20px; }
+  .detail-hero-top { padding:24px; background:linear-gradient(135deg,rgba(0,230,118,0.05) 0%,transparent 60%); border-bottom:1px solid var(--border); display:flex; gap:20px; align-items:flex-start; }
+  .formation-big { font-family:'Barlow Condensed',sans-serif; font-size:52px; font-weight:900; color:var(--green); line-height:1; text-shadow:0 0 40px rgba(0,230,118,0.3); }
+  .detail-info { flex:1; }
+  .detail-title-big { font-family:'Barlow Condensed',sans-serif; font-size:26px; font-weight:800; color:var(--text); line-height:1.2; margin-bottom:6px; }
+  .detail-author { font-size:13px; color:var(--text-dim); margin-bottom:12px; }
+  .big-eff { display:flex; align-items:center; gap:12px; }
+  .big-eff-num { font-family:'Barlow Condensed',sans-serif; font-size:48px; font-weight:900; color:var(--green); line-height:1; text-shadow:0 0 30px rgba(0,230,118,0.4); }
+  .big-eff-label { font-size:12px; color:var(--text-dim); line-height:1.6; }
+  .big-eff-label strong { color:var(--text); display:block; font-size:14px; }
+  .stats-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border); border-bottom:1px solid var(--border); }
+  .stat-cell { background:var(--surface); padding:16px; text-align:center; }
+  .stat-val { font-family:'Barlow Condensed',sans-serif; font-size:28px; font-weight:900; display:block; }
+  .stat-lbl { font-size:11px; color:var(--text-dim); margin-top:2px; letter-spacing:0.5px; }
+
+  /* PITCH */
+  .pitch-wrap { padding:20px; display:flex; justify-content:center; background:var(--surface2); }
+  .pitch { width:240px; height:340px; background:#0d2a1a; border-radius:8px; position:relative; border:2px solid #1a4030; overflow:hidden; }
+  .pitch-lines { position:absolute; inset:0; background:linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px); background-size:40px 40px; }
+  .pitch-center-line { position:absolute; top:50%; left:0; right:0; height:1px; background:rgba(255,255,255,0.1); }
+  .pitch-center-circle { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:60px; height:60px; border:1px solid rgba(255,255,255,0.1); border-radius:50%; }
+  .pitch-box-top { position:absolute; top:0; left:50%; transform:translateX(-50%); width:100px; height:50px; border:1px solid rgba(255,255,255,0.1); border-top:none; }
+  .pitch-box-bottom { position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:100px; height:50px; border:1px solid rgba(255,255,255,0.1); border-bottom:none; }
+  .player-dot { position:absolute; width:28px; height:28px; background:var(--green); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:8px; font-weight:800; color:var(--bg); transform:translate(-50%,-50%); box-shadow:0 0 10px rgba(0,230,118,0.5); z-index:2; }
+  .player-dot.gk { background:var(--yellow); box-shadow:0 0 10px rgba(255,214,0,0.5); }
+
+  /* VOTE SECTION */
+  .vote-section { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:20px; margin-bottom:20px; text-align:center; }
+  .vote-question { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:700; margin-bottom:6px; }
+  .vote-sub { font-size:13px; color:var(--text-dim); margin-bottom:20px; }
+  .vote-buttons { display:flex; gap:12px; justify-content:center; }
+  .vote-yes { flex:1; max-width:160px; background:var(--green-glow); border:1.5px solid var(--green); color:var(--green); padding:14px; border-radius:10px; font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:800; cursor:pointer; transition:all 0.15s; }
+  .vote-yes:hover { background:var(--green); color:var(--bg); }
+  .vote-no { flex:1; max-width:160px; background:rgba(255,61,87,0.08); border:1.5px solid var(--red); color:var(--red); padding:14px; border-radius:10px; font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:800; cursor:pointer; transition:all 0.15s; }
+  .vote-no:hover { background:var(--red); color:white; }
+  .vote-counts { display:flex; justify-content:center; gap:32px; margin-top:12px; font-size:12px; color:var(--text-dim); }
+  .vote-counts span strong { color:var(--text); }
+
+  /* CONTEXT VOTE */
+  .context-grid { display:flex; flex-direction:column; gap:14px; margin-bottom:16px; text-align:left; }
+  .context-label { font-size:12px; font-weight:700; color:var(--text-mid); margin-bottom:7px; letter-spacing:0.3px; }
+  .context-opts { display:flex; gap:8px; flex-wrap:wrap; }
+  .ctx-opt { padding:7px 14px; border-radius:8px; border:1px solid var(--border2); color:var(--text-dim); font-size:13px; font-weight:600; cursor:pointer; transition:all 0.15s; background:var(--surface2); }
+  .ctx-opt:hover { border-color:var(--green); color:var(--green); }
+  .ctx-opt.selected { background:var(--green-glow); border-color:var(--green); color:var(--green); }
+  .btn-submit-vote { width:100%; background:var(--green); color:var(--bg); border:none; border-radius:10px; padding:13px; font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:800; cursor:pointer; transition:all 0.2s; margin-top:4px; }
+  .btn-submit-vote:hover { background:var(--green-dim); }
+
+  /* CONTEXT STATS */
+  .context-stats { text-align:left; }
+  .cstat { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+  .cstat-label { font-size:12px; color:var(--text-mid); min-width:160px; }
+  .cstat-bar { flex:1; height:6px; background:var(--border2); border-radius:3px; overflow:hidden; }
+  .cstat-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,var(--green-dim),var(--green)); }
+  .cstat-val { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; min-width:36px; text-align:right; }
+  .cstat-val.high { color:var(--green); }
+  .cstat-val.mid { color:var(--yellow); }
+  .cstat-val.low { color:var(--red); }
+  .cstat-divider { height:1px; background:var(--border); margin:6px 0 10px; width:100%; }
+
+  /* COMMENTS */
+  .comments-section { background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+  .comments-header { padding:16px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:8px; }
+  .comments-title { font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:800; letter-spacing:0.5px; }
+  .comments-count { font-size:12px; color:var(--text-dim); background:var(--border2); padding:2px 8px; border-radius:10px; }
+  .comment { padding:16px 20px; border-bottom:1px solid var(--border); }
+  .comment:last-child { border-bottom:none; }
+  .comment-header { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+  .avatar { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700; flex-shrink:0; }
+  .comment-user { font-size:13px; font-weight:600; color:var(--text); }
+  .comment-time { font-size:11px; color:var(--text-dim); margin-left:auto; }
+  .comment-context { display:inline-flex; align-items:center; gap:4px; background:rgba(41,121,255,0.1); color:var(--blue); font-size:11px; font-weight:600; padding:2px 8px; border-radius:4px; margin-bottom:8px; }
+  .comment-text { font-size:14px; color:var(--text-mid); line-height:1.6; }
+  .comment-actions { display:flex; gap:16px; margin-top:10px; }
+  .comment-action { font-size:12px; color:var(--text-dim); cursor:pointer; display:flex; align-items:center; gap:4px; transition:color 0.15s; }
+  .comment-action:hover { color:var(--green); }
+
+  /* ===== BUILDER ===== */
+  .builder-page { max-width:800px; margin:0 auto; padding:24px 16px; }
+  .builder-title { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; margin-bottom:16px; letter-spacing:0.5px; }
+  .formation-selector { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px; }
+  .form-btn { padding:6px 10px; border-radius:6px; font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; cursor:pointer; border:1px solid var(--border2); color:var(--text-dim); background:var(--surface); transition:all 0.15s; white-space:nowrap; }
+  .form-btn.active { background:var(--green-glow); border-color:var(--green); color:var(--green); }
+  .form-btn:hover:not(.active) { color:var(--text); border-color:var(--border2); }
+  .builder-layout { display:grid; grid-template-columns:1fr 260px; gap:20px; }
+  @media(max-width:650px){ .builder-layout{grid-template-columns:1fr;} }
+
+  .big-pitch { width:100%; aspect-ratio:0.7; background:linear-gradient(180deg,#0a2818 0%,#0d3020 50%,#0a2818 100%); border-radius:12px; position:relative; border:2px solid #1a4030; overflow:hidden; }
+  .big-pitch-lines { position:absolute; inset:0; background:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:15% 15%; }
+  .big-center-line { position:absolute; top:50%; left:5%; right:5%; height:1px; background:rgba(255,255,255,0.12); }
+  .big-center-circle { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:22%; height:0; padding-bottom:22%; border-radius:50%; border:1px solid rgba(255,255,255,0.12); }
+  .big-box-top { position:absolute; top:0; left:25%; right:25%; height:16%; border:1px solid rgba(255,255,255,0.12); border-top:none; }
+  .big-box-bot { position:absolute; bottom:0; left:25%; right:25%; height:16%; border:1px solid rgba(255,255,255,0.12); border-bottom:none; }
+  .big-player { position:absolute; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; transition:all 0.15s; z-index:2; }
+  .big-player:hover .bp-dot { transform:scale(1.15); box-shadow:0 0 20px rgba(0,230,118,0.6); }
+  .bp-dot { width:36px; height:36px; border-radius:50%; background:var(--green); display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:800; color:var(--bg); box-shadow:0 0 12px rgba(0,230,118,0.4); transition:all 0.15s; }
+  .bp-dot.gk { background:var(--yellow); box-shadow:0 0 12px rgba(255,214,0,0.4); }
+  .bp-name { font-size:9px; font-weight:700; color:white; text-shadow:0 1px 3px rgba(0,0,0,0.8); white-space:nowrap; letter-spacing:0.3px; }
+
+  /* OSM SLIDERS */
+  .tactic-settings { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px; }
+  .setting-row { margin-bottom:18px; }
+  .setting-label { font-size:11px; font-weight:700; color:var(--blue); letter-spacing:1px; text-transform:uppercase; margin-bottom:4px; }
+  .setting-value { font-size:15px; font-weight:700; color:var(--text); margin-bottom:8px; }
+  .osm-slider-wrap { display:flex; align-items:center; gap:10px; }
+  .osm-slider { -webkit-appearance:none; appearance:none; flex:1; height:6px; border-radius:3px; outline:none; cursor:pointer; }
+  .osm-slider::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:white; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.4); }
+  .slider-num { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:900; color:var(--text); min-width:32px; text-align:right; background:var(--surface2); border-radius:6px; padding:2px 6px; }
+  .section-divider { border:none; border-top:1px solid var(--border); margin:16px 0; }
+  .line-tactic-row { margin-bottom:14px; }
+  .lt-label { font-size:11px; font-weight:700; color:var(--yellow); letter-spacing:1px; text-transform:uppercase; margin-bottom:2px; }
+  .lt-value { font-size:14px; font-weight:700; color:var(--text); margin-bottom:6px; }
+  .lt-dots { display:flex; gap:6px; }
+  .lt-dot { width:10px; height:10px; border-radius:50%; background:var(--border2); cursor:pointer; transition:all 0.15s; }
+  .lt-dot.active { background:var(--text); }
+  .btn-share { width:100%; background:var(--green); color:var(--bg); border:none; border-radius:8px; padding:14px; font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:800; letter-spacing:0.5px; cursor:pointer; margin-top:16px; transition:all 0.2s; }
+  .btn-share:hover { background:var(--green-dim); transform:translateY(-1px); }
+
+  /* ===== RANKINGS ===== */
+  .ranking-page { max-width:700px; margin:0 auto; padding:24px 16px; }
+  .ranking-header { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:20px; text-align:center; background:linear-gradient(135deg,rgba(0,230,118,0.05),transparent); }
+  .ranking-title { font-family:'Barlow Condensed',sans-serif; font-size:32px; font-weight:900; letter-spacing:1px; }
+  .ranking-sub { font-size:13px; color:var(--text-dim); margin-top:4px; }
+  .ranking-table { background:var(--surface); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+  .ranking-row { display:grid; grid-template-columns:44px 1fr 80px 80px 60px; align-items:center; padding:14px 16px; border-bottom:1px solid var(--border); transition:background 0.15s; cursor:pointer; }
+  .ranking-row:last-child { border-bottom:none; }
+  .ranking-row:hover { background:var(--surface2); }
+  .ranking-row.header { background:var(--surface2); cursor:default; font-size:11px; font-weight:700; color:var(--text-dim); letter-spacing:0.5px; text-transform:uppercase; }
+  .ranking-row.header:hover { background:var(--surface2); }
+  .rank-pos { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:900; }
+  .rank-pos.p1 { color:var(--yellow); }
+  .rank-pos.p2 { color:#C0C0C0; }
+  .rank-pos.p3 { color:#CD7F32; }
+  .rank-formation { font-family:'Barlow Condensed',sans-serif; font-size:18px; font-weight:800; }
+  .rank-sub { font-size:11px; color:var(--text-dim); }
+  .rank-eff { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:900; text-align:center; }
+  .rank-votes { font-size:13px; color:var(--text-mid); text-align:center; font-weight:600; }
+  .rank-trend { font-size:16px; text-align:center; }
+
+  /* FOOTER */
+  footer { background:var(--surface); border-top:1px solid var(--border); padding:20px; text-align:center; margin-top:40px; }
+  footer p { font-size:12px; color:var(--text-dim); }
+  footer strong { color:var(--green); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo-wrap">
+    <div class="logo">OSM <span>HUB</span></div>
+    <div class="logo-sub">fan-made tactic platform</div>
+  </div>
+  <div class="nav-badge">FAN-MADE</div>
+  <div class="nav-right">
+    <button class="btn-ghost">🌐 EN / ES</button>
+    <button class="btn-primary" onclick="showScreen('builder',document.querySelectorAll('.tab')[2])">+ Share Tactic</button>
+  </div>
+</nav>
+
+<div class="tabs">
+  <div class="tab active" onclick="showScreen('feed',this)">🔥 Trending</div>
+  <div class="tab" onclick="showScreen('detail',this)">📋 Tactic Detail</div>
+  <div class="tab" onclick="showScreen('builder',this)">⚽ Lineup Builder</div>
+  <div class="tab" onclick="showScreen('ranking',this)">🏆 Rankings</div>
+</div>
+
+<!-- ===== FEED ===== -->
+<div id="screen-feed" class="screen active">
+  <div class="feed-layout">
+    <div class="main-feed">
+      <div class="feed-header">
+        <div class="feed-title">TRENDING TACTICS</div>
+        <div class="sort-pills">
+          <div class="pill active">Hot</div>
+          <div class="pill">New</div>
+          <div class="pill">Top</div>
+        </div>
+      </div>
+
+      <div class="tactic-card featured" onclick="showScreen('detail',document.querySelectorAll('.tab')[1])">
+        <div class="card-top">
+          <div class="vote-col">
+            <button class="vote-btn up">▲</button>
+            <div class="vote-count positive">847</div>
+            <button class="vote-btn down">▼</button>
+          </div>
+          <div class="card-body">
+            <div class="card-header">
+              <div class="formation-badge">4-3-3-A</div>
+              <div>
+                <div class="card-title">High Press Attacking — Dominate midfield & wings</div>
+                <div class="card-meta">by @TacticMaster_ES · 2 days ago</div>
+              </div>
+            </div>
+            <div class="effectiveness-bar">
+              <span class="eff-label">EFFECTIVENESS</span>
+              <div class="bar-track"><div class="bar-fill high" style="width:87%"></div></div>
+              <span class="eff-pct high">87%</span>
+            </div>
+            <div class="card-tags">
+              <span class="tag attack">⚡ Attack</span>
+              <span class="tag pressing">🔥 High Press</span>
+              <span class="tag balanced">🏠 Best: Home</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>💬 124 comments</span>
+          <span>👁 4.2k views</span>
+          <span>🏆 Top this week</span>
+        </div>
+      </div>
+
+      <div class="tactic-card" onclick="showScreen('detail',document.querySelectorAll('.tab')[1])">
+        <div class="card-top">
+          <div class="vote-col">
+            <button class="vote-btn up">▲</button>
+            <div class="vote-count positive">612</div>
+            <button class="vote-btn down">▼</button>
+          </div>
+          <div class="card-body">
+            <div class="card-header">
+              <div class="formation-badge">4-4-2-B</div>
+              <div>
+                <div class="card-title">Classic Counter Attack — Small teams beating giants</div>
+                <div class="card-meta">by @OSM_ProTips · 4 days ago</div>
+              </div>
+            </div>
+            <div class="effectiveness-bar">
+              <span class="eff-label">EFFECTIVENESS</span>
+              <div class="bar-track"><div class="bar-fill high" style="width:79%"></div></div>
+              <span class="eff-pct high">79%</span>
+            </div>
+            <div class="card-tags">
+              <span class="tag defense">🛡 Counter</span>
+              <span class="tag balanced">📉 Underdog</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>💬 89 comments</span>
+          <span>👁 3.1k views</span>
+        </div>
+      </div>
+
+      <div class="tactic-card">
+        <div class="card-top">
+          <div class="vote-col">
+            <button class="vote-btn up">▲</button>
+            <div class="vote-count" style="color:var(--yellow)">431</div>
+            <button class="vote-btn down">▼</button>
+          </div>
+          <div class="card-body">
+            <div class="card-header">
+              <div class="formation-badge">3-5-2</div>
+              <div>
+                <div class="card-title">Midfield Control — Win possession battles</div>
+                <div class="card-meta">by @LaLigaTactics · 1 week ago</div>
+              </div>
+            </div>
+            <div class="effectiveness-bar">
+              <span class="eff-label">EFFECTIVENESS</span>
+              <div class="bar-track"><div class="bar-fill mid" style="width:64%"></div></div>
+              <span class="eff-pct mid">64%</span>
+            </div>
+            <div class="card-tags">
+              <span class="tag balanced">⚖️ Balanced</span>
+              <span class="tag pressing">Possession</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>💬 56 comments</span>
+          <span>👁 2.8k views</span>
+        </div>
+      </div>
+
+      <div class="tactic-card">
+        <div class="card-top">
+          <div class="vote-col">
+            <button class="vote-btn up">▲</button>
+            <div class="vote-count positive">298</div>
+            <button class="vote-btn down">▼</button>
+          </div>
+          <div class="card-body">
+            <div class="card-header">
+              <div class="formation-badge">5-4-1-A</div>
+              <div>
+                <div class="card-title">Defensive Wall — Survive against top teams away</div>
+                <div class="card-meta">by @BundesligaPro · 5 days ago</div>
+              </div>
+            </div>
+            <div class="effectiveness-bar">
+              <span class="eff-label">EFFECTIVENESS</span>
+              <div class="bar-track"><div class="bar-fill low" style="width:41%"></div></div>
+              <span class="eff-pct low">41%</span>
+            </div>
+            <div class="card-tags">
+              <span class="tag defense">🛡 Defensive</span>
+              <span class="tag balanced">✈️ Away</span>
+            </div>
+          </div>
+        </div>
+        <div class="card-footer">
+          <span>💬 34 comments</span>
+          <span>👁 1.4k views</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="sidebar-card">
+        <div class="sidebar-title">🏆 Top Formations</div>
+        <div class="top-formation"><div class="rank-num" style="color:var(--yellow)">1</div><div class="tf-name">4-3-3-A</div><div class="tf-pct">87%</div></div>
+        <div class="top-formation"><div class="rank-num" style="color:#C0C0C0">2</div><div class="tf-name">4-4-2-B</div><div class="tf-pct">79%</div></div>
+        <div class="top-formation"><div class="rank-num" style="color:#CD7F32">3</div><div class="tf-name">4-2-3-1</div><div class="tf-pct">76%</div></div>
+        <div class="top-formation"><div class="rank-num">4</div><div class="tf-name">3-5-2</div><div class="tf-pct">64%</div></div>
+        <div class="top-formation"><div class="rank-num">5</div><div class="tf-name">5-2-3-A</div><div class="tf-pct">61%</div></div>
+      </div>
+      <div class="sidebar-card">
+        <div class="sidebar-title">📊 This Week</div>
+        <div class="stat-row"><span>Tactics shared</span><span>1,204</span></div>
+        <div class="stat-row"><span>Votes cast</span><span>47,892</span></div>
+        <div class="stat-row"><span>Active users</span><span>8,341</span></div>
+        <div class="stat-row"><span>Top country</span><span>🇧🇷 Brazil</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DETAIL ===== -->
+<div id="screen-detail" class="screen">
+  <div class="detail-page">
+    <div class="detail-hero">
+      <div class="detail-hero-top">
+        <div class="formation-big">4-3-3-A</div>
+        <div class="detail-info">
+          <div class="detail-title-big">High Press Attacking — Dominate midfield & wings</div>
+          <div class="detail-author">by @TacticMaster_ES · 2 days ago · 4,218 views</div>
+          <div class="big-eff">
+            <div class="big-eff-num">87%</div>
+            <div class="big-eff-label"><strong>Effectiveness Rate</strong>Based on 847 votes from real OSM players</div>
+          </div>
+        </div>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-cell"><span class="stat-val" style="color:var(--green)">847</span><div class="stat-lbl">Total Votes</div></div>
+        <div class="stat-cell"><span class="stat-val" style="color:var(--yellow)">738</span><div class="stat-lbl">👍 It Works</div></div>
+        <div class="stat-cell"><span class="stat-val" style="color:var(--red)">109</span><div class="stat-lbl">👎 Didn't Work</div></div>
+      </div>
+      <div class="pitch-wrap">
+        <div class="pitch">
+          <div class="pitch-lines"></div>
+          <div class="pitch-center-line"></div>
+          <div class="pitch-center-circle"></div>
+          <div class="pitch-box-top"></div>
+          <div class="pitch-box-bottom"></div>
+          <div class="player-dot gk" style="left:50%;top:90%">GK</div>
+          <div class="player-dot" style="left:20%;top:72%">LB</div>
+          <div class="player-dot" style="left:38%;top:72%">CB</div>
+          <div class="player-dot" style="left:62%;top:72%">CB</div>
+          <div class="player-dot" style="left:80%;top:72%">RB</div>
+          <div class="player-dot" style="left:25%;top:50%">CM</div>
+          <div class="player-dot" style="left:50%;top:46%">CM</div>
+          <div class="player-dot" style="left:75%;top:50%">CM</div>
+          <div class="player-dot" style="left:20%;top:22%">LW</div>
+          <div class="player-dot" style="left:50%;top:16%">ST</div>
+          <div class="player-dot" style="left:80%;top:22%">RW</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VOTE -->
+    <div class="vote-section" id="vote-section">
+      <div id="vote-step1">
+        <div class="vote-question">¿Te funcionó esta táctica?</div>
+        <div class="vote-sub">Tu voto ayuda a la comunidad a encontrar las mejores tácticas</div>
+        <div class="vote-buttons">
+          <button class="vote-yes" onclick="showVoteContext('yes')">👍 SÍ, FUNCIONÓ</button>
+          <button class="vote-no" onclick="showVoteContext('no')">👎 NO FUNCIONÓ</button>
+        </div>
+        <div class="vote-counts"><span><strong>738</strong> dicen que sí</span><span><strong>109</strong> dicen que no</span></div>
+      </div>
+      <div id="vote-step2" style="display:none">
+        <div class="vote-question" id="vote-result-title">👍 ¡Gracias! Contanos el contexto</div>
+        <div class="vote-sub">Opcional pero muy útil para la comunidad</div>
+        <div class="context-grid">
+          <div class="context-group">
+            <div class="context-label">📍 ¿De local o visitante?</div>
+            <div class="context-opts">
+              <div class="ctx-opt" onclick="selectCtx(this,'location')">🏠 Local</div>
+              <div class="ctx-opt" onclick="selectCtx(this,'location')">✈️ Visitante</div>
+              <div class="ctx-opt" onclick="selectCtx(this,'location')">↔️ Ambos</div>
+            </div>
+          </div>
+          <div class="context-group">
+            <div class="context-label">⚡ ¿Tu equipo vs el rival?</div>
+            <div class="context-opts">
+              <div class="ctx-opt" onclick="selectCtx(this,'strength')">📈 Superior</div>
+              <div class="ctx-opt" onclick="selectCtx(this,'strength')">⚖️ Similar</div>
+              <div class="ctx-opt" onclick="selectCtx(this,'strength')">📉 Inferior</div>
+            </div>
+          </div>
+          <div class="context-group">
+            <div class="context-label">🏆 ¿En qué competición?</div>
+            <div class="context-opts">
+              <div class="ctx-opt" onclick="selectCtx(this,'comp')">🥇 Liga</div>
+              <div class="ctx-opt" onclick="selectCtx(this,'comp')">🏆 Copa</div>
+              <div class="ctx-opt" onclick="selectCtx(this,'comp')">⭐ Partido clave</div>
+            </div>
+          </div>
+        </div>
+        <button class="btn-submit-vote" onclick="submitVote()">Enviar voto →</button>
+      </div>
+      <div id="vote-step3" style="display:none">
+        <div class="vote-question">✅ ¡Voto registrado!</div>
+        <div class="vote-sub" style="margin-bottom:16px">Así se ve la táctica con tu contexto:</div>
+        <div class="context-stats">
+          <div class="cstat"><div class="cstat-label">🏠 De local</div><div class="cstat-bar"><div class="cstat-fill" style="width:92%"></div></div><div class="cstat-val high">92%</div></div>
+          <div class="cstat"><div class="cstat-label">✈️ De visitante</div><div class="cstat-bar"><div class="cstat-fill" style="width:61%"></div></div><div class="cstat-val mid">61%</div></div>
+          <div class="cstat-divider"></div>
+          <div class="cstat"><div class="cstat-label">📈 Equipo superior</div><div class="cstat-bar"><div class="cstat-fill" style="width:89%"></div></div><div class="cstat-val high">89%</div></div>
+          <div class="cstat"><div class="cstat-label">⚖️ Equipo similar</div><div class="cstat-bar"><div class="cstat-fill" style="width:74%"></div></div><div class="cstat-val high">74%</div></div>
+          <div class="cstat"><div class="cstat-label">📉 Equipo inferior</div><div class="cstat-bar"><div class="cstat-fill" style="width:41%"></div></div><div class="cstat-val low">41%</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMMENTS -->
+    <div class="comments-section">
+      <div class="comments-header">
+        <div class="comments-title">COMMENTS</div>
+        <div class="comments-count">124</div>
+      </div>
+      <div class="comment">
+        <div class="comment-header">
+          <div class="avatar" style="background:rgba(0,230,118,0.2);color:var(--green)">JR</div>
+          <div class="comment-user">JuanRivas_CO</div>
+          <div class="comment-time">hace 3 horas</div>
+        </div>
+        <div class="comment-context">🏠 Local · 📈 Superior · 🥇 Liga</div>
+        <div class="comment-text">Funcionó perfectamente. Las alas son clave, si tenés buenos extremos esta táctica es devastadora. Subí 8 posiciones en una semana.</div>
+        <div class="comment-actions"><div class="comment-action">▲ 42</div><div class="comment-action">💬 Reply</div></div>
+      </div>
+      <div class="comment">
+        <div class="comment-header">
+          <div class="avatar" style="background:rgba(255,214,0,0.2);color:var(--yellow)">MK</div>
+          <div class="comment-user">MikelKaplan_TR</div>
+          <div class="comment-time">hace 6 horas</div>
+        </div>
+        <div class="comment-context">✈️ Visitante · ⚖️ Similar · 🏆 Copa</div>
+        <div class="comment-text">With big budget teams this is unstoppable. The CM trio is the secret — high stamina is key. Won the league 3 times with this setup.</div>
+        <div class="comment-actions"><div class="comment-action">▲ 31</div><div class="comment-action">💬 Reply</div></div>
+      </div>
+      <div class="comment">
+        <div class="comment-header">
+          <div class="avatar" style="background:rgba(255,61,87,0.2);color:var(--red)">PT</div>
+          <div class="comment-user">Pedro_Tático_BR</div>
+          <div class="comment-time">hace 1 día</div>
+        </div>
+        <div class="comment-context">✈️ Visitante · 📉 Inferior · 🥇 Liga</div>
+        <div class="comment-text">No funcionó siendo inferior de visitante. Los extremos se desgastan rápido y quedás expuesto al contraataque. Con equipo chico mejor el 4-4-2.</div>
+        <div class="comment-actions"><div class="comment-action">▲ 18</div><div class="comment-action">💬 Reply</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== BUILDER ===== -->
+<div id="screen-builder" class="screen">
+  <div class="builder-page">
+    <div class="builder-title">⚽ LINEUP BUILDER</div>
+    <div class="formation-selector">
+      <div class="form-btn active">4-3-3-A</div><div class="form-btn">4-3-3-B</div><div class="form-btn">4-5-1</div>
+      <div class="form-btn">4-2-3-1</div><div class="form-btn">4-4-2-A</div><div class="form-btn">4-4-2-B</div>
+      <div class="form-btn">3-2-5</div><div class="form-btn">3-2-3-2</div><div class="form-btn">3-3-4-A</div>
+      <div class="form-btn">3-3-4-B</div><div class="form-btn">3-4-3-A</div><div class="form-btn">3-4-3-B</div>
+      <div class="form-btn">3-3-2-2</div><div class="form-btn">3-5-2</div><div class="form-btn">4-2-4-A</div>
+      <div class="form-btn">4-2-4-B</div><div class="form-btn">5-2-3-A</div><div class="form-btn">5-2-3-B</div>
+      <div class="form-btn">5-3-2-A</div><div class="form-btn">5-3-1-1</div><div class="form-btn">5-4-1-A</div>
+      <div class="form-btn">5-4-1-B</div><div class="form-btn">6-3-1-A</div><div class="form-btn">6-3-1-B</div>
+    </div>
+    <div class="builder-layout">
+      <div>
+        <div class="big-pitch">
+          <div class="big-pitch-lines"></div>
+          <div class="big-center-line"></div>
+          <div class="big-center-circle"></div>
+          <div class="big-box-top"></div>
+          <div class="big-box-bot"></div>
+          <div class="big-player" style="left:50%;top:88%"><div class="bp-dot gk">GK</div><div class="bp-name">PORTERO</div></div>
+          <div class="big-player" style="left:15%;top:72%"><div class="bp-dot">LB</div><div class="bp-name">LAT IZQ</div></div>
+          <div class="big-player" style="left:37%;top:72%"><div class="bp-dot">CB</div><div class="bp-name">CENT</div></div>
+          <div class="big-player" style="left:63%;top:72%"><div class="bp-dot">CB</div><div class="bp-name">CENT</div></div>
+          <div class="big-player" style="left:85%;top:72%"><div class="bp-dot">RB</div><div class="bp-name">LAT DER</div></div>
+          <div class="big-player" style="left:22%;top:50%"><div class="bp-dot">CM</div><div class="bp-name">MC IZQ</div></div>
+          <div class="big-player" style="left:50%;top:46%"><div class="bp-dot">CM</div><div class="bp-name">MC CENT</div></div>
+          <div class="big-player" style="left:78%;top:50%"><div class="bp-dot">CM</div><div class="bp-name">MC DER</div></div>
+          <div class="big-player" style="left:15%;top:22%"><div class="bp-dot">LW</div><div class="bp-name">EXT IZQ</div></div>
+          <div class="big-player" style="left:50%;top:14%"><div class="bp-dot">ST</div><div class="bp-name">DELANT</div></div>
+          <div class="big-player" style="left:85%;top:22%"><div class="bp-dot">RW</div><div class="bp-name">EXT DER</div></div>
+        </div>
+      </div>
+      <div class="tactic-settings">
+        <div class="setting-row">
+          <div class="setting-label">PRESSING</div>
+          <div class="setting-value" id="pressing-label">Balanced</div>
+          <div class="osm-slider-wrap">
+            <input type="range" class="osm-slider" id="pressing-slider" min="1" max="100" value="54" oninput="updateSlider('pressing',this.value)" style="background:linear-gradient(to right,var(--blue) 0%,var(--blue) 54%,var(--border2) 54%,var(--border2) 100%)">
+            <div class="slider-num" id="pressing-num">54</div>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">STYLE</div>
+          <div class="setting-value" id="style-label">Attacking</div>
+          <div class="osm-slider-wrap">
+            <input type="range" class="osm-slider" id="style-slider" min="1" max="100" value="67" oninput="updateSlider('style',this.value)" style="background:linear-gradient(to right,var(--blue) 0%,var(--blue) 67%,var(--border2) 67%,var(--border2) 100%)">
+            <div class="slider-num" id="style-num">67</div>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label">TEMPO</div>
+          <div class="setting-value" id="tempo-label">High-speed passing</div>
+          <div class="osm-slider-wrap">
+            <input type="range" class="osm-slider" id="tempo-slider" min="1" max="100" value="67" oninput="updateSlider('tempo',this.value)" style="background:linear-gradient(to right,var(--blue) 0%,var(--blue) 67%,var(--border2) 67%,var(--border2) 100%)">
+            <div class="slider-num" id="tempo-num">67</div>
+          </div>
+        </div>
+        <hr class="section-divider">
+        <div class="setting-label" style="margin-bottom:12px">LINE TACTICS</div>
+        <div class="line-tactic-row" id="fwd-row">
+          <div class="lt-label">FORWARDS</div>
+          <div class="lt-value" id="fwd-label">Attack only</div>
+          <div class="lt-dots">
+            <div class="lt-dot active" onclick="setLineTactic('fwd',0,['Attack only','Attack & defend','Support'])"></div>
+            <div class="lt-dot" onclick="setLineTactic('fwd',1,['Attack only','Attack & defend','Support'])"></div>
+            <div class="lt-dot" onclick="setLineTactic('fwd',2,['Attack only','Attack & defend','Support'])"></div>
+          </div>
+        </div>
+        <div class="line-tactic-row" id="mid-row">
+          <div class="lt-label">MIDFIELDERS</div>
+          <div class="lt-value" id="mid-label">Protect the defence</div>
+          <div class="lt-dots">
+            <div class="lt-dot active" onclick="setLineTactic('mid',0,['Protect the defence','Mixed','Attack'])"></div>
+            <div class="lt-dot" onclick="setLineTactic('mid',1,['Protect the defence','Mixed','Attack'])"></div>
+            <div class="lt-dot" onclick="setLineTactic('mid',2,['Protect the defence','Mixed','Attack'])"></div>
+          </div>
+        </div>
+        <div class="line-tactic-row" id="def-row">
+          <div class="lt-label">DEFENDERS</div>
+          <div class="lt-value" id="def-label">Defend deep</div>
+          <div class="lt-dots">
+            <div class="lt-dot active" onclick="setLineTactic('def',0,['Defend deep','Normal','High line'])"></div>
+            <div class="lt-dot" onclick="setLineTactic('def',1,['Defend deep','Normal','High line'])"></div>
+            <div class="lt-dot" onclick="setLineTactic('def',2,['Defend deep','Normal','High line'])"></div>
+          </div>
+        </div>
+        <button class="btn-share">🚀 SHARE TACTIC</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== RANKINGS ===== -->
+<div id="screen-ranking" class="screen">
+  <div class="ranking-page">
+    <div class="ranking-header">
+      <div class="ranking-title">🏆 FORMATION RANKINGS</div>
+      <div class="ranking-sub">Based on real votes from 47,892 OSM players this week</div>
+    </div>
+    <div class="ranking-table">
+      <div class="ranking-row header">
+        <div>#</div><div>Formation</div><div style="text-align:center">Eff%</div><div style="text-align:center">Votes</div><div style="text-align:center">↕</div>
+      </div>
+      <div class="ranking-row" onclick="showScreen('detail',document.querySelectorAll('.tab')[1])">
+        <div class="rank-pos p1">1</div><div><div class="rank-formation">4-3-3-A</div><div class="rank-sub">High Press · Attack</div></div>
+        <div class="rank-eff" style="color:var(--green)">87%</div><div class="rank-votes">8,472</div><div class="rank-trend">📈</div>
+      </div>
+      <div class="ranking-row">
+        <div class="rank-pos p2">2</div><div><div class="rank-formation">4-4-2-B</div><div class="rank-sub">Counter · Classic</div></div>
+        <div class="rank-eff" style="color:var(--green)">79%</div><div class="rank-votes">6,201</div><div class="rank-trend">➡️</div>
+      </div>
+      <div class="ranking-row">
+        <div class="rank-pos p3">3</div><div><div class="rank-formation">4-2-3-1</div><div class="rank-sub">Balanced · Control</div></div>
+        <div class="rank-eff" style="color:var(--green)">76%</div><div class="rank-votes">5,834</div><div class="rank-trend">📈</div>
+      </div>
+      <div class="ranking-row">
+        <div class="rank-pos">4</div><div><div class="rank-formation">3-5-2</div><div class="rank-sub">Possession · Mid</div></div>
+        <div class="rank-eff" style="color:var(--yellow)">64%</div><div class="rank-votes">4,312</div><div class="rank-trend">📉</div>
+      </div>
+      <div class="ranking-row">
+        <div class="rank-pos">5</div><div><div class="rank-formation">5-2-3-A</div><div class="rank-sub">Defensive · Solid</div></div>
+        <div class="rank-eff" style="color:var(--yellow)">61%</div><div class="rank-votes">3,901</div><div class="rank-trend">➡️</div>
+      </div>
+      <div class="ranking-row">
+        <div class="rank-pos">6</div><div><div class="rank-formation">5-4-1-A</div><div class="rank-sub">Ultra Defensive</div></div>
+        <div class="rank-eff" style="color:var(--red)">41%</div><div class="rank-votes">2,100</div><div class="rank-trend">📉</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p><strong>OSM Hub</strong> · Fan-made tactic platform · Not affiliated with GameBasics or OSM · Built by the community, for the community</p>
+</footer>
+
+<script>
+  function showScreen(id, tabEl) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('screen-' + id).classList.add('active');
+    if (tabEl) tabEl.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Vote flow
+  function showVoteContext(result) {
+    document.getElementById('vote-step1').style.display = 'none';
+    document.getElementById('vote-step2').style.display = 'block';
+    document.getElementById('vote-result-title').textContent = result === 'yes' ? '👍 ¡Gracias! Contanos el contexto' : '👎 Gracias igual. ¿En qué contexto?';
+  }
+  function selectCtx(el, group) {
+    el.closest('.context-opts').querySelectorAll('.ctx-opt').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  function submitVote() {
+    document.getElementById('vote-step2').style.display = 'none';
+    document.getElementById('vote-step3').style.display = 'block';
+  }
+
+  // Sliders
+  const sliderLabels = {
+    pressing: ['Retreating','Defending','Balanced','Pressing','High pressing'],
+    style: ['Very defensive','Defensive','Balanced','Attacking','Very attacking'],
+    tempo: ['Short passing','Slow build-up','Balanced','Fast passing','High-speed passing']
+  };
+  function updateSlider(type, val) {
+    val = parseInt(val);
+    document.getElementById(type+'-num').textContent = val;
+    const idx = Math.min(4, Math.floor((val-1)/20));
+    document.getElementById(type+'-label').textContent = sliderLabels[type][idx];
+    document.getElementById(type+'-slider').style.background = `linear-gradient(to right, #2979FF 0%, #2979FF ${val}%, #243040 ${val}%, #243040 100%)`;
+  }
+
+  // Line tactics
+  function setLineTactic(type, idx, options) {
+    document.getElementById(type+'-row').querySelectorAll('.lt-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
+    document.getElementById(type+'-label').textContent = options[idx];
+  }
+
+  // Formation selector
+  document.querySelectorAll('.form-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.form-btn').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // Sort pills
+  document.querySelectorAll('.pill').forEach(pill => {
+    pill.addEventListener('click', function() {
+      document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
