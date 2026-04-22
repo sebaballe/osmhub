@@ -936,12 +936,15 @@
     // Reload feed with new language
     loadTactics();
   }
+
+  // ===== INIT =====
+  document.querySelectorAll('.form-btn').forEach(function(btn) {
     btn.addEventListener('click', function() {
-      document.querySelectorAll('.form-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.form-btn').forEach(function(b) { b.classList.remove('active'); });
       this.classList.add('active');
     });
   });
-  document.querySelectorAll('.pill').forEach(pill => {
+  document.querySelectorAll('.pill').forEach(function(pill) {
     pill.addEventListener('click', function() {
       document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
       this.classList.add('active');
