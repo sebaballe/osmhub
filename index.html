@@ -843,9 +843,11 @@
       'Defensa profunda': 'Defend deep', 'Normal': 'Normal', 'Línea alta': 'High line'
     };
     if (currentLang === 'es') {
-      return enToEs[value] || esToEn[value] || value;
+      // Value might be in EN, translate to ES
+      return enToEs[value] !== undefined ? enToEs[value] : value;
     } else {
-      return esToEn[value] || enToEs[value] || value;
+      // Value might be in ES, translate to EN
+      return esToEn[value] !== undefined ? esToEn[value] : value;
     }
   }
 
