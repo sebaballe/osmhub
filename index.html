@@ -757,9 +757,9 @@
     var pressing = parseInt(document.getElementById('pressing-num') ? document.getElementById('pressing-num').textContent : 50);
     var style = parseInt(document.getElementById('style-num') ? document.getElementById('style-num').textContent : 50);
     var tempo = parseInt(document.getElementById('tempo-num') ? document.getElementById('tempo-num').textContent : 50);
-    var fwd_tactic = document.getElementById('fwd-label') ? document.getElementById('fwd-label').textContent.trim() : '';
-    var mid_tactic = document.getElementById('mid-label') ? document.getElementById('mid-label').textContent.trim() : '';
-    var def_tactic = document.getElementById('def-label') ? document.getElementById('def-label').textContent.trim() : '';
+    var fwd_tactic = document.getElementById('fwd-label') ? toEnglish(document.getElementById('fwd-label').textContent.trim()) : '';
+    var mid_tactic = document.getElementById('mid-label') ? toEnglish(document.getElementById('mid-label').textContent.trim()) : '';
+    var def_tactic = document.getElementById('def-label') ? toEnglish(document.getElementById('def-label').textContent.trim()) : '';
     if (!title || !author) { alert(currentLang === 'es' ? 'Por favor completá el título y tu nombre' : 'Please fill in the title and your name'); return; }
     var payload = { formation, title, author, pressing, style, tempo, fwd_tactic, mid_tactic, def_tactic };
     var res = await db.from('tactics').insert(payload);
@@ -831,24 +831,25 @@
   function getSliderLabels() { return currentLang === 'es' ? sliderLabelsEs : sliderLabelsEn; }
   function getLineTactics() { return currentLang === 'es' ? lineTacticsEs : lineTacticsEn; }
 
+  function toEnglish(value) {
+    var map = {
+      'Solo ataque': 'Attack only', 'Atacar y defender': 'Attack & defend', 'Apoyo': 'Support',
+      'Proteger defensa': 'Protect the defence', 'Mixto': 'Mixed', 'Atacar': 'Attack',
+      'Defensa profunda': 'Defend deep', 'Normal': 'Normal', 'Línea alta': 'High line'
+    };
+    return map[value] || value;
+  }
+
   function translateTacticValue(value) {
     var enToEs = {
       'Attack only': 'Solo ataque', 'Attack & defend': 'Atacar y defender', 'Support': 'Apoyo',
       'Protect the defence': 'Proteger defensa', 'Mixed': 'Mixto', 'Attack': 'Atacar',
       'Defend deep': 'Defensa profunda', 'Normal': 'Normal', 'High line': 'Línea alta'
     };
-    var esToEn = {
-      'Solo ataque': 'Attack only', 'Atacar y defender': 'Attack & defend', 'Apoyo': 'Support',
-      'Proteger defensa': 'Protect the defence', 'Mixto': 'Mixed', 'Atacar': 'Attack',
-      'Defensa profunda': 'Defend deep', 'Normal': 'Normal', 'Línea alta': 'High line'
-    };
     if (currentLang === 'es') {
-      // Value might be in EN, translate to ES
       return enToEs[value] !== undefined ? enToEs[value] : value;
-    } else {
-      // Value might be in ES, translate to EN
-      return esToEn[value] !== undefined ? esToEn[value] : value;
     }
+    return value;
   }
 
   function updateSlider(type, val) {
