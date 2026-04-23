@@ -1399,7 +1399,7 @@
       menu.innerHTML = '<button class="user-btn" onclick="toggleUserMenu()">👤 ' + username + ' ▾</button>' +
         '<div class="user-dropdown" id="user-dropdown">' +
         '<div class="dropdown-item" onclick="showScreen(\'profile\',null);loadProfile();toggleUserMenu()">👤 ' + (currentLang === 'es' ? 'Mi perfil' : 'My profile') + '</div>' +
-        '<div class="dropdown-item danger" onclick="handleLogout()">' + (currentLang === 'es' ? 'Cerrar sesión' : 'Sign out') + '</div>' +
+        '<div class="dropdown-item danger" onclick="handleLogout()">' + (currentLang === 'es' ? 'Cerrar sesión' : 'Sign out') + '</div>'
         '</div>';
     } else {
       menu.innerHTML = '<button class="btn-ghost" id="auth-btn" onclick="openAuth()">' +
@@ -1947,6 +1947,8 @@
     // Reload profile if open
     var profileScreen = document.getElementById('screen-profile');
     if (profileScreen && profileScreen.classList.contains('active')) loadProfile();
+    // Update nav user menu language
+    updateNavForUser();
   }
 
   // ===== FORMATION POSITIONS =====
