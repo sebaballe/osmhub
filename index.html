@@ -619,7 +619,6 @@
             <div class="lt-dot" onclick="setLineTactic('def',2,['Defensa profunda','Normal','Línea alta'])"></div>
           </div>
         </div>
-        <button class="btn-share" onclick="shareTactic()">🚀 COMPARTIR TÁCTICA</button>
         <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;">
           <input id="tactic-title-input" type="text" placeholder="💡 Tip extra (opcional): ej. Necesitás extremos rápidos..." style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;">
           <input id="tactic-author-input" type="text" placeholder="Tu nombre / usuario..." style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;">
@@ -644,7 +643,7 @@
               <option value="Contraataque">Contraataque</option>
               <option value="Tiros de repente">Tiros de repente</option>
             </select>
-            <select id="best-situation" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;cursor:pointer;">
+            <select id="best-situation" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;margin-bottom:12px;cursor:pointer;">
               <option value="">¿Cuándo usarla?</option>
               <option value="Local">De local</option>
               <option value="Visitante">De visitante</option>
@@ -653,6 +652,7 @@
               <option value="Equipo inferior">Con equipo inferior</option>
             </select>
           </div>
+          <button class="btn-share" onclick="shareTactic()">🚀 COMPARTIR TÁCTICA</button>
         </div>
       </div>
     </div>
@@ -1217,6 +1217,9 @@
   function updateNavForUser() {
     var menu = document.getElementById('user-menu');
     if (!menu) return;
+    // Show/hide author input based on login state
+    var authorInput = document.getElementById('tactic-author-input');
+    if (authorInput) authorInput.style.display = currentUser ? 'none' : 'block';
     if (currentUser) {
       var username = currentUser.user_metadata && currentUser.user_metadata.username
         ? currentUser.user_metadata.username
