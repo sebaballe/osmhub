@@ -517,8 +517,15 @@
     <!-- COMMENTS -->
     <div class="comments-section">
       <div class="comments-header">
-        <div class="comments-title">COMENTARIOS</div>
+        <div class="comments-title" id="comments-title-label">COMENTARIOS</div>
         <div class="comments-count" id="comments-count">0</div>
+      </div>
+      <div id="comment-form" style="padding:16px 20px;border-bottom:1px solid var(--border);display:none;">
+        <textarea id="comment-input" placeholder="Compartí tu experiencia con esta táctica..." style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:10px;padding:12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;resize:none;height:80px;margin-bottom:8px;"></textarea>
+        <button onclick="submitComment()" style="background:var(--green);color:var(--bg);border:none;border-radius:8px;padding:10px 20px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;cursor:pointer;width:100%;" id="comment-submit-btn">💬 COMENTAR</button>
+      </div>
+      <div id="comment-login-prompt" style="padding:16px 20px;border-bottom:1px solid var(--border);text-align:center;font-size:13px;color:var(--text-dim);display:none;">
+        <span id="comment-login-msg">Iniciá sesión para comentar</span> — <span onclick="openAuth()" style="color:var(--green);cursor:pointer;font-weight:600;" id="comment-login-link">Entrar</span>
       </div>
       <div id="comments-list"></div>
     </div>
@@ -915,24 +922,61 @@
     const container = document.getElementById('comments-list');
     const countEl = document.getElementById('comments-count');
     if (!container) return;
-    const { data } = await db.from('comments').select('*').eq('tactic_id', tacticId).order('created_at', { ascending: false }).limit(20);
+    // Show/hide comment form based on login
+    var form = document.getElementById('comment-form');
+    var loginPrompt = document.getElementById('comment-login-prompt');
+    if (form) form.style.display = currentUser ? 'block' : 'none';
+    if (loginPrompt) loginPrompt.style.display = currentUser ? 'none' : 'block';
+    const { data } = await db.from('comments').select('*').eq('tactic_id', tacticId).order('created_at', { ascending: false }).limit(50);
     if (countEl) countEl.textContent = data ? data.length : 0;
     if (!data || data.length === 0) {
-      container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-dim);font-size:13px">Sé el primero en comentar esta táctica</div>';
+      container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-dim);font-size:13px">' + (currentLang === 'es' ? 'Sé el primero en comentar esta táctica' : 'Be the first to comment on this tactic') + '</div>';
       return;
     }
     container.innerHTML = data.map(function(c) {
+      var isOwn = currentUser && c.user_id === currentUser.id;
       var h = '<div class="comment"><div class="comment-header">';
       h += '<div class="avatar" style="background:rgba(0,230,118,0.2);color:var(--green)">' + c.author.substring(0,2).toUpperCase() + '</div>';
-      h += '<div class="comment-user">' + c.author + '</div>';
-      h += '<div class="comment-time">' + timeAgo(c.created_at) + '</div></div>';
+      h += '<div class="comment-user">@' + c.author + '</div>';
+      h += '<div class="comment-time">' + timeAgo(c.created_at) + '</div>';
+      if (isOwn) h += '<button onclick="deleteComment(\'' + c.id + '\')" style="margin-left:auto;background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:12px;padding:2px 6px;" title="Eliminar">🗑️</button>';
+      h += '</div>';
       if (c.location || c.strength || c.competition) {
-        h += '<div class="comment-context">' + [c.location, c.strength, c.competition].filter(Boolean).join(' - ') + '</div>';
+        h += '<div class="comment-context">' + [c.location, c.strength, c.competition].filter(Boolean).join(' · ') + '</div>';
       }
       h += '<div class="comment-text">' + c.text + '</div>';
-      h += '<div class="comment-actions"><div class="comment-action">up ' + (c.likes || 0) + '</div></div></div>';
+      h += '</div>';
       return h;
     }).join('');
+  }
+
+  async function submitComment() {
+    if (!currentUser || !currentTacticId) return;
+    var input = document.getElementById('comment-input');
+    var text = input ? input.value.trim() : '';
+    if (!text) return;
+    var author = currentUser.user_metadata && currentUser.user_metadata.username
+      ? currentUser.user_metadata.username
+      : currentUser.email.split('@')[0];
+    var btn = document.getElementById('comment-submit-btn');
+    if (btn) btn.textContent = currentLang === 'es' ? 'Enviando...' : 'Sending...';
+    var res = await db.from('comments').insert({
+      tactic_id: currentTacticId,
+      author: author,
+      text: text,
+      user_id: currentUser.id
+    });
+    if (res.error) { alert('Error al enviar comentario'); return; }
+    if (input) input.value = '';
+    if (btn) btn.textContent = currentLang === 'es' ? '💬 COMENTAR' : '💬 COMMENT';
+    loadComments(currentTacticId);
+  }
+
+  async function deleteComment(commentId) {
+    var confirm_msg = currentLang === 'es' ? '¿Eliminar este comentario?' : 'Delete this comment?';
+    if (!confirm(confirm_msg)) return;
+    await db.from('comments').delete().eq('id', commentId).eq('user_id', currentUser.id);
+    loadComments(currentTacticId);
   }
 
   // ===== LOAD CONTEXT STATS =====
@@ -1581,6 +1625,16 @@
         : ['Home','Away','Both','With superior team','With inferior team'];
       for (var j = 1; j < bestSit.options.length; j++) bestSit.options[j].text = sitMap[j-1];
     }
+    var commentInput = document.getElementById('comment-input');
+    if (commentInput) commentInput.placeholder = currentLang === 'es' ? 'Compartí tu experiencia con esta táctica...' : 'Share your experience with this tactic...';
+    var commentBtn = document.getElementById('comment-submit-btn');
+    if (commentBtn) commentBtn.textContent = currentLang === 'es' ? '💬 COMENTAR' : '💬 COMMENT';
+    var commentLoginMsg = document.getElementById('comment-login-msg');
+    if (commentLoginMsg) commentLoginMsg.textContent = currentLang === 'es' ? 'Iniciá sesión para comentar' : 'Sign in to comment';
+    var commentLoginLink = document.getElementById('comment-login-link');
+    if (commentLoginLink) commentLoginLink.textContent = currentLang === 'es' ? 'Entrar' : 'Sign in';
+    var commentsTitleLabel = document.getElementById('comments-title-label');
+    if (commentsTitleLabel) commentsTitleLabel.textContent = currentLang === 'es' ? 'COMENTARIOS' : 'COMMENTS';
     // Builder labels
     ['pressing','style','tempo','linetactics','fwd','mid','def'].forEach(function(k) {
       var el = document.getElementById('label-' + k);
