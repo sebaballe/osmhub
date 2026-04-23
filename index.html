@@ -1944,6 +1944,9 @@
     loadTactics();
     updateSliderLabels();
     renderEvents();
+    // Reload profile if open
+    var profileScreen = document.getElementById('screen-profile');
+    if (profileScreen && profileScreen.classList.contains('active')) loadProfile();
   }
 
   // ===== FORMATION POSITIONS =====
