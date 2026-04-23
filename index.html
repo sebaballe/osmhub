@@ -832,20 +832,20 @@
   function getLineTactics() { return currentLang === 'es' ? lineTacticsEs : lineTacticsEn; }
 
   function translateTacticValue(value) {
-    var map = {
-      // EN to ES
+    var enToEs = {
       'Attack only': 'Solo ataque', 'Attack & defend': 'Atacar y defender', 'Support': 'Apoyo',
       'Protect the defence': 'Proteger defensa', 'Mixed': 'Mixto', 'Attack': 'Atacar',
-      'Defend deep': 'Defensa profunda', 'Normal': 'Normal', 'High line': 'Línea alta',
-      // ES to EN
+      'Defend deep': 'Defensa profunda', 'Normal': 'Normal', 'High line': 'Línea alta'
+    };
+    var esToEn = {
       'Solo ataque': 'Attack only', 'Atacar y defender': 'Attack & defend', 'Apoyo': 'Support',
       'Proteger defensa': 'Protect the defence', 'Mixto': 'Mixed', 'Atacar': 'Attack',
-      'Defensa profunda': 'Defend deep', 'Línea alta': 'High line'
+      'Defensa profunda': 'Defend deep', 'Normal': 'Normal', 'Línea alta': 'High line'
     };
     if (currentLang === 'es') {
-      return map[value] || value;
+      return enToEs[value] || esToEn[value] || value;
     } else {
-      return map[value] || value;
+      return esToEn[value] || enToEs[value] || value;
     }
   }
 
