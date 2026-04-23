@@ -1707,6 +1707,20 @@
     if (filterStylePh) filterStylePh.text = currentLang === 'es' ? '🎮 Estilo' : '🎮 Style';
     var filterSitPh = document.getElementById('filter-situation-ph');
     if (filterSitPh) filterSitPh.text = currentLang === 'es' ? '📍 Situación' : '📍 Situation';
+    // Update filter style options
+    var fsEl = document.getElementById('filter-style');
+    if (fsEl) {
+      var fsEs = ['⚽ Balón largo','↔️ Juego de bandas','🔄 Posesión','⚡ Contraataque','🎯 Tiros de repente'];
+      var fsEn = ['⚽ Long ball','↔️ Wing play','🔄 Possession','⚡ Counter-attack','🎯 Shoot on sight'];
+      for (var i = 1; i < fsEl.options.length; i++) fsEl.options[i].text = currentLang === 'es' ? fsEs[i-1] : fsEn[i-1];
+    }
+    // Update filter situation options
+    var fsiEl = document.getElementById('filter-situation');
+    if (fsiEl) {
+      var fsiEs = ['🏠 Local · Superior','🏠 Local · Inferior','✈️ Visitante · Superior','✈️ Visitante · Inferior'];
+      var fsiEn = ['🏠 Home · Superior','🏠 Home · Inferior','✈️ Away · Superior','✈️ Away · Inferior'];
+      for (var k = 1; k < fsiEl.options.length; k++) fsiEl.options[k].text = currentLang === 'es' ? fsiEs[k-1] : fsiEn[k-1];
+    }
     var clearBtn = document.getElementById('clear-filters-btn');
     if (clearBtn) clearBtn.textContent = currentLang === 'es' ? '✕ Limpiar' : '✕ Clear';
     var feedTitleLabel = document.getElementById('feed-title-label');
