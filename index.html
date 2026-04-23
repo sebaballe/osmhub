@@ -1073,6 +1073,8 @@
       var el = document.getElementById('label-' + k);
       if (el) el.textContent = t('label-' + k);
     });
+    // Reload detail if open
+    if (currentTacticId) loadTacticDetail(currentTacticId);
     // Reload feed with new language
     loadTactics();
     updateSliderLabels();
