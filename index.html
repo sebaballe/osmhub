@@ -47,6 +47,85 @@
   .btn-primary { background:var(--green); color:var(--bg); border:none; padding:7px 16px; border-radius:6px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Barlow',sans-serif; transition:all 0.15s; }
   .btn-primary:hover { background:var(--green-dim); }
 
+  /* AUTH MODAL */
+  .modal-overlay {
+    position:fixed; inset:0; z-index:200;
+    background:rgba(0,0,0,0.7); backdrop-filter:blur(4px);
+    display:flex; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .modal-overlay.hidden { display:none; }
+  .modal {
+    background:var(--surface); border:1px solid var(--border2);
+    border-radius:20px; padding:32px 28px; width:100%; max-width:380px;
+    position:relative;
+  }
+  .modal-close {
+    position:absolute; top:16px; right:16px;
+    background:none; border:none; color:var(--text-dim);
+    font-size:20px; cursor:pointer; line-height:1;
+  }
+  .modal-close:hover { color:var(--text); }
+  .modal-title {
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:24px; font-weight:900; color:var(--text);
+    margin-bottom:6px; letter-spacing:0.5px;
+  }
+  .modal-sub { font-size:13px; color:var(--text-dim); margin-bottom:24px; }
+  .modal-tabs { display:flex; gap:0; margin-bottom:24px; border-bottom:1px solid var(--border); }
+  .modal-tab {
+    flex:1; padding:10px; text-align:center;
+    font-size:13px; font-weight:600; cursor:pointer;
+    color:var(--text-dim); border-bottom:2px solid transparent;
+    transition:all 0.15s;
+  }
+  .modal-tab.active { color:var(--green); border-bottom-color:var(--green); }
+  .auth-input {
+    width:100%; background:var(--surface2);
+    border:1px solid var(--border2); border-radius:10px;
+    padding:12px 14px; color:var(--text); font-size:14px;
+    font-family:'Barlow',sans-serif; outline:none;
+    margin-bottom:12px; transition:border 0.15s;
+  }
+  .auth-input:focus { border-color:var(--green); }
+  .auth-input::placeholder { color:var(--text-dim); }
+  .btn-auth {
+    width:100%; background:var(--green); color:var(--bg);
+    border:none; border-radius:10px; padding:13px;
+    font-family:'Barlow Condensed',sans-serif;
+    font-size:18px; font-weight:800; cursor:pointer;
+    transition:all 0.2s; letter-spacing:0.5px; margin-top:4px;
+  }
+  .btn-auth:hover { background:var(--green-dim); }
+  .auth-msg { font-size:13px; text-align:center; margin-top:12px; min-height:18px; }
+  .auth-msg.error { color:var(--red); }
+  .auth-msg.success { color:var(--green); }
+  .user-menu {
+    position:relative;
+  }
+  .user-btn {
+    background:var(--surface2); border:1px solid var(--border2);
+    color:var(--text); padding:6px 14px; border-radius:6px;
+    font-size:13px; font-weight:600; cursor:pointer;
+    font-family:'Barlow',sans-serif; transition:all 0.15s;
+    display:flex; align-items:center; gap:6px;
+  }
+  .user-btn:hover { border-color:var(--green); color:var(--green); }
+  .user-dropdown {
+    position:absolute; top:calc(100% + 8px); right:0;
+    background:var(--surface); border:1px solid var(--border2);
+    border-radius:10px; padding:8px; min-width:160px;
+    z-index:150; display:none;
+  }
+  .user-dropdown.open { display:block; }
+  .dropdown-item {
+    padding:8px 12px; border-radius:6px; font-size:13px;
+    color:var(--text-mid); cursor:pointer; transition:all 0.15s;
+  }
+  .dropdown-item:hover { background:var(--surface2); color:var(--text); }
+  .dropdown-item.danger { color:var(--red); }
+  .dropdown-item.danger:hover { background:rgba(255,61,87,0.1); }
+
   /* TABS */
   .tabs { position:fixed; top:56px; left:0; right:0; z-index:90; background:var(--surface); border-bottom:1px solid var(--border); display:flex; padding:0 20px; overflow-x:auto; }
   .tabs::-webkit-scrollbar { display:none; }
@@ -274,7 +353,10 @@
   <div class="nav-badge">FAN-MADE</div>
   <div class="nav-right">
     <button class="btn-ghost" id="lang-btn" onclick="toggleLang()">🌐 EN / ES</button>
-    <button class="btn-primary" id="btn-share-nav" onclick="showScreen('builder',document.querySelectorAll('.tab')[2])">+ Compartir Táctica</button>
+    <div class="user-menu" id="user-menu">
+      <button class="btn-ghost" id="auth-btn" onclick="openAuth()">Iniciar sesión</button>
+    </div>
+    <button class="btn-primary" id="btn-share-nav" onclick="handleShareClick()">+ Compartir Táctica</button>
   </div>
 </nav>
 
@@ -540,6 +622,31 @@
   </div>
 </div>
 
+<!-- AUTH MODAL -->
+<div class="modal-overlay hidden" id="auth-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeAuth()">✕</button>
+    <div class="modal-title" id="auth-modal-title">OSM HUB</div>
+    <div class="modal-sub" id="auth-modal-sub">Uníte a la comunidad de tácticas</div>
+    <div class="modal-tabs">
+      <div class="modal-tab active" id="tab-login" onclick="switchAuthTab('login')">Iniciar sesión</div>
+      <div class="modal-tab" id="tab-register" onclick="switchAuthTab('register')">Registrarse</div>
+    </div>
+    <div id="auth-form-login">
+      <input class="auth-input" id="login-email" type="email" placeholder="Email">
+      <input class="auth-input" id="login-password" type="password" placeholder="Contraseña">
+      <button class="btn-auth" onclick="handleLogin()">ENTRAR</button>
+    </div>
+    <div id="auth-form-register" style="display:none">
+      <input class="auth-input" id="reg-username" type="text" placeholder="Nombre de usuario (ej: TacticMaster_AR)">
+      <input class="auth-input" id="reg-email" type="email" placeholder="Email">
+      <input class="auth-input" id="reg-password" type="password" placeholder="Contraseña (mín. 6 caracteres)">
+      <button class="btn-auth" onclick="handleRegister()">CREAR CUENTA</button>
+    </div>
+    <div class="auth-msg" id="auth-msg"></div>
+  </div>
+</div>
+
 <footer>
   <p><strong>OSM Hub</strong> · Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM · Construida por la comunidad, para la comunidad</p>
 </footer>
@@ -753,7 +860,9 @@
   async function shareTactic() {
     var formation = document.querySelector('.form-btn.active') ? document.querySelector('.form-btn.active').textContent.trim() : '';
     var title = document.getElementById('tactic-title-input') ? document.getElementById('tactic-title-input').value.trim() : '';
-    var author = document.getElementById('tactic-author-input') ? document.getElementById('tactic-author-input').value.trim() : '';
+    var author = currentUser
+      ? (currentUser.user_metadata && currentUser.user_metadata.username ? currentUser.user_metadata.username : currentUser.email.split('@')[0])
+      : (document.getElementById('tactic-author-input') ? document.getElementById('tactic-author-input').value.trim() : '');
     var pressing = parseInt(document.getElementById('pressing-num') ? document.getElementById('pressing-num').textContent : 50);
     var style = parseInt(document.getElementById('style-num') ? document.getElementById('style-num').textContent : 50);
     var tempo = parseInt(document.getElementById('tempo-num') ? document.getElementById('tempo-num').textContent : 50);
@@ -923,7 +1032,109 @@
         '<div class="bp-name">' + p.r + '</div></div>';
     }).join('');
   }
-  var currentLang = 'es';
+  // ===== AUTH =====
+  var currentUser = null;
+
+  async function initAuth() {
+    var res = await db.auth.getSession();
+    if (res.data && res.data.session) {
+      currentUser = res.data.session.user;
+      updateNavForUser();
+    }
+    db.auth.onAuthStateChange(function(event, session) {
+      currentUser = session ? session.user : null;
+      updateNavForUser();
+    });
+  }
+
+  function updateNavForUser() {
+    var menu = document.getElementById('user-menu');
+    if (!menu) return;
+    if (currentUser) {
+      var username = currentUser.user_metadata && currentUser.user_metadata.username
+        ? currentUser.user_metadata.username
+        : currentUser.email.split('@')[0];
+      menu.innerHTML = '<button class="user-btn" onclick="toggleUserMenu()">👤 ' + username + ' ▾</button>' +
+        '<div class="user-dropdown" id="user-dropdown">' +
+        '<div class="dropdown-item danger" onclick="handleLogout()">' + (currentLang === 'es' ? 'Cerrar sesión' : 'Sign out') + '</div>' +
+        '</div>';
+    } else {
+      menu.innerHTML = '<button class="btn-ghost" id="auth-btn" onclick="openAuth()">' +
+        (currentLang === 'es' ? 'Iniciar sesión' : 'Sign in') + '</button>';
+    }
+  }
+
+  function toggleUserMenu() {
+    var dd = document.getElementById('user-dropdown');
+    if (dd) dd.classList.toggle('open');
+  }
+
+  function openAuth() {
+    document.getElementById('auth-modal').classList.remove('hidden');
+    document.getElementById('auth-msg').textContent = '';
+  }
+
+  function closeAuth() {
+    document.getElementById('auth-modal').classList.add('hidden');
+  }
+
+  function switchAuthTab(tab) {
+    document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+    document.getElementById('tab-register').classList.toggle('active', tab === 'register');
+    document.getElementById('auth-form-login').style.display = tab === 'login' ? 'block' : 'none';
+    document.getElementById('auth-form-register').style.display = tab === 'register' ? 'block' : 'none';
+    document.getElementById('auth-msg').textContent = '';
+  }
+
+  async function handleLogin() {
+    var email = document.getElementById('login-email').value.trim();
+    var password = document.getElementById('login-password').value;
+    var msg = document.getElementById('auth-msg');
+    if (!email || !password) { msg.textContent = currentLang === 'es' ? 'Completá todos los campos' : 'Fill in all fields'; msg.className = 'auth-msg error'; return; }
+    msg.textContent = currentLang === 'es' ? 'Entrando...' : 'Signing in...'; msg.className = 'auth-msg';
+    var res = await db.auth.signInWithPassword({ email: email, password: password });
+    if (res.error) { msg.textContent = currentLang === 'es' ? 'Email o contraseña incorrectos' : 'Wrong email or password'; msg.className = 'auth-msg error'; return; }
+    msg.textContent = currentLang === 'es' ? '¡Bienvenido!' : 'Welcome!'; msg.className = 'auth-msg success';
+    setTimeout(closeAuth, 1000);
+  }
+
+  async function handleRegister() {
+    var username = document.getElementById('reg-username').value.trim();
+    var email = document.getElementById('reg-email').value.trim();
+    var password = document.getElementById('reg-password').value;
+    var msg = document.getElementById('auth-msg');
+    if (!username || !email || !password) { msg.textContent = currentLang === 'es' ? 'Completá todos los campos' : 'Fill in all fields'; msg.className = 'auth-msg error'; return; }
+    if (password.length < 6) { msg.textContent = currentLang === 'es' ? 'La contraseña debe tener al menos 6 caracteres' : 'Password must be at least 6 characters'; msg.className = 'auth-msg error'; return; }
+    msg.textContent = currentLang === 'es' ? 'Creando cuenta...' : 'Creating account...'; msg.className = 'auth-msg';
+    var res = await db.auth.signUp({ email: email, password: password, options: { data: { username: username } } });
+    if (res.error) { msg.textContent = res.error.message; msg.className = 'auth-msg error'; return; }
+    msg.textContent = currentLang === 'es' ? '¡Cuenta creada! Revisá tu email para confirmar.' : 'Account created! Check your email to confirm.'; msg.className = 'auth-msg success';
+  }
+
+  async function handleLogout() {
+    await db.auth.signOut();
+  }
+
+  function handleShareClick() {
+    if (!currentUser) {
+      openAuth();
+      setTimeout(function() {
+        var msg = document.getElementById('auth-msg');
+        if (msg) { msg.textContent = currentLang === 'es' ? 'Iniciá sesión para compartir tácticas' : 'Sign in to share tactics'; msg.className = 'auth-msg error'; }
+      }, 100);
+      return;
+    }
+    showScreen('builder', document.querySelectorAll('.tab')[2]);
+  }
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.user-menu')) {
+      var dd = document.getElementById('user-dropdown');
+      if (dd) dd.classList.remove('open');
+    }
+  });
+
+  // ===== BILINGUAL SYSTEM =====
   var translations = {
     es: {
       'nav-share': '+ Compartir Táctica',
@@ -1281,6 +1492,7 @@
   });
 
   // Load feed on start
+  initAuth();
   loadTactics();
 </script>
 </body>
