@@ -603,7 +603,7 @@
         </div>
         <button class="btn-share" onclick="shareTactic()">🚀 COMPARTIR TÁCTICA</button>
         <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;">
-          <input id="tactic-title-input" type="text" placeholder="Título de tu táctica..." style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;">
+          <input id="tactic-title-input" type="text" placeholder="💡 Tip extra (opcional): ej. Necesitás extremos rápidos..." style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;">
           <input id="tactic-author-input" type="text" placeholder="Tu nombre / usuario..." style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;">
           <div style="border-top:1px solid var(--border);padding-top:10px;margin-top:4px;">
             <div style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;margin-bottom:8px;" id="vs-section-label">⚔️ CONTEXTO DEL RIVAL (opcional)</div>
@@ -764,7 +764,13 @@
       html += '<div class="card-body">';
       html += '<div class="card-header">';
       html += '<div class="formation-badge">' + t.formation + '</div>';
-      html += '<div><div class="card-title">' + t.title + '</div>';
+      html += '<div>';
+      if (t.title && t.title !== t.formation && !t.title.startsWith(t.formation)) {
+        html += '<div class="card-title">' + t.title + '</div>';
+      }
+      if (t.title && (t.title === t.formation || t.title.startsWith(t.formation))) {
+        html += '<div class="card-meta" style="font-size:11px;color:var(--text-dim);">' + t.title + '</div>';
+      }
       html += '<div class="card-meta">by @' + t.author + ' &middot; ' + timeAgo(t.created_at) + '</div></div>';
       html += '</div>';
       html += '<div class="effectiveness-bar">';
@@ -963,7 +969,7 @@
   // ===== SHARE TACTIC =====
   async function shareTactic() {
     var formation = document.querySelector('.form-btn.active') ? document.querySelector('.form-btn.active').textContent.trim() : '';
-    var title = document.getElementById('tactic-title-input') ? document.getElementById('tactic-title-input').value.trim() : '';
+    var tip = document.getElementById('tactic-title-input') ? document.getElementById('tactic-title-input').value.trim() : '';
     var author = currentUser
       ? (currentUser.user_metadata && currentUser.user_metadata.username ? currentUser.user_metadata.username : currentUser.email.split('@')[0])
       : (document.getElementById('tactic-author-input') ? document.getElementById('tactic-author-input').value.trim() : '');
@@ -976,7 +982,13 @@
     var vs_formation = document.getElementById('vs-formation') ? document.getElementById('vs-formation').value : '';
     var vs_style = document.getElementById('vs-style') ? document.getElementById('vs-style').value : '';
     var best_situation = document.getElementById('best-situation') ? document.getElementById('best-situation').value : '';
-    if (!title || !author) { alert(currentLang === 'es' ? 'Por favor completá el título y tu nombre' : 'Please fill in the title and your name'); return; }
+    // Auto-generate title from formation + context if no tip provided
+    var autoTitle = formation;
+    if (vs_formation) autoTitle += ' vs ' + vs_formation;
+    if (vs_style) autoTitle += ' · ' + vs_style;
+    if (best_situation) autoTitle += ' · ' + best_situation;
+    var title = tip || autoTitle;
+    if (!author) { alert(currentLang === 'es' ? 'Por favor ingresá tu nombre de usuario' : 'Please enter your username'); return; }
     var payload = { formation: formation, title: title, author: author, pressing: pressing, style: style, tempo: tempo, fwd_tactic: fwd_tactic, mid_tactic: mid_tactic, def_tactic: def_tactic, user_id: currentUser ? currentUser.id : null, vs_formation: vs_formation || null, vs_style: vs_style || null, best_situation: best_situation || null };
     var res = await db.from('tactics').insert(payload);
     if (res.error) { alert(currentLang === 'es' ? 'Error al guardar. Intentá de nuevo.' : 'Error saving. Please try again.'); return; }
@@ -1382,7 +1394,7 @@
       'comments-title': 'COMENTARIOS',
       'builder-title': '⚽ CREADOR DE ALINEACIONES',
       'share-tactic-btn': '🚀 COMPARTIR TÁCTICA',
-      'tactic-title-ph': 'Título de tu táctica...',
+      'tactic-title-ph': '💡 Tip extra (opcional): ej. Necesitás extremos rápidos...',
       'tactic-author-ph': 'Tu nombre / usuario...',
       'ranking-title': '🏆 RANKING DE FORMACIONES',
       'ranking-sub': 'Basado en votos reales de jugadores de OSM',
@@ -1442,7 +1454,7 @@
       'comments-title': 'COMMENTS',
       'builder-title': '⚽ LINEUP BUILDER',
       'share-tactic-btn': '🚀 SHARE TACTIC',
-      'tactic-title-ph': 'Tactic title...',
+      'tactic-title-ph': '💡 Extra tip (optional): e.g. You need fast wingers...',
       'tactic-author-ph': 'Your name / username...',
       'ranking-title': '🏆 FORMATION RANKINGS',
       'ranking-sub': 'Based on real votes from OSM players',
