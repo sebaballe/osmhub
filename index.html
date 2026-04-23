@@ -451,17 +451,7 @@
           <div class="pitch-center-circle"></div>
           <div class="pitch-box-top"></div>
           <div class="pitch-box-bottom"></div>
-          <div class="player-dot gk" style="left:50%;top:90%">GK</div>
-          <div class="player-dot" style="left:20%;top:72%">LB</div>
-          <div class="player-dot" style="left:38%;top:72%">CB</div>
-          <div class="player-dot" style="left:62%;top:72%">CB</div>
-          <div class="player-dot" style="left:80%;top:72%">RB</div>
-          <div class="player-dot" style="left:25%;top:50%">CM</div>
-          <div class="player-dot" style="left:50%;top:46%">CM</div>
-          <div class="player-dot" style="left:75%;top:50%">CM</div>
-          <div class="player-dot" style="left:20%;top:22%">LW</div>
-          <div class="player-dot" style="left:50%;top:16%">ST</div>
-          <div class="player-dot" style="left:80%;top:22%">RW</div>
+          <div id="detail-pitch-players"></div>
         </div>
       </div>
     </div>
@@ -906,6 +896,13 @@
       } else {
         ownerActions.innerHTML = '';
       }
+    }
+    // Update pitch with correct formation
+    var pitchPlayers = document.getElementById('detail-pitch-players');
+    if (pitchPlayers && formations[t.formation]) {
+      pitchPlayers.innerHTML = formations[t.formation].map(function(p) {
+        return '<div class="player-dot' + (p.gk ? ' gk' : '') + '" style="left:' + p.x + '%;top:' + p.y + '%">' + p.pos + '</div>';
+      }).join('');
     }
     // Reset vote steps
     document.getElementById('vote-step1').style.display = 'block';
