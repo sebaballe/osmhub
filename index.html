@@ -393,12 +393,43 @@
   <div class="feed-layout">
     <div class="main-feed">
       <div class="feed-header">
-        <div class="feed-title">TÁCTICAS DE MODA</div>
+        <div class="feed-title" id="feed-title-label">TÁCTICAS DE MODA</div>
         <div class="sort-pills">
-          <div class="pill active">Caliente</div>
-          <div class="pill">Nuevo</div>
-          <div class="pill">Arriba</div>
+          <div class="pill active" onclick="setSortPill(this,'hot')">Caliente</div>
+          <div class="pill" onclick="setSortPill(this,'new')">Nuevo</div>
+          <div class="pill" onclick="setSortPill(this,'top')">Arriba</div>
         </div>
+      </div>
+
+      <!-- FILTERS -->
+      <div id="feed-filters" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center;">
+        <select id="filter-formation" onchange="applyFilters()" style="background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:7px 10px;color:var(--text-mid);font-family:'Barlow',sans-serif;font-size:12px;outline:none;cursor:pointer;">
+          <option value="" id="filter-formation-ph">🏟️ Formación</option>
+          <option>4-3-3-A</option><option>4-3-3-B</option><option>4-5-1</option>
+          <option>4-2-3-1</option><option>4-4-2-A</option><option>4-4-2-B</option>
+          <option>3-2-5</option><option>3-2-3-2</option><option>3-3-4-A</option>
+          <option>3-3-4-B</option><option>3-4-3-A</option><option>3-4-3-B</option>
+          <option>3-3-2-2</option><option>3-5-2</option><option>4-2-4-A</option>
+          <option>4-2-4-B</option><option>5-2-3-A</option><option>5-2-3-B</option>
+          <option>5-3-2-A</option><option>5-3-1-1</option><option>5-4-1-A</option>
+          <option>5-4-1-B</option><option>6-3-1-A</option><option>6-3-1-B</option>
+        </select>
+        <select id="filter-style" onchange="applyFilters()" style="background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:7px 10px;color:var(--text-mid);font-family:'Barlow',sans-serif;font-size:12px;outline:none;cursor:pointer;">
+          <option value="" id="filter-style-ph">🎮 Estilo</option>
+          <option value="Balon largo">⚽ Balón largo</option>
+          <option value="Juego de bandas">↔️ Juego de bandas</option>
+          <option value="Posesion">🔄 Posesión</option>
+          <option value="Contraataque">⚡ Contraataque</option>
+          <option value="Tiros de repente">🎯 Tiros de repente</option>
+        </select>
+        <select id="filter-situation" onchange="applyFilters()" style="background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:7px 10px;color:var(--text-mid);font-family:'Barlow',sans-serif;font-size:12px;outline:none;cursor:pointer;">
+          <option value="" id="filter-situation-ph">📍 Situación</option>
+          <option value="Local">🏠 Local</option>
+          <option value="Visitante">✈️ Visitante</option>
+          <option value="Equipo superior">📈 Superior</option>
+          <option value="Equipo inferior">📉 Inferior</option>
+        </select>
+        <button id="clear-filters-btn" onclick="clearFilters()" style="display:none;background:rgba(255,61,87,0.1);border:1px solid var(--red);color:var(--red);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Barlow',sans-serif;">✕ Limpiar</button>
       </div>
       <div id="tactics-feed">
         <div style="text-align:center;padding:40px;color:var(--text-dim)">Cargando tácticas...</div>
@@ -761,12 +792,49 @@
     if (id === 'ranking') loadRankings();
   }
 
+  var currentSort = 'hot';
+
+  function setSortPill(el, sort) {
+    document.querySelectorAll('.pill').forEach(function(p) { p.classList.remove('active'); });
+    el.classList.add('active');
+    currentSort = sort;
+    loadTactics();
+  }
+
+  function applyFilters() {
+    var clearBtn = document.getElementById('clear-filters-btn');
+    var f = document.getElementById('filter-formation').value;
+    var s = document.getElementById('filter-style').value;
+    var sit = document.getElementById('filter-situation').value;
+    if (clearBtn) clearBtn.style.display = (f || s || sit) ? 'block' : 'none';
+    loadTactics();
+  }
+
+  function clearFilters() {
+    document.getElementById('filter-formation').value = '';
+    document.getElementById('filter-style').value = '';
+    document.getElementById('filter-situation').value = '';
+    var clearBtn = document.getElementById('clear-filters-btn');
+    if (clearBtn) clearBtn.style.display = 'none';
+    loadTactics();
+  }
+
   // ===== LOAD TACTICS FEED =====
   async function loadTactics() {
     const feed = document.getElementById('tactics-feed');
     if (!feed) return;
-    feed.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-dim)">Cargando tácticas...</div>';
-    const { data, error } = await db.from('tactics').select('*').order('votes_yes', { ascending: false }).limit(20);
+    feed.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-dim)">' + (currentLang === 'es' ? 'Cargando...' : 'Loading...') + '</div>';
+    // Get filter values
+    var filterFormation = document.getElementById('filter-formation') ? document.getElementById('filter-formation').value : '';
+    var filterStyle = document.getElementById('filter-style') ? document.getElementById('filter-style').value : '';
+    var filterSituation = document.getElementById('filter-situation') ? document.getElementById('filter-situation').value : '';
+    // Build query
+    var sortField = currentSort === 'new' ? 'created_at' : currentSort === 'top' ? 'votes_yes' : 'votes_yes';
+    var query = db.from('tactics').select('*').order(sortField, { ascending: false }).limit(50);
+    if (filterFormation) query = query.eq('formation', filterFormation);
+    if (filterStyle) query = query.eq('own_style', filterStyle);
+    if (filterSituation) query = query.eq('best_situation', filterSituation);
+    const { data, error } = await query;
     if (error || !data || data.length === 0) {
       feed.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-dim)">' + (currentLang === 'es' ? 'Aún no hay tácticas. ¡Sé el primero en compartir una!' : 'No tactics yet. Be the first to share one!') + '</div>';
       return;
@@ -1630,6 +1698,16 @@
     if (commentLoginMsg) commentLoginMsg.textContent = currentLang === 'es' ? 'Iniciá sesión para comentar' : 'Sign in to comment';
     var commentLoginLink = document.getElementById('comment-login-link');
     if (commentLoginLink) commentLoginLink.textContent = currentLang === 'es' ? 'Entrar' : 'Sign in';
+    var filterFormPh = document.getElementById('filter-formation-ph');
+    if (filterFormPh) filterFormPh.text = currentLang === 'es' ? '🏟️ Formación' : '🏟️ Formation';
+    var filterStylePh = document.getElementById('filter-style-ph');
+    if (filterStylePh) filterStylePh.text = currentLang === 'es' ? '🎮 Estilo' : '🎮 Style';
+    var filterSitPh = document.getElementById('filter-situation-ph');
+    if (filterSitPh) filterSitPh.text = currentLang === 'es' ? '📍 Situación' : '📍 Situation';
+    var clearBtn = document.getElementById('clear-filters-btn');
+    if (clearBtn) clearBtn.textContent = currentLang === 'es' ? '✕ Limpiar' : '✕ Clear';
+    var feedTitleLabel = document.getElementById('feed-title-label');
+    if (feedTitleLabel) feedTitleLabel.textContent = currentLang === 'es' ? 'TÁCTICAS DE MODA' : 'TRENDING TACTICS';
     var commentsTitleLabel = document.getElementById('comments-title-label');
     if (commentsTitleLabel) commentsTitleLabel.textContent = currentLang === 'es' ? 'COMENTARIOS' : 'COMMENTS';
     // Builder labels
@@ -1823,12 +1901,7 @@
       updatePitch(this.textContent.trim());
     });
   });
-  document.querySelectorAll('.pill').forEach(function(pill) {
-    pill.addEventListener('click', function() {
-      document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-      this.classList.add('active');
-    });
-  });
+  // Pills handled by setSortPill inline onclick
 
   // Edit modal sliders
   ['pressing','style','tempo'].forEach(function(type) {
