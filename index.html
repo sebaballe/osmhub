@@ -386,6 +386,7 @@
   <div class="tab" onclick="showScreen('detail',this)">📋 Detalle</div>
   <div class="tab" onclick="showScreen('builder',this)">⚽ Alineaciones</div>
   <div class="tab" onclick="showScreen('ranking',this)">🏆 Rankings</div>
+  <div class="tab" onclick="showScreen('events',this)" id="tab-events">🗓️ Eventos</div>
 </div>
 
 <!-- ===== FEED ===== -->
@@ -769,6 +770,17 @@
   </div>
 </div>
 
+<!-- ===== EVENTS ===== -->
+<div id="screen-events" class="screen">
+  <div style="max-width:700px;margin:0 auto;padding:24px 16px;">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;background:linear-gradient(135deg,rgba(0,230,118,0.05),transparent);">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;letter-spacing:0.5px;" id="events-title">🗓️ EVENTOS DE ABRIL 2026</div>
+      <div style="font-size:13px;color:var(--text-dim);margin-top:4px;" id="events-sub">Eventos especiales de OSM este mes</div>
+    </div>
+    <div id="events-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+  </div>
+</div>
+
 <footer>
   <p><strong>OSM Hub</strong> · Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM · Construida por la comunidad, para la comunidad</p>
 </footer>
@@ -789,6 +801,7 @@
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (id === 'feed') loadTactics();
     if (id === 'ranking') loadRankings();
+    if (id === 'events') renderEvents();
   }
 
   var currentSort = 'hot';
@@ -1500,7 +1513,102 @@
     }
   });
 
-  // ===== BILINGUAL SYSTEM =====
+  // ===== EVENTS =====
+  var eventsData = [
+    { dates: '1-2', name_es: 'Extreme Progression', name_en: 'Extreme Progression',
+      desc_es: 'Mayor progresión de entrenamiento con cada entrenamiento y amistoso.',
+      desc_en: 'Higher training progression with every training and friendly.',
+      tags: ['Entrenamiento'] },
+    { dates: '4', name_es: 'Bargain Scout', name_en: 'Bargain Scout',
+      desc_es: 'Comisión de scout menor, jugadores más baratos, scout en 2h.',
+      desc_en: 'Smaller scout fee, cheaper players, faster scout: 2h.',
+      tags: ['Scout'] },
+    { dates: '6-7', name_es: 'Training Camp Mania', name_en: 'Training Camp Mania',
+      desc_es: 'Campo de entrenamiento más barato y poderoso. Scout en 2h.',
+      desc_en: 'Training camp cheaper and more powerful. Scout in 2h.',
+      tags: ['Entrenamiento', 'Scout'] },
+    { dates: '9', name_es: 'Transfer Rush', name_en: 'Transfer Rush',
+      desc_es: 'Mayor chance de venta, hasta 6 jugadores en lista. Scout en 2h.',
+      desc_en: 'Higher sale chance, up to 6 players on list. Scout in 2h.',
+      tags: ['Transferencias', 'Scout'] },
+    { dates: '11-12', name_es: 'Golden Oldies x Legends', name_en: 'Golden Oldies x Legends',
+      desc_es: 'Mayor progresión para jugadores viejos. Jugadores leyenda en lista de transferencias.',
+      desc_en: 'Higher progression for old players. Legend players on transfer list.',
+      tags: ['Entrenamiento', 'Transferencias'] },
+    { dates: '14', name_es: 'Friendly Frenzy', name_en: 'Friendly Frenzy',
+      desc_es: 'Progresión extra con cada amistoso. Evento de 1 día.',
+      desc_en: 'Extra training progression with every friendly. 1 day event.',
+      tags: ['Amistosos'] },
+    { dates: '16', name_es: 'Guaranteed Training Boost', name_en: 'Guaranteed Training Boost',
+      desc_es: 'Mayor chance de obtener boost Raro, Épico, Élite o Legendario.',
+      desc_en: 'Higher chance of getting Rare, Epic, Elite or Legendary boost.',
+      tags: ['Entrenamiento'] },
+    { dates: '18', name_es: 'Extraordinary Scout', name_en: 'Extraordinary Scout',
+      desc_es: 'Scout en 2h. Jugadores buscados más baratos.',
+      desc_en: 'Faster scout: 2h. Scouted players less expensive.',
+      tags: ['Scout'] },
+    { dates: '20-21', name_es: 'Intense Friendlies', name_en: 'Intense Friendlies',
+      desc_es: 'Progresión extra de entrenamiento con cada amistoso.',
+      desc_en: 'Extra training progression with every friendly.',
+      tags: ['Amistosos'] },
+    { dates: '23', name_es: 'Super Staff', name_en: 'Super Staff',
+      desc_es: 'Doctor y abogado en 3h. Scout en 4h. Analista en 15min. Entrenadores más rápidos.',
+      desc_en: 'Doctor and lawyer 3h. Scout 4h. Analyst 15min. Faster trainers.',
+      tags: ['Staff', 'Scout'] },
+    { dates: '23-24', name_es: 'Legends', name_en: 'Legends',
+      desc_es: 'Jugadores leyenda agregados a la lista de transferencias.',
+      desc_en: 'Legend players added on transfer list.',
+      tags: ['Transferencias'] },
+    { dates: '25', name_es: 'Booming Stadium', name_en: 'Booming Stadium',
+      desc_es: 'Timers del estadio reducidos a 4h.',
+      desc_en: 'Shorter stadium timers (4h).',
+      tags: ['Estadio'] },
+    { dates: '27-28', name_es: 'Transfer Madness', name_en: 'Transfer Madness',
+      desc_es: 'Mayor chance de venta, hasta 6 jugadores en lista. Scout en 2h.',
+      desc_en: 'Higher sale chance, up to 6 players on list. Scout in 2h.',
+      tags: ['Transferencias', 'Scout'] },
+    { dates: '30', name_es: 'Top Facilities', name_en: 'Top Facilities',
+      desc_es: 'Timers de estadio en 4h. Entrenadores normales 4h, Universal 3h.',
+      desc_en: 'Stadium timers 4h. Normal trainers 4h, Universal Trainer 3h.',
+      tags: ['Estadio', 'Entrenamiento'] },
+  ];
+
+  var tagColors = {
+    'Entrenamiento': { bg: 'rgba(0,230,118,0.1)', color: 'var(--green)', en: 'Training' },
+    'Scout': { bg: 'rgba(41,121,255,0.12)', color: 'var(--blue)', en: 'Scout' },
+    'Transferencias': { bg: 'rgba(255,214,0,0.12)', color: 'var(--yellow)', en: 'Transfers' },
+    'Amistosos': { bg: 'rgba(147,90,255,0.12)', color: '#935aff', en: 'Friendlies' },
+    'Staff': { bg: 'rgba(0,200,150,0.12)', color: '#00c896', en: 'Staff' },
+    'Estadio': { bg: 'rgba(255,107,53,0.12)', color: '#ff6b35', en: 'Stadium' },
+  };
+
+  function renderEvents() {
+    var container = document.getElementById('events-list');
+    if (!container) return;
+    var title = document.getElementById('events-title');
+    var sub = document.getElementById('events-sub');
+    if (title) title.textContent = currentLang === 'es' ? '🗓️ EVENTOS DE ABRIL 2026' : '🗓️ APRIL 2026 EVENTS';
+    if (sub) sub.textContent = currentLang === 'es' ? 'Eventos especiales de OSM este mes' : 'Special OSM events this month';
+    container.innerHTML = eventsData.map(function(e) {
+      var name = currentLang === 'es' ? e.name_es : e.name_en;
+      var desc = currentLang === 'es' ? e.desc_es : e.desc_en;
+      var tags = e.tags.map(function(tag) {
+        var c = tagColors[tag];
+        var label = currentLang === 'es' ? tag : c.en;
+        return '<span style="font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;background:' + c.bg + ';color:' + c.color + ';">' + label + '</span>';
+      }).join('');
+      return '<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start;">' +
+        '<div style="min-width:48px;text-align:center;background:var(--surface2);border-radius:8px;padding:8px 4px;flex-shrink:0;">' +
+        '<div style="font-family:Barlow Condensed,sans-serif;font-size:20px;font-weight:900;color:var(--green);line-height:1;">' + e.dates + '</div>' +
+        '<div style="font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;">' + (currentLang === 'es' ? 'ABR' : 'APR') + '</div>' +
+        '</div>' +
+        '<div style="flex:1;">' +
+        '<div style="font-family:Barlow Condensed,sans-serif;font-size:17px;font-weight:800;color:var(--text);margin-bottom:4px;">' + name + '</div>' +
+        '<div style="font-size:12px;color:var(--text-mid);margin-bottom:8px;line-height:1.5;">' + desc + '</div>' +
+        '<div style="display:flex;gap:6px;flex-wrap:wrap;">' + tags + '</div>' +
+        '</div></div>';
+    }).join('');
+  }
   var translations = {
     es: {
       'nav-share': '+ Compartir Táctica',
@@ -1508,6 +1616,7 @@
       'tab-detail': '📋 Detalle',
       'tab-builder': '⚽ Alineaciones',
       'tab-ranking': '🏆 Rankings',
+      'tab-events': '🗓️ Eventos',
       'feed-title': 'TÁCTICAS DE MODA',
       'pill-hot': 'Caliente',
       'pill-new': 'Nuevo',
@@ -1641,6 +1750,8 @@
     document.querySelectorAll('.tab')[1].textContent = t('tab-detail');
     document.querySelectorAll('.tab')[2].textContent = t('tab-builder');
     document.querySelectorAll('.tab')[3].textContent = t('tab-ranking');
+    var tabEvents = document.getElementById('tab-events');
+    if (tabEvents) tabEvents.textContent = t('tab-events');
     document.querySelector('.feed-title').textContent = t('feed-title');
     document.querySelectorAll('.pill')[0].textContent = t('pill-hot');
     document.querySelectorAll('.pill')[1].textContent = t('pill-new');
@@ -1737,6 +1848,7 @@
     // Reload feed with new language
     loadTactics();
     updateSliderLabels();
+    renderEvents();
   }
 
   // ===== FORMATION POSITIONS =====
