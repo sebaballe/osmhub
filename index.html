@@ -539,7 +539,7 @@
         <div class="own-style-btn" onclick="selectOwnStyle(this,'Juego de bandas')">↔️ Juego de bandas</div>
         <div class="own-style-btn" onclick="selectOwnStyle(this,'Posesion')">🔄 Posesión</div>
         <div class="own-style-btn" onclick="selectOwnStyle(this,'Contraataque')">⚡ Contraataque</div>
-        <div class="own-style-btn" onclick="selectOwnStyle(this,'Mixto')">⚖️ Mixto</div>
+        <div class="own-style-btn" onclick="selectOwnStyle(this,'Tiros de repente')">🎯 Tiros de repente</div>
       </div>
     </div>
     <div class="builder-layout">
@@ -1090,7 +1090,7 @@
       'Juego de bandas': 'Wing play',
       'Posesion': 'Possession', 'Posesión': 'Possession',
       'Contraataque': 'Counter-attack',
-      'Tiros de repente': 'Long shots',
+      'Tiros de repente': 'Shoot on sight',
       'Mixto': 'Mixed',
       'De local': 'Home', 'De visitante': 'Away', 'Ambos': 'Both',
       'Con equipo superior': 'Superior team', 'Con equipo inferior': 'Inferior team'
@@ -1098,7 +1098,7 @@
     var enToEs = {
       'Long ball': 'Balón largo', 'Wing play': 'Juego de bandas',
       'Possession': 'Posesión', 'Counter-attack': 'Contraataque',
-      'Long shots': 'Tiros de repente', 'Mixed': 'Mixto',
+      'Long shots': 'Tiros de repente', 'Shoot on sight': 'Tiros de repente', 'Mixed': 'Mixto',
       'Home': 'De local', 'Away': 'De visitante', 'Both': 'Ambos',
       'Superior team': 'Con equipo superior', 'Inferior team': 'Con equipo inferior'
     };
@@ -1547,8 +1547,8 @@
     var ownStyleLabel = document.getElementById('own-style-label');
     if (ownStyleLabel) ownStyleLabel.textContent = currentLang === 'es' ? '🎮 ESTILO DE JUEGO PROPIO' : '🎮 OWN PLAY STYLE';
     var ownStyleBtns = document.querySelectorAll('.own-style-btn');
-    var ownStyleEs = ['⚽ Balón largo','↔️ Juego de bandas','🔄 Posesión','⚡ Contraataque','⚖️ Mixto'];
-    var ownStyleEn = ['⚽ Long ball','↔️ Wing play','🔄 Possession','⚡ Counter-attack','⚖️ Mixed'];
+    var ownStyleEs = ['⚽ Balón largo','↔️ Juego de bandas','🔄 Posesión','⚡ Contraataque','🎯 Tiros de repente'];
+    var ownStyleEn = ['⚽ Long ball','↔️ Wing play','🔄 Possession','⚡ Counter-attack','🎯 Shoot on sight'];
     ownStyleBtns.forEach(function(btn, i) { btn.textContent = currentLang === 'es' ? ownStyleEs[i] : ownStyleEn[i]; });
     // VS section
     var vsLabel = document.getElementById('vs-section-label');
