@@ -424,10 +424,10 @@
         </select>
         <select id="filter-situation" onchange="applyFilters()" style="background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:7px 10px;color:var(--text-mid);font-family:'Barlow',sans-serif;font-size:12px;outline:none;cursor:pointer;">
           <option value="" id="filter-situation-ph">📍 Situación</option>
-          <option value="Local">🏠 Local</option>
-          <option value="Visitante">✈️ Visitante</option>
-          <option value="Equipo superior">📈 Superior</option>
-          <option value="Equipo inferior">📉 Inferior</option>
+          <option value="Local · Superior">🏠 Local · Superior</option>
+          <option value="Local · Inferior">🏠 Local · Inferior</option>
+          <option value="Visitante · Superior">✈️ Visitante · Superior</option>
+          <option value="Visitante · Inferior">✈️ Visitante · Inferior</option>
         </select>
         <button id="clear-filters-btn" onclick="clearFilters()" style="display:none;background:rgba(255,61,87,0.1);border:1px solid var(--red);color:var(--red);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Barlow',sans-serif;">✕ Limpiar</button>
       </div>
@@ -680,11 +680,10 @@
             </select>
             <select id="best-situation" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;margin-bottom:12px;cursor:pointer;">
               <option value="">¿Cuándo usarla?</option>
-              <option value="Local">De local</option>
-              <option value="Visitante">De visitante</option>
-              <option value="Ambos">Ambos</option>
-              <option value="Equipo superior">Con equipo superior</option>
-              <option value="Equipo inferior">Con equipo inferior</option>
+              <option value="Local · Superior">🏠 Local · Superior</option>
+              <option value="Local · Inferior">🏠 Local · Inferior</option>
+              <option value="Visitante · Superior">✈️ Visitante · Superior</option>
+              <option value="Visitante · Inferior">✈️ Visitante · Inferior</option>
             </select>
           </div>
           <button class="btn-share" onclick="shareTactic()">🚀 COMPARTIR TÁCTICA</button>
@@ -1209,14 +1208,18 @@
       'Tiros de repente': 'Shoot on sight',
       'Mixto': 'Mixed',
       'De local': 'Home', 'De visitante': 'Away', 'Ambos': 'Both',
-      'Con equipo superior': 'Superior team', 'Con equipo inferior': 'Inferior team'
+      'Con equipo superior': 'Superior team', 'Con equipo inferior': 'Inferior team',
+      'Local · Superior': 'Home · Superior', 'Local · Inferior': 'Home · Inferior',
+      'Visitante · Superior': 'Away · Superior', 'Visitante · Inferior': 'Away · Inferior'
     };
     var enToEs = {
       'Long ball': 'Balón largo', 'Wing play': 'Juego de bandas',
       'Possession': 'Posesión', 'Counter-attack': 'Contraataque',
       'Long shots': 'Tiros de repente', 'Shoot on sight': 'Tiros de repente', 'Mixed': 'Mixto',
       'Home': 'De local', 'Away': 'De visitante', 'Both': 'Ambos',
-      'Superior team': 'Con equipo superior', 'Inferior team': 'Con equipo inferior'
+      'Superior team': 'Con equipo superior', 'Inferior team': 'Con equipo inferior',
+      'Home · Superior': 'Local · Superior', 'Home · Inferior': 'Local · Inferior',
+      'Away · Superior': 'Visitante · Superior', 'Away · Inferior': 'Visitante · Inferior'
     };
     if (currentLang === 'en') return esToEn[value] || value;
     return enToEs[value] || value;
@@ -1686,8 +1689,8 @@
     if (bestSit) {
       bestSit.options[0].text = currentLang === 'es' ? '¿Cuándo usarla?' : 'When to use it?';
       var sitMap = currentLang === 'es'
-        ? ['De local','De visitante','Ambos','Con equipo superior','Con equipo inferior']
-        : ['Home','Away','Both','With superior team','With inferior team'];
+        ? ['🏠 Local · Superior','🏠 Local · Inferior','✈️ Visitante · Superior','✈️ Visitante · Inferior']
+        : ['🏠 Home · Superior','🏠 Home · Inferior','✈️ Away · Superior','✈️ Away · Inferior'];
       for (var j = 1; j < bestSit.options.length; j++) bestSit.options[j].text = sitMap[j-1];
     }
     var commentInput = document.getElementById('comment-input');
