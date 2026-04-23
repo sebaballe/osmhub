@@ -8,8 +8,7 @@
 <meta name="theme-color" content="#0A0E14">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script defer src="/_vercel/insights/script.js"></script>
-  <style>
+<style>
   :root {
     --bg: #0A0E14;
     --surface: #111720;
@@ -35,18 +34,24 @@
     position:fixed; top:0; left:0; right:0; z-index:100;
     background:rgba(10,14,20,0.96); backdrop-filter:blur(16px);
     border-bottom:1px solid var(--border);
-    height:56px; display:flex; align-items:center; padding:0 20px; gap:12px;
+    height:56px; display:flex; align-items:center; padding:0 12px; gap:8px;
   }
-  .logo { font-family:'Barlow Condensed',sans-serif; font-size:22px; font-weight:900; color:var(--text); letter-spacing:1px; }
+  .logo { font-family:'Barlow Condensed',sans-serif; font-size:20px; font-weight:900; color:var(--text); letter-spacing:1px; }
   .logo span { color:var(--green); }
-  .logo-sub { font-size:10px; color:var(--text-dim); font-weight:400; letter-spacing:0.3px; margin-top:1px; }
+  .logo-sub { font-size:9px; color:var(--text-dim); font-weight:400; letter-spacing:0.3px; margin-top:1px; }
   .logo-wrap { display:flex; flex-direction:column; line-height:1; }
-  .nav-badge { background:var(--green-glow); border:1px solid var(--green); color:var(--green); font-size:10px; font-weight:700; padding:2px 8px; border-radius:4px; letter-spacing:1px; }
-  .nav-right { margin-left:auto; display:flex; gap:8px; align-items:center; }
-  .btn-ghost { background:transparent; border:1px solid var(--border2); color:var(--text-mid); padding:6px 14px; border-radius:6px; font-size:13px; font-weight:500; cursor:pointer; font-family:'Barlow',sans-serif; transition:all 0.15s; }
+  .nav-badge { background:var(--green-glow); border:1px solid var(--green); color:var(--green); font-size:9px; font-weight:700; padding:2px 6px; border-radius:4px; letter-spacing:1px; white-space:nowrap; }
+  .nav-right { margin-left:auto; display:flex; gap:6px; align-items:center; }
+  .btn-ghost { background:transparent; border:1px solid var(--border2); color:var(--text-mid); padding:5px 10px; border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; font-family:'Barlow',sans-serif; transition:all 0.15s; white-space:nowrap; }
   .btn-ghost:hover { border-color:var(--green); color:var(--green); }
-  .btn-primary { background:var(--green); color:var(--bg); border:none; padding:7px 16px; border-radius:6px; font-size:13px; font-weight:700; cursor:pointer; font-family:'Barlow',sans-serif; transition:all 0.15s; }
+  .btn-primary { background:var(--green); color:var(--bg); border:none; padding:6px 12px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer; font-family:'Barlow',sans-serif; transition:all 0.15s; white-space:nowrap; }
   .btn-primary:hover { background:var(--green-dim); }
+  @media(max-width:480px) {
+    .logo-sub { display:none; }
+    .nav-badge { display:none; }
+    #lang-btn { padding:5px 8px; font-size:11px; }
+    .btn-primary { padding:6px 10px; font-size:11px; }
+  }
 
   /* AUTH MODAL */
   .modal-overlay {
