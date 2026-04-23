@@ -605,6 +605,37 @@
         <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;">
           <input id="tactic-title-input" type="text" placeholder="Título de tu táctica..." style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;">
           <input id="tactic-author-input" type="text" placeholder="Tu nombre / usuario..." style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;">
+          <div style="border-top:1px solid var(--border);padding-top:10px;margin-top:4px;">
+            <div style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;margin-bottom:8px;" id="vs-section-label">⚔️ CONTEXTO DEL RIVAL (opcional)</div>
+            <select id="vs-formation" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;margin-bottom:8px;cursor:pointer;">
+              <option value="">¿Contra qué formación funciona?</option>
+              <option>4-3-3-A</option><option>4-3-3-B</option><option>4-5-1</option>
+              <option>4-2-3-1</option><option>4-4-2-A</option><option>4-4-2-B</option>
+              <option>3-2-5</option><option>3-2-3-2</option><option>3-3-4-A</option>
+              <option>3-3-4-B</option><option>4-3-3-A</option><option>3-4-3-B</option>
+              <option>3-3-2-2</option><option>3-5-2</option><option>4-2-4-A</option>
+              <option>4-2-4-B</option><option>5-2-3-A</option><option>5-2-3-B</option>
+              <option>5-3-2-A</option><option>5-3-1-1</option><option>5-4-1-A</option>
+              <option>5-4-1-B</option><option>6-3-1-A</option><option>6-3-1-B</option>
+            </select>
+            <select id="vs-style" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;margin-bottom:8px;cursor:pointer;">
+              <option value="">¿Contra qué estilo de juego?</option>
+              <option value="Contraataque">Contraataque</option>
+              <option value="Posesion">Posesión</option>
+              <option value="Alta presion">Alta presión</option>
+              <option value="Defensivo">Defensivo</option>
+              <option value="Atacante">Atacante</option>
+              <option value="Equilibrado">Equilibrado</option>
+            </select>
+            <select id="best-situation" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;cursor:pointer;">
+              <option value="">¿Cuándo usarla?</option>
+              <option value="Local">De local</option>
+              <option value="Visitante">De visitante</option>
+              <option value="Ambos">Ambos</option>
+              <option value="Equipo superior">Con equipo superior</option>
+              <option value="Equipo inferior">Con equipo inferior</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -742,8 +773,14 @@
       html += '<div class="bar-track"><div class="bar-fill ' + effClass + '" style="width:' + pct + '%"></div></div>';
       html += '<span class="eff-pct ' + effClass + '">' + pct + '%</span>';
       html += '</div>';
+      if (t.vs_formation || t.vs_style || t.best_situation) {
+        html += '<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);display:flex;gap:6px;flex-wrap:wrap;">';
+        if (t.vs_formation) html += '<span style="font-size:11px;background:rgba(255,61,87,0.12);color:var(--red);padding:2px 8px;border-radius:4px;font-weight:600;">⚔️ vs ' + t.vs_formation + '</span>';
+        if (t.vs_style) html += '<span style="font-size:11px;background:rgba(41,121,255,0.12);color:var(--blue);padding:2px 8px;border-radius:4px;font-weight:600;">🎮 ' + t.vs_style + '</span>';
+        if (t.best_situation) html += '<span style="font-size:11px;background:rgba(0,230,118,0.1);color:var(--green);padding:2px 8px;border-radius:4px;font-weight:600;">📍 ' + t.best_situation + '</span>';
+        html += '</div>';
+      }
       if (t.pressing || t.style || t.tempo) {
-        html += '<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">';
         html += '<span style="font-size:11px;background:rgba(41,121,255,0.15);color:#2979FF;padding:2px 8px;border-radius:4px;">&#128293; ' + (t.pressing || 50) + '</span>';
         html += '<span style="font-size:11px;background:rgba(0,230,118,0.1);color:#00E676;padding:2px 8px;border-radius:4px;">&#9889; ' + (t.style || 50) + '</span>';
         html += '<span style="font-size:11px;background:rgba(255,214,0,0.15);color:#FFD600;padding:2px 8px;border-radius:4px;">&#9201; ' + (t.tempo || 50) + '</span>';
@@ -806,7 +843,18 @@
       sliderHtml += '</div></div>';
     }
     var sliderContainer = document.getElementById('detail-slider-info');
-    if (sliderContainer) sliderContainer.innerHTML = sliderHtml;
+    if (sliderContainer) {
+      var vsHtml = '';
+      if (t.vs_formation || t.vs_style || t.best_situation) {
+        vsHtml += '<div style="background:var(--surface2);border-radius:12px;padding:14px 16px;margin-bottom:16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">';
+        vsHtml += '<span style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;">' + (currentLang === 'es' ? 'MEJOR CONTRA:' : 'BEST AGAINST:') + '</span>';
+        if (t.vs_formation) vsHtml += '<span style="font-size:13px;background:rgba(255,61,87,0.12);color:var(--red);padding:4px 10px;border-radius:6px;font-weight:700;">⚔️ ' + t.vs_formation + '</span>';
+        if (t.vs_style) vsHtml += '<span style="font-size:13px;background:rgba(41,121,255,0.12);color:var(--blue);padding:4px 10px;border-radius:6px;font-weight:700;">🎮 ' + t.vs_style + '</span>';
+        if (t.best_situation) vsHtml += '<span style="font-size:13px;background:rgba(0,230,118,0.1);color:var(--green);padding:4px 10px;border-radius:6px;font-weight:700;">📍 ' + t.best_situation + '</span>';
+        vsHtml += '</div>';
+      }
+      sliderContainer.innerHTML = vsHtml + sliderHtml;
+    }
     // Show edit/delete if owner
     var ownerActions = document.getElementById('detail-owner-actions');
     if (ownerActions) {
@@ -926,13 +974,19 @@
     var fwd_tactic = document.getElementById('fwd-label') ? toEnglish(document.getElementById('fwd-label').textContent.trim()) : '';
     var mid_tactic = document.getElementById('mid-label') ? toEnglish(document.getElementById('mid-label').textContent.trim()) : '';
     var def_tactic = document.getElementById('def-label') ? toEnglish(document.getElementById('def-label').textContent.trim()) : '';
+    var vs_formation = document.getElementById('vs-formation') ? document.getElementById('vs-formation').value : '';
+    var vs_style = document.getElementById('vs-style') ? document.getElementById('vs-style').value : '';
+    var best_situation = document.getElementById('best-situation') ? document.getElementById('best-situation').value : '';
     if (!title || !author) { alert(currentLang === 'es' ? 'Por favor completá el título y tu nombre' : 'Please fill in the title and your name'); return; }
-    var payload = { formation: formation, title: title, author: author, pressing: pressing, style: style, tempo: tempo, fwd_tactic: fwd_tactic, mid_tactic: mid_tactic, def_tactic: def_tactic, user_id: currentUser ? currentUser.id : null };
+    var payload = { formation: formation, title: title, author: author, pressing: pressing, style: style, tempo: tempo, fwd_tactic: fwd_tactic, mid_tactic: mid_tactic, def_tactic: def_tactic, user_id: currentUser ? currentUser.id : null, vs_formation: vs_formation || null, vs_style: vs_style || null, best_situation: best_situation || null };
     var res = await db.from('tactics').insert(payload);
     if (res.error) { alert(currentLang === 'es' ? 'Error al guardar. Intentá de nuevo.' : 'Error saving. Please try again.'); return; }
     alert(currentLang === 'es' ? '¡Táctica compartida! Ya aparece en el feed.' : 'Tactic shared! It now appears in the feed.');
     document.getElementById('tactic-title-input').value = '';
     document.getElementById('tactic-author-input').value = '';
+    if (document.getElementById('vs-formation')) document.getElementById('vs-formation').value = '';
+    if (document.getElementById('vs-style')) document.getElementById('vs-style').value = '';
+    if (document.getElementById('best-situation')) document.getElementById('best-situation').value = '';
     showScreen('feed', document.querySelectorAll('.tab')[0]);
     loadTactics();
   }
