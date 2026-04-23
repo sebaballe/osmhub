@@ -288,6 +288,14 @@
   .form-btn { padding:6px 10px; border-radius:6px; font-family:'Barlow Condensed',sans-serif; font-size:13px; font-weight:700; cursor:pointer; border:1px solid var(--border2); color:var(--text-dim); background:var(--surface); transition:all 0.15s; white-space:nowrap; }
   .form-btn.active { background:var(--green-glow); border-color:var(--green); color:var(--green); }
   .form-btn:hover:not(.active) { color:var(--text); border-color:var(--border2); }
+  .own-style-btn {
+    padding:7px 14px; border-radius:8px; font-size:13px; font-weight:600;
+    border:1px solid var(--border2); color:var(--text-dim);
+    background:var(--surface); cursor:pointer; transition:all 0.15s;
+    white-space:nowrap;
+  }
+  .own-style-btn.active { background:var(--green-glow); border-color:var(--green); color:var(--green); }
+  .own-style-btn:hover:not(.active) { border-color:var(--border2); color:var(--text); }
   .builder-layout { display:grid; grid-template-columns:1fr 260px; gap:20px; }
   @media(max-width:650px){ .builder-layout{grid-template-columns:1fr;} }
 
@@ -523,6 +531,16 @@
       <div class="form-btn">4-2-4-B</div><div class="form-btn">5-2-3-A</div><div class="form-btn">5-2-3-B</div>
       <div class="form-btn">5-3-2-A</div><div class="form-btn">5-3-1-1</div><div class="form-btn">5-4-1-A</div>
       <div class="form-btn">5-4-1-B</div><div class="form-btn">6-3-1-A</div><div class="form-btn">6-3-1-B</div>
+    </div>
+    <div style="margin-bottom:14px;">
+      <div style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;margin-bottom:8px;" id="own-style-label">🎮 ESTILO DE JUEGO PROPIO</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;" id="own-style-options">
+        <div class="own-style-btn active" onclick="selectOwnStyle(this,'Balon largo')">⚽ Balón largo</div>
+        <div class="own-style-btn" onclick="selectOwnStyle(this,'Juego de bandas')">↔️ Juego de bandas</div>
+        <div class="own-style-btn" onclick="selectOwnStyle(this,'Posesion')">🔄 Posesión</div>
+        <div class="own-style-btn" onclick="selectOwnStyle(this,'Contraataque')">⚡ Contraataque</div>
+        <div class="own-style-btn" onclick="selectOwnStyle(this,'Mixto')">⚖️ Mixto</div>
+      </div>
     </div>
     <div class="builder-layout">
       <div>
@@ -764,6 +782,7 @@
       html += '<div class="card-body">';
       html += '<div class="card-header">';
       html += '<div class="formation-badge">' + t.formation + '</div>';
+      if (t.own_style) html += '<div style="font-size:12px;font-weight:700;color:var(--text-mid);padding:4px 8px;background:var(--surface2);border-radius:6px;border:1px solid var(--border2);">🎮 ' + translateVsValue(t.own_style) + '</div>';
       html += '<div>';
       if (t.title && t.title !== t.formation && !t.title.startsWith(t.formation)) {
         html += '<div class="card-title">' + t.title + '</div>';
@@ -852,6 +871,9 @@
       var vsHtml = '';
       if (t.vs_formation || t.vs_style || t.best_situation) {
         vsHtml += '<div style="background:var(--surface2);border-radius:12px;padding:14px 16px;margin-bottom:16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">';
+        vsHtml += '<span style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;">' + (currentLang === 'es' ? 'ESTILO PROPIO:' : 'OWN STYLE:') + '</span>';
+        if (t.own_style) vsHtml += '<span style="font-size:13px;background:var(--surface2);border:1px solid var(--border2);color:var(--text-mid);padding:4px 10px;border-radius:6px;font-weight:700;">🎮 ' + translateVsValue(t.own_style) + '</span>';
+        vsHtml += '</div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px;">';
         vsHtml += '<span style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;">' + (currentLang === 'es' ? 'MEJOR CONTRA:' : 'BEST AGAINST:') + '</span>';
         if (t.vs_formation) vsHtml += '<span style="font-size:13px;background:rgba(255,61,87,0.12);color:var(--red);padding:4px 10px;border-radius:6px;font-weight:700;">⚔️ ' + t.vs_formation + '</span>';
         if (t.vs_style) vsHtml += '<span style="font-size:13px;background:rgba(41,121,255,0.12);color:var(--blue);padding:4px 10px;border-radius:6px;font-weight:700;">🎮 ' + translateVsValue(t.vs_style) + '</span>';
@@ -989,7 +1011,7 @@
     if (best_situation) autoTitle += ' · ' + best_situation;
     var title = tip || autoTitle;
     if (!author) { alert(currentLang === 'es' ? 'Por favor ingresá tu nombre de usuario' : 'Please enter your username'); return; }
-    var payload = { formation: formation, title: title, author: author, pressing: pressing, style: style, tempo: tempo, fwd_tactic: fwd_tactic, mid_tactic: mid_tactic, def_tactic: def_tactic, user_id: currentUser ? currentUser.id : null, vs_formation: vs_formation || null, vs_style: vs_style || null, best_situation: best_situation || null };
+    var payload = { formation: formation, title: title, author: author, pressing: pressing, style: style, tempo: tempo, fwd_tactic: fwd_tactic, mid_tactic: mid_tactic, def_tactic: def_tactic, user_id: currentUser ? currentUser.id : null, vs_formation: vs_formation || null, vs_style: vs_style || null, best_situation: best_situation || null, own_style: selectedOwnStyle || null };
     var res = await db.from('tactics').insert(payload);
     if (res.error) { alert(currentLang === 'es' ? 'Error al guardar. Intentá de nuevo.' : 'Error saving. Please try again.'); return; }
     alert(currentLang === 'es' ? '¡Táctica compartida! Ya aparece en el feed.' : 'Tactic shared! It now appears in the feed.');
@@ -1069,13 +1091,14 @@
       'Posesion': 'Possession', 'Posesión': 'Possession',
       'Contraataque': 'Counter-attack',
       'Tiros de repente': 'Long shots',
+      'Mixto': 'Mixed',
       'De local': 'Home', 'De visitante': 'Away', 'Ambos': 'Both',
       'Con equipo superior': 'Superior team', 'Con equipo inferior': 'Inferior team'
     };
     var enToEs = {
       'Long ball': 'Balón largo', 'Wing play': 'Juego de bandas',
       'Possession': 'Posesión', 'Counter-attack': 'Contraataque',
-      'Long shots': 'Tiros de repente',
+      'Long shots': 'Tiros de repente', 'Mixed': 'Mixto',
       'Home': 'De local', 'Away': 'De visitante', 'Both': 'Ambos',
       'Superior team': 'Con equipo superior', 'Inferior team': 'Con equipo inferior'
     };
@@ -1521,6 +1544,12 @@
     if (ctxLabels[0]) ctxLabels[0].textContent = t('ctx-q-location');
     if (ctxLabels[1]) ctxLabels[1].textContent = t('ctx-q-strength');
     if (ctxLabels[2]) ctxLabels[2].textContent = t('ctx-q-comp');
+    var ownStyleLabel = document.getElementById('own-style-label');
+    if (ownStyleLabel) ownStyleLabel.textContent = currentLang === 'es' ? '🎮 ESTILO DE JUEGO PROPIO' : '🎮 OWN PLAY STYLE';
+    var ownStyleBtns = document.querySelectorAll('.own-style-btn');
+    var ownStyleEs = ['⚽ Balón largo','↔️ Juego de bandas','🔄 Posesión','⚡ Contraataque','⚖️ Mixto'];
+    var ownStyleEn = ['⚽ Long ball','↔️ Wing play','🔄 Possession','⚡ Counter-attack','⚖️ Mixed'];
+    ownStyleBtns.forEach(function(btn, i) { btn.textContent = currentLang === 'es' ? ownStyleEs[i] : ownStyleEn[i]; });
     // VS section
     var vsLabel = document.getElementById('vs-section-label');
     if (vsLabel) vsLabel.textContent = currentLang === 'es' ? '⚔️ CONTEXTO DEL RIVAL (opcional)' : '⚔️ RIVAL CONTEXT (optional)';
@@ -1716,6 +1745,13 @@
         '<div class="bp-dot' + (p.gk ? ' gk' : '') + '">' + p.pos + '</div>' +
         '<div class="bp-name">' + p.name + '</div></div>';
     }).join('');
+  }
+
+  var selectedOwnStyle = 'Balon largo';
+  function selectOwnStyle(el, value) {
+    document.querySelectorAll('.own-style-btn').forEach(function(b) { b.classList.remove('active'); });
+    el.classList.add('active');
+    selectedOwnStyle = value;
   }
 
   // ===== INIT =====
