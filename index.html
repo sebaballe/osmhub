@@ -776,8 +776,8 @@
       if (t.vs_formation || t.vs_style || t.best_situation) {
         html += '<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);display:flex;gap:6px;flex-wrap:wrap;">';
         if (t.vs_formation) html += '<span style="font-size:11px;background:rgba(255,61,87,0.12);color:var(--red);padding:2px 8px;border-radius:4px;font-weight:600;">⚔️ vs ' + t.vs_formation + '</span>';
-        if (t.vs_style) html += '<span style="font-size:11px;background:rgba(41,121,255,0.12);color:var(--blue);padding:2px 8px;border-radius:4px;font-weight:600;">🎮 ' + t.vs_style + '</span>';
-        if (t.best_situation) html += '<span style="font-size:11px;background:rgba(0,230,118,0.1);color:var(--green);padding:2px 8px;border-radius:4px;font-weight:600;">📍 ' + t.best_situation + '</span>';
+        if (t.vs_style) html += '<span style="font-size:11px;background:rgba(41,121,255,0.12);color:var(--blue);padding:2px 8px;border-radius:4px;font-weight:600;">🎮 ' + translateVsValue(t.vs_style) + '</span>';
+        if (t.best_situation) html += '<span style="font-size:11px;background:rgba(0,230,118,0.1);color:var(--green);padding:2px 8px;border-radius:4px;font-weight:600;">📍 ' + translateVsValue(t.best_situation) + '</span>';
         html += '</div>';
       }
       if (t.pressing || t.style || t.tempo) {
@@ -849,8 +849,8 @@
         vsHtml += '<div style="background:var(--surface2);border-radius:12px;padding:14px 16px;margin-bottom:16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">';
         vsHtml += '<span style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;">' + (currentLang === 'es' ? 'MEJOR CONTRA:' : 'BEST AGAINST:') + '</span>';
         if (t.vs_formation) vsHtml += '<span style="font-size:13px;background:rgba(255,61,87,0.12);color:var(--red);padding:4px 10px;border-radius:6px;font-weight:700;">⚔️ ' + t.vs_formation + '</span>';
-        if (t.vs_style) vsHtml += '<span style="font-size:13px;background:rgba(41,121,255,0.12);color:var(--blue);padding:4px 10px;border-radius:6px;font-weight:700;">🎮 ' + t.vs_style + '</span>';
-        if (t.best_situation) vsHtml += '<span style="font-size:13px;background:rgba(0,230,118,0.1);color:var(--green);padding:4px 10px;border-radius:6px;font-weight:700;">📍 ' + t.best_situation + '</span>';
+        if (t.vs_style) vsHtml += '<span style="font-size:13px;background:rgba(41,121,255,0.12);color:var(--blue);padding:4px 10px;border-radius:6px;font-weight:700;">🎮 ' + translateVsValue(t.vs_style) + '</span>';
+        if (t.best_situation) vsHtml += '<span style="font-size:13px;background:rgba(0,230,118,0.1);color:var(--green);padding:4px 10px;border-radius:6px;font-weight:700;">📍 ' + translateVsValue(t.best_situation) + '</span>';
         vsHtml += '</div>';
       }
       sliderContainer.innerHTML = vsHtml + sliderHtml;
@@ -1050,6 +1050,24 @@
 
   function getSliderLabels() { return currentLang === 'es' ? sliderLabelsEs : sliderLabelsEn; }
   function getLineTactics() { return currentLang === 'es' ? lineTacticsEs : lineTacticsEn; }
+
+  function translateVsValue(value) {
+    var esToEn = {
+      'Contraataque': 'Counter-attack', 'Posesion': 'Possession', 'Posesión': 'Possession',
+      'Alta presion': 'High press', 'Alta presión': 'High press',
+      'Defensivo': 'Defensive', 'Atacante': 'Attacking', 'Equilibrado': 'Balanced',
+      'De local': 'Home', 'De visitante': 'Away', 'Ambos': 'Both',
+      'Con equipo superior': 'Superior team', 'Con equipo inferior': 'Inferior team'
+    };
+    var enToEs = {
+      'Counter-attack': 'Contraataque', 'Possession': 'Posesión', 'High press': 'Alta presión',
+      'Defensive': 'Defensivo', 'Attacking': 'Atacante', 'Balanced': 'Equilibrado',
+      'Home': 'De local', 'Away': 'De visitante', 'Both': 'Ambos',
+      'Superior team': 'Con equipo superior', 'Inferior team': 'Con equipo inferior'
+    };
+    if (currentLang === 'en') return esToEn[value] || value;
+    return enToEs[value] || value;
+  }
 
   function toEnglish(value) {
     var map = {
@@ -1489,6 +1507,27 @@
     if (ctxLabels[0]) ctxLabels[0].textContent = t('ctx-q-location');
     if (ctxLabels[1]) ctxLabels[1].textContent = t('ctx-q-strength');
     if (ctxLabels[2]) ctxLabels[2].textContent = t('ctx-q-comp');
+    // VS section
+    var vsLabel = document.getElementById('vs-section-label');
+    if (vsLabel) vsLabel.textContent = currentLang === 'es' ? '⚔️ CONTEXTO DEL RIVAL (opcional)' : '⚔️ RIVAL CONTEXT (optional)';
+    var vsForm = document.getElementById('vs-formation');
+    if (vsForm) vsForm.options[0].text = currentLang === 'es' ? '¿Contra qué formación funciona?' : 'Works best against which formation?';
+    var vsStyleEl = document.getElementById('vs-style');
+    if (vsStyleEl) {
+      vsStyleEl.options[0].text = currentLang === 'es' ? '¿Contra qué estilo de juego?' : 'Against which play style?';
+      var styleMap = currentLang === 'es'
+        ? ['Contraataque','Posesión','Alta presión','Defensivo','Atacante','Equilibrado']
+        : ['Counter-attack','Possession','High press','Defensive','Attacking','Balanced'];
+      for (var i = 1; i < vsStyleEl.options.length; i++) vsStyleEl.options[i].text = styleMap[i-1];
+    }
+    var bestSit = document.getElementById('best-situation');
+    if (bestSit) {
+      bestSit.options[0].text = currentLang === 'es' ? '¿Cuándo usarla?' : 'When to use it?';
+      var sitMap = currentLang === 'es'
+        ? ['De local','De visitante','Ambos','Con equipo superior','Con equipo inferior']
+        : ['Home','Away','Both','With superior team','With inferior team'];
+      for (var j = 1; j < bestSit.options.length; j++) bestSit.options[j].text = sitMap[j-1];
+    }
     // Builder labels
     ['pressing','style','tempo','linetactics','fwd','mid','def'].forEach(function(k) {
       var el = document.getElementById('label-' + k);
