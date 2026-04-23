@@ -1203,8 +1203,8 @@
   async function deleteTactic(id) {
     var confirm_msg = currentLang === 'es' ? '¿Estás seguro que querés eliminar esta táctica?' : 'Are you sure you want to delete this tactic?';
     if (!confirm(confirm_msg)) return;
-    var res = await db.from('tactics').delete().eq('id', id).eq('user_id', currentUser.id);
-    if (res.error) { alert('Error al eliminar'); return; }
+    var res = await db.rpc('delete_tactic_cascade', { tactic_uuid: id, user_uuid: currentUser.id });
+    if (res.error) { alert('Error al eliminar: ' + res.error.message); return; }
     showScreen('feed', document.querySelectorAll('.tab')[0]);
     loadTactics();
   }
