@@ -781,6 +781,45 @@
   </div>
 </div>
 
+<!-- ===== PROFILE ===== -->
+<div id="screen-profile" class="screen">
+  <div style="max-width:700px;margin:0 auto;padding:24px 16px;">
+
+    <!-- Profile header -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:20px;">
+      <div style="background:linear-gradient(135deg,rgba(0,230,118,0.08),transparent);padding:28px 24px;display:flex;gap:20px;align-items:center;">
+        <div id="profile-avatar" style="width:64px;height:64px;border-radius:50%;background:var(--green-glow);border:2px solid var(--green);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--green);flex-shrink:0;">?</div>
+        <div>
+          <div id="profile-username" style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--text);">-</div>
+          <div id="profile-email" style="font-size:13px;color:var(--text-dim);margin-top:2px;">-</div>
+          <div id="profile-joined" style="font-size:12px;color:var(--text-dim);margin-top:4px;">-</div>
+        </div>
+      </div>
+      <!-- Stats row -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);">
+        <div style="background:var(--surface);padding:16px;text-align:center;">
+          <div id="profile-tactics-count" style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--green);">0</div>
+          <div id="profile-tactics-label" style="font-size:11px;color:var(--text-dim);margin-top:2px;">Tácticas</div>
+        </div>
+        <div style="background:var(--surface);padding:16px;text-align:center;">
+          <div id="profile-votes-count" style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--yellow);">0</div>
+          <div id="profile-votes-label" style="font-size:11px;color:var(--text-dim);margin-top:2px;">Votos recibidos</div>
+        </div>
+        <div style="background:var(--surface);padding:16px;text-align:center;">
+          <div id="profile-eff" style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--blue);">0%</div>
+          <div id="profile-eff-label" style="font-size:11px;color:var(--text-dim);margin-top:2px;">Eficacia promedio</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- My tactics -->
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;letter-spacing:0.5px;color:var(--text-mid);margin-bottom:12px;" id="profile-my-tactics-label">MIS TÁCTICAS</div>
+    <div id="profile-tactics-list" style="display:flex;flex-direction:column;gap:10px;">
+      <div style="text-align:center;padding:40px;color:var(--text-dim);font-size:13px;" id="profile-empty-msg">Aún no publicaste ninguna táctica.</div>
+    </div>
+  </div>
+</div>
+
 <footer>
   <p><strong>OSM Hub</strong> · Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM · Construida por la comunidad, para la comunidad</p>
 </footer>
@@ -802,6 +841,7 @@
     if (id === 'feed') loadTactics();
     if (id === 'ranking') loadRankings();
     if (id === 'events') renderEvents();
+    if (id === 'profile') loadProfile();
   }
 
   var currentSort = 'hot';
@@ -1358,6 +1398,7 @@
         : currentUser.email.split('@')[0];
       menu.innerHTML = '<button class="user-btn" onclick="toggleUserMenu()">👤 ' + username + ' ▾</button>' +
         '<div class="user-dropdown" id="user-dropdown">' +
+        '<div class="dropdown-item" onclick="showScreen(\'profile\',null);loadProfile();toggleUserMenu()">👤 ' + (currentLang === 'es' ? 'Mi perfil' : 'My profile') + '</div>' +
         '<div class="dropdown-item danger" onclick="handleLogout()">' + (currentLang === 'es' ? 'Cerrar sesión' : 'Sign out') + '</div>' +
         '</div>';
     } else {
@@ -1488,6 +1529,60 @@
 
   function closeEditModal() {
     document.getElementById('edit-modal').classList.add('hidden');
+  }
+
+  async function loadProfile() {
+    if (!currentUser) { openAuth(); return; }
+    var username = currentUser.user_metadata && currentUser.user_metadata.username
+      ? currentUser.user_metadata.username : currentUser.email.split('@')[0];
+    var initials = username.substring(0,2).toUpperCase();
+    // Set header
+    document.getElementById('profile-avatar').textContent = initials;
+    document.getElementById('profile-username').textContent = '@' + username;
+    document.getElementById('profile-email').textContent = currentUser.email;
+    var joined = new Date(currentUser.created_at);
+    var joinedStr = currentLang === 'es'
+      ? 'Miembro desde ' + joined.toLocaleDateString('es', {month:'long', year:'numeric'})
+      : 'Member since ' + joined.toLocaleDateString('en', {month:'long', year:'numeric'});
+    document.getElementById('profile-joined').textContent = joinedStr;
+    // Update labels
+    document.getElementById('profile-tactics-label').textContent = currentLang === 'es' ? 'Tácticas' : 'Tactics';
+    document.getElementById('profile-votes-label').textContent = currentLang === 'es' ? 'Votos recibidos' : 'Votes received';
+    document.getElementById('profile-eff-label').textContent = currentLang === 'es' ? 'Eficacia promedio' : 'Avg effectiveness';
+    document.getElementById('profile-my-tactics-label').textContent = currentLang === 'es' ? 'MIS TÁCTICAS' : 'MY TACTICS';
+    // Load tactics
+    var res = await db.from('tactics').select('*').eq('user_id', currentUser.id).order('created_at', {ascending: false});
+    var tactics = res.data || [];
+    document.getElementById('profile-tactics-count').textContent = tactics.length;
+    // Calculate total votes and avg effectiveness
+    var totalVotes = 0, totalYes = 0;
+    tactics.forEach(function(t) { totalVotes += t.votes_yes + t.votes_no; totalYes += t.votes_yes; });
+    document.getElementById('profile-votes-count').textContent = totalVotes;
+    var avgEff = totalVotes > 0 ? Math.round((totalYes / totalVotes) * 100) : 0;
+    document.getElementById('profile-eff').textContent = avgEff + '%';
+    document.getElementById('profile-eff').style.color = avgEff >= 70 ? 'var(--green)' : avgEff >= 50 ? 'var(--yellow)' : 'var(--red)';
+    // Render tactics list
+    var list = document.getElementById('profile-tactics-list');
+    if (tactics.length === 0) {
+      list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-dim);font-size:13px;">' + (currentLang === 'es' ? 'Aún no publicaste ninguna táctica.' : 'You haven\'t published any tactics yet.') + '</div>';
+      return;
+    }
+    list.innerHTML = tactics.map(function(t) {
+      var total = t.votes_yes + t.votes_no;
+      var pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
+      var effClass = pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--yellow)' : 'var(--red)';
+      return '<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:center;cursor:pointer;" onclick="loadTacticDetail(\'' + t.id + '\')">' +
+        '<div style="font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:900;background:var(--green-glow);color:var(--green);border:1px solid rgba(0,230,118,0.3);padding:4px 8px;border-radius:6px;white-space:nowrap;">' + t.formation + '</div>' +
+        '<div style="flex:1;">' +
+        '<div style="font-size:14px;font-weight:600;color:var(--text);">' + t.title + '</div>' +
+        '<div style="font-size:12px;color:var(--text-dim);margin-top:2px;">' + timeAgo(t.created_at) + ' · ' + total + (currentLang === 'es' ? ' votos' : ' votes') + '</div>' +
+        '</div>' +
+        '<div style="font-family:Barlow Condensed,sans-serif;font-size:22px;font-weight:900;color:' + effClass + ';">' + pct + '%</div>' +
+        '<div style="display:flex;gap:6px;">' +
+        '<button onclick="event.stopPropagation();editTactic(\'' + t.id + '\')" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:14px;padding:4px;">✏️</button>' +
+        '<button onclick="event.stopPropagation();deleteTactic(\'' + t.id + '\')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:14px;padding:4px;">🗑️</button>' +
+        '</div></div>';
+    }).join('');
   }
 
   async function handleLogout() {
