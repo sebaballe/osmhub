@@ -620,12 +620,11 @@
             </select>
             <select id="vs-style" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;margin-bottom:8px;cursor:pointer;">
               <option value="">¿Contra qué estilo de juego?</option>
-              <option value="Contraataque">Contraataque</option>
+              <option value="Balon largo">Balón largo</option>
+              <option value="Juego de bandas">Juego de bandas</option>
               <option value="Posesion">Posesión</option>
-              <option value="Alta presion">Alta presión</option>
-              <option value="Defensivo">Defensivo</option>
-              <option value="Atacante">Atacante</option>
-              <option value="Equilibrado">Equilibrado</option>
+              <option value="Contraataque">Contraataque</option>
+              <option value="Tiros de repente">Tiros de repente</option>
             </select>
             <select id="best-situation" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;cursor:pointer;">
               <option value="">¿Cuándo usarla?</option>
@@ -1053,15 +1052,18 @@
 
   function translateVsValue(value) {
     var esToEn = {
-      'Contraataque': 'Counter-attack', 'Posesion': 'Possession', 'Posesión': 'Possession',
-      'Alta presion': 'High press', 'Alta presión': 'High press',
-      'Defensivo': 'Defensive', 'Atacante': 'Attacking', 'Equilibrado': 'Balanced',
+      'Balon largo': 'Long ball', 'Balón largo': 'Long ball',
+      'Juego de bandas': 'Wing play',
+      'Posesion': 'Possession', 'Posesión': 'Possession',
+      'Contraataque': 'Counter-attack',
+      'Tiros de repente': 'Long shots',
       'De local': 'Home', 'De visitante': 'Away', 'Ambos': 'Both',
       'Con equipo superior': 'Superior team', 'Con equipo inferior': 'Inferior team'
     };
     var enToEs = {
-      'Counter-attack': 'Contraataque', 'Possession': 'Posesión', 'High press': 'Alta presión',
-      'Defensive': 'Defensivo', 'Attacking': 'Atacante', 'Balanced': 'Equilibrado',
+      'Long ball': 'Balón largo', 'Wing play': 'Juego de bandas',
+      'Possession': 'Posesión', 'Counter-attack': 'Contraataque',
+      'Long shots': 'Tiros de repente',
       'Home': 'De local', 'Away': 'De visitante', 'Both': 'Ambos',
       'Superior team': 'Con equipo superior', 'Inferior team': 'Con equipo inferior'
     };
@@ -1516,8 +1518,8 @@
     if (vsStyleEl) {
       vsStyleEl.options[0].text = currentLang === 'es' ? '¿Contra qué estilo de juego?' : 'Against which play style?';
       var styleMap = currentLang === 'es'
-        ? ['Contraataque','Posesión','Alta presión','Defensivo','Atacante','Equilibrado']
-        : ['Counter-attack','Possession','High press','Defensive','Attacking','Balanced'];
+        ? ['Balón largo','Juego de bandas','Posesión','Contraataque','Tiros de repente']
+        : ['Long ball','Wing play','Possession','Counter-attack','Long shots'];
       for (var i = 1; i < vsStyleEl.options.length; i++) vsStyleEl.options[i].text = styleMap[i-1];
     }
     var bestSit = document.getElementById('best-situation');
