@@ -600,7 +600,7 @@
         html += '<span style="font-size:11px;background:rgba(41,121,255,0.15);color:#2979FF;padding:2px 8px;border-radius:4px;">&#128293; ' + (t.pressing || 50) + '</span>';
         html += '<span style="font-size:11px;background:rgba(0,230,118,0.1);color:#00E676;padding:2px 8px;border-radius:4px;">&#9889; ' + (t.style || 50) + '</span>';
         html += '<span style="font-size:11px;background:rgba(255,214,0,0.15);color:#FFD600;padding:2px 8px;border-radius:4px;">&#9201; ' + (t.tempo || 50) + '</span>';
-        if (t.fwd_tactic) html += '<span style="font-size:11px;background:rgba(255,61,87,0.15);color:#FF3D57;padding:2px 8px;border-radius:4px;">&#9650; ' + t.fwd_tactic + '</span>';
+        if (t.fwd_tactic) html += '<span style="font-size:11px;background:rgba(255,61,87,0.15);color:#FF3D57;padding:2px 8px;border-radius:4px;">&#9650; ' + translateTacticValue(t.fwd_tactic) + '</span>';
         html += '</div>';
       }
       html += '</div></div>';
@@ -647,9 +647,9 @@
       sliderHtml += '<div style="text-align:center;background:var(--surface);border-radius:8px;padding:10px;"><div style="font-size:10px;color:var(--yellow);font-weight:700;">' + tLbl.toUpperCase() + '</div><div style="font-size:24px;font-weight:900;color:var(--text);font-family:Barlow Condensed,sans-serif;">' + (t.tempo || 50) + '</div></div>';
       sliderHtml += '</div>';
       sliderHtml += '<div style="display:flex;flex-direction:column;gap:6px;">';
-      if (t.fwd_tactic) sliderHtml += '<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--red);font-weight:700;">&#9650; ' + fLbl + '</span><span style="color:var(--text);">' + t.fwd_tactic + '</span></div>';
-      if (t.mid_tactic) sliderHtml += '<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:#2979FF;font-weight:700;">&#9670; ' + mLbl + '</span><span style="color:var(--text);">' + t.mid_tactic + '</span></div>';
-      if (t.def_tactic) sliderHtml += '<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--green);font-weight:700;">&#9660; ' + dLbl + '</span><span style="color:var(--text);">' + t.def_tactic + '</span></div>';
+      if (t.fwd_tactic) sliderHtml += '<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--red);font-weight:700;">&#9650; ' + fLbl + '</span><span style="color:var(--text);">' + translateTacticValue(t.fwd_tactic) + '</span></div>';
+      if (t.mid_tactic) sliderHtml += '<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:#2979FF;font-weight:700;">&#9670; ' + mLbl + '</span><span style="color:var(--text);">' + translateTacticValue(t.mid_tactic) + '</span></div>';
+      if (t.def_tactic) sliderHtml += '<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--green);font-weight:700;">&#9660; ' + dLbl + '</span><span style="color:var(--text);">' + translateTacticValue(t.def_tactic) + '</span></div>';
       sliderHtml += '</div></div>';
     }
     var sliderContainer = document.getElementById('detail-slider-info');
@@ -831,6 +831,24 @@
   function getSliderLabels() { return currentLang === 'es' ? sliderLabelsEs : sliderLabelsEn; }
   function getLineTactics() { return currentLang === 'es' ? lineTacticsEs : lineTacticsEn; }
 
+  function translateTacticValue(value) {
+    var map = {
+      // EN to ES
+      'Attack only': 'Solo ataque', 'Attack & defend': 'Atacar y defender', 'Support': 'Apoyo',
+      'Protect the defence': 'Proteger defensa', 'Mixed': 'Mixto', 'Attack': 'Atacar',
+      'Defend deep': 'Defensa profunda', 'Normal': 'Normal', 'High line': 'Línea alta',
+      // ES to EN
+      'Solo ataque': 'Attack only', 'Atacar y defender': 'Attack & defend', 'Apoyo': 'Support',
+      'Proteger defensa': 'Protect the defence', 'Mixto': 'Mixed', 'Atacar': 'Attack',
+      'Defensa profunda': 'Defend deep', 'Línea alta': 'High line'
+    };
+    if (currentLang === 'es') {
+      return map[value] || value;
+    } else {
+      return map[value] || value;
+    }
+  }
+
   function updateSlider(type, val) {
     val = parseInt(val);
     document.getElementById(type+'-num').textContent = val;
@@ -978,7 +996,7 @@
       'effectiveness': 'EFFECTIVENESS',
       'total-votes': 'Total Votes',
       'it-works': '👍 It Works',
-      'didnt-work': '👎 Didn\'t Work',
+      'didnt-work': "👎 Didn't Work",
       'vote-question': 'Did this tactic work for you?',
       'vote-sub': 'Your vote helps the community find the best tactics',
       'vote-yes': '👍 YES, IT WORKED',
@@ -1062,7 +1080,7 @@
     if (document.getElementById('detail-eff-title')) document.getElementById('detail-eff-title').textContent = currentLang === 'es' ? 'Tasa de Eficacia' : 'Effectiveness Rate';
     if (document.getElementById('lbl-total-votes')) document.getElementById('lbl-total-votes').textContent = currentLang === 'es' ? 'Total Votos' : 'Total Votes';
     if (document.getElementById('lbl-it-works')) document.getElementById('lbl-it-works').textContent = currentLang === 'es' ? '👍 Funcionó' : '👍 It Works';
-    if (document.getElementById('lbl-didnt-work')) document.getElementById('lbl-didnt-work').textContent = currentLang === 'es' ? '👎 No Funcionó' : '👎 Didn\'t Work';
+    if (document.getElementById('lbl-didnt-work')) document.getElementById('lbl-didnt-work').textContent = currentLang === 'es' ? '👎 No Funcionó' : "👎 Didn't Work";
     // Context labels
     var ctxLabels = document.querySelectorAll('.context-label');
     if (ctxLabels[0]) ctxLabels[0].textContent = t('ctx-q-location');
