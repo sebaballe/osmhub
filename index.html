@@ -340,6 +340,7 @@
         <div class="stat-cell"><span class="stat-val" id="detail-votes-no" style="color:var(--red)">0</span><div class="stat-lbl" id="lbl-didnt-work">👎 No Funcionó</div></div>
       </div>
       <div class="pitch-wrap">
+        <div id="detail-slider-info"></div>
         <div class="pitch">
           <div class="pitch-lines"></div>
           <div class="pitch-center-line"></div>
@@ -575,6 +576,7 @@
       var total = t.votes_yes + t.votes_no;
       var pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
       var effClass = pct >= 70 ? 'high' : pct >= 50 ? 'mid' : 'low';
+      var effLbl = currentLang === 'es' ? 'EFICACIA' : 'EFFECTIVENESS';
       var html = '<div class="tactic-card" onclick="loadTacticDetail(\'' + t.id + '\')">';
       html += '<div class="card-top">';
       html += '<div class="vote-col">';
@@ -589,14 +591,23 @@
       html += '<div class="card-meta">by @' + t.author + ' &middot; ' + timeAgo(t.created_at) + '</div></div>';
       html += '</div>';
       html += '<div class="effectiveness-bar">';
-      html += '<span class="eff-label">EFFECTIVENESS</span>';
+      html += '<span class="eff-label">' + effLbl + '</span>';
       html += '<div class="bar-track"><div class="bar-fill ' + effClass + '" style="width:' + pct + '%"></div></div>';
       html += '<span class="eff-pct ' + effClass + '">' + pct + '%</span>';
-      html += '</div></div></div>';
+      html += '</div>';
+      if (t.pressing || t.style || t.tempo) {
+        html += '<div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">';
+        html += '<span style="font-size:11px;background:rgba(41,121,255,0.15);color:#2979FF;padding:2px 8px;border-radius:4px;">&#128293; ' + (t.pressing || 50) + '</span>';
+        html += '<span style="font-size:11px;background:rgba(0,230,118,0.1);color:#00E676;padding:2px 8px;border-radius:4px;">&#9889; ' + (t.style || 50) + '</span>';
+        html += '<span style="font-size:11px;background:rgba(255,214,0,0.15);color:#FFD600;padding:2px 8px;border-radius:4px;">&#9201; ' + (t.tempo || 50) + '</span>';
+        if (t.fwd_tactic) html += '<span style="font-size:11px;background:rgba(255,61,87,0.15);color:#FF3D57;padding:2px 8px;border-radius:4px;">&#9650; ' + t.fwd_tactic + '</span>';
+        html += '</div>';
+      }
+      html += '</div></div>';
       html += '<div class="card-footer">';
-      html += '<span>&#128077; ' + t.votes_yes + ' yes</span>';
-      html += '<span>&#128078; ' + t.votes_no + ' no</span>';
-      html += '<span>&#128065; ' + (t.views || 0) + ' views</span>';
+      html += '<span>&#128077; ' + t.votes_yes + '</span>';
+      html += '<span>&#128078; ' + t.votes_no + '</span>';
+      html += '<span>&#128065; ' + (t.views || 0) + '</span>';
       html += '</div></div>';
       return html;
     }).join('');
@@ -615,10 +626,34 @@
     document.getElementById('detail-title').textContent = t.title;
     document.getElementById('detail-author').textContent = 'by @' + t.author + ' · ' + timeAgo(t.created_at) + ' · ' + (t.views || 0) + ' views';
     document.getElementById('detail-pct').textContent = pct + '%';
-    document.getElementById('detail-eff-sub').textContent = 'Based on ' + total + ' votes from real OSM players';
+    document.getElementById('detail-eff-sub').textContent = (currentLang === 'es' ? 'Basado en ' : 'Based on ') + total + (currentLang === 'es' ? ' votos reales de jugadores de OSM' : ' votes from real OSM players');
     document.getElementById('detail-votes-total').textContent = total;
     document.getElementById('detail-votes-yes').textContent = t.votes_yes;
     document.getElementById('detail-votes-no').textContent = t.votes_no;
+    // Show slider values in detail
+    var sliderHtml = '';
+    if (t.pressing !== null || t.style !== null || t.tempo !== null) {
+      var pLbl = currentLang === 'es' ? 'Presión' : 'Pressing';
+      var sLbl = currentLang === 'es' ? 'Estilo' : 'Style';
+      var tLbl = currentLang === 'es' ? 'Ritmo' : 'Tempo';
+      var fLbl = currentLang === 'es' ? 'Delanteros' : 'Forwards';
+      var mLbl = currentLang === 'es' ? 'Mediocampistas' : 'Midfielders';
+      var dLbl = currentLang === 'es' ? 'Defensores' : 'Defenders';
+      sliderHtml = '<div style="background:var(--surface2);border-radius:12px;padding:16px;margin:16px 0;">';
+      sliderHtml += '<div style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:1px;margin-bottom:12px;">' + (currentLang === 'es' ? 'CONFIGURACIÓN TÁCTICA' : 'TACTIC SETTINGS') + '</div>';
+      sliderHtml += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;">';
+      sliderHtml += '<div style="text-align:center;background:var(--surface);border-radius:8px;padding:10px;"><div style="font-size:10px;color:#2979FF;font-weight:700;">' + pLbl.toUpperCase() + '</div><div style="font-size:24px;font-weight:900;color:var(--text);font-family:Barlow Condensed,sans-serif;">' + (t.pressing || 50) + '</div></div>';
+      sliderHtml += '<div style="text-align:center;background:var(--surface);border-radius:8px;padding:10px;"><div style="font-size:10px;color:var(--green);font-weight:700;">' + sLbl.toUpperCase() + '</div><div style="font-size:24px;font-weight:900;color:var(--text);font-family:Barlow Condensed,sans-serif;">' + (t.style || 50) + '</div></div>';
+      sliderHtml += '<div style="text-align:center;background:var(--surface);border-radius:8px;padding:10px;"><div style="font-size:10px;color:var(--yellow);font-weight:700;">' + tLbl.toUpperCase() + '</div><div style="font-size:24px;font-weight:900;color:var(--text);font-family:Barlow Condensed,sans-serif;">' + (t.tempo || 50) + '</div></div>';
+      sliderHtml += '</div>';
+      sliderHtml += '<div style="display:flex;flex-direction:column;gap:6px;">';
+      if (t.fwd_tactic) sliderHtml += '<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--red);font-weight:700;">&#9650; ' + fLbl + '</span><span style="color:var(--text);">' + t.fwd_tactic + '</span></div>';
+      if (t.mid_tactic) sliderHtml += '<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:#2979FF;font-weight:700;">&#9670; ' + mLbl + '</span><span style="color:var(--text);">' + t.mid_tactic + '</span></div>';
+      if (t.def_tactic) sliderHtml += '<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--green);font-weight:700;">&#9660; ' + dLbl + '</span><span style="color:var(--text);">' + t.def_tactic + '</span></div>';
+      sliderHtml += '</div></div>';
+    }
+    var sliderContainer = document.getElementById('detail-slider-info');
+    if (sliderContainer) sliderContainer.innerHTML = sliderHtml;
     // Reset vote steps
     document.getElementById('vote-step1').style.display = 'block';
     document.getElementById('vote-step2').style.display = 'none';
@@ -716,19 +751,22 @@
 
   // ===== SHARE TACTIC =====
   async function shareTactic() {
-    const formation = document.querySelector('.form-btn.active')?.textContent.trim();
-    const title = document.getElementById('tactic-title-input')?.value.trim();
-    const author = document.getElementById('tactic-author-input')?.value.trim();
-    const pressing = document.getElementById('pressing-num')?.textContent;
-    const style = document.getElementById('style-num')?.textContent;
-    const tempo = document.getElementById('tempo-num')?.textContent;
-    if (!title || !author) { alert('Por favor completá el título y tu nombre'); return; }
-    const { error } = await db.from('tactics').insert({
-      formation, title, author,
-      description: 'Pressing: ' + pressing + ' | Style: ' + style + ' | Tempo: ' + tempo
-    });
-    if (error) { alert('Error al guardar. Intentá de nuevo.'); return; }
-    alert('¡Táctica compartida! Ya aparece en el feed.');
+    var formation = document.querySelector('.form-btn.active') ? document.querySelector('.form-btn.active').textContent.trim() : '';
+    var title = document.getElementById('tactic-title-input') ? document.getElementById('tactic-title-input').value.trim() : '';
+    var author = document.getElementById('tactic-author-input') ? document.getElementById('tactic-author-input').value.trim() : '';
+    var pressing = parseInt(document.getElementById('pressing-num') ? document.getElementById('pressing-num').textContent : 50);
+    var style = parseInt(document.getElementById('style-num') ? document.getElementById('style-num').textContent : 50);
+    var tempo = parseInt(document.getElementById('tempo-num') ? document.getElementById('tempo-num').textContent : 50);
+    var fwd_tactic = document.getElementById('fwd-label') ? document.getElementById('fwd-label').textContent.trim() : '';
+    var mid_tactic = document.getElementById('mid-label') ? document.getElementById('mid-label').textContent.trim() : '';
+    var def_tactic = document.getElementById('def-label') ? document.getElementById('def-label').textContent.trim() : '';
+    if (!title || !author) { alert(currentLang === 'es' ? 'Por favor completá el título y tu nombre' : 'Please fill in the title and your name'); return; }
+    var payload = { formation, title, author, pressing, style, tempo, fwd_tactic, mid_tactic, def_tactic };
+    var res = await db.from('tactics').insert(payload);
+    if (res.error) { alert(currentLang === 'es' ? 'Error al guardar. Intentá de nuevo.' : 'Error saving. Please try again.'); return; }
+    alert(currentLang === 'es' ? '¡Táctica compartida! Ya aparece en el feed.' : 'Tactic shared! It now appears in the feed.');
+    document.getElementById('tactic-title-input').value = '';
+    document.getElementById('tactic-author-input').value = '';
     showScreen('feed', document.querySelectorAll('.tab')[0]);
     loadTactics();
   }
