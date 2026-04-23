@@ -1086,29 +1086,66 @@
     document.getElementById('auth-msg').textContent = '';
   }
 
-  async function handleLogin() {
-    var email = document.getElementById('login-email').value.trim();
-    var password = document.getElementById('login-password').value;
-    var msg = document.getElementById('auth-msg');
-    if (!email || !password) { msg.textContent = currentLang === 'es' ? 'Completá todos los campos' : 'Fill in all fields'; msg.className = 'auth-msg error'; return; }
-    msg.textContent = currentLang === 'es' ? 'Entrando...' : 'Signing in...'; msg.className = 'auth-msg';
-    var res = await db.auth.signInWithPassword({ email: email, password: password });
-    if (res.error) { msg.textContent = currentLang === 'es' ? 'Email o contraseña incorrectos' : 'Wrong email or password'; msg.className = 'auth-msg error'; return; }
-    msg.textContent = currentLang === 'es' ? '¡Bienvenido!' : 'Welcome!'; msg.className = 'auth-msg success';
-    setTimeout(closeAuth, 1000);
-  }
-
   async function handleRegister() {
     var username = document.getElementById('reg-username').value.trim();
     var email = document.getElementById('reg-email').value.trim();
     var password = document.getElementById('reg-password').value;
     var msg = document.getElementById('auth-msg');
-    if (!username || !email || !password) { msg.textContent = currentLang === 'es' ? 'Completá todos los campos' : 'Fill in all fields'; msg.className = 'auth-msg error'; return; }
-    if (password.length < 6) { msg.textContent = currentLang === 'es' ? 'La contraseña debe tener al menos 6 caracteres' : 'Password must be at least 6 characters'; msg.className = 'auth-msg error'; return; }
-    msg.textContent = currentLang === 'es' ? 'Creando cuenta...' : 'Creating account...'; msg.className = 'auth-msg';
-    var res = await db.auth.signUp({ email: email, password: password, options: { data: { username: username } } });
-    if (res.error) { msg.textContent = res.error.message; msg.className = 'auth-msg error'; return; }
-    msg.textContent = currentLang === 'es' ? '¡Cuenta creada! Revisá tu email para confirmar.' : 'Account created! Check your email to confirm.'; msg.className = 'auth-msg success';
+    msg.textContent = '';
+    if (!username || !email || !password) {
+      msg.textContent = currentLang === 'es' ? 'Completá todos los campos' : 'Fill in all fields';
+      msg.className = 'auth-msg error'; return;
+    }
+    if (password.length < 6) {
+      msg.textContent = currentLang === 'es' ? 'La contraseña debe tener al menos 6 caracteres' : 'Password must be at least 6 characters';
+      msg.className = 'auth-msg error'; return;
+    }
+    msg.textContent = currentLang === 'es' ? 'Creando cuenta...' : 'Creating account...';
+    msg.className = 'auth-msg';
+    try {
+      var res = await db.auth.signUp({
+        email: email,
+        password: password,
+        options: { data: { username: username } }
+      });
+      if (res.error) {
+        msg.textContent = res.error.message;
+        msg.className = 'auth-msg error';
+        return;
+      }
+      msg.textContent = currentLang === 'es' ? '¡Cuenta creada! Ya podés usar OSM Hub.' : 'Account created! You can now use OSM Hub.';
+      msg.className = 'auth-msg success';
+      setTimeout(closeAuth, 2000);
+    } catch(e) {
+      msg.textContent = 'Error: ' + e.message;
+      msg.className = 'auth-msg error';
+    }
+  }
+
+  async function handleLogin() {
+    var email = document.getElementById('login-email').value.trim();
+    var password = document.getElementById('login-password').value;
+    var msg = document.getElementById('auth-msg');
+    msg.textContent = '';
+    if (!email || !password) {
+      msg.textContent = currentLang === 'es' ? 'Completá todos los campos' : 'Fill in all fields';
+      msg.className = 'auth-msg error'; return;
+    }
+    msg.textContent = currentLang === 'es' ? 'Entrando...' : 'Signing in...';
+    msg.className = 'auth-msg';
+    try {
+      var res = await db.auth.signInWithPassword({ email: email, password: password });
+      if (res.error) {
+        msg.textContent = currentLang === 'es' ? 'Email o contraseña incorrectos' : 'Wrong email or password';
+        msg.className = 'auth-msg error'; return;
+      }
+      msg.textContent = currentLang === 'es' ? '¡Bienvenido!' : 'Welcome!';
+      msg.className = 'auth-msg success';
+      setTimeout(closeAuth, 1000);
+    } catch(e) {
+      msg.textContent = 'Error: ' + e.message;
+      msg.className = 'auth-msg error';
+    }
   }
 
   async function handleLogout() {
