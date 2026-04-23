@@ -746,7 +746,7 @@
     feed.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-dim)">Cargando tácticas...</div>';
     const { data, error } = await db.from('tactics').select('*').order('votes_yes', { ascending: false }).limit(20);
     if (error || !data || data.length === 0) {
-      feed.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-dim)">Aún no hay tácticas. ¡Sé el primero en compartir una!</div>';
+      feed.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-dim)">' + (currentLang === 'es' ? 'Aún no hay tácticas. ¡Sé el primero en compartir una!' : 'No tactics yet. Be the first to share one!') + '</div>';
       return;
     }
     feed.innerHTML = data.map(function(t) {
