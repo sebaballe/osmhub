@@ -1688,10 +1688,14 @@
     // Load real stats
     var tacticsRes = await db.from('tactics').select('id', { count: 'exact', head: true });
     var votesRes = await db.from('votes').select('id', { count: 'exact', head: true });
+    var usersRes = await db.from('profiles').select('id', { count: 'exact', head: true });
     var tCount = tacticsRes.count || 0;
     var vCount = votesRes.count || 0;
+    var uCount = usersRes.count || 0;
+    var statUsers = document.getElementById('banner-stat-users');
     var statTactics = document.getElementById('banner-stat-tactics');
     var statVotes = document.getElementById('banner-stat-votes');
+    if (statUsers) statUsers.textContent = uCount > 0 ? uCount + '+' : '40+';
     if (statTactics) statTactics.textContent = tCount + '+';
     if (statVotes) statVotes.textContent = vCount + '+';
     // Translate
