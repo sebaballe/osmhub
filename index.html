@@ -379,7 +379,7 @@
   </div>
   <div class="nav-badge">FAN-MADE</div>
   <div class="nav-right">
-    <button class="btn-ghost" id="lang-btn" onclick="toggleLang()">🌐 EN / ES</button>
+    <button class="btn-ghost" id="lang-btn" onclick="toggleLang()">🌐 ES / EN</button>
     <div class="user-menu" id="user-menu">
       <button class="btn-ghost" id="auth-btn" onclick="openAuth()">Iniciar sesión</button>
     </div>
@@ -1560,7 +1560,7 @@
     }).join('');
   }
   // ===== AUTH =====
-  var currentLang = 'es';
+  var currentLang = 'en';
   var currentUser = null;
 
   async function initAuth() {
@@ -2386,6 +2386,7 @@
 
   // Load feed on start
   initAuth();
+  applyTranslations();
   loadTactics();
   setTimeout(updateBanner, 500);
 </script>
