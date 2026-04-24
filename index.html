@@ -1997,6 +1997,11 @@
     if (commentLoginMsg) commentLoginMsg.textContent = currentLang === 'es' ? 'Iniciá sesión para comentar' : 'Sign in to comment';
     var commentLoginLink = document.getElementById('comment-login-link');
     if (commentLoginLink) commentLoginLink.textContent = currentLang === 'es' ? 'Entrar' : 'Sign in';
+    // Update Cualquiera/Any option in vs-formation and filter
+    var vsFormEl = document.getElementById('vs-formation');
+    if (vsFormEl && vsFormEl.options[1]) vsFormEl.options[1].text = currentLang === 'es' ? '🌐 Cualquiera' : '🌐 Any';
+    var filterFormEl = document.getElementById('filter-formation');
+    if (filterFormEl && filterFormEl.options[1]) filterFormEl.options[1].text = currentLang === 'es' ? '🌐 Cualquiera / Any' : '🌐 Any / Cualquiera';
     var filterFormPh = document.getElementById('filter-formation-ph');
     if (filterFormPh) filterFormPh.text = currentLang === 'es' ? '🏟️ Formación' : '🏟️ Formation';
     var filterStylePh = document.getElementById('filter-style-ph');
