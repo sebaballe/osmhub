@@ -399,6 +399,35 @@
 <div id="screen-feed" class="screen active">
   <div class="feed-layout">
     <div class="main-feed">
+      <!-- WELCOME BANNER (shown when not logged in) -->
+      <div id="welcome-banner" style="display:none;background:linear-gradient(135deg,rgba(0,230,118,0.08),rgba(41,121,255,0.06));border:1px solid rgba(0,230,118,0.25);border-radius:16px;padding:20px;margin-bottom:20px;">
+        <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
+          <div style="flex:1;min-width:200px;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:4px;" id="banner-title">🏆 Unite a la comunidad de tácticas</div>
+            <div style="font-size:13px;color:var(--text-dim);line-height:1.5;" id="banner-sub">Registrate gratis para votar tácticas, comentar y compartir las tuyas. Ya somos managers de todo el mundo.</div>
+          </div>
+          <button onclick="openAuth()" style="background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:12px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;white-space:nowrap;flex-shrink:0;" id="banner-btn">⚡ REGISTRARME</button>
+        </div>
+        <div style="display:flex;gap:20px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,230,118,0.15);flex-wrap:wrap;">
+          <div style="text-align:center;">
+            <div id="banner-stat-users" style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--green);">40+</div>
+            <div style="font-size:11px;color:var(--text-dim);" id="banner-stat-users-label">managers activos</div>
+          </div>
+          <div style="text-align:center;">
+            <div id="banner-stat-tactics" style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--blue);">-</div>
+            <div style="font-size:11px;color:var(--text-dim);" id="banner-stat-tactics-label">tácticas publicadas</div>
+          </div>
+          <div style="text-align:center;">
+            <div id="banner-stat-votes" style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--yellow);">-</div>
+            <div style="font-size:11px;color:var(--text-dim);" id="banner-stat-votes-label">votos de la comunidad</div>
+          </div>
+          <div style="text-align:center;">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--text-mid);">🌍</div>
+            <div style="font-size:11px;color:var(--text-dim);" id="banner-stat-world-label">managers de todo el mundo</div>
+          </div>
+        </div>
+      </div>
+
       <div class="feed-header">
         <div class="feed-title" id="feed-title-label">TÁCTICAS DE MODA</div>
         <div class="sort-pills">
@@ -906,7 +935,7 @@
     document.getElementById('screen-' + id).classList.add('active');
     if (tabEl) tabEl.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (id === 'feed') loadTactics();
+    if (id === 'feed') { loadTactics(); updateBanner(); }
     if (id === 'ranking') loadRankings();
     if (id === 'events') renderEvents();
     if (id === 'profile') loadProfile();
@@ -1651,8 +1680,38 @@
     }
   }
 
+  async function updateBanner() {
+    var banner = document.getElementById('welcome-banner');
+    if (!banner) return;
+    if (currentUser) { banner.style.display = 'none'; return; }
+    banner.style.display = 'block';
+    // Load real stats
+    var tacticsRes = await db.from('tactics').select('id', { count: 'exact', head: true });
+    var votesRes = await db.from('votes').select('id', { count: 'exact', head: true });
+    var tCount = tacticsRes.count || 0;
+    var vCount = votesRes.count || 0;
+    var statTactics = document.getElementById('banner-stat-tactics');
+    var statVotes = document.getElementById('banner-stat-votes');
+    if (statTactics) statTactics.textContent = tCount + '+';
+    if (statVotes) statVotes.textContent = vCount + '+';
+    // Translate
+    var title = document.getElementById('banner-title');
+    var sub = document.getElementById('banner-sub');
+    var btn = document.getElementById('banner-btn');
+    var ul = document.getElementById('banner-stat-users-label');
+    var tl = document.getElementById('banner-stat-tactics-label');
+    var vl = document.getElementById('banner-stat-votes-label');
+    var wl = document.getElementById('banner-stat-world-label');
+    if (title) title.textContent = currentLang === 'es' ? '🏆 Unite a la comunidad de tácticas' : '🏆 Join the tactics community';
+    if (sub) sub.textContent = currentLang === 'es' ? 'Registrate gratis para votar tácticas, comentar y compartir las tuyas. Ya somos managers de todo el mundo.' : 'Sign up free to vote tactics, comment and share yours. Managers from all over the world are already here.';
+    if (btn) btn.textContent = currentLang === 'es' ? '⚡ REGISTRARME' : '⚡ SIGN UP FREE';
+    if (ul) ul.textContent = currentLang === 'es' ? 'managers activos' : 'active managers';
+    if (tl) tl.textContent = currentLang === 'es' ? 'tácticas publicadas' : 'tactics published';
+    if (vl) vl.textContent = currentLang === 'es' ? 'votos de la comunidad' : 'community votes';
+    if (wl) wl.textContent = currentLang === 'es' ? 'managers de todo el mundo' : 'managers worldwide';
+  }
+
   async function deleteTactic(id) {
-    var confirm_msg = currentLang === 'es' ? '¿Estás seguro que querés eliminar esta táctica?' : 'Are you sure you want to delete this tactic?';
     if (!confirm(confirm_msg)) return;
     var res = await db.rpc('delete_tactic_cascade', { tactic_uuid: id, user_uuid: currentUser.id });
     if (res.error) { alert('Error al eliminar: ' + res.error.message); return; }
@@ -2127,6 +2186,7 @@
     if (profileScreen && profileScreen.classList.contains('active')) loadProfile();
     // Update nav user menu language
     updateNavForUser();
+    updateBanner();
   }
 
   // ===== FORMATION POSITIONS =====
@@ -2322,6 +2382,7 @@
   // Load feed on start
   initAuth();
   loadTactics();
+  updateBanner();
 </script>
 </body>
 </html>
