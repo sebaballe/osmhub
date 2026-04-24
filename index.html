@@ -498,7 +498,16 @@
           <button class="vote-no" onclick="showVoteContext('no')">👎 NO FUNCIONÓ</button>
         </div>
       </div>
-      <div id="vote-step2" style="display:none">
+      <div id="vote-step-register" style="display:none;text-align:center;padding:8px 0;">
+        <div style="font-size:32px;margin-bottom:12px;">🏆</div>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--text);margin-bottom:8px;" id="vote-register-title">Tu voto vale para la comunidad</div>
+        <div style="font-size:13px;color:var(--text-dim);margin-bottom:20px;line-height:1.6;" id="vote-register-sub">Registrate gratis para votar. Tus votos ayudan a miles de managers a encontrar las mejores tácticas para cada situación.</div>
+        <button onclick="openAuth()" style="width:100%;background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;margin-bottom:10px;" id="vote-register-btn">⚡ REGISTRARME GRATIS</button>
+        <div style="font-size:12px;color:var(--text-dim);" id="vote-register-note">Solo tu email. Sin spam. Sin tarjeta.</div>
+        <div style="margin-top:12px;">
+          <span onclick="document.getElementById('vote-step-register').style.display='none';document.getElementById('vote-step1').style.display='block';" style="font-size:12px;color:var(--text-dim);cursor:pointer;text-decoration:underline;" id="vote-register-back">Volver</span>
+        </div>
+      </div>
         <div class="vote-question" id="vote-result-title">👍 ¡Gracias! Contanos el contexto</div>
         <div class="vote-sub">Opcional pero muy útil para la comunidad</div>
         <div class="context-grid">
@@ -1028,6 +1037,7 @@
     document.getElementById('vote-step1').style.display = 'block';
     document.getElementById('vote-step2').style.display = 'none';
     document.getElementById('vote-step3').style.display = 'none';
+    document.getElementById('vote-step-register').style.display = 'none';
     // Update DB views
     await db.from('tactics').update({ views: (t.views || 0) + 1 }).eq('id', id);
     loadComments(id);
@@ -1127,10 +1137,18 @@
   // ===== VOTE FLOW =====
   let currentVoteResult = null;
   function showVoteContext(result) {
+    if (!currentUser) {
+      // Show compelling register message
+      document.getElementById('vote-step1').style.display = 'none';
+      document.getElementById('vote-step-register').style.display = 'block';
+      return;
+    }
     currentVoteResult = result;
     document.getElementById('vote-step1').style.display = 'none';
     document.getElementById('vote-step2').style.display = 'block';
-    document.getElementById('vote-result-title').textContent = result === 'yes' ? '👍 ¡Gracias! Contanos el contexto' : '👎 Gracias igual. ¿En qué contexto?';
+    document.getElementById('vote-result-title').textContent = result === 'yes'
+      ? (currentLang === 'es' ? '👍 ¡Gracias! Contanos el contexto' : '👍 Thanks! Tell us the context')
+      : (currentLang === 'es' ? '👎 Gracias igual. ¿En qué contexto?' : '👎 Thanks anyway. What was the context?');
   }
   function selectCtx(el, group) {
     el.closest('.context-opts').querySelectorAll('.ctx-opt').forEach(o => o.classList.remove('selected'));
@@ -1933,6 +1951,16 @@
     if (clearBtn) clearBtn.textContent = currentLang === 'es' ? '✕ Limpiar' : '✕ Clear';
     var feedTitleLabel = document.getElementById('feed-title-label');
     if (feedTitleLabel) feedTitleLabel.textContent = currentLang === 'es' ? 'TÁCTICAS DE MODA' : 'TRENDING TACTICS';
+    var voteRegTitle = document.getElementById('vote-register-title');
+    if (voteRegTitle) voteRegTitle.textContent = currentLang === 'es' ? 'Tu voto vale para la comunidad' : 'Your vote matters to the community';
+    var voteRegSub = document.getElementById('vote-register-sub');
+    if (voteRegSub) voteRegSub.textContent = currentLang === 'es' ? 'Registrate gratis para votar. Tus votos ayudan a miles de managers a encontrar las mejores tácticas para cada situación.' : 'Sign up free to vote. Your votes help thousands of managers find the best tactics for every situation.';
+    var voteRegBtn = document.getElementById('vote-register-btn');
+    if (voteRegBtn) voteRegBtn.textContent = currentLang === 'es' ? '⚡ REGISTRARME GRATIS' : '⚡ SIGN UP FREE';
+    var voteRegNote = document.getElementById('vote-register-note');
+    if (voteRegNote) voteRegNote.textContent = currentLang === 'es' ? 'Solo tu email. Sin spam. Sin tarjeta.' : 'Just your email. No spam. No credit card.';
+    var voteRegBack = document.getElementById('vote-register-back');
+    if (voteRegBack) voteRegBack.textContent = currentLang === 'es' ? 'Volver' : 'Go back';
     var commentsTitleLabel = document.getElementById('comments-title-label');
     if (commentsTitleLabel) commentsTitleLabel.textContent = currentLang === 'es' ? 'COMENTARIOS' : 'COMMENTS';
     // Builder labels
