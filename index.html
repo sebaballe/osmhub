@@ -1403,22 +1403,31 @@
   async function loadRankings() {
     const table = document.getElementById('rankings-body');
     if (!table) return;
-    const { data } = await db.from('tactics').select('*').order('votes_yes', { ascending: false }).limit(10);
+    // Load more tactics to sort by percentage
+    const { data } = await db.from('tactics').select('*').gt('votes_yes', 0).limit(50);
     if (!data || data.length === 0) {
-      table.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-dim)">Aún no hay datos suficientes</div>';
+      table.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-dim)">' + (currentLang === 'es' ? 'Aún no hay datos suficientes' : 'Not enough data yet') + '</div>';
       return;
     }
+    // Sort by effectiveness percentage, minimum 1 vote
+    var sorted = data
+      .map(function(t) {
+        var total = t.votes_yes + t.votes_no;
+        var pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
+        return Object.assign({}, t, { pct: pct, total: total });
+      })
+      .filter(function(t) { return t.total > 0; })
+      .sort(function(a, b) { return b.pct - a.pct || b.total - a.total; })
+      .slice(0, 10);
     const medals = ['p1','p2','p3'];
-    table.innerHTML = data.map((t, i) => {
-      const total = t.votes_yes + t.votes_no;
-      const pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
-      const effClass = pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--yellow)' : 'var(--red)';
+    table.innerHTML = sorted.map(function(t, i) {
+      const effClass = t.pct >= 70 ? 'var(--green)' : t.pct >= 50 ? 'var(--yellow)' : 'var(--red)';
       var h2 = '<div class="ranking-row" onclick="loadTacticDetail(\'' + t.id + '\')">';
       h2 += '<div class="rank-pos ' + (medals[i] || '') + '">' + (i+1) + '</div>';
       h2 += '<div><div class="rank-formation">' + t.formation + '</div><div class="rank-sub">' + t.title.substring(0,30) + '...</div></div>';
-      h2 += '<div class="rank-eff" style="color:' + effClass + '">' + pct + '%</div>';
-      h2 += '<div class="rank-votes">' + total + '</div>';
-      h2 += '<div class="rank-trend">' + (i < 3 ? 'up' : '-') + '</div></div>';
+      h2 += '<div class="rank-eff" style="color:' + effClass + '">' + t.pct + '%</div>';
+      h2 += '<div class="rank-votes">' + t.total + ' ' + (currentLang === 'es' ? 'votos' : 'votes') + '</div>';
+      h2 += '</div>';
       return h2;
     }).join('');
   }
