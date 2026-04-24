@@ -389,7 +389,7 @@
 
 <div class="tabs">
   <div class="tab active" onclick="showScreen('feed',this)">🔥 Tendencia</div>
-  <div class="tab" onclick="showScreen('detail',this)">📋 Detalle</div>
+  <div class="tab" onclick="showScreen('detail',this)" id="tab-detail" style="display:none">📋 Detalle</div>
   <div class="tab" onclick="showScreen('builder',this)">⚽ Alineaciones</div>
   <div class="tab" onclick="showScreen('ranking',this)">🏆 Rankings</div>
   <div class="tab" onclick="showScreen('events',this)" id="tab-events">🗓️ Eventos</div>
@@ -463,6 +463,9 @@
 
 <!-- ===== DETAIL ===== -->
 <div id="screen-detail" class="screen">
+  <div style="max-width:700px;margin:0 auto;padding:16px 16px 0;">
+    <button onclick="showScreen('feed',document.querySelectorAll('.tab')[0])" id="btn-back-feed" style="background:none;border:none;color:var(--text-dim);font-size:14px;font-weight:600;cursor:pointer;padding:0 0 12px 0;display:flex;align-items:center;gap:6px;font-family:'Barlow',sans-serif;">← <span id="back-feed-label">Volver al feed</span></button>
+  </div>
   <div class="detail-page">
     <div class="detail-hero">
       <div class="detail-hero-top">
@@ -2036,6 +2039,8 @@
     if (voteRegNote) voteRegNote.textContent = currentLang === 'es' ? 'Solo tu email. Sin spam. Sin tarjeta.' : 'Just your email. No spam. No credit card.';
     var voteRegBack = document.getElementById('vote-register-back');
     if (voteRegBack) voteRegBack.textContent = currentLang === 'es' ? 'Volver' : 'Go back';
+    var backFeedLabel = document.getElementById('back-feed-label');
+    if (backFeedLabel) backFeedLabel.textContent = currentLang === 'es' ? 'Volver al feed' : 'Back to feed';
     var commentsTitleLabel = document.getElementById('comments-title-label');
     if (commentsTitleLabel) commentsTitleLabel.textContent = currentLang === 'es' ? 'COMENTARIOS' : 'COMMENTS';
     // Builder labels
