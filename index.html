@@ -1111,6 +1111,12 @@
       if (voteCheck.data) {
         alreadyVoted = true;
         var vs1 = document.getElementById('vote-step1');
+        var vs2 = document.getElementById('vote-step2');
+        var vs3 = document.getElementById('vote-step3');
+        var vsr = document.getElementById('vote-step-register');
+        if (vs2) vs2.style.display = 'none';
+        if (vs3) vs3.style.display = 'none';
+        if (vsr) vsr.style.display = 'none';
         if (vs1) {
           var prevResult = voteCheck.data.result;
           vs1.innerHTML = '<div style="text-align:center;padding:16px 0;">' +
