@@ -700,7 +700,7 @@
               <option value="Tiros de repente">Tiros de repente</option>
             </select>
             <select id="best-situation" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;margin-bottom:12px;cursor:pointer;">
-              <option value="">¿Cuándo usarla?</option>
+              <option value="">¿Tu situación al usar esta táctica?</option>
               <option value="Local · Superior">🏠 Local · Superior</option>
               <option value="Local · Inferior">🏠 Local · Inferior</option>
               <option value="Visitante · Superior">✈️ Visitante · Superior</option>
@@ -995,8 +995,13 @@
         html += '<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);display:flex;gap:6px;flex-wrap:wrap;">';
         if (t.vs_formation) html += '<span style="font-size:11px;background:rgba(255,61,87,0.12);color:var(--red);padding:2px 8px;border-radius:4px;font-weight:600;">⚔️ vs ' + t.vs_formation + '</span>';
         if (t.vs_style) html += '<span style="font-size:11px;background:rgba(41,121,255,0.12);color:var(--blue);padding:2px 8px;border-radius:4px;font-weight:600;">🎮 ' + translateVsValue(t.vs_style) + '</span>';
-        if (t.best_situation) html += '<span style="font-size:11px;background:rgba(0,230,118,0.1);color:var(--green);padding:2px 8px;border-radius:4px;font-weight:600;">📍 ' + translateVsValue(t.best_situation) + '</span>';
         html += '</div>';
+        if (t.best_situation) {
+          html += '<div style="margin-top:4px;display:flex;gap:6px;align-items:center;">';
+          html += '<span style="font-size:10px;font-weight:700;color:var(--text-dim);letter-spacing:0.5px;">' + (currentLang === 'es' ? 'TU SIT:' : 'YOUR SIT:') + '</span>';
+          html += '<span style="font-size:11px;background:rgba(0,230,118,0.1);color:var(--green);padding:2px 8px;border-radius:4px;font-weight:600;">📍 ' + translateVsValue(t.best_situation) + '</span>';
+          html += '</div>';
+        }
       }
       if (t.pressing || t.style || t.tempo) {
         html += '<span style="font-size:11px;background:rgba(41,121,255,0.15);color:#2979FF;padding:2px 8px;border-radius:4px;">&#128293; ' + (t.pressing || 50) + '</span>';
@@ -1077,12 +1082,20 @@
         vsHtml += '<div style="background:var(--surface2);border-radius:12px;padding:14px 16px;margin-bottom:16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">';
         vsHtml += '<span style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;">' + (currentLang === 'es' ? 'ESTILO PROPIO:' : 'OWN STYLE:') + '</span>';
         if (t.own_style) vsHtml += '<span style="font-size:13px;background:var(--surface2);border:1px solid var(--border2);color:var(--text-mid);padding:4px 10px;border-radius:6px;font-weight:700;">🎮 ' + translateVsValue(t.own_style) + '</span>';
-        vsHtml += '</div><div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:8px;">';
-        vsHtml += '<span style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;">' + (currentLang === 'es' ? 'MEJOR CONTRA:' : 'BEST AGAINST:') + '</span>';
-        if (t.vs_formation) vsHtml += '<span style="font-size:13px;background:rgba(255,61,87,0.12);color:var(--red);padding:4px 10px;border-radius:6px;font-weight:700;">⚔️ ' + t.vs_formation + '</span>';
-        if (t.vs_style) vsHtml += '<span style="font-size:13px;background:rgba(41,121,255,0.12);color:var(--blue);padding:4px 10px;border-radius:6px;font-weight:700;">🎮 ' + translateVsValue(t.vs_style) + '</span>';
-        if (t.best_situation) vsHtml += '<span style="font-size:13px;background:rgba(0,230,118,0.1);color:var(--green);padding:4px 10px;border-radius:6px;font-weight:700;">📍 ' + translateVsValue(t.best_situation) + '</span>';
         vsHtml += '</div>';
+        if (t.vs_formation || t.vs_style) {
+          vsHtml += '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">';
+          vsHtml += '<span style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;">' + (currentLang === 'es' ? 'MEJOR CONTRA:' : 'BEST AGAINST:') + '</span>';
+          if (t.vs_formation) vsHtml += '<span style="font-size:13px;background:rgba(255,61,87,0.12);color:var(--red);padding:4px 10px;border-radius:6px;font-weight:700;">⚔️ ' + t.vs_formation + '</span>';
+          if (t.vs_style) vsHtml += '<span style="font-size:13px;background:rgba(41,121,255,0.12);color:var(--blue);padding:4px 10px;border-radius:6px;font-weight:700;">🎮 ' + translateVsValue(t.vs_style) + '</span>';
+          vsHtml += '</div>';
+        }
+        if (t.best_situation) {
+          vsHtml += '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">';
+          vsHtml += '<span style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;">' + (currentLang === 'es' ? 'TU SITUACIÓN:' : 'YOUR SITUATION:') + '</span>';
+          vsHtml += '<span style="font-size:13px;background:rgba(0,230,118,0.1);color:var(--green);padding:4px 10px;border-radius:6px;font-weight:700;">📍 ' + translateVsValue(t.best_situation) + '</span>';
+          vsHtml += '</div>';
+        }
       }
       sliderContainer.innerHTML = vsHtml + sliderHtml;
     }
