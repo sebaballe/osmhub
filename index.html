@@ -2181,6 +2181,7 @@
     loadTactics();
     updateSliderLabels();
     renderEvents();
+    updateBanner();
     // Reload profile if open
     var profileScreen = document.getElementById('screen-profile');
     if (profileScreen && profileScreen.classList.contains('active')) loadProfile();
@@ -2382,7 +2383,7 @@
   // Load feed on start
   initAuth();
   loadTactics();
-  updateBanner();
+  setTimeout(updateBanner, 500);
 </script>
 </body>
 </html>
