@@ -1069,7 +1069,11 @@
       html += '</div></div>';
       return html;
     }).join('');
-    feed.innerHTML += html;
+    if (!append) {
+      feed.innerHTML = html;
+    } else {
+      feed.insertAdjacentHTML('beforeend', html);
+    }
     tacticsPage++;
     tacticsHasMore = data.length === tacticsPageSize;
     if (tacticsHasMore) {
