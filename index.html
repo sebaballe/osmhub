@@ -918,10 +918,12 @@
       if (t.own_style) html += '<div style="font-size:12px;font-weight:700;color:var(--text-mid);padding:4px 8px;background:var(--surface2);border-radius:6px;border:1px solid var(--border2);">🎮 ' + translateVsValue(t.own_style) + '</div>';
       html += '<div>';
       if (t.title && t.title !== t.formation && !t.title.startsWith(t.formation)) {
-        html += '<div class="card-title">' + t.title + '</div>';
+        var titlePts = t.title.split(' · ').map(function(p) { return p.indexOf(' vs ') !== -1 ? p : translateVsValue(p); }).join(' · ');
+        html += '<div class="card-title">' + titlePts + '</div>';
       }
       if (t.title && (t.title === t.formation || t.title.startsWith(t.formation))) {
-        html += '<div class="card-meta" style="font-size:11px;color:var(--text-dim);">' + t.title + '</div>';
+        var titlePts2 = t.title.split(' · ').map(function(p) { return p.indexOf(' vs ') !== -1 ? p : translateVsValue(p); }).join(' · ');
+        html += '<div class="card-meta" style="font-size:11px;color:var(--text-dim);">' + titlePts2 + '</div>';
       }
       html += '<div class="card-meta">by @' + t.author + ' &middot; ' + timeAgo(t.created_at) + '</div></div>';
       html += '</div>';
@@ -970,7 +972,17 @@
     const total = t.votes_yes + t.votes_no;
     const pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
     document.getElementById('detail-formation').textContent = t.formation;
-    document.getElementById('detail-title').textContent = t.title;
+    // Translate title parts if auto-generated
+    var titleParts = t.title ? t.title.split(' · ') : [];
+    var translatedTitle = titleParts.map(function(part) {
+      // Translate vs formation part (starts with formation vs formation)
+      if (part.indexOf(' vs ') !== -1) {
+        var vsParts = part.split(' vs ');
+        return vsParts[0] + ' vs ' + vsParts[1];
+      }
+      return translateVsValue(part);
+    }).join(' · ');
+    document.getElementById('detail-title').textContent = translatedTitle;
     document.getElementById('detail-author').textContent = 'by @' + t.author + ' · ' + timeAgo(t.created_at) + ' · ' + (t.views || 0) + ' views';
     document.getElementById('detail-pct').textContent = pct + '%';
     document.getElementById('detail-eff-sub').textContent = (currentLang === 'es' ? 'Basado en ' : 'Based on ') + total + (currentLang === 'es' ? ' votos reales de jugadores de OSM' : ' votes from real OSM players');
