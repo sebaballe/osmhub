@@ -1105,10 +1105,14 @@
       }).join('');
     }
     // Reset vote steps
-    document.getElementById('vote-step1').style.display = 'block';
-    document.getElementById('vote-step2').style.display = 'none';
-    document.getElementById('vote-step3').style.display = 'none';
-    document.getElementById('vote-step-register').style.display = 'none';
+    var vs1 = document.getElementById('vote-step1');
+    var vs2 = document.getElementById('vote-step2');
+    var vs3 = document.getElementById('vote-step3');
+    var vsr = document.getElementById('vote-step-register');
+    if (vs1) vs1.style.display = 'block';
+    if (vs2) vs2.style.display = 'none';
+    if (vs3) vs3.style.display = 'none';
+    if (vsr) vsr.style.display = 'none';
     // Update DB views
     await db.from('tactics').update({ views: (t.views || 0) + 1 }).eq('id', id);
     loadComments(id);
@@ -1209,15 +1213,19 @@
   let currentVoteResult = null;
   function showVoteContext(result) {
     if (!currentUser) {
-      // Show compelling register message
-      document.getElementById('vote-step1').style.display = 'none';
-      document.getElementById('vote-step-register').style.display = 'block';
+      var step1 = document.getElementById('vote-step1');
+      var stepReg = document.getElementById('vote-step-register');
+      if (step1) step1.style.display = 'none';
+      if (stepReg) stepReg.style.display = 'block';
       return;
     }
     currentVoteResult = result;
-    document.getElementById('vote-step1').style.display = 'none';
-    document.getElementById('vote-step2').style.display = 'block';
-    document.getElementById('vote-result-title').textContent = result === 'yes'
+    var step1 = document.getElementById('vote-step1');
+    var step2 = document.getElementById('vote-step2');
+    if (step1) step1.style.display = 'none';
+    if (step2) step2.style.display = 'block';
+    var title = document.getElementById('vote-result-title');
+    if (title) title.textContent = result === 'yes'
       ? (currentLang === 'es' ? '👍 ¡Gracias! Contanos el contexto' : '👍 Thanks! Tell us the context')
       : (currentLang === 'es' ? '👎 Gracias igual. ¿En qué contexto?' : '👎 Thanks anyway. What was the context?');
   }
@@ -1240,8 +1248,10 @@
     const field = currentVoteResult === 'yes' ? 'votes_yes' : 'votes_no';
     const { data: t } = await db.from('tactics').select(field).eq('id', currentTacticId).single();
     await db.from('tactics').update({ [field]: (t[field] || 0) + 1 }).eq('id', currentTacticId);
-    document.getElementById('vote-step2').style.display = 'none';
-    document.getElementById('vote-step3').style.display = 'block';
+    var step2 = document.getElementById('vote-step2');
+    var step3 = document.getElementById('vote-step3');
+    if (step2) step2.style.display = 'none';
+    if (step3) step3.style.display = 'block';
     loadContextStats(currentTacticId);
   }
 
