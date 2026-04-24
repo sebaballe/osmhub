@@ -1104,6 +1104,28 @@
         return '<div class="player-dot' + (p.gk ? ' gk' : '') + '" style="left:' + p.x + '%;top:' + p.y + '%">' + p.pos + '</div>';
       }).join('');
     }
+    // Check if user already voted
+    var alreadyVoted = false;
+    if (currentUser) {
+      var voteCheck = await db.from('votes').select('id,result').eq('tactic_id', id).eq('user_id', currentUser.id).single();
+      if (voteCheck.data) {
+        alreadyVoted = true;
+        var vs1 = document.getElementById('vote-step1');
+        if (vs1) {
+          var prevResult = voteCheck.data.result;
+          vs1.innerHTML = '<div style="text-align:center;padding:16px 0;">' +
+            '<div style="font-size:28px;margin-bottom:8px;">' + (prevResult === 'yes' ? '👍' : '👎') + '</div>' +
+            '<div style="font-family:Barlow Condensed,sans-serif;font-size:18px;font-weight:800;color:var(--text);">' +
+            (currentLang === 'es' ? 'Ya votaste esta táctica' : 'You already voted on this tactic') + '</div>' +
+            '<div style="font-size:13px;color:var(--text-dim);margin-top:6px;">' +
+            (currentLang === 'es' ? 'Tu voto: ' : 'Your vote: ') +
+            (prevResult === 'yes'
+              ? (currentLang === 'es' ? '✅ Funcionó' : '✅ It worked')
+              : (currentLang === 'es' ? '❌ No funcionó' : '❌ Didn\'t work')) +
+            '</div></div>';
+        }
+      }
+    }
     // Reset vote steps
     var vs1 = document.getElementById('vote-step1');
     var vs2 = document.getElementById('vote-step2');
@@ -1235,6 +1257,13 @@
   }
   async function submitVote() {
     if (!currentTacticId) return;
+    if (!currentUser) { openAuth(); return; }
+    // Check for duplicate vote
+    var existing = await db.from('votes').select('id').eq('tactic_id', currentTacticId).eq('user_id', currentUser.id).single();
+    if (existing.data) {
+      alert(currentLang === 'es' ? 'Ya votaste esta táctica.' : 'You already voted on this tactic.');
+      return;
+    }
     const getSelected = (group) => {
       const el = document.querySelector('.context-opts [data-group="' + group + '"].selected');
       return el ? el.textContent.trim() : null;
@@ -1243,7 +1272,7 @@
     const strength = document.querySelector('.ctx-opt[onclick*="strength"].selected')?.textContent.trim() || null;
     const comp = document.querySelector('.ctx-opt[onclick*="comp"].selected')?.textContent.trim() || null;
     // Save vote
-    await db.from('votes').insert({ tactic_id: currentTacticId, result: currentVoteResult, location, strength, competition: comp });
+    await db.from('votes').insert({ tactic_id: currentTacticId, result: currentVoteResult, location, strength, competition: comp, user_id: currentUser ? currentUser.id : null });
     // Update tactic counts
     const field = currentVoteResult === 'yes' ? 'votes_yes' : 'votes_no';
     const { data: t } = await db.from('tactics').select(field).eq('id', currentTacticId).single();
