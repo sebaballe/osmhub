@@ -2068,7 +2068,8 @@
       if (el) el.textContent = t('label-' + k);
     });
     // Reload detail if open
-    if (currentTacticId) loadTacticDetail(currentTacticId);
+    var detailScreen = document.getElementById('screen-detail');
+    if (currentTacticId && detailScreen && detailScreen.classList.contains('active')) loadTacticDetail(currentTacticId);
     // Reload feed with new language
     loadTactics();
     updateSliderLabels();
