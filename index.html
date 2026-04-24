@@ -972,23 +972,23 @@
   var tacticsPage = 0;
   var tacticsPageSize = 10;
   var tacticsHasMore = true;
+  var tacticsLoading = false;
 
   async function loadTactics(append) {
+    if (tacticsLoading) return;
+    tacticsLoading = true;
     const feed = document.getElementById('tactics-feed');
-    if (!feed) return;
+    if (!feed) { tacticsLoading = false; return; }
     if (!append) {
       tacticsPage = 0;
       tacticsHasMore = true;
       feed.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-dim)">' + (currentLang === 'es' ? 'Cargando...' : 'Loading...') + '</div>';
     }
-    // Remove load more button if exists
     var oldBtn = document.getElementById('load-more-btn');
     if (oldBtn) oldBtn.remove();
-    // Get filter values
     var filterFormation = document.getElementById('filter-formation') ? document.getElementById('filter-formation').value : '';
     var filterStyle = document.getElementById('filter-style') ? document.getElementById('filter-style').value : '';
     var filterSituation = document.getElementById('filter-situation') ? document.getElementById('filter-situation').value : '';
-    // Build query with pagination
     var sortField = currentSort === 'new' ? 'created_at' : 'votes_yes';
     var from = tacticsPage * tacticsPageSize;
     var to = from + tacticsPageSize - 1;
@@ -997,6 +997,7 @@
     if (filterStyle) query = query.eq('own_style', filterStyle);
     if (filterSituation) query = query.eq('best_situation', filterSituation);
     const { data, error } = await query;
+    tacticsLoading = false;
     if (error || !data) return;
     if (!append && data.length === 0) {
       feed.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-dim)">' + (currentLang === 'es' ? 'Aún no hay tácticas. ¡Sé el primero en compartir una!' : 'No tactics yet. Be the first to share one!') + '</div>';
