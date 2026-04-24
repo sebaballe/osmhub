@@ -651,27 +651,27 @@
           <div class="lt-label" id="label-fwd">DELANTEROS</div>
           <div class="lt-value" id="fwd-label">Solo ataque</div>
           <div class="lt-dots">
-            <div class="lt-dot active" onclick="setLineTactic('fwd',0,['Solo ataque','Atacar y defender','Apoyo'])"></div>
-            <div class="lt-dot" onclick="setLineTactic('fwd',1,['Solo ataque','Atacar y defender','Apoyo'])"></div>
-            <div class="lt-dot" onclick="setLineTactic('fwd',2,['Solo ataque','Atacar y defender','Apoyo'])"></div>
+            <div class="lt-dot active" onclick="setLineTactic('fwd',0,getLineTactics().fwd)"></div>
+            <div class="lt-dot" onclick="setLineTactic('fwd',1,getLineTactics().fwd)"></div>
+            <div class="lt-dot" onclick="setLineTactic('fwd',2,getLineTactics().fwd)"></div>
           </div>
         </div>
         <div class="line-tactic-row" id="mid-row">
           <div class="lt-label" id="label-mid">MEDIOCAMPISTAS</div>
           <div class="lt-value" id="mid-label">Proteger defensa</div>
           <div class="lt-dots">
-            <div class="lt-dot active" onclick="setLineTactic('mid',0,['Proteger defensa','Mixto','Atacar'])"></div>
-            <div class="lt-dot" onclick="setLineTactic('mid',1,['Proteger defensa','Mixto','Atacar'])"></div>
-            <div class="lt-dot" onclick="setLineTactic('mid',2,['Proteger defensa','Mixto','Atacar'])"></div>
+            <div class="lt-dot active" onclick="setLineTactic('mid',0,getLineTactics().mid)"></div>
+            <div class="lt-dot" onclick="setLineTactic('mid',1,getLineTactics().mid)"></div>
+            <div class="lt-dot" onclick="setLineTactic('mid',2,getLineTactics().mid)"></div>
           </div>
         </div>
         <div class="line-tactic-row" id="def-row">
           <div class="lt-label" id="label-def">DEFENSORES</div>
           <div class="lt-value" id="def-label">Defensa profunda</div>
           <div class="lt-dots">
-            <div class="lt-dot active" onclick="setLineTactic('def',0,['Defensa profunda','Normal','Línea alta'])"></div>
-            <div class="lt-dot" onclick="setLineTactic('def',1,['Defensa profunda','Normal','Línea alta'])"></div>
-            <div class="lt-dot" onclick="setLineTactic('def',2,['Defensa profunda','Normal','Línea alta'])"></div>
+            <div class="lt-dot active" onclick="setLineTactic('def',0,getLineTactics().def)"></div>
+            <div class="lt-dot" onclick="setLineTactic('def',1,getLineTactics().def)"></div>
+            <div class="lt-dot" onclick="setLineTactic('def',2,getLineTactics().def)"></div>
           </div>
         </div>
         <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;">
@@ -1328,14 +1328,14 @@
     tempo: ['Short passing','Slow build-up','Balanced','Fast passing','High-speed passing']
   };
   var lineTacticsEs = {
-    fwd: ['Solo ataque','Atacar y defender','Apoyo'],
-    mid: ['Proteger defensa','Mixto','Atacar'],
-    def: ['Defensa profunda','Normal','Línea alta']
+    fwd: ['Quedarse atras','Apoyar mediocampo','Solo ataque'],
+    mid: ['Proteger defensa','Quedarse en posicion','Empujar adelante'],
+    def: ['Defensa profunda','Laterales atacantes','Apoyar mediocampo']
   };
   var lineTacticsEn = {
-    fwd: ['Attack only','Attack & defend','Support'],
-    mid: ['Protect the defence','Mixed','Attack'],
-    def: ['Defend deep','Normal','High line']
+    fwd: ['Drop deep','Support midfield','Attack only'],
+    mid: ['Protect the defence','Stay in position','Push forward'],
+    def: ['Defend deep','Attacking full backs','Support midfield']
   };
 
   function getSliderLabels() { return currentLang === 'es' ? sliderLabelsEs : sliderLabelsEn; }
@@ -1373,23 +1373,32 @@
 
   function toEnglish(value) {
     var map = {
-      'Solo ataque': 'Attack only', 'Atacar y defender': 'Attack & defend', 'Apoyo': 'Support',
-      'Proteger defensa': 'Protect the defence', 'Mixto': 'Mixed', 'Atacar': 'Attack',
-      'Defensa profunda': 'Defend deep', 'Normal': 'Normal', 'Línea alta': 'High line'
+      'Quedarse atras': 'Drop deep', 'Apoyar mediocampo': 'Support midfield', 'Solo ataque': 'Attack only',
+      'Proteger defensa': 'Protect the defence', 'Quedarse en posicion': 'Stay in position', 'Empujar adelante': 'Push forward',
+      'Defensa profunda': 'Defend deep', 'Laterales atacantes': 'Attacking full backs',
+      'Atacar y defender': 'Attack & defend', 'Apoyo': 'Support', 'Mixto': 'Mixed',
+      'Atacar': 'Attack', 'Normal': 'Normal', 'Línea alta': 'High line'
     };
     return map[value] || value;
   }
 
   function translateTacticValue(value) {
     var enToEs = {
-      'Attack only': 'Solo ataque', 'Attack & defend': 'Atacar y defender', 'Support': 'Apoyo',
-      'Protect the defence': 'Proteger defensa', 'Mixed': 'Mixto', 'Attack': 'Atacar',
-      'Defend deep': 'Defensa profunda', 'Normal': 'Normal', 'High line': 'Línea alta'
+      'Drop deep': 'Quedarse atras', 'Support midfield': 'Apoyar mediocampo', 'Attack only': 'Solo ataque',
+      'Protect the defence': 'Proteger defensa', 'Stay in position': 'Quedarse en posicion', 'Push forward': 'Empujar adelante',
+      'Defend deep': 'Defensa profunda', 'Attacking full backs': 'Laterales atacantes',
+      'Attack & defend': 'Atacar y defender', 'Support': 'Apoyo', 'Mixed': 'Mixto',
+      'Attack': 'Atacar', 'Normal': 'Normal', 'High line': 'Linea alta'
     };
-    if (currentLang === 'es') {
-      return enToEs[value] !== undefined ? enToEs[value] : value;
-    }
-    return value;
+    var esToEn = {
+      'Quedarse atras': 'Drop deep', 'Apoyar mediocampo': 'Support midfield', 'Solo ataque': 'Attack only',
+      'Proteger defensa': 'Protect the defence', 'Quedarse en posicion': 'Stay in position', 'Empujar adelante': 'Push forward',
+      'Defensa profunda': 'Defend deep', 'Laterales atacantes': 'Attacking full backs',
+      'Atacar y defender': 'Attack & defend', 'Apoyo': 'Support', 'Mixto': 'Mixed',
+      'Atacar': 'Attack', 'Normal': 'Normal', 'Linea alta': 'High line', 'Línea alta': 'High line'
+    };
+    if (currentLang === 'es') return enToEs[value] !== undefined ? enToEs[value] : value;
+    return esToEn[value] !== undefined ? esToEn[value] : value;
   }
 
   function updateSlider(type, val) {
