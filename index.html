@@ -363,6 +363,12 @@
   gtag('js', new Date());
   gtag('config', 'G-EL4D78N1C7');
 </script>
+<link rel="manifest" id="pwa-manifest">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="OSM Hub">
+<link rel="apple-touch-icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiB2aWV3Qm94PSIwIDAgMTkyIDE5MiI+CiAgPHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIHJ4PSI0MCIgZmlsbD0iIzBBMEUxNCIvPgogIDxyZWN0IHg9IjgiIHk9IjgiIHdpZHRoPSIxNzYiIGhlaWdodD0iMTc2IiByeD0iMzYiIGZpbGw9IiMxMTE3MjAiLz4KICA8dGV4dCB4PSI5NiIgeT0iODAiIGZvbnQtZmFtaWx5PSJBcmlhbCBCbGFjaywgQXJpYWwiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iNTIiIGZpbGw9IiMwMEU2NzYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPk9TTTwvdGV4dD4KICA8dGV4dCB4PSI5NiIgeT0iMTQwIiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssIEFyaWFsIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjUyIiBmaWxsPSIjRkZGRkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5IVUI8L3RleHQ+CiAgPHJlY3QgeD0iMjAiIHk9IjkwIiB3aWR0aD0iMTUyIiBoZWlnaHQ9IjQiIHJ4PSIyIiBmaWxsPSIjMDBFNjc2IiBvcGFjaXR5PSIwLjQiLz4KPC9zdmc+">
 </head>
 <body>
 
@@ -835,6 +841,54 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+
+  // ===== PWA MANIFEST =====
+  (function() {
+    var manifest = {
+      name: "OSM Hub",
+      short_name: "OSM Hub",
+      description: "Fan-made tactic platform for OSM",
+      start_url: "/",
+      display: "standalone",
+      background_color: "#0A0E14",
+      theme_color: "#0A0E14",
+      orientation: "portrait-primary",
+      icons: [
+        { src: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiB2aWV3Qm94PSIwIDAgMTkyIDE5MiI+CiAgPHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIHJ4PSI0MCIgZmlsbD0iIzBBMEUxNCIvPgogIDxyZWN0IHg9IjgiIHk9IjgiIHdpZHRoPSIxNzYiIGhlaWdodD0iMTc2IiByeD0iMzYiIGZpbGw9IiMxMTE3MjAiLz4KICA8dGV4dCB4PSI5NiIgeT0iODAiIGZvbnQtZmFtaWx5PSJBcmlhbCBCbGFjaywgQXJpYWwiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iNTIiIGZpbGw9IiMwMEU2NzYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPk9TTTwvdGV4dD4KICA8dGV4dCB4PSI5NiIgeT0iMTQwIiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssIEFyaWFsIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjUyIiBmaWxsPSIjRkZGRkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5IVUI8L3RleHQ+CiAgPHJlY3QgeD0iMjAiIHk9IjkwIiB3aWR0aD0iMTUyIiBoZWlnaHQ9IjQiIHJ4PSIyIiBmaWxsPSIjMDBFNjc2IiBvcGFjaXR5PSIwLjQiLz4KPC9zdmc+", sizes: "192x192", type: "image/svg+xml" },
+        { src: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+CiAgPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMDAiIGZpbGw9IiMwQTBFMTQiLz4KICA8cmVjdCB4PSIxNiIgeT0iMTYiIHdpZHRoPSI0ODAiIGhlaWdodD0iNDgwIiByeD0iOTAiIGZpbGw9IiMxMTE3MjAiLz4KICA8dGV4dCB4PSIyNTYiIHk9IjIxMCIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLCBBcmlhbCIgZm9udC13ZWlnaHQ9IjkwMCIgZm9udC1zaXplPSIxNDAiIGZpbGw9IiMwMEU2NzYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPk9TTTwvdGV4dD4KICA8dGV4dCB4PSIyNTYiIHk9IjM3MCIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLCBBcmlhbCIgZm9udC13ZWlnaHQ9IjkwMCIgZm9udC1zaXplPSIxNDAiIGZpbGw9IiNGRkZGRkYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkhVQjwvdGV4dD4KICA8cmVjdCB4PSI1MCIgeT0iMjQwIiB3aWR0aD0iNDEyIiBoZWlnaHQ9IjgiIHJ4PSI0IiBmaWxsPSIjMDBFNjc2IiBvcGFjaXR5PSIwLjQiLz4KPC9zdmc+", sizes: "512x512", type: "image/svg+xml", purpose: "any maskable" }
+      ]
+    };
+    var blob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
+    var url = URL.createObjectURL(blob);
+    document.getElementById('pwa-manifest').setAttribute('href', url);
+  })();
+
+  // ===== SERVICE WORKER =====
+  if ('serviceWorker' in navigator) {
+    var swContent = `
+      var CACHE = 'osmhub-v1';
+      var URLS = ['/'];
+      self.addEventListener('install', function(e) {
+        e.waitUntil(caches.open(CACHE).then(function(c) { return c.addAll(URLS); }));
+        self.skipWaiting();
+      });
+      self.addEventListener('activate', function(e) {
+        e.waitUntil(caches.keys().then(function(keys) {
+          return Promise.all(keys.filter(function(k) { return k !== CACHE; }).map(function(k) { return caches.delete(k); }));
+        }));
+        self.clients.claim();
+      });
+      self.addEventListener('fetch', function(e) {
+        if (e.request.mode === 'navigate') {
+          e.respondWith(fetch(e.request).catch(function() { return caches.match('/'); }));
+        }
+      });
+    `;
+    var swBlob = new Blob([swContent], {type: 'application/javascript'});
+    var swUrl = URL.createObjectURL(swBlob);
+    navigator.serviceWorker.register(swUrl).catch(function(e) { console.log('SW error:', e); });
+  }
+
   // ===== SUPABASE CONFIG =====
   const SUPABASE_URL = 'https://dyazsdbmdbnmjjpcttnw.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5YXpzZGJtZGJubWpqcGN0dG53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4ODE0MTIsImV4cCI6MjA5MjQ1NzQxMn0.CbmYy-9XILk99DkuKi5CFIqQBDvADcLvozvIX46c5zQ';
