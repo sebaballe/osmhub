@@ -412,6 +412,7 @@
       <div id="feed-filters" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center;">
         <select id="filter-formation" onchange="applyFilters()" style="background:var(--surface);border:1px solid var(--border2);border-radius:8px;padding:7px 10px;color:var(--text-mid);font-family:'Barlow',sans-serif;font-size:12px;outline:none;cursor:pointer;">
           <option value="" id="filter-formation-ph">🏟️ Formación</option>
+          <option value="Cualquiera">🌐 Cualquiera / Any</option>
           <option>4-3-3-A</option><option>4-3-3-B</option><option>4-5-1</option>
           <option>4-2-3-1</option><option>4-4-2-A</option><option>4-4-2-B</option>
           <option>3-2-5</option><option>3-2-3-2</option><option>3-3-4-A</option>
@@ -677,6 +678,7 @@
             <div style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;margin-bottom:8px;" id="vs-section-label">⚔️ CONTEXTO DEL RIVAL (opcional)</div>
             <select id="vs-formation" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;margin-bottom:8px;cursor:pointer;">
               <option value="">¿Contra qué formación funciona?</option>
+              <option value="Cualquiera">🌐 Cualquiera</option>
               <option>4-3-3-A</option><option>4-3-3-B</option><option>4-5-1</option>
               <option>4-2-3-1</option><option>4-4-2-A</option><option>4-4-2-B</option>
               <option>3-2-5</option><option>3-2-3-2</option><option>3-3-4-A</option>
@@ -1338,6 +1340,7 @@
 
   function translateVsValue(value) {
     var esToEn = {
+      'Cualquiera': 'Any',
       'Balon largo': 'Long ball', 'Balón largo': 'Long ball',
       'Juego de bandas': 'Wing play',
       'Posesion': 'Possession', 'Posesión': 'Possession',
@@ -1352,6 +1355,7 @@
       'Visitante · Superior': 'Away · Superior', 'Visitante · Inferior': 'Away · Inferior'
     };
     var enToEs = {
+      'Any': 'Cualquiera',
       'Long ball': 'Balón largo', 'Wing play': 'Juego de bandas',
       'Possession': 'Posesión', 'Counter-attack': 'Contraataque',
       'Long shots': 'Tiros de repente', 'Shoot on sight': 'Tiros de repente', 'Mixed': 'Mixto',
