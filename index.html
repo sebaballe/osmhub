@@ -806,14 +806,14 @@
     </div>
     <div id="auth-form-login">
       <input class="auth-input" id="login-email" type="email" placeholder="Email">
-      <input class="auth-input" id="login-password" type="password" placeholder="Contraseña">
-      <button class="btn-auth" onclick="handleLogin()">ENTRAR</button>
+      <input class="auth-input" id="login-password" type="password" placeholder="Password">
+      <button class="btn-auth" id="login-form-btn" onclick="handleLogin()">SIGN IN</button>
     </div>
     <div id="auth-form-register" style="display:none">
-      <input class="auth-input" id="reg-username" type="text" placeholder="Nombre de usuario (ej: TacticMaster_AR)">
+      <input class="auth-input" id="reg-username" type="text" placeholder="Username (e.g. TacticMaster_AR)">
       <input class="auth-input" id="reg-email" type="email" placeholder="Email">
-      <input class="auth-input" id="reg-password" type="password" placeholder="Contraseña (mín. 6 caracteres)">
-      <button class="btn-auth" onclick="handleRegister()">CREAR CUENTA</button>
+      <input class="auth-input" id="reg-password" type="password" placeholder="Password (min. 6 characters)">
+      <button class="btn-auth" id="reg-form-btn" onclick="handleRegister()">CREATE ACCOUNT</button>
     </div>
     <div class="auth-msg" id="auth-msg"></div>
   </div>
@@ -1634,6 +1634,18 @@
   function openAuth() {
     document.getElementById('auth-modal').classList.remove('hidden');
     document.getElementById('auth-msg').textContent = '';
+    // Apply current language to modal
+    var es = currentLang === 'es';
+    document.getElementById('auth-modal-sub').textContent = es ? 'Uníte a la comunidad de tácticas' : 'Join the tactics community';
+    document.getElementById('tab-login').textContent = es ? 'Iniciar sesión' : 'Sign in';
+    document.getElementById('tab-register').textContent = es ? 'Registrarse' : 'Sign up';
+    document.getElementById('login-email').placeholder = 'Email';
+    document.getElementById('login-password').placeholder = es ? 'Contraseña' : 'Password';
+    document.getElementById('login-form-btn').textContent = es ? 'ENTRAR' : 'SIGN IN';
+    document.getElementById('reg-username').placeholder = es ? 'Nombre de usuario (ej: TacticMaster_AR)' : 'Username (e.g. TacticMaster_AR)';
+    document.getElementById('reg-email').placeholder = 'Email';
+    document.getElementById('reg-password').placeholder = es ? 'Contraseña (mín. 6 caracteres)' : 'Password (min. 6 characters)';
+    document.getElementById('reg-form-btn').textContent = es ? 'CREAR CUENTA' : 'CREATE ACCOUNT';
   }
 
   function closeAuth() {
