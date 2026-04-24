@@ -530,11 +530,11 @@
     <!-- VOTE -->
     <div class="vote-section" id="vote-section">
       <div id="vote-step1">
-        <div class="vote-question">¿Te funcionó esta táctica?</div>
-        <div class="vote-sub">Tu voto ayuda a la comunidad a encontrar las mejores tácticas</div>
+        <div class="vote-question" id="vote-q1">Did this tactic work for you?</div>
+        <div class="vote-sub" id="vote-sub1">Your vote helps the community find the best tactics</div>
         <div class="vote-buttons">
-          <button class="vote-yes" onclick="showVoteContext('yes')">👍 SÍ, FUNCIONÓ</button>
-          <button class="vote-no" onclick="showVoteContext('no')">👎 NO FUNCIONÓ</button>
+          <button class="vote-yes" id="vote-btn-yes" onclick="showVoteContext('yes')">👍 IT WORKED</button>
+          <button class="vote-no" id="vote-btn-no" onclick="showVoteContext('no')">👎 DIDN'T WORK</button>
         </div>
       </div>
       <div id="vote-step-register" style="display:none;text-align:center;padding:8px 0;">
@@ -548,38 +548,38 @@
         </div>
       </div>
         <div class="vote-question" id="vote-result-title">👍 ¡Gracias! Contanos el contexto</div>
-        <div class="vote-sub">Opcional pero muy útil para la comunidad</div>
+        <div class="vote-sub" id="vote-sub2">Optional but very helpful for the community</div>
         <div class="context-grid">
           <div class="context-group">
-            <div class="context-label">📍 ¿De local o visitante?</div>
+            <div class="context-label" id="vote-ctx-location">📍 Home or away?</div>
             <div class="context-opts">
-              <div class="ctx-opt" onclick="selectCtx(this,'location')">🏠 Local</div>
-              <div class="ctx-opt" onclick="selectCtx(this,'location')">✈️ Visitante</div>
-              <div class="ctx-opt" onclick="selectCtx(this,'location')">↔️ Ambos</div>
+              <div class="ctx-opt" id="ctx-home" onclick="selectCtx(this,'location')">🏠 Home</div>
+              <div class="ctx-opt" id="ctx-away" onclick="selectCtx(this,'location')">✈️ Away</div>
+              <div class="ctx-opt" id="ctx-both" onclick="selectCtx(this,'location')">↔️ Both</div>
             </div>
           </div>
           <div class="context-group">
-            <div class="context-label">⚡ ¿Tu equipo vs el rival?</div>
+            <div class="context-label" id="vote-ctx-strength">⚡ Your team vs rival?</div>
             <div class="context-opts">
-              <div class="ctx-opt" onclick="selectCtx(this,'strength')">📈 Superior</div>
-              <div class="ctx-opt" onclick="selectCtx(this,'strength')">⚖️ Similar</div>
-              <div class="ctx-opt" onclick="selectCtx(this,'strength')">📉 Inferior</div>
+              <div class="ctx-opt" id="ctx-superior" onclick="selectCtx(this,'strength')">📈 Superior</div>
+              <div class="ctx-opt" id="ctx-similar" onclick="selectCtx(this,'strength')">⚖️ Similar</div>
+              <div class="ctx-opt" id="ctx-inferior" onclick="selectCtx(this,'strength')">📉 Inferior</div>
             </div>
           </div>
           <div class="context-group">
-            <div class="context-label">🏆 ¿En qué competición?</div>
+            <div class="context-label" id="vote-ctx-comp">🏆 What competition?</div>
             <div class="context-opts">
-              <div class="ctx-opt" onclick="selectCtx(this,'comp')">🥇 Liga</div>
-              <div class="ctx-opt" onclick="selectCtx(this,'comp')">🏆 Copa</div>
-              <div class="ctx-opt" onclick="selectCtx(this,'comp')">⭐ Partido clave</div>
+              <div class="ctx-opt" id="ctx-liga" onclick="selectCtx(this,'comp')">🥇 League</div>
+              <div class="ctx-opt" id="ctx-copa" onclick="selectCtx(this,'comp')">🏆 Cup</div>
+              <div class="ctx-opt" id="ctx-key" onclick="selectCtx(this,'comp')">⭐ Key match</div>
             </div>
           </div>
         </div>
-        <button class="btn-submit-vote" onclick="submitVote()">Enviar voto →</button>
+        <button class="btn-submit-vote" id="vote-submit-btn" onclick="submitVote()">Send vote →</button>
       </div>
       <div id="vote-step3" style="display:none">
-        <div class="vote-question">✅ ¡Voto registrado!</div>
-        <div class="vote-sub" style="margin-bottom:16px">Así se ve la táctica con tu contexto:</div>
+        <div class="vote-question" id="vote-q3">✅ Vote registered!</div>
+        <div class="vote-sub" id="vote-sub3" style="margin-bottom:16px">Here's how the tactic looks with your context:</div>
         <div class="context-stats" id="context-stats-detail"></div>
       </div>
     </div>
@@ -2197,6 +2197,28 @@
     if (voteRegBack) voteRegBack.textContent = currentLang === 'es' ? 'Volver' : 'Go back';
     var backFeedLabel = document.getElementById('back-feed-label');
     if (backFeedLabel) backFeedLabel.textContent = currentLang === 'es' ? 'Volver al feed' : 'Back to feed';
+    // Vote section translations
+    var es = currentLang === 'es';
+    var vq1 = document.getElementById('vote-q1'); if(vq1) vq1.textContent = es ? '¿Te funcionó esta táctica?' : 'Did this tactic work for you?';
+    var vs1 = document.getElementById('vote-sub1'); if(vs1) vs1.textContent = es ? 'Tu voto ayuda a la comunidad a encontrar las mejores tácticas' : 'Your vote helps the community find the best tactics';
+    var vby = document.getElementById('vote-btn-yes'); if(vby) vby.textContent = es ? '👍 SÍ, FUNCIONÓ' : '👍 IT WORKED';
+    var vbn = document.getElementById('vote-btn-no'); if(vbn) vbn.textContent = es ? '👎 NO FUNCIONÓ' : "👎 DIDN'T WORK";
+    var vs2 = document.getElementById('vote-sub2'); if(vs2) vs2.textContent = es ? 'Opcional pero muy útil para la comunidad' : 'Optional but very helpful for the community';
+    var vcl = document.getElementById('vote-ctx-location'); if(vcl) vcl.textContent = es ? '📍 ¿De local o visitante?' : '📍 Home or away?';
+    var vcs = document.getElementById('vote-ctx-strength'); if(vcs) vcs.textContent = es ? '⚡ ¿Tu equipo vs el rival?' : '⚡ Your team vs rival?';
+    var vcc = document.getElementById('vote-ctx-comp'); if(vcc) vcc.textContent = es ? '🏆 ¿En qué competición?' : '🏆 What competition?';
+    var ch = document.getElementById('ctx-home'); if(ch) ch.textContent = es ? '🏠 Local' : '🏠 Home';
+    var ca = document.getElementById('ctx-away'); if(ca) ca.textContent = es ? '✈️ Visitante' : '✈️ Away';
+    var cb = document.getElementById('ctx-both'); if(cb) cb.textContent = es ? '↔️ Ambos' : '↔️ Both';
+    var csup = document.getElementById('ctx-superior'); if(csup) csup.textContent = es ? '📈 Superior' : '📈 Superior';
+    var csim = document.getElementById('ctx-similar'); if(csim) csim.textContent = es ? '⚖️ Similar' : '⚖️ Similar';
+    var cinf = document.getElementById('ctx-inferior'); if(cinf) cinf.textContent = es ? '📉 Inferior' : '📉 Inferior';
+    var clig = document.getElementById('ctx-liga'); if(clig) clig.textContent = es ? '🥇 Liga' : '🥇 League';
+    var ccop = document.getElementById('ctx-copa'); if(ccop) ccop.textContent = es ? '🏆 Copa' : '🏆 Cup';
+    var ckey = document.getElementById('ctx-key'); if(ckey) ckey.textContent = es ? '⭐ Partido clave' : '⭐ Key match';
+    var vsb = document.getElementById('vote-submit-btn'); if(vsb) vsb.textContent = es ? 'Enviar voto →' : 'Send vote →';
+    var vq3 = document.getElementById('vote-q3'); if(vq3) vq3.textContent = es ? '✅ ¡Voto registrado!' : '✅ Vote registered!';
+    var vs3 = document.getElementById('vote-sub3'); if(vs3) vs3.textContent = es ? 'Así se ve la táctica con tu contexto:' : "Here's how the tactic looks with your context:";
     var commentsTitleLabel = document.getElementById('comments-title-label');
     if (commentsTitleLabel) commentsTitleLabel.textContent = currentLang === 'es' ? 'COMENTARIOS' : 'COMMENTS';
     // Builder labels
