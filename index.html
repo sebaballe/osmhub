@@ -392,7 +392,7 @@
   <div class="tab" onclick="showScreen('detail',this)" id="tab-detail" style="display:none">📋 Detalle</div>
   <div class="tab" onclick="showScreen('builder',this)">⚽ Alineaciones</div>
   <div class="tab" onclick="showScreen('ranking',this)">🏆 Rankings</div>
-  <div class="tab" onclick="showScreen('events',this)" id="tab-events">🗓️ Eventos</div>
+  <div class="tab" onclick="showScreen('events',this)" id="tab-events">📅 Events</div>
   <div class="tab" onclick="showScreen('h2h',this)" id="tab-h2h">⚔️ H2H</div>
 </div>
 
@@ -897,7 +897,59 @@
         <div style="display:flex;gap:8px;margin-bottom:12px;" id="h2h-comp-opts">
           <button onclick="selectH2HComp(this,'league')" class="h2h-comp" style="flex:1;padding:8px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow',sans-serif;font-size:13px;cursor:pointer;">🥇 Liga</button>
           <button onclick="selectH2HComp(this,'cup')" class="h2h-comp" style="flex:1;padding:8px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow',sans-serif;font-size:13px;cursor:pointer;">🏆 Copa</button>
-          <button onclick="selectH2HComp(this,'key')" class="h2h-comp" style="flex:1;padding:8px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow',sans-serif;font-size:13px;cursor:pointer;">⭐ Clave</button>
+        </div>
+        <div style="margin-bottom:12px;">
+          <div style="font-size:11px;font-weight:700;color:var(--text-dim);letter-spacing:0.5px;margin-bottom:8px;" id="h2h-score-label">⚽ SCORE (optional)</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;">
+            <div style="font-size:11px;font-weight:600;color:var(--text-dim);width:100%;margin-bottom:2px;" id="h2h-score-draws-label">Draws</div>
+            <button onclick="selectH2HScore(this,'0-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">0-0</button>
+            <button onclick="selectH2HScore(this,'1-1')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">1-1</button>
+            <button onclick="selectH2HScore(this,'2-2')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">2-2</button>
+            <button onclick="selectH2HScore(this,'3-3')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">3-3</button>
+            <button onclick="selectH2HScore(this,'4-4')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">4-4</button>
+            <div style="font-size:11px;font-weight:600;color:var(--text-dim);width:100%;margin-top:4px;margin-bottom:2px;" id="h2h-score-wins-label">Wins</div>
+            <button onclick="selectH2HScore(this,'1-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">1-0</button>
+            <button onclick="selectH2HScore(this,'2-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">2-0</button>
+            <button onclick="selectH2HScore(this,'3-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">3-0</button>
+            <button onclick="selectH2HScore(this,'4-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">4-0</button>
+            <button onclick="selectH2HScore(this,'5-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">5-0</button>
+            <button onclick="selectH2HScore(this,'2-1')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">2-1</button>
+            <button onclick="selectH2HScore(this,'3-1')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">3-1</button>
+            <button onclick="selectH2HScore(this,'4-1')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">4-1</button>
+            <button onclick="selectH2HScore(this,'5-1')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">5-1</button>
+            <button onclick="selectH2HScore(this,'3-2')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">3-2</button>
+            <button onclick="selectH2HScore(this,'4-2')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">4-2</button>
+            <button onclick="selectH2HScore(this,'5-2')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">5-2</button>
+            <button onclick="selectH2HScore(this,'4-3')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">4-3</button>
+            <button onclick="selectH2HScore(this,'5-4')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">5-4</button>
+            <button onclick="selectH2HScore(this,'otro')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;" id="h2h-score-other">Other</button>
+          </div>
+          <input id="h2h-score-custom" type="text" placeholder="e.g. 6-1" style="display:none;margin-top:8px;width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;">
+        </div>
+            <div style="font-size:11px;font-weight:600;color:var(--text-dim);width:100%;margin-bottom:2px;" id="h2h-score-draws-label">Empates</div>
+            <button onclick="selectH2HScore(this,'0-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">0-0</button>
+            <button onclick="selectH2HScore(this,'1-1')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">1-1</button>
+            <button onclick="selectH2HScore(this,'2-2')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">2-2</button>
+            <button onclick="selectH2HScore(this,'3-3')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">3-3</button>
+            <button onclick="selectH2HScore(this,'4-4')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">4-4</button>
+            <div style="font-size:11px;font-weight:600;color:var(--text-dim);width:100%;margin-top:4px;margin-bottom:2px;" id="h2h-score-wins-label">Victorias</div>
+            <button onclick="selectH2HScore(this,'1-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">1-0</button>
+            <button onclick="selectH2HScore(this,'2-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">2-0</button>
+            <button onclick="selectH2HScore(this,'3-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">3-0</button>
+            <button onclick="selectH2HScore(this,'4-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">4-0</button>
+            <button onclick="selectH2HScore(this,'5-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">5-0</button>
+            <button onclick="selectH2HScore(this,'2-1')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">2-1</button>
+            <button onclick="selectH2HScore(this,'3-1')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">3-1</button>
+            <button onclick="selectH2HScore(this,'4-1')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">4-1</button>
+            <button onclick="selectH2HScore(this,'5-1')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">5-1</button>
+            <button onclick="selectH2HScore(this,'3-2')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">3-2</button>
+            <button onclick="selectH2HScore(this,'4-2')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">4-2</button>
+            <button onclick="selectH2HScore(this,'5-2')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">5-2</button>
+            <button onclick="selectH2HScore(this,'4-3')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">4-3</button>
+            <button onclick="selectH2HScore(this,'5-4')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">5-4</button>
+            <button onclick="selectH2HScore(this,'otro')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;" id="h2h-score-other">Otro</button>
+          </div>
+          <input id="h2h-score-custom" type="text" placeholder="ej: 6-1" style="display:none;margin-top:8px;width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;">
         </div>
         <button onclick="saveH2H()" style="width:100%;background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="h2h-save-btn">GUARDAR</button>
         <div id="h2h-msg" style="text-align:center;font-size:13px;margin-top:8px;min-height:16px;"></div>
@@ -1952,6 +2004,23 @@
     selectedH2HComp = value;
   }
 
+  var selectedH2HScore = null;
+
+  function selectH2HScore(el, value) {
+    document.querySelectorAll('.h2h-score').forEach(function(b) {
+      b.style.background = 'var(--surface2)';
+      b.style.color = 'var(--text-dim)';
+      b.style.borderColor = 'var(--border2)';
+    });
+    el.style.background = 'rgba(41,121,255,0.12)';
+    el.style.color = 'var(--blue)';
+    el.style.borderColor = 'var(--blue)';
+    selectedH2HScore = value;
+    var custom = document.getElementById('h2h-score-custom');
+    if (value === 'otro') { custom.style.display = 'block'; custom.focus(); }
+    else { custom.style.display = 'none'; }
+  }
+
   async function saveH2H() {
     if (!currentUser) return;
     var opponent = document.getElementById('h2h-opponent').value.trim();
@@ -1959,17 +2028,18 @@
     if (!opponent) { msg.textContent = currentLang === 'es' ? 'Ingresá el usuario del rival' : 'Enter the rival username'; msg.style.color = 'var(--red)'; return; }
     if (!selectedH2HResult) { msg.textContent = currentLang === 'es' ? 'Elegí el resultado' : 'Select the result'; msg.style.color = 'var(--red)'; return; }
     if (!selectedH2HComp) { msg.textContent = currentLang === 'es' ? 'Elegí la competición' : 'Select the competition'; msg.style.color = 'var(--red)'; return; }
+    var score = selectedH2HScore === 'otro' ? document.getElementById('h2h-score-custom').value.trim() : selectedH2HScore;
     var btn = document.getElementById('h2h-save-btn');
     btn.textContent = currentLang === 'es' ? 'Guardando...' : 'Saving...';
-    var res = await db.from('h2h').insert({ user_id: currentUser.id, opponent_username: opponent, result: selectedH2HResult, competition: selectedH2HComp });
+    var res = await db.from('h2h').insert({ user_id: currentUser.id, opponent_username: opponent, result: selectedH2HResult, competition: selectedH2HComp, score: score || null });
     if (res.error) { msg.textContent = 'Error: ' + res.error.message; msg.style.color = 'var(--red)'; btn.textContent = currentLang === 'es' ? 'GUARDAR' : 'SAVE'; return; }
     msg.textContent = currentLang === 'es' ? '✅ Resultado guardado!' : '✅ Result saved!';
     msg.style.color = 'var(--green)';
     btn.textContent = currentLang === 'es' ? 'GUARDAR' : 'SAVE';
     document.getElementById('h2h-opponent').value = '';
-    selectedH2HResult = null;
-    selectedH2HComp = null;
-    document.querySelectorAll('.h2h-opt,.h2h-comp').forEach(function(b) { b.style.background = 'var(--surface2)'; b.style.color = 'var(--text-dim)'; b.style.borderColor = 'var(--border2)'; });
+    document.getElementById('h2h-score-custom').style.display = 'none';
+    selectedH2HResult = null; selectedH2HComp = null; selectedH2HScore = null;
+    document.querySelectorAll('.h2h-opt,.h2h-comp,.h2h-score').forEach(function(b) { b.style.background = 'var(--surface2)'; b.style.color = 'var(--text-dim)'; b.style.borderColor = 'var(--border2)'; });
     setTimeout(function() { msg.textContent = ''; }, 2000);
     loadH2H();
   }
@@ -1996,7 +2066,7 @@
       else opponents[opp].draws++;
       opponents[opp].matches.push(m);
     });
-    var compLabel = { league: currentLang === 'es' ? 'Liga' : 'League', cup: currentLang === 'es' ? 'Copa' : 'Cup', key: currentLang === 'es' ? 'Clave' : 'Key' };
+    var compLabel = { league: currentLang === 'es' ? 'Liga' : 'League', cup: currentLang === 'es' ? 'Copa' : 'Cup' };
     var resultLabel = { win: currentLang === 'es' ? 'Victoria' : 'Win', loss: currentLang === 'es' ? 'Derrota' : 'Loss', draw: currentLang === 'es' ? 'Empate' : 'Draw' };
     var resultColor = { win: 'var(--green)', loss: 'var(--red)', draw: 'var(--yellow)' };
     list.innerHTML = Object.values(opponents).map(function(opp) {
@@ -2033,7 +2103,8 @@
         html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);">';
         html += '<span style="font-size:11px;color:var(--text-dim);min-width:50px;">' + dateStr + '</span>';
         html += '<span style="font-size:13px;font-weight:600;color:' + resultColor[m.result] + ';">' + resultLabel[m.result] + '</span>';
-        html += '<span style="font-size:11px;color:var(--text-dim);">' + compLabel[m.competition] + '</span>';
+        html += '<span style="font-size:11px;color:var(--text-dim);">' + (compLabel[m.competition] || m.competition) + '</span>';
+        if (m.score) html += '<span style="font-size:12px;font-weight:700;color:var(--text-mid);background:var(--surface2);padding:2px 6px;border-radius:4px;">' + m.score + '</span>';
         html += '<button onclick="deleteH2H(\'' + m.id + '\')" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:12px;padding:0 4px;">🗑️</button>';
         html += '</div>';
       });
@@ -2149,7 +2220,7 @@
       'tab-detail': '📋 Detalle',
       'tab-builder': '⚽ Alineaciones',
       'tab-ranking': '🏆 Rankings',
-      'tab-events': '🗓️ Eventos',
+      'tab-events': '📅 Eventos',
       'tab-h2h': '⚔️ H2H',
       'feed-title': 'TÁCTICAS DE MODA',
       'pill-hot': 'Caliente',
@@ -2211,6 +2282,7 @@
       'tab-detail': '📋 Tactic Detail',
       'tab-builder': '⚽ Lineup Builder',
       'tab-ranking': '🏆 Rankings',
+      'tab-events': '📅 Events',
       'tab-h2h': '⚔️ H2H',
       'feed-title': 'TRENDING TACTICS',
       'pill-hot': 'Hot',
@@ -2306,16 +2378,23 @@
       h2hOpts[2].textContent = currentLang === 'es' ? 'Derrota' : 'Loss';
     }
     var h2hComps = document.querySelectorAll('.h2h-comp');
-    if (h2hComps.length === 3) {
+    if (h2hComps.length >= 2) {
       h2hComps[0].textContent = currentLang === 'es' ? '🥇 Liga' : '🥇 League';
       h2hComps[1].textContent = currentLang === 'es' ? '🏆 Copa' : '🏆 Cup';
-      h2hComps[2].textContent = currentLang === 'es' ? '⭐ Clave' : '⭐ Key';
     }
     // Reload H2H if open
     var h2hScreen = document.getElementById('screen-h2h');
     if (h2hScreen && h2hScreen.classList.contains('active')) loadH2H();
-    var h2hOpp = document.getElementById('h2h-opponent');
-    if (h2hOpp) h2hOpp.placeholder = currentLang === 'es' ? 'Usuario del rival (ej: hola123)' : 'Rival username (e.g. hola123)';
+    var h2hScoreLabel = document.getElementById('h2h-score-label');
+    if (h2hScoreLabel) h2hScoreLabel.textContent = currentLang === 'es' ? '⚽ MARCADOR (opcional)' : '⚽ SCORE (optional)';
+    var h2hDrawsLabel = document.getElementById('h2h-score-draws-label');
+    if (h2hDrawsLabel) h2hDrawsLabel.textContent = currentLang === 'es' ? 'Empates' : 'Draws';
+    var h2hWinsLabel = document.getElementById('h2h-score-wins-label');
+    if (h2hWinsLabel) h2hWinsLabel.textContent = currentLang === 'es' ? 'Victorias' : 'Wins';
+    var h2hOther = document.getElementById('h2h-score-other');
+    if (h2hOther) h2hOther.textContent = currentLang === 'es' ? 'Otro' : 'Other';
+    var h2hOppEl = document.getElementById('h2h-opponent');
+    if (h2hOppEl) h2hOppEl.placeholder = currentLang === 'es' ? 'Usuario del rival (ej: hola123)' : 'Rival username (e.g. hola123)';
     document.querySelector('.feed-title').textContent = t('feed-title');
     document.querySelectorAll('.pill')[0].textContent = t('pill-hot');
     document.querySelectorAll('.pill')[1].textContent = t('pill-new');
