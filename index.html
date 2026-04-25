@@ -393,6 +393,7 @@
   <div class="tab" onclick="showScreen('builder',this)">⚽ Alineaciones</div>
   <div class="tab" onclick="showScreen('ranking',this)">🏆 Rankings</div>
   <div class="tab" onclick="showScreen('events',this)" id="tab-events">🗓️ Eventos</div>
+  <div class="tab" onclick="showScreen('h2h',this)" id="tab-h2h">⚔️ H2H</div>
 </div>
 
 <!-- ===== FEED ===== -->
@@ -869,6 +870,45 @@
   </div>
 </div>
 
+<!-- ===== H2H ===== -->
+<div id="screen-h2h" class="screen">
+  <div style="max-width:500px;margin:0 auto;padding:24px 16px;">
+
+    <!-- Not logged in -->
+    <div id="h2h-login-prompt" style="display:none;text-align:center;padding:40px 20px;background:var(--surface);border:1px solid var(--border);border-radius:16px;">
+      <div style="font-size:36px;margin-bottom:12px;">⚔️</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--text);margin-bottom:8px;" id="h2h-login-title">Iniciá sesión para ver tu H2H</div>
+      <div style="font-size:13px;color:var(--text-dim);margin-bottom:20px;" id="h2h-login-sub">Llevá el registro de tus partidos contra otros managers</div>
+      <button onclick="openAuth()" style="background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:12px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="h2h-login-btn">⚡ INICIAR SESIÓN</button>
+    </div>
+
+    <!-- Logged in -->
+    <div id="h2h-content" style="display:none;">
+
+      <!-- Add new result -->
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--text);margin-bottom:14px;" id="h2h-add-title">+ Registrar resultado</div>
+        <input id="h2h-opponent" type="text" placeholder="Usuario del rival (ej: hola123)" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;margin-bottom:8px;">
+        <div style="display:flex;gap:8px;margin-bottom:8px;" id="h2h-result-opts">
+          <button onclick="selectH2HResult(this,'win')" class="h2h-opt" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;cursor:pointer;">Victoria</button>
+          <button onclick="selectH2HResult(this,'draw')" class="h2h-opt" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;cursor:pointer;">Empate</button>
+          <button onclick="selectH2HResult(this,'loss')" class="h2h-opt" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;cursor:pointer;">Derrota</button>
+        </div>
+        <div style="display:flex;gap:8px;margin-bottom:12px;" id="h2h-comp-opts">
+          <button onclick="selectH2HComp(this,'league')" class="h2h-comp" style="flex:1;padding:8px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow',sans-serif;font-size:13px;cursor:pointer;">🥇 Liga</button>
+          <button onclick="selectH2HComp(this,'cup')" class="h2h-comp" style="flex:1;padding:8px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow',sans-serif;font-size:13px;cursor:pointer;">🏆 Copa</button>
+          <button onclick="selectH2HComp(this,'key')" class="h2h-comp" style="flex:1;padding:8px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow',sans-serif;font-size:13px;cursor:pointer;">⭐ Clave</button>
+        </div>
+        <button onclick="saveH2H()" style="width:100%;background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="h2h-save-btn">GUARDAR</button>
+        <div id="h2h-msg" style="text-align:center;font-size:13px;margin-top:8px;min-height:16px;"></div>
+      </div>
+
+      <!-- H2H list -->
+      <div id="h2h-list"></div>
+    </div>
+  </div>
+</div>
+
 <footer>
   <p><strong>OSM Hub</strong> · Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM · Construida por la comunidad, para la comunidad</p>
 </footer>
@@ -939,6 +979,7 @@
     if (id === 'ranking') loadRankings();
     if (id === 'events') renderEvents();
     if (id === 'profile') loadProfile();
+    if (id === 'h2h') loadH2H();
   }
 
   var currentSort = 'hot';
@@ -1883,7 +1924,129 @@
     }
   });
 
-  // ===== EVENTS =====
+  // ===== H2H =====
+  var selectedH2HResult = null;
+  var selectedH2HComp = null;
+
+  function selectH2HResult(el, value) {
+    document.querySelectorAll('.h2h-opt').forEach(function(b) {
+      b.style.background = 'var(--surface2)';
+      b.style.color = 'var(--text-dim)';
+      b.style.borderColor = 'var(--border2)';
+    });
+    el.style.background = value === 'win' ? 'rgba(0,230,118,0.15)' : value === 'loss' ? 'rgba(255,61,87,0.15)' : 'rgba(255,214,0,0.15)';
+    el.style.color = value === 'win' ? 'var(--green)' : value === 'loss' ? 'var(--red)' : 'var(--yellow)';
+    el.style.borderColor = value === 'win' ? 'var(--green)' : value === 'loss' ? 'var(--red)' : 'var(--yellow)';
+    selectedH2HResult = value;
+  }
+
+  function selectH2HComp(el, value) {
+    document.querySelectorAll('.h2h-comp').forEach(function(b) {
+      b.style.background = 'var(--surface2)';
+      b.style.color = 'var(--text-dim)';
+      b.style.borderColor = 'var(--border2)';
+    });
+    el.style.background = 'rgba(41,121,255,0.12)';
+    el.style.color = 'var(--blue)';
+    el.style.borderColor = 'var(--blue)';
+    selectedH2HComp = value;
+  }
+
+  async function saveH2H() {
+    if (!currentUser) return;
+    var opponent = document.getElementById('h2h-opponent').value.trim();
+    var msg = document.getElementById('h2h-msg');
+    if (!opponent) { msg.textContent = currentLang === 'es' ? 'Ingresá el usuario del rival' : 'Enter the rival username'; msg.style.color = 'var(--red)'; return; }
+    if (!selectedH2HResult) { msg.textContent = currentLang === 'es' ? 'Elegí el resultado' : 'Select the result'; msg.style.color = 'var(--red)'; return; }
+    if (!selectedH2HComp) { msg.textContent = currentLang === 'es' ? 'Elegí la competición' : 'Select the competition'; msg.style.color = 'var(--red)'; return; }
+    var btn = document.getElementById('h2h-save-btn');
+    btn.textContent = currentLang === 'es' ? 'Guardando...' : 'Saving...';
+    var res = await db.from('h2h').insert({ user_id: currentUser.id, opponent_username: opponent, result: selectedH2HResult, competition: selectedH2HComp });
+    if (res.error) { msg.textContent = 'Error: ' + res.error.message; msg.style.color = 'var(--red)'; btn.textContent = currentLang === 'es' ? 'GUARDAR' : 'SAVE'; return; }
+    msg.textContent = currentLang === 'es' ? '✅ Resultado guardado!' : '✅ Result saved!';
+    msg.style.color = 'var(--green)';
+    btn.textContent = currentLang === 'es' ? 'GUARDAR' : 'SAVE';
+    document.getElementById('h2h-opponent').value = '';
+    selectedH2HResult = null;
+    selectedH2HComp = null;
+    document.querySelectorAll('.h2h-opt,.h2h-comp').forEach(function(b) { b.style.background = 'var(--surface2)'; b.style.color = 'var(--text-dim)'; b.style.borderColor = 'var(--border2)'; });
+    setTimeout(function() { msg.textContent = ''; }, 2000);
+    loadH2H();
+  }
+
+  async function loadH2H() {
+    if (!currentUser) {
+      document.getElementById('h2h-login-prompt').style.display = 'block';
+      document.getElementById('h2h-content').style.display = 'none';
+      return;
+    }
+    document.getElementById('h2h-login-prompt').style.display = 'none';
+    document.getElementById('h2h-content').style.display = 'block';
+    var res = await db.from('h2h').select('*').eq('user_id', currentUser.id).order('played_at', { ascending: false });
+    var data = res.data || [];
+    var list = document.getElementById('h2h-list');
+    if (data.length === 0) { list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-dim);font-size:13px;">' + (currentLang === 'es' ? 'Aún no registraste ningún partido.' : 'No matches recorded yet.') + '</div>'; return; }
+    // Group by opponent
+    var opponents = {};
+    data.forEach(function(m) {
+      var opp = m.opponent_username.toLowerCase();
+      if (!opponents[opp]) opponents[opp] = { name: m.opponent_username, wins: 0, losses: 0, draws: 0, matches: [] };
+      if (m.result === 'win') opponents[opp].wins++;
+      else if (m.result === 'loss') opponents[opp].losses++;
+      else opponents[opp].draws++;
+      opponents[opp].matches.push(m);
+    });
+    var compLabel = { league: currentLang === 'es' ? 'Liga' : 'League', cup: currentLang === 'es' ? 'Copa' : 'Cup', key: currentLang === 'es' ? 'Clave' : 'Key' };
+    var resultLabel = { win: currentLang === 'es' ? 'Victoria' : 'Win', loss: currentLang === 'es' ? 'Derrota' : 'Loss', draw: currentLang === 'es' ? 'Empate' : 'Draw' };
+    var resultColor = { win: 'var(--green)', loss: 'var(--red)', draw: 'var(--yellow)' };
+    list.innerHTML = Object.values(opponents).map(function(opp) {
+      var total = opp.wins + opp.losses + opp.draws;
+      var winPct = Math.round((opp.wins / total) * 100);
+      var initials = opp.name.substring(0, 2).toUpperCase();
+      var myUser = currentUser.user_metadata && currentUser.user_metadata.username ? currentUser.user_metadata.username : currentUser.email.split('@')[0];
+      var myInitials = myUser.substring(0, 2).toUpperCase();
+      var html = '<div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:12px;">';
+      // Header
+      html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">';
+      html += '<div style="text-align:center;flex:1;"><div style="width:44px;height:44px;border-radius:50%;background:rgba(41,121,255,0.15);color:var(--blue);display:flex;align-items:center;justify-content:center;font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:900;margin:0 auto 4px;">' + myInitials + '</div><div style="font-size:12px;font-weight:600;color:var(--text);">@' + myUser + '</div></div>';
+      html += '<div style="font-size:18px;color:var(--text-dim);font-weight:500;padding:0 12px;">vs</div>';
+      html += '<div style="text-align:center;flex:1;"><div style="width:44px;height:44px;border-radius:50%;background:var(--surface2);color:var(--text-mid);display:flex;align-items:center;justify-content:center;font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:900;margin:0 auto 4px;">' + initials + '</div><div style="font-size:12px;font-weight:600;color:var(--text);">@' + opp.name + '</div></div>';
+      html += '</div>';
+      // Stats
+      html += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">';
+      html += '<div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-family:Barlow Condensed,sans-serif;font-size:24px;font-weight:900;color:var(--green);">' + opp.wins + '</div><div style="font-size:11px;color:var(--text-dim);">' + (currentLang === 'es' ? 'Victorias' : 'Wins') + '</div></div>';
+      html += '<div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-family:Barlow Condensed,sans-serif;font-size:24px;font-weight:900;color:var(--text);">' + total + '</div><div style="font-size:11px;color:var(--text-dim);">' + (currentLang === 'es' ? 'Partidos' : 'Matches') + '</div></div>';
+      html += '<div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-family:Barlow Condensed,sans-serif;font-size:24px;font-weight:900;color:var(--red);">' + opp.losses + '</div><div style="font-size:11px;color:var(--text-dim);">' + (currentLang === 'es' ? 'Derrotas' : 'Losses') + '</div></div>';
+      html += '</div>';
+      // Bar
+      html += '<div style="margin-bottom:14px;">';
+      html += '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-dim);margin-bottom:4px;"><span>' + winPct + '%</span><span>' + (100-winPct) + '%</span></div>';
+      html += '<div style="height:8px;border-radius:4px;background:var(--surface2);overflow:hidden;display:flex;">';
+      html += '<div style="width:' + winPct + '%;background:var(--green);height:100%;"></div>';
+      html += '</div></div>';
+      // Last matches
+      html += '<div style="border-top:1px solid var(--border);padding-top:10px;">';
+      html += '<div style="font-size:12px;color:var(--text-dim);margin-bottom:6px;font-weight:600;">' + (currentLang === 'es' ? 'Últimos partidos' : 'Recent matches') + '</div>';
+      opp.matches.slice(0, 4).forEach(function(m) {
+        var d = new Date(m.played_at);
+        var dateStr = d.getDate() + ' ' + ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'][d.getMonth()];
+        html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);">';
+        html += '<span style="font-size:11px;color:var(--text-dim);min-width:50px;">' + dateStr + '</span>';
+        html += '<span style="font-size:13px;font-weight:600;color:' + resultColor[m.result] + ';">' + resultLabel[m.result] + '</span>';
+        html += '<span style="font-size:11px;color:var(--text-dim);">' + compLabel[m.competition] + '</span>';
+        html += '<button onclick="deleteH2H(\'' + m.id + '\')" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:12px;padding:0 4px;">🗑️</button>';
+        html += '</div>';
+      });
+      html += '</div></div>';
+      return html;
+    }).join('');
+  }
+
+  async function deleteH2H(id) {
+    if (!confirm(currentLang === 'es' ? '¿Eliminar este resultado?' : 'Delete this result?')) return;
+    await db.from('h2h').delete().eq('id', id).eq('user_id', currentUser.id);
+    loadH2H();
+  }
   var eventsData = [
     { dates: '1-2', name_es: 'Extreme Progression', name_en: 'Extreme Progression',
       desc_es: 'Mayor progresión de entrenamiento con cada entrenamiento y amistoso.',
@@ -1987,6 +2150,7 @@
       'tab-builder': '⚽ Alineaciones',
       'tab-ranking': '🏆 Rankings',
       'tab-events': '🗓️ Eventos',
+      'tab-h2h': '⚔️ H2H',
       'feed-title': 'TÁCTICAS DE MODA',
       'pill-hot': 'Caliente',
       'pill-new': 'Nuevo',
@@ -2047,6 +2211,7 @@
       'tab-detail': '📋 Tactic Detail',
       'tab-builder': '⚽ Lineup Builder',
       'tab-ranking': '🏆 Rankings',
+      'tab-h2h': '⚔️ H2H',
       'feed-title': 'TRENDING TACTICS',
       'pill-hot': 'Hot',
       'pill-new': 'New',
@@ -2122,6 +2287,8 @@
     document.querySelectorAll('.tab')[3].textContent = t('tab-ranking');
     var tabEvents = document.getElementById('tab-events');
     if (tabEvents) tabEvents.textContent = t('tab-events');
+    var tabH2h = document.getElementById('tab-h2h');
+    if (tabH2h) tabH2h.textContent = t('tab-h2h');
     document.querySelector('.feed-title').textContent = t('feed-title');
     document.querySelectorAll('.pill')[0].textContent = t('pill-hot');
     document.querySelectorAll('.pill')[1].textContent = t('pill-new');
