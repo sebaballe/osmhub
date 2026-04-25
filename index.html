@@ -2072,7 +2072,7 @@
       // Last matches
       html += '<div style="border-top:1px solid var(--border);padding-top:10px;">';
       html += '<div style="font-size:12px;color:var(--text-dim);margin-bottom:6px;font-weight:600;">' + (currentLang === 'es' ? 'Últimos partidos' : 'Recent matches') + '</div>';
-      opp.matches.slice(0, 4).forEach(function(m) {
+      opp.matches.slice(0, 3).forEach(function(m) {
         var d = new Date(m.played_at);
         var dateStr = d.getDate() + ' ' + ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'][d.getMonth()];
         html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);">';
