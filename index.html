@@ -877,9 +877,9 @@
     <!-- Not logged in -->
     <div id="h2h-login-prompt" style="display:none;text-align:center;padding:40px 20px;background:var(--surface);border:1px solid var(--border);border-radius:16px;">
       <div style="font-size:36px;margin-bottom:12px;">⚔️</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--text);margin-bottom:8px;" id="h2h-login-title">Iniciá sesión para ver tu H2H</div>
-      <div style="font-size:13px;color:var(--text-dim);margin-bottom:20px;" id="h2h-login-sub">Llevá el registro de tus partidos contra otros managers</div>
-      <button onclick="openAuth()" style="background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:12px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="h2h-login-btn">⚡ INICIAR SESIÓN</button>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--text);margin-bottom:8px;" id="h2h-login-title">Sign in to see your H2H</div>
+      <div style="font-size:13px;color:var(--text-dim);margin-bottom:20px;" id="h2h-login-sub">Keep track of your matches against other managers</div>
+      <button onclick="openAuth()" style="background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:12px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="h2h-login-btn">⚡ SIGN IN</button>
     </div>
 
     <!-- Logged in -->
@@ -2289,6 +2289,33 @@
     if (tabEvents) tabEvents.textContent = t('tab-events');
     var tabH2h = document.getElementById('tab-h2h');
     if (tabH2h) tabH2h.textContent = t('tab-h2h');
+    var h2hLoginTitle = document.getElementById('h2h-login-title');
+    if (h2hLoginTitle) h2hLoginTitle.textContent = currentLang === 'es' ? 'Iniciá sesión para ver tu H2H' : 'Sign in to see your H2H';
+    var h2hLoginSub = document.getElementById('h2h-login-sub');
+    if (h2hLoginSub) h2hLoginSub.textContent = currentLang === 'es' ? 'Llevá el registro de tus partidos contra otros managers' : 'Keep track of your matches against other managers';
+    var h2hLoginBtn = document.getElementById('h2h-login-btn');
+    if (h2hLoginBtn) h2hLoginBtn.textContent = currentLang === 'es' ? '⚡ INICIAR SESIÓN' : '⚡ SIGN IN';
+    var h2hAddTitle = document.getElementById('h2h-add-title');
+    if (h2hAddTitle) h2hAddTitle.textContent = currentLang === 'es' ? '+ Registrar resultado' : '+ Record result';
+    var h2hSaveBtn = document.getElementById('h2h-save-btn');
+    if (h2hSaveBtn) h2hSaveBtn.textContent = currentLang === 'es' ? 'GUARDAR' : 'SAVE';
+    var h2hOpts = document.querySelectorAll('.h2h-opt');
+    if (h2hOpts.length === 3) {
+      h2hOpts[0].textContent = currentLang === 'es' ? 'Victoria' : 'Win';
+      h2hOpts[1].textContent = currentLang === 'es' ? 'Empate' : 'Draw';
+      h2hOpts[2].textContent = currentLang === 'es' ? 'Derrota' : 'Loss';
+    }
+    var h2hComps = document.querySelectorAll('.h2h-comp');
+    if (h2hComps.length === 3) {
+      h2hComps[0].textContent = currentLang === 'es' ? '🥇 Liga' : '🥇 League';
+      h2hComps[1].textContent = currentLang === 'es' ? '🏆 Copa' : '🏆 Cup';
+      h2hComps[2].textContent = currentLang === 'es' ? '⭐ Clave' : '⭐ Key';
+    }
+    // Reload H2H if open
+    var h2hScreen = document.getElementById('screen-h2h');
+    if (h2hScreen && h2hScreen.classList.contains('active')) loadH2H();
+    var h2hOpp = document.getElementById('h2h-opponent');
+    if (h2hOpp) h2hOpp.placeholder = currentLang === 'es' ? 'Usuario del rival (ej: hola123)' : 'Rival username (e.g. hola123)';
     document.querySelector('.feed-title').textContent = t('feed-title');
     document.querySelectorAll('.pill')[0].textContent = t('pill-hot');
     document.querySelectorAll('.pill')[1].textContent = t('pill-new');
