@@ -2083,6 +2083,26 @@
         html += '<button onclick="deleteH2H(\'' + m.id + '\')" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:12px;padding:0 4px;">🗑️</button>';
         html += '</div>';
       });
+      // Show all button if more than 3 matches
+      if (opp.matches.length > 3) {
+        var histId = 'hist-' + opp.name.replace(/[^a-zA-Z0-9]/g,'');
+        var hiddenHtml = opp.matches.slice(3).map(function(m2) {
+          var d2 = new Date(m2.played_at);
+          var months = currentLang === 'es' ? ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'] : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+          var dateStr2 = d2.getDate() + ' ' + months[d2.getMonth()];
+          return '<div style="display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);">' +
+            '<span style="font-size:11px;color:var(--text-dim);min-width:50px;">' + dateStr2 + '</span>' +
+            '<span style="font-size:13px;font-weight:600;color:' + resultColor[m2.result] + ';">' + resultLabel[m2.result] + '</span>' +
+            '<span style="font-size:11px;color:var(--text-dim);">' + (compLabel[m2.competition] || m2.competition) + '</span>' +
+            (m2.score ? '<span style="font-size:12px;font-weight:700;color:var(--text-mid);background:var(--surface2);padding:2px 6px;border-radius:4px;">' + m2.score + '</span>' : '<span></span>') +
+            '<button onclick="deleteH2H(\'' + m2.id + '\')" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:12px;padding:0 4px;">🗑️</button>' +
+            '</div>';
+        }).join('');
+        var showAllLabel = currentLang === 'es' ? '▼ Ver historial completo (' + opp.matches.length + ')' : '▼ Full history (' + opp.matches.length + ')';
+        var showLessLabel = currentLang === 'es' ? '▲ Ver menos' : '▲ Show less';
+        html += '<div id="' + histId + '" style="display:none;">' + hiddenHtml + '</div>';
+        html += '<div style="text-align:center;margin-top:8px;"><button onclick="var el=document.getElementById(\'' + histId + '\');if(el.style.display===\'none\'){el.style.display=\'block\';this.textContent=\'' + showLessLabel + '\';}else{el.style.display=\'none\';this.textContent=\'' + showAllLabel + '\';}" style="background:none;border:none;color:var(--text-dim);font-size:12px;cursor:pointer;font-weight:600;">' + showAllLabel + '</button></div>';
+      }
       html += '</div></div>';
       return html;
     }).join('');
