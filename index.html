@@ -977,10 +977,10 @@
           <span style="color:var(--green);font-size:16px;">1</span> <span id="req-1">Registrarse gratis en OSM Hub</span>
         </div>
         <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-mid);">
-          <span style="color:var(--green);font-size:16px;">2</span> <span id="req-2">Publicar al menos una táctica</span>
+          <span style="color:var(--green);font-size:16px;">2</span> <span id="req-2">Tener cuenta de PayPal para recibir el premio</span>
         </div>
         <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-mid);">
-          <span style="color:var(--green);font-size:16px;">3</span> <span id="req-3">Tener cuenta de PayPal para recibir el premio</span>
+          <span style="color:var(--green);font-size:16px;">3</span> <span id="req-3">Confirmar inscripción comentando en el grupo</span>
         </div>
       </div>
     </div>
@@ -2064,13 +2064,13 @@
     var pl = document.getElementById('tournament-prize-label'); if(pl) pl.textContent = es ? 'Premio PayPal' : 'PayPal prize';
     var rt = document.getElementById('tournament-req-title'); if(rt) rt.textContent = es ? '✅ REQUISITOS' : '✅ REQUIREMENTS';
     var r1 = document.getElementById('req-1'); if(r1) r1.textContent = es ? 'Registrarse gratis en OSM Hub' : 'Sign up free on OSM Hub';
-    var r2 = document.getElementById('req-2'); if(r2) r2.textContent = es ? 'Publicar al menos una táctica' : 'Share at least one tactic';
-    var r3 = document.getElementById('req-3'); if(r3) r3.textContent = es ? 'Tener cuenta de PayPal para recibir el premio' : 'Have a PayPal account to receive the prize';
+    var r2 = document.getElementById('req-2'); if(r2) r2.textContent = es ? 'Tener cuenta de PayPal para recibir el premio' : 'Have a PayPal account to receive the prize';
+    var r3 = document.getElementById('req-3'); if(r3) r3.textContent = es ? 'Confirmar inscripción comentando en el grupo' : 'Confirm registration by commenting in the group';
     var pt = document.getElementById('tournament-participants-title'); if(pt) pt.textContent = es ? '👥 PARTICIPANTES (10/16)' : '👥 PARTICIPANTS (10/16)';
     var empties = document.querySelectorAll('.p-empty'); empties.forEach(function(e) { e.textContent = es ? 'Cupo disponible' : 'Open spot'; });
     var cta = document.getElementById('tournament-cta-text'); if(cta) cta.textContent = es ? '¿Querés participar? Quedan solo 6 cupos.' : 'Want to join? Only 6 spots left.';
     var ctab = document.getElementById('tournament-cta-btn'); if(ctab) ctab.textContent = es ? '⚡ ANOTARME' : '⚡ JOIN NOW';
-    var ctan = document.getElementById('tournament-cta-note'); if(ctan) ctan.textContent = es ? 'Registrate y publicá una táctica para confirmar tu lugar' : 'Sign up and share a tactic to confirm your spot';
+    var ctan = document.getElementById('tournament-cta-note'); if(ctan) ctan.textContent = es ? 'Registrate y confirmá tu lugar en el grupo' : 'Sign up and confirm your spot in the group';
   }
   var selectedH2HResult = null;
   var selectedH2HComp = null;
