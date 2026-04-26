@@ -1159,9 +1159,10 @@
     var feProsTitle = document.getElementById('fe-pros-title'); if(feProsTitle) feProsTitle.textContent = es ? '✅ VENTAJAS' : '✅ STRENGTHS';
     var feConsTitle = document.getElementById('fe-cons-title'); if(feConsTitle) feConsTitle.textContent = es ? '❌ DESVENTAJAS' : '❌ WEAKNESSES';
     var feTacticsTitle = document.getElementById('fe-tactics-title'); if(feTacticsTitle) feTacticsTitle.textContent = es ? '✦ TÁCTICAS OFICIALES OSM HUB' : '✦ OSM HUB OFFICIAL TACTICS';
-    document.getElementById('fe-pros').innerHTML = data.pros.map(function(p) { return '• ' + p; }).join('<br>');
-    document.getElementById('fe-cons').innerHTML = data.cons.map(function(c) { return '• ' + c; }).join('<br>');
+    var fePros = document.getElementById('fe-pros'); if(fePros) fePros.innerHTML = data.pros.map(function(p) { return '• ' + p; }).join('<br>');
+    var feCons = document.getElementById('fe-cons'); if(feCons) feCons.innerHTML = data.cons.map(function(c) { return '• ' + c; }).join('<br>');
     var pitchEl = document.getElementById('fe-pitch-players');
+    if (!pitchEl) return;
     var positions = getDefaultPositions(formation);
     pitchEl.innerHTML = positions.map(function(p) {
       var isGK = p.r === 'GK';
