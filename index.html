@@ -303,6 +303,7 @@
   .p-name { font-size:14px;font-weight:600;color:var(--text);flex:1; }
   .p-empty { color:var(--text-dim);font-style:italic;font-weight:400; }
   .confirmed-badge { font-size:14px;color:var(--green);font-weight:700; }
+  @keyframes fadeIn { from { opacity:0;transform:translateY(4px); } to { opacity:1;transform:translateY(0); } }
   .builder-layout { display:grid; grid-template-columns:1fr 260px; gap:20px; }
   @media(max-width:650px){ .builder-layout{grid-template-columns:1fr;} }
 
@@ -1042,10 +1043,24 @@
       </div>
     </div>
 
-    <!-- Draw / Bracket section -->
+    <!-- Draw Animation -->
     <div id="tournament-draw-section" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;display:none;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:14px;" id="bracket-title">🎲 SORTEO — RONDA 1</div>
-      <div id="bracket-list" style="display:flex;flex-direction:column;gap:8px;"></div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:14px;text-align:center;" id="bracket-title">🎲 SORTEO — EQUIPOS ASIGNADOS</div>
+      
+      <!-- Animation area -->
+      <div id="draw-animation" style="display:none;text-align:center;padding:20px 0;">
+        <div style="font-size:13px;color:var(--text-dim);margin-bottom:16px;" id="draw-anim-label">Mezclando equipos...</div>
+        <div id="draw-spinning" style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--yellow);min-height:40px;transition:all 0.1s;"></div>
+      </div>
+
+      <!-- Start button -->
+      <div id="draw-start-section" style="text-align:center;margin-bottom:16px;">
+        <button onclick="startDrawAnimation()" id="draw-start-btn" style="background:var(--yellow);color:var(--bg);border:none;border-radius:10px;padding:12px 28px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;">🎲 INICIAR SORTEO</button>
+        <div style="font-size:12px;color:var(--text-dim);margin-top:8px;" id="draw-start-note">La animación revelará los equipos uno por uno</div>
+      </div>
+
+      <!-- Results list -->
+      <div id="bracket-list" style="display:flex;flex-direction:column;gap:4px;"></div>
     </div>
 
     <!-- Not logged in draw prompt -->
@@ -2102,6 +2117,67 @@
     ["shoxx11", "Santos"]
   ];
 
+  // Draw animation — 24h expiry
+  var DRAW_EXPIRY = new Date('2026-04-27T12:00:00').getTime(); // 24h after draw
+  var drawAnimationDone = false;
+
+  function startDrawAnimation() {
+    var startBtn = document.getElementById('draw-start-section');
+    var animArea = document.getElementById('draw-animation');
+    var bracketList = document.getElementById('bracket-list');
+    var spinning = document.getElementById('draw-spinning');
+    var animLabel = document.getElementById('draw-anim-label');
+    if(startBtn) startBtn.style.display = 'none';
+    if(animArea) animArea.style.display = 'block';
+    if(bracketList) bracketList.innerHTML = '';
+    var teams = bracketData.map(function(m) { return m[1]; });
+    var idx = 0;
+    var spinCount = 0;
+    var maxSpin = 30;
+    // Spin animation
+    var spinInterval = setInterval(function() {
+      var randomTeam = teams[Math.floor(Math.random() * teams.length)];
+      if(spinning) spinning.textContent = '⚽ ' + randomTeam;
+      spinCount++;
+      if(spinCount >= maxSpin) {
+        clearInterval(spinInterval);
+        if(animLabel) animLabel.textContent = currentLang === 'es' ? 'Revelando equipos...' : 'Revealing teams...';
+        // Reveal one by one
+        var revealInterval = setInterval(function() {
+          if(idx >= bracketData.length) {
+            clearInterval(revealInterval);
+            if(animArea) animArea.style.display = 'none';
+            drawAnimationDone = true;
+            return;
+          }
+          var match = bracketData[idx];
+          if(spinning) spinning.textContent = '⚽ ' + match[1];
+          var row = document.createElement('div');
+          row.style.cssText = 'display:flex;align-items:center;gap:10px;background:var(--surface2);border-radius:8px;padding:10px 14px;margin-bottom:4px;animation:fadeIn 0.3s ease;';
+          row.innerHTML = '<span style="font-size:12px;color:var(--text-dim);min-width:24px;font-weight:700;">' + (idx+1) + '</span>' +
+            '<span style="flex:1;font-size:14px;font-weight:600;color:var(--text);">@' + match[0] + '</span>' +
+            '<span style="font-size:13px;color:var(--text-dim);padding:0 8px;">→</span>' +
+            '<span style="font-size:14px;font-weight:800;color:var(--yellow);">⚽ ' + match[1] + '</span>';
+          if(bracketList) bracketList.appendChild(row);
+          idx++;
+        }, 600);
+      }
+    }, 80);
+  }
+
+  function checkDrawExpiry() {
+    var drawSection = document.getElementById('tournament-draw-section');
+    var drawStart = document.getElementById('draw-start-section');
+    if (!drawSection) return;
+    var now = new Date().getTime();
+    if (now > DRAW_EXPIRY) {
+      // 24h passed — hide draw section, show only results
+      if(drawStart) drawStart.style.display = 'none';
+      var animArea = document.getElementById('draw-animation');
+      if(animArea) animArea.style.display = 'none';
+    }
+  }
+
   function applyTournamentTranslations() {
     var es = currentLang === 'es';
     var sub = document.getElementById('tournament-sub'); if(sub) sub.textContent = es ? 'Primer torneo oficial de OSM Hub · Mayo 2026' : 'First official OSM Hub tournament · May 2026';
@@ -2129,16 +2205,23 @@
         if(drawPrompt) drawPrompt.style.display = 'none';
         if(drawSection) {
           drawSection.style.display = 'block';
+          checkDrawExpiry();
           var bracketList = document.getElementById('bracket-list');
-          if(bracketList) {
-            bracketList.innerHTML = bracketData.map(function(match, i) {
-              return '<div style="display:flex;align-items:center;gap:10px;background:var(--surface2);border-radius:8px;padding:10px 14px;margin-bottom:4px;">' +
-                '<span style="font-size:12px;color:var(--text-dim);min-width:24px;font-weight:700;">' + (i+1) + '</span>' +
-                '<span style="flex:1;font-size:14px;font-weight:600;color:var(--text);">@' + match[0] + '</span>' +
-                '<span style="font-size:13px;color:var(--text-dim);padding:0 8px;">→</span>' +
-                '<span style="font-size:14px;font-weight:800;color:var(--yellow);">⚽ ' + match[1] + '</span>' +
-                '</div>';
-            }).join('');
+          var now = new Date().getTime();
+          // If 24h passed, show full results directly without animation button
+          if (now > DRAW_EXPIRY) {
+            var startSection = document.getElementById('draw-start-section');
+            if(startSection) startSection.style.display = 'none';
+            if(bracketList) {
+              bracketList.innerHTML = bracketData.map(function(match, i) {
+                return '<div style="display:flex;align-items:center;gap:10px;background:var(--surface2);border-radius:8px;padding:10px 14px;margin-bottom:4px;">' +
+                  '<span style="font-size:12px;color:var(--text-dim);min-width:24px;font-weight:700;">' + (i+1) + '</span>' +
+                  '<span style="flex:1;font-size:14px;font-weight:600;color:var(--text);">@' + match[0] + '</span>' +
+                  '<span style="font-size:13px;color:var(--text-dim);padding:0 8px;">→</span>' +
+                  '<span style="font-size:14px;font-weight:800;color:var(--yellow);">⚽ ' + match[1] + '</span>' +
+                  '</div>';
+              }).join('');
+            }
           }
         }
       } else {
