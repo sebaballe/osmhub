@@ -296,6 +296,13 @@
   }
   .own-style-btn.active { background:var(--green-glow); border-color:var(--green); color:var(--green); }
   .own-style-btn:hover:not(.active) { border-color:var(--border2); color:var(--text); }
+  .participant-row { display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;background:var(--surface2); }
+  .participant-row.confirmed { border-left:3px solid var(--green); }
+  .participant-row.empty { border-left:3px solid var(--border2);opacity:0.5; }
+  .p-num { font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:var(--text-dim);min-width:24px; }
+  .p-name { font-size:14px;font-weight:600;color:var(--text);flex:1; }
+  .p-empty { color:var(--text-dim);font-style:italic;font-weight:400; }
+  .confirmed-badge { font-size:14px;color:var(--green);font-weight:700; }
   .builder-layout { display:grid; grid-template-columns:1fr 260px; gap:20px; }
   @media(max-width:650px){ .builder-layout{grid-template-columns:1fr;} }
 
@@ -394,6 +401,7 @@
   <div class="tab" onclick="showScreen('ranking',this)">🏆 Rankings</div>
   <div class="tab" onclick="showScreen('events',this)" id="tab-events">📅 Events</div>
   <div class="tab" onclick="showScreen('h2h',this)" id="tab-h2h">⚔️ H2H</div>
+  <div class="tab" onclick="showScreen('tournament',this)" id="tab-tournament">🏆 Copa</div>
 </div>
 
 <!-- ===== FEED ===== -->
@@ -936,6 +944,102 @@
   </div>
 </div>
 
+<!-- ===== TOURNAMENT ===== -->
+<div id="screen-tournament" class="screen">
+  <div style="max-width:600px;margin:0 auto;padding:24px 16px;">
+
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg,rgba(255,214,0,0.08),rgba(0,230,118,0.06));border:1px solid rgba(255,214,0,0.25);border-radius:16px;padding:24px;margin-bottom:20px;text-align:center;">
+      <div style="font-size:40px;margin-bottom:8px;">🏆</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--yellow);letter-spacing:1px;">COPA NOSTALGIA</div>
+      <div style="font-size:13px;color:var(--text-dim);margin-top:6px;" id="tournament-sub">Primer torneo oficial de OSM Hub · 7 de mayo 2026</div>
+      <div style="display:flex;gap:16px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--green);" id="tournament-spots-taken">10</div>
+          <div style="font-size:11px;color:var(--text-dim);" id="tournament-confirmed-label">Confirmados</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--red);" id="tournament-spots-left">6</div>
+          <div style="font-size:11px;color:var(--text-dim);" id="tournament-spots-label">Cupos libres</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--yellow);">$</div>
+          <div style="font-size:11px;color:var(--text-dim);" id="tournament-prize-label">Premio PayPal</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Requirements -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:12px;" id="tournament-req-title">✅ REQUISITOS</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-mid);">
+          <span style="color:var(--green);font-size:16px;">1</span> <span id="req-1">Registrarse gratis en OSM Hub</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-mid);">
+          <span style="color:var(--green);font-size:16px;">2</span> <span id="req-2">Publicar al menos una táctica</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-mid);">
+          <span style="color:var(--green);font-size:16px;">3</span> <span id="req-3">Tener cuenta de PayPal para recibir el premio</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Participants -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:14px;" id="tournament-participants-title">👥 PARTICIPANTES (10/16)</div>
+      <div style="display:flex;flex-direction:column;gap:8px;" id="participants-list">
+        <!-- Filled spots -->
+        <div class="participant-row confirmed">
+          <div class="p-num">1</div><div class="p-name">@Xabi alonso 16_5</div><div class="p-status confirmed-badge">✓</div>
+        </div>
+        <div class="participant-row confirmed">
+          <div class="p-num">2</div><div class="p-name">@Sherito Da Silva</div><div class="p-status confirmed-badge">✓</div>
+        </div>
+        <div class="participant-row confirmed">
+          <div class="p-num">3</div><div class="p-name">@fernando18_0</div><div class="p-status confirmed-badge">✓</div>
+        </div>
+        <div class="participant-row confirmed">
+          <div class="p-num">4</div><div class="p-name">@Griche espinosa 70</div><div class="p-status confirmed-badge">✓</div>
+        </div>
+        <div class="participant-row confirmed">
+          <div class="p-num">5</div><div class="p-name">@iShowfideo</div><div class="p-status confirmed-badge">✓</div>
+        </div>
+        <div class="participant-row confirmed">
+          <div class="p-num">6</div><div class="p-name">@Myking Guzman</div><div class="p-status confirmed-badge">✓</div>
+        </div>
+        <div class="participant-row confirmed">
+          <div class="p-num">7</div><div class="p-name">@Parame el taxi</div><div class="p-status confirmed-badge">✓</div>
+        </div>
+        <div class="participant-row confirmed">
+          <div class="p-num">8</div><div class="p-name">@Sir Nacho Ruglio</div><div class="p-status confirmed-badge">✓</div>
+        </div>
+        <div class="participant-row confirmed">
+          <div class="p-num">9</div><div class="p-name">@Nivekserolf</div><div class="p-status confirmed-badge">✓</div>
+        </div>
+        <div class="participant-row confirmed">
+          <div class="p-num">10</div><div class="p-name">@kevinp_388</div><div class="p-status confirmed-badge">✓</div>
+        </div>
+        <!-- Empty spots -->
+        <div class="participant-row empty"><div class="p-num">11</div><div class="p-name p-empty" id="spot-empty">Cupo disponible</div><div class="p-status"></div></div>
+        <div class="participant-row empty"><div class="p-num">12</div><div class="p-name p-empty">Cupo disponible</div><div class="p-status"></div></div>
+        <div class="participant-row empty"><div class="p-num">13</div><div class="p-name p-empty">Cupo disponible</div><div class="p-status"></div></div>
+        <div class="participant-row empty"><div class="p-num">14</div><div class="p-name p-empty">Cupo disponible</div><div class="p-status"></div></div>
+        <div class="participant-row empty"><div class="p-num">15</div><div class="p-name p-empty">Cupo disponible</div><div class="p-status"></div></div>
+        <div class="participant-row empty"><div class="p-num">16</div><div class="p-name p-empty">Cupo disponible</div><div class="p-status"></div></div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div style="background:var(--surface);border:1px solid rgba(0,230,118,0.3);border-radius:12px;padding:16px;text-align:center;">
+      <div style="font-size:13px;color:var(--text-dim);margin-bottom:12px;" id="tournament-cta-text">¿Querés participar? Quedan solo 6 cupos.</div>
+      <button onclick="openAuth()" id="tournament-cta-btn" style="background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:12px 28px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;">⚡ ANOTARME</button>
+      <div style="font-size:11px;color:var(--text-dim);margin-top:8px;" id="tournament-cta-note">Registrate y publicá una táctica para confirmar tu lugar</div>
+    </div>
+
+  </div>
+</div>
+
 <footer>
   <p><strong>OSM Hub</strong> · Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM · Construida por la comunidad, para la comunidad</p>
 </footer>
@@ -1007,6 +1111,7 @@
     if (id === 'events') renderEvents();
     if (id === 'profile') loadProfile();
     if (id === 'h2h') loadH2H();
+    if (id === 'tournament') applyTournamentTranslations();
   }
 
   var currentSort = 'hot';
@@ -1951,7 +2056,22 @@
     }
   });
 
-  // ===== H2H =====
+  function applyTournamentTranslations() {
+    var es = currentLang === 'es';
+    var sub = document.getElementById('tournament-sub'); if(sub) sub.textContent = es ? 'Primer torneo oficial de OSM Hub · 7 de mayo 2026' : 'First official OSM Hub tournament · May 7th 2026';
+    var cl = document.getElementById('tournament-confirmed-label'); if(cl) cl.textContent = es ? 'Confirmados' : 'Confirmed';
+    var sl = document.getElementById('tournament-spots-label'); if(sl) sl.textContent = es ? 'Cupos libres' : 'Open spots';
+    var pl = document.getElementById('tournament-prize-label'); if(pl) pl.textContent = es ? 'Premio PayPal' : 'PayPal prize';
+    var rt = document.getElementById('tournament-req-title'); if(rt) rt.textContent = es ? '✅ REQUISITOS' : '✅ REQUIREMENTS';
+    var r1 = document.getElementById('req-1'); if(r1) r1.textContent = es ? 'Registrarse gratis en OSM Hub' : 'Sign up free on OSM Hub';
+    var r2 = document.getElementById('req-2'); if(r2) r2.textContent = es ? 'Publicar al menos una táctica' : 'Share at least one tactic';
+    var r3 = document.getElementById('req-3'); if(r3) r3.textContent = es ? 'Tener cuenta de PayPal para recibir el premio' : 'Have a PayPal account to receive the prize';
+    var pt = document.getElementById('tournament-participants-title'); if(pt) pt.textContent = es ? '👥 PARTICIPANTES (10/16)' : '👥 PARTICIPANTS (10/16)';
+    var empties = document.querySelectorAll('.p-empty'); empties.forEach(function(e) { e.textContent = es ? 'Cupo disponible' : 'Open spot'; });
+    var cta = document.getElementById('tournament-cta-text'); if(cta) cta.textContent = es ? '¿Querés participar? Quedan solo 6 cupos.' : 'Want to join? Only 6 spots left.';
+    var ctab = document.getElementById('tournament-cta-btn'); if(ctab) ctab.textContent = es ? '⚡ ANOTARME' : '⚡ JOIN NOW';
+    var ctan = document.getElementById('tournament-cta-note'); if(ctan) ctan.textContent = es ? 'Registrate y publicá una táctica para confirmar tu lugar' : 'Sign up and share a tactic to confirm your spot';
+  }
   var selectedH2HResult = null;
   var selectedH2HComp = null;
 
@@ -2217,6 +2337,7 @@
       'tab-ranking': '🏆 Rankings',
       'tab-events': '📅 Eventos',
       'tab-h2h': '⚔️ H2H',
+      'tab-tournament': '🏆 Copa',
       'feed-title': 'TÁCTICAS DE MODA',
       'pill-hot': 'Caliente',
       'pill-new': 'Nuevo',
@@ -2356,6 +2477,9 @@
     if (tabEvents) tabEvents.textContent = t('tab-events');
     var tabH2h = document.getElementById('tab-h2h');
     if (tabH2h) tabH2h.textContent = t('tab-h2h');
+    var tabTournament = document.getElementById('tab-tournament');
+    if (tabTournament) tabTournament.textContent = t('tab-tournament');
+    applyTournamentTranslations();
     var h2hLoginTitle = document.getElementById('h2h-login-title');
     if (h2hLoginTitle) h2hLoginTitle.textContent = currentLang === 'es' ? 'Iniciá sesión para ver tu H2H' : 'Sign in to see your H2H';
     var h2hLoginSub = document.getElementById('h2h-login-sub');
