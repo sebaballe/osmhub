@@ -1032,11 +1032,25 @@
       </div>
     </div>
 
+    <!-- Draw / Bracket section -->
+    <div id="tournament-draw-section" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;display:none;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:14px;" id="bracket-title">🎲 SORTEO — RONDA 1</div>
+      <div id="bracket-list" style="display:flex;flex-direction:column;gap:8px;"></div>
+    </div>
+
+    <!-- Not logged in draw prompt -->
+    <div id="draw-login-prompt" style="background:linear-gradient(135deg,rgba(255,214,0,0.08),transparent);border:1px solid rgba(255,214,0,0.25);border-radius:12px;padding:20px;margin-bottom:16px;text-align:center;display:none;">
+      <div style="font-size:28px;margin-bottom:8px;">🔒</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--yellow);margin-bottom:6px;" id="draw-locked-title">El sorteo ya está disponible</div>
+      <div style="font-size:13px;color:var(--text-dim);margin-bottom:14px;" id="draw-locked-sub">Registrate para ver tu rival en el bracket</div>
+      <button onclick="openAuth()" style="background:var(--yellow);color:var(--bg);border:none;border-radius:10px;padding:10px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="draw-locked-btn">⚡ VER EL SORTEO</button>
+    </div>
+
     <!-- CTA -->
-    <div style="background:var(--surface);border:1px solid rgba(0,230,118,0.3);border-radius:12px;padding:16px;text-align:center;">
-      <div style="font-size:13px;color:var(--text-dim);margin-bottom:12px;" id="tournament-cta-text">¿Querés participar? Quedan solo 6 cupos.</div>
+    <div style="background:var(--surface);border:1px solid rgba(0,230,118,0.3);border-radius:12px;padding:16px;text-align:center;" id="tournament-join-section">
+      <div style="font-size:13px;color:var(--text-dim);margin-bottom:12px;" id="tournament-cta-text">¿Querés participar? Quedan solo 5 cupos.</div>
       <button onclick="openAuth()" id="tournament-cta-btn" style="background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:12px 28px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;">⚡ ANOTARME</button>
-      <div style="font-size:11px;color:var(--text-dim);margin-top:8px;" id="tournament-cta-note">Registrate y publicá una táctica para confirmar tu lugar</div>
+      <div style="font-size:11px;color:var(--text-dim);margin-top:8px;" id="tournament-cta-note">Registrate y confirmá tu lugar en el grupo</div>
     </div>
 
   </div>
@@ -2058,9 +2072,13 @@
     }
   });
 
+  // Bracket data — filled when draw is done
+  var bracketData = null; // Set to array of matches when draw is complete
+  // Example: [['Player1','Player2'],['Player3','Player4'],...] — 8 matches
+
   function applyTournamentTranslations() {
     var es = currentLang === 'es';
-    var sub = document.getElementById('tournament-sub'); if(sub) sub.textContent = es ? 'Primer torneo oficial de OSM Hub · 7 de mayo 2026' : 'First official OSM Hub tournament · May 7th 2026';
+    var sub = document.getElementById('tournament-sub'); if(sub) sub.textContent = es ? 'Primer torneo oficial de OSM Hub · Mayo 2026' : 'First official OSM Hub tournament · May 2026';
     var cl = document.getElementById('tournament-confirmed-label'); if(cl) cl.textContent = es ? 'Confirmados' : 'Confirmed';
     var sl = document.getElementById('tournament-spots-label'); if(sl) sl.textContent = es ? 'Cupos libres' : 'Open spots';
     var pl = document.getElementById('tournament-prize-label'); if(pl) pl.textContent = es ? 'Premio PayPal' : 'PayPal prize';
@@ -2073,6 +2091,40 @@
     var cta = document.getElementById('tournament-cta-text'); if(cta) cta.textContent = es ? '¿Querés participar? Quedan solo 5 cupos.' : 'Want to join? Only 5 spots left.';
     var ctab = document.getElementById('tournament-cta-btn'); if(ctab) ctab.textContent = es ? '⚡ ANOTARME' : '⚡ JOIN NOW';
     var ctan = document.getElementById('tournament-cta-note'); if(ctan) ctan.textContent = es ? 'Registrate y confirmá tu lugar en el grupo' : 'Sign up and confirm your spot in the group';
+    var bt = document.getElementById('bracket-title'); if(bt) bt.textContent = es ? '🎲 SORTEO — RONDA 1' : '🎲 DRAW — ROUND 1';
+    var dlt = document.getElementById('draw-locked-title'); if(dlt) dlt.textContent = es ? 'El sorteo ya está disponible' : 'The draw is now available';
+    var dls = document.getElementById('draw-locked-sub'); if(dls) dls.textContent = es ? 'Registrate para ver tu rival en el bracket' : 'Sign up to see your rival in the bracket';
+    var dlb = document.getElementById('draw-locked-btn'); if(dlb) dlb.textContent = es ? '⚡ VER EL SORTEO' : '⚡ SEE THE DRAW';
+    // Show bracket if draw is done
+    var drawSection = document.getElementById('tournament-draw-section');
+    var drawPrompt = document.getElementById('draw-login-prompt');
+    var joinSection = document.getElementById('tournament-join-section');
+    if (bracketData) {
+      joinSection.style.display = 'none';
+      if (currentUser) {
+        if(drawPrompt) drawPrompt.style.display = 'none';
+        if(drawSection) {
+          drawSection.style.display = 'block';
+          var bracketList = document.getElementById('bracket-list');
+          if(bracketList) {
+            bracketList.innerHTML = bracketData.map(function(match, i) {
+              return '<div style="display:flex;align-items:center;gap:10px;background:var(--surface2);border-radius:8px;padding:10px 14px;">' +
+                '<span style="font-size:12px;color:var(--text-dim);min-width:20px;font-weight:700;">' + (i+1) + '</span>' +
+                '<span style="flex:1;font-size:14px;font-weight:600;color:var(--text);">@' + match[0] + '</span>' +
+                '<span style="font-size:12px;color:var(--text-dim);font-weight:700;padding:0 8px;">vs</span>' +
+                '<span style="flex:1;font-size:14px;font-weight:600;color:var(--text);text-align:right;">@' + match[1] + '</span>' +
+                '</div>';
+            }).join('');
+          }
+        }
+      } else {
+        if(drawSection) drawSection.style.display = 'none';
+        if(drawPrompt) drawPrompt.style.display = 'block';
+      }
+    } else {
+      if(drawSection) drawSection.style.display = 'none';
+      if(drawPrompt) drawPrompt.style.display = 'none';
+    }
   }
   var selectedH2HResult = null;
   var selectedH2HComp = null;
