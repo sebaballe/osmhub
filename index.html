@@ -396,13 +396,13 @@
 </nav>
 
 <div class="tabs">
-  <div class="tab active" onclick="showScreen('feed',this)">🔥 Tendencia</div>
-  <div class="tab" onclick="showScreen('detail',this)" id="tab-detail" style="display:none">📋 Detalle</div>
-  <div class="tab" onclick="showScreen('builder',this)">⚽ Alineaciones</div>
+  <div class="tab active" onclick="showScreen('feed',this)" id="tab-trending">🔥 Trending</div>
+  <div class="tab" onclick="showScreen('detail',this)" id="tab-detail" style="display:none">📋 Tactic Detail</div>
+  <div class="tab" onclick="showScreen('tournament',this)" id="tab-tournament">🏆 Copa Nostalgia</div>
+  <div class="tab" onclick="showScreen('builder',this)" id="tab-builder">⚽ Lineup Builder</div>
   <div class="tab" onclick="showScreen('ranking',this)" id="tab-ranking">🥇 Rankings</div>
   <div class="tab" onclick="showScreen('events',this)" id="tab-events">📅 Events</div>
   <div class="tab" onclick="showScreen('h2h',this)" id="tab-h2h">⚔️ H2H</div>
-  <div class="tab" onclick="showScreen('tournament',this)" id="tab-tournament">🏆 Copa Nostalgia</div>
 </div>
 
 <!-- ===== FEED ===== -->
@@ -936,6 +936,22 @@
       </div>
     </div>
 
+    <!-- Comment to join next cup -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px;" id="tournament-comment-title">💬 ¿QUERÉS PARTICIPAR EN LA PRÓXIMA?</div>
+      <div style="font-size:13px;color:var(--text-dim);margin-bottom:12px;" id="tournament-comment-sub">Dejá tu usuario de OSM para ser considerado en la Copa Nostalgia II</div>
+      <div id="tournament-comment-logged" style="display:none;">
+        <textarea id="tournament-comment-input" placeholder="Escribí tu usuario de OSM..." style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;resize:none;height:70px;margin-bottom:8px;box-sizing:border-box;"></textarea>
+        <button onclick="submitTournamentComment()" style="width:100%;background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="tournament-comment-btn">✅ DEJAR MI USUARIO</button>
+        <div id="tournament-comment-msg" style="text-align:center;font-size:13px;margin-top:8px;"></div>
+      </div>
+      <div id="tournament-comment-guest" style="display:none;text-align:center;">
+        <div style="font-size:13px;color:var(--text-dim);margin-bottom:10px;" id="tournament-comment-login-msg">Registrate para dejar tu usuario</div>
+        <button onclick="openAuth()" style="background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:10px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="tournament-comment-login-btn">⚡ REGISTRARME</button>
+      </div>
+      <div id="tournament-comments-list" style="margin-top:14px;display:flex;flex-direction:column;gap:6px;"></div>
+    </div>
+
     <!-- Draw Animation -->
     <div id="tournament-draw-section" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;display:none;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:14px;text-align:center;" id="bracket-title">🎲 SORTEO — EQUIPOS ASIGNADOS</div>
@@ -1046,7 +1062,7 @@
     if (id === 'events') renderEvents();
     if (id === 'profile') loadProfile();
     if (id === 'h2h') loadH2H();
-    if (id === 'tournament') applyTournamentTranslations();
+    if (id === 'tournament') { applyTournamentTranslations(); loadTournamentComments(); }
   }
 
   var currentSort = 'hot';
@@ -1180,8 +1196,9 @@
     tacticsList.innerHTML = res.data.map(function(t) {
       var total = t.votes_yes + t.votes_no;
       var pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
+      var titleDisplay = translateVsValue(t.title.substring(0, 40));
       return '<div onclick="loadTacticDetail(\'' + t.id + '\')" style="display:flex;align-items:center;gap:10px;background:var(--surface2);border-radius:8px;padding:10px 12px;cursor:pointer;">' +
-        '<div style="flex:1;font-size:13px;font-weight:600;color:var(--text);">' + t.title.substring(0, 35) + '...</div>' +
+        '<div style="flex:1;font-size:13px;font-weight:600;color:var(--text);">' + titleDisplay + '...</div>' +
         '<div style="font-size:13px;font-weight:800;color:' + (pct>=70?'var(--green)':pct>=50?'var(--yellow)':'var(--red)') + ';">' + pct + '%</div>' +
         '</div>';
     }).join('');
@@ -2187,6 +2204,39 @@
     }
   }
 
+  async function loadTournamentComments() {
+    var logged = document.getElementById('tournament-comment-logged');
+    var guest = document.getElementById('tournament-comment-guest');
+    if (currentUser) { if(logged) logged.style.display='block'; if(guest) guest.style.display='none'; }
+    else { if(logged) logged.style.display='none'; if(guest) guest.style.display='block'; }
+    var list = document.getElementById('tournament-comments-list');
+    if (!list) return;
+    var res = await db.from('comments').select('*').eq('tactic_id', 'tournament-copa-nostalgia').order('created_at', { ascending: false }).limit(20);
+    if (!res.data || res.data.length === 0) { list.innerHTML = ''; return; }
+    list.innerHTML = res.data.map(function(c) {
+      return '<div style="background:var(--surface2);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:10px;">' +
+        '<div style="width:32px;height:32px;border-radius:50%;background:rgba(0,230,118,0.15);color:var(--green);display:flex;align-items:center;justify-content:center;font-family:\'Barlow Condensed\',sans-serif;font-size:13px;font-weight:900;flex-shrink:0;">' + (c.author || '?').substring(0,2).toUpperCase() + '</div>' +
+        '<div><div style="font-size:13px;font-weight:600;color:var(--text);">@' + (c.author || 'usuario') + '</div><div style="font-size:12px;color:var(--text-dim);">' + c.text + '</div></div>' +
+        '</div>';
+    }).join('');
+  }
+
+  async function submitTournamentComment() {
+    if (!currentUser) return;
+    var input = document.getElementById('tournament-comment-input');
+    var msg = document.getElementById('tournament-comment-msg');
+    var text = input ? input.value.trim() : '';
+    if (!text) { if(msg) { msg.textContent = currentLang === 'es' ? 'Escribí tu usuario de OSM' : 'Enter your OSM username'; msg.style.color = 'var(--red)'; } return; }
+    var btn = document.getElementById('tournament-comment-btn');
+    if(btn) btn.textContent = currentLang === 'es' ? 'Enviando...' : 'Sending...';
+    var username = currentUser.user_metadata && currentUser.user_metadata.username ? currentUser.user_metadata.username : currentUser.email.split('@')[0];
+    await db.from('comments').insert({ tactic_id: 'tournament-copa-nostalgia', author: username, text: text, user_id: currentUser.id });
+    if(msg) { msg.textContent = currentLang === 'es' ? '✅ ¡Usuario registrado!' : '✅ Username registered!'; msg.style.color = 'var(--green)'; }
+    if(btn) btn.textContent = currentLang === 'es' ? '✅ DEJAR MI USUARIO' : '✅ LEAVE MY USERNAME';
+    if(input) input.value = '';
+    loadTournamentComments();
+  }
+
   function applyTournamentTranslations() {
     var es = currentLang === 'es';
     var sub = document.getElementById('tournament-sub'); if(sub) sub.textContent = es ? 'Primer torneo oficial de OSM Hub · Mayo 2026' : 'First official OSM Hub tournament · May 2026';
@@ -2200,7 +2250,12 @@
     var pt = document.getElementById('tournament-participants-title'); if(pt) pt.textContent = es ? '👥 PARTICIPANTES (16/16)' : '👥 PARTICIPANTS (16/16)';
     var cta = document.getElementById('tournament-cta-text'); if(cta) cta.textContent = es ? '¡Cupos completos!' : 'Registration closed!';
     var ctan = document.getElementById('tournament-cta-note'); if(ctan) ctan.textContent = es ? 'El sorteo se realizará próximamente. Registrate para ver los resultados.' : 'The draw will take place soon. Sign up to see the results.';
-    var bt = document.getElementById('bracket-title'); if(bt) bt.textContent = es ? '🎲 SORTEO — EQUIPOS ASIGNADOS' : '🎲 DRAW — TEAM ASSIGNMENTS';
+    var tct = document.getElementById('tournament-comment-title'); if(tct) tct.textContent = es ? '💬 ¿QUERÉS PARTICIPAR EN LA PRÓXIMA?' : '💬 WANT TO JOIN THE NEXT ONE?';
+    var tcs = document.getElementById('tournament-comment-sub'); if(tcs) tcs.textContent = es ? 'Dejá tu usuario de OSM para ser considerado en la Copa Nostalgia II' : 'Leave your OSM username to be considered for Copa Nostalgia II';
+    var tcb = document.getElementById('tournament-comment-btn'); if(tcb) tcb.textContent = es ? '✅ DEJAR MI USUARIO' : '✅ LEAVE MY USERNAME';
+    var tci = document.getElementById('tournament-comment-input'); if(tci) tci.placeholder = es ? 'Escribí tu usuario de OSM...' : 'Write your OSM username...';
+    var tclm = document.getElementById('tournament-comment-login-msg'); if(tclm) tclm.textContent = es ? 'Registrate para dejar tu usuario' : 'Sign up to leave your username';
+    var tclb = document.getElementById('tournament-comment-login-btn'); if(tclb) tclb.textContent = es ? '⚡ REGISTRARME' : '⚡ SIGN UP';
     var dlt = document.getElementById('draw-locked-title'); if(dlt) dlt.textContent = es ? 'El sorteo ya está disponible' : 'The draw is now available';
     var dls = document.getElementById('draw-locked-sub'); if(dls) dls.textContent = es ? 'Registrate para ver tu rival en el bracket' : 'Sign up to see your rival in the bracket';
     var dlb = document.getElementById('draw-locked-btn'); if(dlb) dlb.textContent = es ? '⚡ VER EL SORTEO' : '⚡ SEE THE DRAW';
