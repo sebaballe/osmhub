@@ -615,139 +615,42 @@
 
 <!-- ===== BUILDER ===== -->
 <div id="screen-builder" class="screen">
-  <div class="builder-page">
-    <div class="builder-title">⚽ CREADOR DE ALINEACIONES</div>
-    <div class="formation-selector">
-      <div class="form-btn active">4-3-3-A</div><div class="form-btn">4-3-3-B</div><div class="form-btn">4-5-1</div>
-      <div class="form-btn">4-2-3-1</div><div class="form-btn">4-4-2-A</div><div class="form-btn">4-4-2-B</div>
-      <div class="form-btn">3-2-5</div><div class="form-btn">3-2-3-2</div><div class="form-btn">3-3-4-A</div>
-      <div class="form-btn">3-3-4-B</div><div class="form-btn">3-4-3-A</div><div class="form-btn">3-4-3-B</div>
-      <div class="form-btn">3-3-2-2</div><div class="form-btn">3-5-2</div><div class="form-btn">4-2-4-A</div>
-      <div class="form-btn">4-2-4-B</div><div class="form-btn">5-2-3-A</div><div class="form-btn">5-2-3-B</div>
-      <div class="form-btn">5-3-2-A</div><div class="form-btn">5-3-1-1</div><div class="form-btn">5-4-1-A</div>
-      <div class="form-btn">5-4-1-B</div><div class="form-btn">6-3-1-A</div><div class="form-btn">6-3-1-B</div>
-    </div>
-    <div style="margin-bottom:14px;">
-      <div style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;margin-bottom:8px;" id="own-style-label">🎮 ESTILO DE JUEGO PROPIO</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;" id="own-style-options">
-        <div class="own-style-btn active" onclick="selectOwnStyle(this,'Balon largo')">⚽ Balón largo</div>
-        <div class="own-style-btn" onclick="selectOwnStyle(this,'Juego de bandas')">↔️ Juego de bandas</div>
-        <div class="own-style-btn" onclick="selectOwnStyle(this,'Posesion')">🔄 Posesión</div>
-        <div class="own-style-btn" onclick="selectOwnStyle(this,'Contraataque')">⚡ Contraataque</div>
-        <div class="own-style-btn" onclick="selectOwnStyle(this,'Tiros de repente')">🎯 Tiros de repente</div>
-      </div>
-    </div>
-    <div class="builder-layout">
-      <div>
-        <div class="big-pitch">
-          <div class="big-pitch-lines"></div>
-          <div class="big-center-line"></div>
-          <div class="big-center-circle"></div>
-          <div class="big-box-top"></div>
-          <div class="big-box-bot"></div>
-          <div id="big-pitch-players">
-          <div class="big-player" style="left:50%;top:88%"><div class="bp-dot gk">GK</div><div class="bp-name">PORTERO</div></div>
-          <div class="big-player" style="left:15%;top:72%"><div class="bp-dot">LB</div><div class="bp-name">LAT IZQ</div></div>
-          <div class="big-player" style="left:37%;top:72%"><div class="bp-dot">CB</div><div class="bp-name">CENT</div></div>
-          <div class="big-player" style="left:63%;top:72%"><div class="bp-dot">CB</div><div class="bp-name">CENT</div></div>
-          <div class="big-player" style="left:85%;top:72%"><div class="bp-dot">RB</div><div class="bp-name">LAT DER</div></div>
-          <div class="big-player" style="left:22%;top:50%"><div class="bp-dot">CM</div><div class="bp-name">MC IZQ</div></div>
-          <div class="big-player" style="left:50%;top:46%"><div class="bp-dot">CM</div><div class="bp-name">MC CENT</div></div>
-          <div class="big-player" style="left:78%;top:50%"><div class="bp-dot">CM</div><div class="bp-name">MC DER</div></div>
-          <div class="big-player" style="left:15%;top:22%"><div class="bp-dot">LW</div><div class="bp-name">EXT IZQ</div></div>
-          <div class="big-player" style="left:50%;top:14%"><div class="bp-dot">ST</div><div class="bp-name">DELANT</div></div>
-          <div class="big-player" style="left:85%;top:22%"><div class="bp-dot">RW</div><div class="bp-name">EXT DER</div></div>
+  <div style="max-width:600px;margin:0 auto;padding:24px 16px;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--text);margin-bottom:4px;" id="builder-title-main">⚽ EXPLORADOR DE FORMACIONES</div>
+    <div style="font-size:13px;color:var(--text-dim);margin-bottom:20px;" id="builder-sub">Seleccioná una formación para ver sus características y tácticas oficiales</div>
+    <!-- Formation Grid -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:24px;" id="formation-explorer-grid"></div>
+    <!-- Formation Detail -->
+    <div id="formation-detail" style="display:none;">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--green);" id="fe-formation-name"></div>
+          <div style="flex:1;">
+            <div style="font-size:13px;color:var(--text-dim);" id="fe-formation-type"></div>
+          </div>
+          <button onclick="document.getElementById('formation-detail').style.display='none';" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:18px;">✕</button>
+        </div>
+        <!-- Mini pitch -->
+        <div style="position:relative;width:100%;aspect-ratio:2/3;background:#1a3a1a;border-radius:8px;margin-bottom:16px;overflow:hidden;" id="fe-pitch">
+          <div style="position:absolute;top:50%;left:5%;right:5%;height:1px;background:rgba(255,255,255,0.2);"></div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;border:1px solid rgba(255,255,255,0.2);border-radius:50%;"></div>
+          <div id="fe-pitch-players"></div>
+        </div>
+        <!-- Pros & Cons -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+          <div style="background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.2);border-radius:8px;padding:12px;">
+            <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:8px;" id="fe-pros-title">✅ VENTAJAS</div>
+            <div id="fe-pros" style="font-size:12px;color:var(--text-mid);line-height:1.6;"></div>
+          </div>
+          <div style="background:rgba(255,61,87,0.08);border:1px solid rgba(255,61,87,0.2);border-radius:8px;padding:12px;">
+            <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:8px;" id="fe-cons-title">❌ DESVENTAJAS</div>
+            <div id="fe-cons" style="font-size:12px;color:var(--text-mid);line-height:1.6;"></div>
           </div>
         </div>
-      </div>
-      <div class="tactic-settings">
-        <div class="setting-row">
-          <div class="setting-label" id="label-pressing">PRESIÓN</div>
-          <div class="setting-value" id="pressing-label">Equilibrado</div>
-          <div class="osm-slider-wrap">
-            <input type="range" class="osm-slider" id="pressing-slider" min="1" max="100" value="54" oninput="updateSlider('pressing',this.value)" style="background:linear-gradient(to right,var(--blue) 0%,var(--blue) 54%,var(--border2) 54%,var(--border2) 100%)">
-            <div class="slider-num" id="pressing-num">54</div>
-          </div>
-        </div>
-        <div class="setting-row">
-          <div class="setting-label" id="label-style">ESTILO</div>
-          <div class="setting-value" id="style-label">Atacante</div>
-          <div class="osm-slider-wrap">
-            <input type="range" class="osm-slider" id="style-slider" min="1" max="100" value="67" oninput="updateSlider('style',this.value)" style="background:linear-gradient(to right,var(--blue) 0%,var(--blue) 67%,var(--border2) 67%,var(--border2) 100%)">
-            <div class="slider-num" id="style-num">67</div>
-          </div>
-        </div>
-        <div class="setting-row">
-          <div class="setting-label" id="label-tempo">RITMO</div>
-          <div class="setting-value" id="tempo-label">Pase veloz</div>
-          <div class="osm-slider-wrap">
-            <input type="range" class="osm-slider" id="tempo-slider" min="1" max="100" value="67" oninput="updateSlider('tempo',this.value)" style="background:linear-gradient(to right,var(--blue) 0%,var(--blue) 67%,var(--border2) 67%,var(--border2) 100%)">
-            <div class="slider-num" id="tempo-num">67</div>
-          </div>
-        </div>
-        <hr class="section-divider">
-        <div class="setting-label" id="label-linetactics" style="margin-bottom:12px">TÁCTICAS DE LÍNEA</div>
-        <div class="line-tactic-row" id="fwd-row">
-          <div class="lt-label" id="label-fwd">DELANTEROS</div>
-          <div class="lt-value" id="fwd-label">Solo ataque</div>
-          <div class="lt-dots">
-            <div class="lt-dot active" onclick="setLineTactic('fwd',0,getLineTactics().fwd)"></div>
-            <div class="lt-dot" onclick="setLineTactic('fwd',1,getLineTactics().fwd)"></div>
-            <div class="lt-dot" onclick="setLineTactic('fwd',2,getLineTactics().fwd)"></div>
-          </div>
-        </div>
-        <div class="line-tactic-row" id="mid-row">
-          <div class="lt-label" id="label-mid">MEDIOCAMPISTAS</div>
-          <div class="lt-value" id="mid-label">Proteger defensa</div>
-          <div class="lt-dots">
-            <div class="lt-dot active" onclick="setLineTactic('mid',0,getLineTactics().mid)"></div>
-            <div class="lt-dot" onclick="setLineTactic('mid',1,getLineTactics().mid)"></div>
-            <div class="lt-dot" onclick="setLineTactic('mid',2,getLineTactics().mid)"></div>
-          </div>
-        </div>
-        <div class="line-tactic-row" id="def-row">
-          <div class="lt-label" id="label-def">DEFENSORES</div>
-          <div class="lt-value" id="def-label">Defensa profunda</div>
-          <div class="lt-dots">
-            <div class="lt-dot active" onclick="setLineTactic('def',0,getLineTactics().def)"></div>
-            <div class="lt-dot" onclick="setLineTactic('def',1,getLineTactics().def)"></div>
-            <div class="lt-dot" onclick="setLineTactic('def',2,getLineTactics().def)"></div>
-          </div>
-        </div>
-        <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px;">
-          <input id="tactic-title-input" type="text" placeholder="💡 Tip extra (opcional): ej. Necesitás extremos rápidos..." style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;">
-          <input id="tactic-author-input" type="text" placeholder="Tu nombre / usuario..." style="background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;">
-          <div style="border-top:1px solid var(--border);padding-top:10px;margin-top:4px;">
-            <div style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;margin-bottom:8px;" id="vs-section-label">⚔️ CONTEXTO DEL RIVAL (opcional)</div>
-            <select id="vs-formation" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;margin-bottom:8px;cursor:pointer;">
-              <option value="">¿Contra qué formación funciona?</option>
-              <option value="Cualquiera">🌐 Cualquiera</option>
-              <option>4-3-3-A</option><option>4-3-3-B</option><option>4-5-1</option>
-              <option>4-2-3-1</option><option>4-4-2-A</option><option>4-4-2-B</option>
-              <option>3-2-5</option><option>3-2-3-2</option><option>3-3-4-A</option>
-              <option>3-3-4-B</option><option>4-3-3-A</option><option>3-4-3-B</option>
-              <option>3-3-2-2</option><option>3-5-2</option><option>4-2-4-A</option>
-              <option>4-2-4-B</option><option>5-2-3-A</option><option>5-2-3-B</option>
-              <option>5-3-2-A</option><option>5-3-1-1</option><option>5-4-1-A</option>
-              <option>5-4-1-B</option><option>6-3-1-A</option><option>6-3-1-B</option>
-            </select>
-            <select id="vs-style" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;margin-bottom:8px;cursor:pointer;">
-              <option value="">¿Contra qué estilo de juego?</option>
-              <option value="Balon largo">Balón largo</option>
-              <option value="Juego de bandas">Juego de bandas</option>
-              <option value="Posesion">Posesión</option>
-              <option value="Contraataque">Contraataque</option>
-              <option value="Tiros de repente">Tiros de repente</option>
-            </select>
-            <select id="best-situation" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;margin-bottom:12px;cursor:pointer;">
-              <option value="">¿Tu situación al usar esta táctica?</option>
-              <option value="Local · Superior">🏠 Local · Superior</option>
-              <option value="Local · Inferior">🏠 Local · Inferior</option>
-              <option value="Visitante · Superior">✈️ Visitante · Superior</option>
-              <option value="Visitante · Inferior">✈️ Visitante · Inferior</option>
-            </select>
-          </div>
-          <button class="btn-share" onclick="shareTactic()">🚀 COMPARTIR TÁCTICA</button>
+        <!-- OSM Hub tactics for this formation -->
+        <div style="border-top:1px solid var(--border);padding-top:12px;">
+          <div style="font-size:12px;font-weight:700;color:var(--text-dim);margin-bottom:8px;" id="fe-tactics-title">✦ TÁCTICAS OFICIALES OSM HUB</div>
+          <div id="fe-tactics-list" style="display:flex;flex-direction:column;gap:6px;"></div>
         </div>
       </div>
     </div>
@@ -1149,6 +1052,7 @@
     if (tabEl) tabEl.classList.add('active');
     window.scrollTo({ top: 0, behavior: 'smooth' });
     if (id === 'feed') { loadTactics(); updateBanner(); }
+    if (id === 'builder') initFormationExplorer();
     if (id === 'ranking') loadRankings();
     if (id === 'events') renderEvents();
     if (id === 'profile') loadProfile();
@@ -1181,6 +1085,106 @@
     var clearBtn = document.getElementById('clear-filters-btn');
     if (clearBtn) clearBtn.style.display = 'none';
     loadTactics();
+  }
+
+  // ===== FORMATION EXPLORER =====
+  var formationData = {
+    '4-3-3-A': { type: 'Ataque', pros: ['Presión alta', 'Extremos desequilibrantes', 'Ideal contraataque'], cons: ['Vulnerable flancos', 'Mediocampo corto', 'Requiere extremos rápidos'] },
+    '4-3-3-B': { type: 'Ataque', pros: ['Dominio bandas', 'Muchos goles', 'Presión constante'], cons: ['Flancos expuestos', 'Mediocampo débil', 'Gasta mucho'] },
+    '4-5-1': { type: 'Equilibrio', pros: ['Mediocampo dominante', 'Sólido defensivamente', 'Versátil'], cons: ['Poco ofensivo', 'Delantero aislado', 'Difícil crear chances'] },
+    '4-2-3-1': { type: 'Equilibrio', pros: ['Muy completo', 'Doble pivote protege', 'Variedad ofensiva'], cons: ['Complejo de usar', 'Requiere buenos CM', 'Lento en transición'] },
+    '4-4-2-A': { type: 'Equilibrio', pros: ['Clásica y sólida', 'Dos delanteros', 'Fácil de usar'], cons: ['Predecible', 'Mediocampo estrecho', 'Poco creativa'] },
+    '4-4-2-B': { type: 'Equilibrio', pros: ['Balanceada', 'Buena presión', 'Dos puntas'], cons: ['Mediocampo limitado', 'Pocos extremos', 'Contra 4-5-1 sufre'] },
+    '3-2-5': { type: 'Ataque extremo', pros: ['Muy ofensiva', '5 atacantes', 'Abruma rivales'], cons: ['Muy vulnerable atrás', 'Solo 3 defensores', 'Arriesgada'] },
+    '3-5-2': { type: 'Equilibrio', pros: ['Mediocampo amplio', 'Dos delanteros', 'Carrilleros'], cons: ['Solo 3 defensores', 'Vulnerable extremos', 'Necesita carrilleros buenos'] },
+    '5-2-3-A': { type: 'Defensivo', pros: ['5 defensores', 'Muy sólida atrás', 'Buen contraataque'], cons: ['Poco posesión', 'Mediocampo pequeño', 'Ofensiva limitada'] },
+    '5-2-3-B': { type: 'Defensivo', pros: ['Súper defensiva', 'Ideal visitante inferior', 'Contraataque letal'], cons: ['Muy pasiva', 'Difícil mantener posesión', 'Poco creativa'] },
+    '5-3-2-A': { type: 'Defensivo', pros: ['Muy sólida', 'Dos delanteros', 'Mediocampo decente'], cons: ['Lenta en ataque', 'Poca amplitud', 'Depende de delanteros'] },
+    '5-4-1-A': { type: 'Ultra defensivo', pros: ['Muy difícil de superar', '9 jugadores atrás', 'Ideal inferior'], cons: ['Casi sin ataque', 'Un delantero solo', 'Muy pasiva'] },
+    '5-4-1-B': { type: 'Defensivo', pros: ['Sólida y organizada', 'Buenos contraataques', 'Mediocampo amplio'], cons: ['Poco ofensiva', 'Delantero aislado', 'Necesita velocidad'] },
+    '6-3-1-A': { type: 'Ultra defensivo', pros: ['Máxima defensa', 'Ideal visitante inferior', 'Muy difícil de penetrar'], cons: ['Casi sin ataque', 'Un solo delantero', 'Necesita parking del bus'] },
+    '6-3-1-B': { type: 'Ultra defensivo', pros: ['Impenetrable atrás', 'Contraataque rápido', 'Ideal equipos débiles'], cons: ['Muy defensiva', 'Poca creatividad', 'Depende del contragolpe'] },
+    '3-4-3-A': { type: 'Ataque', pros: ['Muy ofensiva', 'Amplitud total', 'Presión alta'], cons: ['Solo 3 defensores', 'Vulnerable bandas', 'Riesgosa'] },
+    '3-4-3-B': { type: 'Ataque', pros: ['Gran presión', 'Muchos atacantes', 'Desequilibrante'], cons: ['Solo 3 defensores', 'Costosa de mantener', 'Necesita calidad'] },
+    '3-3-4-A': { type: 'Ataque extremo', pros: ['4 atacantes', 'Arrolladoras', 'Ideal superior local'], cons: ['3 defensores', 'Muy expuesta', 'Solo para ganar'] },
+    '3-3-4-B': { type: 'Ataque extremo', pros: ['Máximo ataque', 'Muy agresiva', 'Desequilibra'], cons: ['Defensivamente frágil', '3 defensores solos', 'Solo con ventaja'] },
+    '3-2-3-2': { type: 'Ataque', pros: ['Dos puntas', 'Creatividad amplia', 'Muchas opciones ofensivas'], cons: ['Solo 3 defensores', 'Vulnerable atrás', 'Necesita calidad total'] },
+    '3-3-2-2': { type: 'Equilibrio', pros: ['Dos delanteros', 'Amplio mediocampo', 'Flexible'], cons: ['Solo 3 atrás', 'Complicada de organizar', 'Necesita carrilleros'] },
+    '4-2-4-A': { type: 'Ataque', pros: ['4 atacantes', 'Muy ofensiva', 'Ideal local superior'], cons: ['Mediocampo solo 2', 'Vulnerable al contraataque', 'Riesgosa'] },
+    '4-2-4-B': { type: 'Ataque', pros: ['Muy ofensiva', 'Amplitud total', 'Arrolla rivales inferiores'], cons: ['2 mediocampistas solos', 'Expuesta al contragolpe', 'Solo cuando ganás'] },
+    '5-3-1-1': { type: 'Defensivo', pros: ['Sólida defensivamente', 'Buen pressing medio', '5+1 detrás'], cons: ['Poco ofensiva', 'Limitada arriba', 'Necesita delantero referencia'] },
+  };
+
+  var formationPositions = {
+    '4-3-3-A': [{l:50,t:88,r:'GK'},{l:15,t:72,r:'LB'},{l:37,t:72,r:'CB'},{l:63,t:72,r:'CB'},{l:85,t:72,r:'RB'},{l:22,t:50,r:'CM'},{l:50,t:46,r:'CM'},{l:78,t:50,r:'CM'},{l:15,t:22,r:'LW'},{l:50,t:14,r:'ST'},{l:85,t:22,r:'RW'}],
+    '4-3-3-B': [{l:50,t:88,r:'GK'},{l:15,t:72,r:'LB'},{l:37,t:72,r:'CB'},{l:63,t:72,r:'CB'},{l:85,t:72,r:'RB'},{l:28,t:50,r:'CM'},{l:50,t:46,r:'CM'},{l:72,t:50,r:'CM'},{l:15,t:20,r:'LW'},{l:50,t:14,r:'ST'},{l:85,t:20,r:'RW'}],
+    '4-5-1': [{l:50,t:88,r:'GK'},{l:15,t:72,r:'LB'},{l:37,t:72,r:'CB'},{l:63,t:72,r:'CB'},{l:85,t:72,r:'RB'},{l:10,t:50,r:'LM'},{l:28,t:48,r:'CM'},{l:50,t:44,r:'CM'},{l:72,t:48,r:'CM'},{l:90,t:50,r:'RM'},{l:50,t:16,r:'ST'}],
+    '4-4-2-A': [{l:50,t:88,r:'GK'},{l:15,t:72,r:'LB'},{l:37,t:72,r:'CB'},{l:63,t:72,r:'CB'},{l:85,t:72,r:'RB'},{l:15,t:50,r:'LM'},{l:37,t:48,r:'CM'},{l:63,t:48,r:'CM'},{l:85,t:50,r:'RM'},{l:33,t:20,r:'ST'},{l:67,t:20,r:'ST'}],
+    '4-4-2-B': [{l:50,t:88,r:'GK'},{l:15,t:72,r:'LB'},{l:37,t:72,r:'CB'},{l:63,t:72,r:'CB'},{l:85,t:72,r:'RB'},{l:15,t:50,r:'LM'},{l:37,t:48,r:'CM'},{l:63,t:48,r:'CM'},{l:85,t:50,r:'RM'},{l:33,t:20,r:'ST'},{l:67,t:20,r:'ST'}],
+    '4-2-3-1': [{l:50,t:88,r:'GK'},{l:15,t:72,r:'LB'},{l:37,t:72,r:'CB'},{l:63,t:72,r:'CB'},{l:85,t:72,r:'RB'},{l:33,t:55,r:'DM'},{l:67,t:55,r:'DM'},{l:15,t:35,r:'LM'},{l:50,t:32,r:'AM'},{l:85,t:35,r:'RM'},{l:50,t:14,r:'ST'}],
+    '5-2-3-A': [{l:50,t:88,r:'GK'},{l:8,t:72,r:'LB'},{l:27,t:72,r:'CB'},{l:50,t:72,r:'CB'},{l:73,t:72,r:'CB'},{l:92,t:72,r:'RB'},{l:33,t:50,r:'DM'},{l:67,t:50,r:'DM'},{l:15,t:18,r:'LW'},{l:50,t:14,r:'ST'},{l:85,t:18,r:'RW'}],
+    '5-2-3-B': [{l:50,t:88,r:'GK'},{l:8,t:72,r:'LB'},{l:27,t:72,r:'CB'},{l:50,t:72,r:'CB'},{l:73,t:72,r:'CB'},{l:92,t:72,r:'RB'},{l:33,t:50,r:'DM'},{l:67,t:50,r:'DM'},{l:15,t:18,r:'LW'},{l:50,t:14,r:'ST'},{l:85,t:18,r:'RW'}],
+    '5-3-2-A': [{l:50,t:88,r:'GK'},{l:8,t:72,r:'LB'},{l:27,t:72,r:'CB'},{l:50,t:72,r:'CB'},{l:73,t:72,r:'CB'},{l:92,t:72,r:'RB'},{l:22,t:48,r:'CM'},{l:50,t:44,r:'CM'},{l:78,t:48,r:'CM'},{l:33,t:20,r:'ST'},{l:67,t:20,r:'ST'}],
+    '5-4-1-A': [{l:50,t:88,r:'GK'},{l:8,t:72,r:'LB'},{l:27,t:72,r:'CB'},{l:50,t:72,r:'CB'},{l:73,t:72,r:'CB'},{l:92,t:72,r:'RB'},{l:15,t:50,r:'LM'},{l:35,t:48,r:'CM'},{l:65,t:48,r:'CM'},{l:85,t:50,r:'RM'},{l:50,t:16,r:'ST'}],
+    '5-4-1-B': [{l:50,t:88,r:'GK'},{l:8,t:72,r:'LB'},{l:27,t:72,r:'CB'},{l:50,t:72,r:'CB'},{l:73,t:72,r:'CB'},{l:92,t:72,r:'RB'},{l:15,t:50,r:'LM'},{l:35,t:48,r:'CM'},{l:65,t:48,r:'CM'},{l:85,t:50,r:'RM'},{l:50,t:16,r:'ST'}],
+    '6-3-1-A': [{l:50,t:88,r:'GK'},{l:8,t:75,r:'LB'},{l:24,t:72,r:'CB'},{l:38,t:70,r:'CB'},{l:62,t:70,r:'CB'},{l:76,t:72,r:'CB'},{l:92,t:75,r:'RB'},{l:22,t:48,r:'CM'},{l:50,t:44,r:'CM'},{l:78,t:48,r:'CM'},{l:50,t:16,r:'ST'}],
+    '6-3-1-B': [{l:50,t:88,r:'GK'},{l:8,t:75,r:'LB'},{l:24,t:72,r:'CB'},{l:38,t:70,r:'CB'},{l:62,t:70,r:'CB'},{l:76,t:72,r:'CB'},{l:92,t:75,r:'RB'},{l:22,t:48,r:'CM'},{l:50,t:44,r:'CM'},{l:78,t:48,r:'CM'},{l:50,t:16,r:'ST'}],
+  };
+
+  function getDefaultPositions(formation) {
+    if (formationPositions[formation]) return formationPositions[formation];
+    return [{l:50,t:88,r:'GK'},{l:25,t:65,r:'CB'},{l:50,t:65,r:'CB'},{l:75,t:65,r:'CB'},{l:50,t:40,r:'CM'},{l:50,t:18,r:'ST'}];
+  }
+
+  function initFormationExplorer() {
+    var grid = document.getElementById('formation-explorer-grid');
+    if (!grid) return;
+    var formations = Object.keys(formationData);
+    grid.innerHTML = formations.map(function(f) {
+      return '<div onclick="showFormationDetail(\'' + f + '\')" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor=\'var(--green)\';this.style.background=\'var(--surface2)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.background=\'var(--surface)\'">' +
+        '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:16px;font-weight:900;color:var(--green);">' + f + '</div>' +
+        '<div style="font-size:10px;color:var(--text-dim);margin-top:2px;">' + formationData[f].type + '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  async function showFormationDetail(formation) {
+    var detail = document.getElementById('formation-detail');
+    if (!detail) return;
+    detail.style.display = 'block';
+    detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    var es = currentLang === 'es';
+    var data = formationData[formation] || { pros: [], cons: [] };
+    var feName = document.getElementById('fe-formation-name'); if(feName) feName.textContent = formation;
+    var feType = document.getElementById('fe-formation-type'); if(feType) feType.textContent = data.type || '';
+    var feProsTitle = document.getElementById('fe-pros-title'); if(feProsTitle) feProsTitle.textContent = es ? '✅ VENTAJAS' : '✅ STRENGTHS';
+    var feConsTitle = document.getElementById('fe-cons-title'); if(feConsTitle) feConsTitle.textContent = es ? '❌ DESVENTAJAS' : '❌ WEAKNESSES';
+    var feTacticsTitle = document.getElementById('fe-tactics-title'); if(feTacticsTitle) feTacticsTitle.textContent = es ? '✦ TÁCTICAS OFICIALES OSM HUB' : '✦ OSM HUB OFFICIAL TACTICS';
+    document.getElementById('fe-pros').innerHTML = data.pros.map(function(p) { return '• ' + p; }).join('<br>');
+    document.getElementById('fe-cons').innerHTML = data.cons.map(function(c) { return '• ' + c; }).join('<br>');
+    var pitchEl = document.getElementById('fe-pitch-players');
+    var positions = getDefaultPositions(formation);
+    pitchEl.innerHTML = positions.map(function(p) {
+      var isGK = p.r === 'GK';
+      return '<div style="position:absolute;left:' + p.l + '%;top:' + p.t + '%;transform:translate(-50%,-50%);text-align:center;">' +
+        '<div style="width:28px;height:28px;border-radius:50%;background:' + (isGK ? '#FFD600' : '#00E676') + ';display:flex;align-items:center;justify-content:center;font-family:\'Barlow Condensed\',sans-serif;font-size:9px;font-weight:900;color:#0A0E14;margin:0 auto;">' + p.r + '</div>' +
+        '</div>';
+    }).join('');
+    var tacticsList = document.getElementById('fe-tactics-list');
+    tacticsList.innerHTML = '<div style="font-size:12px;color:var(--text-dim);">' + (es ? 'Cargando...' : 'Loading...') + '</div>';
+    var res = await db.from('tactics').select('id,title,best_situation,votes_yes,votes_no').eq('formation', formation).eq('author', 'OSM Hub').limit(5);
+    if (!res.data || res.data.length === 0) {
+      tacticsList.innerHTML = '<div style="font-size:12px;color:var(--text-dim);">' + (es ? 'Próximamente tácticas oficiales para esta formación' : 'Official tactics for this formation coming soon') + '</div>';
+      return;
+    }
+    tacticsList.innerHTML = res.data.map(function(t) {
+      var total = t.votes_yes + t.votes_no;
+      var pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
+      return '<div onclick="loadTacticDetail(\'' + t.id + '\')" style="display:flex;align-items:center;gap:10px;background:var(--surface2);border-radius:8px;padding:10px 12px;cursor:pointer;">' +
+        '<div style="flex:1;font-size:13px;font-weight:600;color:var(--text);">' + t.title.substring(0, 35) + '...</div>' +
+        '<div style="font-size:13px;font-weight:800;color:' + (pct>=70?'var(--green)':pct>=50?'var(--yellow)':'var(--red)') + ';">' + pct + '%</div>' +
+        '</div>';
+    }).join('');
   }
 
   // ===== LOAD TACTICS FEED =====
@@ -1312,7 +1316,7 @@
     if (!t) return;
     const total = t.votes_yes + t.votes_no;
     const pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
-    document.getElementById('detail-formation').textContent = t.formation;
+    var detForm = document.getElementById('detail-formation'); if(detForm) detForm.textContent = t.formation;
     // Translate title parts if auto-generated
     var titleParts = t.title ? t.title.split(' · ') : [];
     var translatedTitle = titleParts.map(function(part) {
@@ -1323,13 +1327,13 @@
       }
       return translateVsValue(part);
     }).join(' · ');
-    document.getElementById('detail-title').textContent = translatedTitle;
-    document.getElementById('detail-author').textContent = 'by @' + t.author + ' · ' + timeAgo(t.created_at) + ' · ' + (t.views || 0) + ' views';
-    document.getElementById('detail-pct').textContent = pct + '%';
-    document.getElementById('detail-eff-sub').textContent = (currentLang === 'es' ? 'Basado en ' : 'Based on ') + total + (currentLang === 'es' ? ' votos reales de jugadores de OSM' : ' votes from real OSM players');
-    document.getElementById('detail-votes-total').textContent = total;
-    document.getElementById('detail-votes-yes').textContent = t.votes_yes;
-    document.getElementById('detail-votes-no').textContent = t.votes_no;
+    var detTitle = document.getElementById('detail-title'); if(detTitle) detTitle.textContent = translatedTitle;
+    var detAuthor = document.getElementById('detail-author'); if(detAuthor) detAuthor.textContent = 'by @' + t.author + ' · ' + timeAgo(t.created_at) + ' · ' + (t.views || 0) + ' views';
+    var detPct = document.getElementById('detail-pct'); if(detPct) detPct.textContent = pct + '%';
+    var detEffSub = document.getElementById('detail-eff-sub'); if(detEffSub) detEffSub.textContent = (currentLang === 'es' ? 'Basado en ' : 'Based on ') + total + (currentLang === 'es' ? ' votos reales de jugadores de OSM' : ' votes from real OSM players');
+    var detVotesTotal = document.getElementById('detail-votes-total'); if(detVotesTotal) detVotesTotal.textContent = total;
+    var detVotesYes = document.getElementById('detail-votes-yes'); if(detVotesYes) detVotesYes.textContent = t.votes_yes;
+    var detVotesNo = document.getElementById('detail-votes-no'); if(detVotesNo) detVotesNo.textContent = t.votes_no;
     // Show slider values in detail
     var sliderHtml = '';
     if (t.pressing !== null || t.style !== null || t.tempo !== null) {
@@ -1860,7 +1864,7 @@
 
   function openAuth() {
     document.getElementById('auth-modal').classList.remove('hidden');
-    document.getElementById('auth-msg').textContent = '';
+    var authMsg = document.getElementById('auth-msg'); if(authMsg) authMsg.textContent = '';
     // Apply current language to modal
     var es = currentLang === 'es';
     document.getElementById('auth-modal-sub').textContent = es ? 'Uníte a la comunidad de tácticas' : 'Join the tactics community';
@@ -1884,7 +1888,7 @@
     document.getElementById('tab-register').classList.toggle('active', tab === 'register');
     document.getElementById('auth-form-login').style.display = tab === 'login' ? 'block' : 'none';
     document.getElementById('auth-form-register').style.display = tab === 'register' ? 'block' : 'none';
-    document.getElementById('auth-msg').textContent = '';
+    var authMsg = document.getElementById('auth-msg'); if(authMsg) authMsg.textContent = '';
   }
 
   async function handleRegister() {
@@ -2565,6 +2569,7 @@
       'tab-events': '📅 Events',
       'tab-h2h': '⚔️ H2H',
       'tab-tournament': '🏆 Copa Nostalgia',
+      'feed-title': 'TRENDING TACTICS',
       'pill-hot': 'Hot',
       'pill-new': 'New',
       'pill-top': 'Top',
@@ -2678,7 +2683,8 @@
     if (h2hOther) h2hOther.textContent = currentLang === 'es' ? 'Otro' : 'Other';
     var h2hOppEl = document.getElementById('h2h-opponent');
     if (h2hOppEl) h2hOppEl.placeholder = currentLang === 'es' ? 'Usuario del rival (ej: hola123)' : 'Rival username (e.g. hola123)';
-    document.querySelector('.feed-title').textContent = t('feed-title');
+    var feedTitleEl = document.querySelector('.feed-title');
+    if (feedTitleEl) feedTitleEl.textContent = t('feed-title');
     document.querySelectorAll('.pill')[0].textContent = t('pill-hot');
     document.querySelectorAll('.pill')[1].textContent = t('pill-new');
     document.querySelectorAll('.pill')[2].textContent = t('pill-top');
