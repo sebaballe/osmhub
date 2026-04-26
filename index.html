@@ -955,11 +955,12 @@
       <div style="font-size:13px;color:var(--text-dim);margin-top:6px;" id="tournament-sub">Primer torneo oficial de OSM Hub · 7 de mayo 2026</div>
       <div style="display:flex;gap:16px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
         <div style="text-align:center;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--green);" id="tournament-spots-taken">14</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--green);" id="tournament-spots-taken">16</div>
           <div style="font-size:11px;color:var(--text-dim);" id="tournament-confirmed-label">Confirmados</div>
         </div>
         <div style="text-align:center;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--red);" id="tournament-spots-left">5</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--red);" id="tournament-spots-left">🔒</div>
+          <div style="font-size:11px;color:var(--text-dim);" id="tournament-spots-label">Cupos cerrados</div>
           <div style="font-size:11px;color:var(--text-dim);" id="tournament-spots-label">Cupos libres</div>
         </div>
         <div style="text-align:center;">
@@ -987,7 +988,7 @@
 
     <!-- Participants -->
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:14px;" id="tournament-participants-title">👥 PARTICIPANTES (11/16)</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:14px;" id="tournament-participants-title">👥 PARTICIPANTES (14/16)</div>
       <div style="display:flex;flex-direction:column;gap:8px;" id="participants-list">
         <!-- Filled spots -->
         <div class="participant-row confirmed">
@@ -1032,9 +1033,12 @@
         <div class="participant-row confirmed">
           <div class="p-num">14</div><div class="p-name">@luis rodriguez_69</div><div class="p-status confirmed-badge">✓</div>
         </div>
-        <!-- Empty spots -->
-        <div class="participant-row empty"><div class="p-num">15</div><div class="p-name p-empty" id="spot-empty">Cupo disponible</div><div class="p-status"></div></div>
-        <div class="participant-row empty"><div class="p-num">16</div><div class="p-name p-empty">Cupo disponible</div><div class="p-status"></div></div>
+        <div class="participant-row confirmed">
+          <div class="p-num">15</div><div class="p-name">@Jramos_9</div><div class="p-status confirmed-badge">✓</div>
+        </div>
+        <div class="participant-row confirmed">
+          <div class="p-num">16</div><div class="p-name">@shoxx11</div><div class="p-status confirmed-badge">✓</div>
+        </div>
       </div>
     </div>
 
@@ -1052,11 +1056,11 @@
       <button onclick="openAuth()" style="background:var(--yellow);color:var(--bg);border:none;border-radius:10px;padding:10px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="draw-locked-btn">⚡ VER EL SORTEO</button>
     </div>
 
-    <!-- CTA -->
-    <div style="background:var(--surface);border:1px solid rgba(0,230,118,0.3);border-radius:12px;padding:16px;text-align:center;" id="tournament-join-section">
-      <div style="font-size:13px;color:var(--text-dim);margin-bottom:12px;" id="tournament-cta-text">¿Querés participar? Quedan solo 5 cupos.</div>
-      <button onclick="openAuth()" id="tournament-cta-btn" style="background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:12px 28px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;">⚡ ANOTARME</button>
-      <div style="font-size:11px;color:var(--text-dim);margin-top:8px;" id="tournament-cta-note">Registrate y confirmá tu lugar en el grupo</div>
+    <!-- CTA closed -->
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;" id="tournament-join-section">
+      <div style="font-size:32px;margin-bottom:8px;">🔒</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:6px;" id="tournament-cta-text">¡Cupos completos!</div>
+      <div style="font-size:13px;color:var(--text-dim);" id="tournament-cta-note">El sorteo se realizará próximamente. Registrate para ver los resultados.</div>
     </div>
 
   </div>
@@ -2086,17 +2090,15 @@
     var es = currentLang === 'es';
     var sub = document.getElementById('tournament-sub'); if(sub) sub.textContent = es ? 'Primer torneo oficial de OSM Hub · Mayo 2026' : 'First official OSM Hub tournament · May 2026';
     var cl = document.getElementById('tournament-confirmed-label'); if(cl) cl.textContent = es ? 'Confirmados' : 'Confirmed';
-    var sl = document.getElementById('tournament-spots-label'); if(sl) sl.textContent = es ? 'Cupos libres' : 'Open spots';
+    var sl = document.getElementById('tournament-spots-label'); if(sl) sl.textContent = es ? 'Cupos cerrados' : 'Registration closed';
     var pl = document.getElementById('tournament-prize-label'); if(pl) pl.textContent = es ? 'Premio PayPal' : 'PayPal prize';
     var rt = document.getElementById('tournament-req-title'); if(rt) rt.textContent = es ? '✅ REQUISITOS' : '✅ REQUIREMENTS';
     var r1 = document.getElementById('req-1'); if(r1) r1.textContent = es ? 'Registrarse gratis en OSM Hub' : 'Sign up free on OSM Hub';
     var r2 = document.getElementById('req-2'); if(r2) r2.textContent = es ? 'Tener cuenta de PayPal para recibir el premio' : 'Have a PayPal account to receive the prize';
     var r3 = document.getElementById('req-3'); if(r3) r3.textContent = es ? 'Confirmar inscripción comentando en el grupo' : 'Confirm registration by commenting in the group';
-    var pt = document.getElementById('tournament-participants-title'); if(pt) pt.textContent = es ? '👥 PARTICIPANTES (11/16)' : '👥 PARTICIPANTS (11/16)';
-    var empties = document.querySelectorAll('.p-empty'); empties.forEach(function(e) { e.textContent = es ? 'Cupo disponible' : 'Open spot'; });
-    var cta = document.getElementById('tournament-cta-text'); if(cta) cta.textContent = es ? '¿Querés participar? Quedan solo 5 cupos.' : 'Want to join? Only 5 spots left.';
-    var ctab = document.getElementById('tournament-cta-btn'); if(ctab) ctab.textContent = es ? '⚡ ANOTARME' : '⚡ JOIN NOW';
-    var ctan = document.getElementById('tournament-cta-note'); if(ctan) ctan.textContent = es ? 'Registrate y confirmá tu lugar en el grupo' : 'Sign up and confirm your spot in the group';
+    var pt = document.getElementById('tournament-participants-title'); if(pt) pt.textContent = es ? '👥 PARTICIPANTES (16/16)' : '👥 PARTICIPANTS (16/16)';
+    var cta = document.getElementById('tournament-cta-text'); if(cta) cta.textContent = es ? '¡Cupos completos!' : 'Registration closed!';
+    var ctan = document.getElementById('tournament-cta-note'); if(ctan) ctan.textContent = es ? 'El sorteo se realizará próximamente. Registrate para ver los resultados.' : 'The draw will take place soon. Sign up to see the results.';
     var bt = document.getElementById('bracket-title'); if(bt) bt.textContent = es ? '🎲 SORTEO — RONDA 1' : '🎲 DRAW — ROUND 1';
     var dlt = document.getElementById('draw-locked-title'); if(dlt) dlt.textContent = es ? 'El sorteo ya está disponible' : 'The draw is now available';
     var dls = document.getElementById('draw-locked-sub'); if(dls) dls.textContent = es ? 'Registrate para ver tu rival en el bracket' : 'Sign up to see your rival in the bracket';
