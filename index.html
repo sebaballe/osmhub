@@ -2402,7 +2402,7 @@
       'tab-ranking': '🥇 Rankings',
       'tab-events': '📅 Events',
       'tab-h2h': '⚔️ H2H',
-      'feed-title': 'TRENDING TACTICS',
+      'tab-tournament': '🏆 Copa Nostalgia',
       'pill-hot': 'Hot',
       'pill-new': 'New',
       'pill-top': 'Top',
@@ -2480,7 +2480,7 @@
     var tabH2h = document.getElementById('tab-h2h');
     if (tabH2h) tabH2h.textContent = t('tab-h2h');
     var tabTournament = document.getElementById('tab-tournament');
-    if (tabTournament) tabTournament.textContent = t('tab-tournament');
+    if (tabTournament) tabTournament.textContent = '🏆 ' + (currentLang === 'es' ? 'Copa Nostalgia' : 'Tournament');
     applyTournamentTranslations();
     var h2hLoginTitle = document.getElementById('h2h-login-title');
     if (h2hLoginTitle) h2hLoginTitle.textContent = currentLang === 'es' ? 'Iniciá sesión para ver tu H2H' : 'Sign in to see your H2H';
