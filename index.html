@@ -2082,9 +2082,25 @@
     }
   });
 
-  // Bracket data — filled when draw is done
-  var bracketData = null; // Set to array of matches when draw is complete
-  // Example: [['Player1','Player2'],['Player3','Player4'],...] — 8 matches
+  // Bracket data — Copa Nostalgia draw results
+  var bracketData = [
+    ["Xabi alonso 16_5", "Liverpool"],
+    ["Sherito Da Silva", "AC Milan"],
+    ["fernando18_0", "River Plate"],
+    ["Griche espinosa 70", "Benfica"],
+    ["iShowfideo", "Bayern München"],
+    ["Myking Guzman", "Ajax"],
+    ["Parame el taxi", "Fenerbahce"],
+    ["Sir Nacho Ruglio", "Arsenal"],
+    ["Nivekserolf", "Boca Juniors"],
+    ["kevinp_388", "Barcelona"],
+    ["matiasc_51", "Juventus"],
+    ["ferchu2020", "Manchester United"],
+    ["ThCARP", "Galatasaray"],
+    ["luis rodriguez_69", "Inter Milan"],
+    ["Jramos_9", "Real Madrid"],
+    ["shoxx11", "Santos"]
+  ];
 
   function applyTournamentTranslations() {
     var es = currentLang === 'es';
@@ -2099,7 +2115,7 @@
     var pt = document.getElementById('tournament-participants-title'); if(pt) pt.textContent = es ? '👥 PARTICIPANTES (16/16)' : '👥 PARTICIPANTS (16/16)';
     var cta = document.getElementById('tournament-cta-text'); if(cta) cta.textContent = es ? '¡Cupos completos!' : 'Registration closed!';
     var ctan = document.getElementById('tournament-cta-note'); if(ctan) ctan.textContent = es ? 'El sorteo se realizará próximamente. Registrate para ver los resultados.' : 'The draw will take place soon. Sign up to see the results.';
-    var bt = document.getElementById('bracket-title'); if(bt) bt.textContent = es ? '🎲 SORTEO — RONDA 1' : '🎲 DRAW — ROUND 1';
+    var bt = document.getElementById('bracket-title'); if(bt) bt.textContent = es ? '🎲 SORTEO — EQUIPOS ASIGNADOS' : '🎲 DRAW — TEAM ASSIGNMENTS';
     var dlt = document.getElementById('draw-locked-title'); if(dlt) dlt.textContent = es ? 'El sorteo ya está disponible' : 'The draw is now available';
     var dls = document.getElementById('draw-locked-sub'); if(dls) dls.textContent = es ? 'Registrate para ver tu rival en el bracket' : 'Sign up to see your rival in the bracket';
     var dlb = document.getElementById('draw-locked-btn'); if(dlb) dlb.textContent = es ? '⚡ VER EL SORTEO' : '⚡ SEE THE DRAW';
@@ -2116,11 +2132,11 @@
           var bracketList = document.getElementById('bracket-list');
           if(bracketList) {
             bracketList.innerHTML = bracketData.map(function(match, i) {
-              return '<div style="display:flex;align-items:center;gap:10px;background:var(--surface2);border-radius:8px;padding:10px 14px;">' +
-                '<span style="font-size:12px;color:var(--text-dim);min-width:20px;font-weight:700;">' + (i+1) + '</span>' +
+              return '<div style="display:flex;align-items:center;gap:10px;background:var(--surface2);border-radius:8px;padding:10px 14px;margin-bottom:4px;">' +
+                '<span style="font-size:12px;color:var(--text-dim);min-width:24px;font-weight:700;">' + (i+1) + '</span>' +
                 '<span style="flex:1;font-size:14px;font-weight:600;color:var(--text);">@' + match[0] + '</span>' +
-                '<span style="font-size:12px;color:var(--text-dim);font-weight:700;padding:0 8px;">vs</span>' +
-                '<span style="flex:1;font-size:14px;font-weight:600;color:var(--text);text-align:right;">@' + match[1] + '</span>' +
+                '<span style="font-size:13px;color:var(--text-dim);padding:0 8px;">→</span>' +
+                '<span style="font-size:14px;font-weight:800;color:var(--yellow);">⚽ ' + match[1] + '</span>' +
                 '</div>';
             }).join('');
           }
