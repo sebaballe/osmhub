@@ -398,10 +398,10 @@
   <div class="tab active" onclick="showScreen('feed',this)">🔥 Tendencia</div>
   <div class="tab" onclick="showScreen('detail',this)" id="tab-detail" style="display:none">📋 Detalle</div>
   <div class="tab" onclick="showScreen('builder',this)">⚽ Alineaciones</div>
-  <div class="tab" onclick="showScreen('ranking',this)">🏆 Rankings</div>
+  <div class="tab" onclick="showScreen('ranking',this)" id="tab-ranking">🥇 Rankings</div>
   <div class="tab" onclick="showScreen('events',this)" id="tab-events">📅 Events</div>
   <div class="tab" onclick="showScreen('h2h',this)" id="tab-h2h">⚔️ H2H</div>
-  <div class="tab" onclick="showScreen('tournament',this)" id="tab-tournament">🏆 Copa</div>
+  <div class="tab" onclick="showScreen('tournament',this)" id="tab-tournament">🏆 Copa Nostalgia</div>
 </div>
 
 <!-- ===== FEED ===== -->
@@ -955,11 +955,11 @@
       <div style="font-size:13px;color:var(--text-dim);margin-top:6px;" id="tournament-sub">Primer torneo oficial de OSM Hub · 7 de mayo 2026</div>
       <div style="display:flex;gap:16px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
         <div style="text-align:center;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--green);" id="tournament-spots-taken">10</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--green);" id="tournament-spots-taken">11</div>
           <div style="font-size:11px;color:var(--text-dim);" id="tournament-confirmed-label">Confirmados</div>
         </div>
         <div style="text-align:center;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--red);" id="tournament-spots-left">6</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--red);" id="tournament-spots-left">5</div>
           <div style="font-size:11px;color:var(--text-dim);" id="tournament-spots-label">Cupos libres</div>
         </div>
         <div style="text-align:center;">
@@ -987,7 +987,7 @@
 
     <!-- Participants -->
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:14px;" id="tournament-participants-title">👥 PARTICIPANTES (10/16)</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:14px;" id="tournament-participants-title">👥 PARTICIPANTES (11/16)</div>
       <div style="display:flex;flex-direction:column;gap:8px;" id="participants-list">
         <!-- Filled spots -->
         <div class="participant-row confirmed">
@@ -1020,9 +1020,11 @@
         <div class="participant-row confirmed">
           <div class="p-num">10</div><div class="p-name">@kevinp_388</div><div class="p-status confirmed-badge">✓</div>
         </div>
+        <div class="participant-row confirmed">
+          <div class="p-num">11</div><div class="p-name">@matiasc_51</div><div class="p-status confirmed-badge">✓</div>
+        </div>
         <!-- Empty spots -->
-        <div class="participant-row empty"><div class="p-num">11</div><div class="p-name p-empty" id="spot-empty">Cupo disponible</div><div class="p-status"></div></div>
-        <div class="participant-row empty"><div class="p-num">12</div><div class="p-name p-empty">Cupo disponible</div><div class="p-status"></div></div>
+        <div class="participant-row empty"><div class="p-num">12</div><div class="p-name p-empty" id="spot-empty">Cupo disponible</div><div class="p-status"></div></div>
         <div class="participant-row empty"><div class="p-num">13</div><div class="p-name p-empty">Cupo disponible</div><div class="p-status"></div></div>
         <div class="participant-row empty"><div class="p-num">14</div><div class="p-name p-empty">Cupo disponible</div><div class="p-status"></div></div>
         <div class="participant-row empty"><div class="p-num">15</div><div class="p-name p-empty">Cupo disponible</div><div class="p-status"></div></div>
@@ -2066,9 +2068,9 @@
     var r1 = document.getElementById('req-1'); if(r1) r1.textContent = es ? 'Registrarse gratis en OSM Hub' : 'Sign up free on OSM Hub';
     var r2 = document.getElementById('req-2'); if(r2) r2.textContent = es ? 'Tener cuenta de PayPal para recibir el premio' : 'Have a PayPal account to receive the prize';
     var r3 = document.getElementById('req-3'); if(r3) r3.textContent = es ? 'Confirmar inscripción comentando en el grupo' : 'Confirm registration by commenting in the group';
-    var pt = document.getElementById('tournament-participants-title'); if(pt) pt.textContent = es ? '👥 PARTICIPANTES (10/16)' : '👥 PARTICIPANTS (10/16)';
+    var pt = document.getElementById('tournament-participants-title'); if(pt) pt.textContent = es ? '👥 PARTICIPANTES (11/16)' : '👥 PARTICIPANTS (11/16)';
     var empties = document.querySelectorAll('.p-empty'); empties.forEach(function(e) { e.textContent = es ? 'Cupo disponible' : 'Open spot'; });
-    var cta = document.getElementById('tournament-cta-text'); if(cta) cta.textContent = es ? '¿Querés participar? Quedan solo 6 cupos.' : 'Want to join? Only 6 spots left.';
+    var cta = document.getElementById('tournament-cta-text'); if(cta) cta.textContent = es ? '¿Querés participar? Quedan solo 5 cupos.' : 'Want to join? Only 5 spots left.';
     var ctab = document.getElementById('tournament-cta-btn'); if(ctab) ctab.textContent = es ? '⚡ ANOTARME' : '⚡ JOIN NOW';
     var ctan = document.getElementById('tournament-cta-note'); if(ctan) ctan.textContent = es ? 'Registrate y confirmá tu lugar en el grupo' : 'Sign up and confirm your spot in the group';
   }
@@ -2334,10 +2336,10 @@
       'tab-trending': '🔥 Tendencia',
       'tab-detail': '📋 Detalle',
       'tab-builder': '⚽ Alineaciones',
-      'tab-ranking': '🏆 Rankings',
+      'tab-ranking': '🥇 Rankings',
       'tab-events': '📅 Eventos',
       'tab-h2h': '⚔️ H2H',
-      'tab-tournament': '🏆 Copa',
+      'tab-tournament': '🏆 Copa Nostalgia',
       'feed-title': 'TÁCTICAS DE MODA',
       'pill-hot': 'Caliente',
       'pill-new': 'Nuevo',
@@ -2397,7 +2399,7 @@
       'tab-trending': '🔥 Trending',
       'tab-detail': '📋 Tactic Detail',
       'tab-builder': '⚽ Lineup Builder',
-      'tab-ranking': '🏆 Rankings',
+      'tab-ranking': '🥇 Rankings',
       'tab-events': '📅 Events',
       'tab-h2h': '⚔️ H2H',
       'feed-title': 'TRENDING TACTICS',
