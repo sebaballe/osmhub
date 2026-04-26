@@ -2695,10 +2695,10 @@
   function applyTranslations() {
     document.querySelector('.logo-sub').textContent = t('logo-sub');
     document.getElementById('btn-share-nav').textContent = t('nav-share');
-    document.querySelectorAll('.tab')[0].textContent = t('tab-trending');
-    document.querySelectorAll('.tab')[1].textContent = t('tab-detail');
-    document.querySelectorAll('.tab')[2].textContent = t('tab-builder');
-    document.querySelectorAll('.tab')[3].textContent = t('tab-ranking');
+    var tabTrending = document.getElementById('tab-trending'); if(tabTrending) tabTrending.textContent = t('tab-trending');
+    var tabDetail = document.getElementById('tab-detail'); if(tabDetail) tabDetail.textContent = t('tab-detail');
+    var tabBuilder = document.getElementById('tab-builder'); if(tabBuilder) tabBuilder.textContent = t('tab-builder');
+    var tabRanking = document.getElementById('tab-ranking'); if(tabRanking) tabRanking.textContent = t('tab-ranking');
     var tabEvents = document.getElementById('tab-events');
     if (tabEvents) tabEvents.textContent = t('tab-events');
     var tabH2h = document.getElementById('tab-h2h');
