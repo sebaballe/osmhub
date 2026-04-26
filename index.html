@@ -1752,12 +1752,13 @@
     val = parseInt(val);
     document.getElementById(type+'-num').textContent = val;
     const idx = Math.min(4, Math.floor((val-1)/20));
-    document.getElementById(type+'-label').textContent = getSliderLabels()[type][idx];
-    document.getElementById(type+'-slider').style.background = 'linear-gradient(to right, #2979FF 0%, #2979FF ' + val + '%, #243040 ' + val + '%, #243040 100%)';
+    var sliderLabel = document.getElementById(type+'-label'); if(sliderLabel) sliderLabel.textContent = getSliderLabels()[type][idx];
+    var sliderEl = document.getElementById(type+'-slider'); if(sliderEl) sliderEl.style.background = 'linear-gradient(to right, #2979FF 0%, #2979FF ' + val + '%, #243040 ' + val + '%, #243040 100%)';
   }
   function setLineTactic(type, idx, options) {
-    document.getElementById(type+'-row').querySelectorAll('.lt-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
-    document.getElementById(type+'-label').textContent = options[idx];
+    var row = document.getElementById(type+'-row');
+    if(row) row.querySelectorAll('.lt-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
+    var lbl = document.getElementById(type+'-label'); if(lbl) lbl.textContent = options[idx];
   }
   function updateSliderLabels() {
     ['pressing','style','tempo'].forEach(function(type) {
@@ -1765,14 +1766,15 @@
       if (slider) {
         var val = parseInt(slider.value);
         var idx = Math.min(4, Math.floor((val-1)/20));
-        document.getElementById(type+'-label').textContent = getSliderLabels()[type][idx];
+        var slLbl = document.getElementById(type+'-label'); if(slLbl) slLbl.textContent = getSliderLabels()[type][idx];
       }
     });
     ['fwd','mid','def'].forEach(function(type) {
       var dots = document.getElementById(type+'-row') ? document.getElementById(type+'-row').querySelectorAll('.lt-dot') : [];
       var activeIdx = 0;
       dots.forEach(function(d,i) { if(d.classList.contains('active')) activeIdx = i; });
-      document.getElementById(type+'-label').textContent = getLineTactics()[type][activeIdx];
+      var labelEl = document.getElementById(type+'-label');
+      if (labelEl) labelEl.textContent = getLineTactics()[type][activeIdx];
       dots.forEach(function(dot, i) {
         var lt = getLineTactics()[type];
         dot.setAttribute('onclick', "setLineTactic('" + type + "'," + i + "," + JSON.stringify(lt) + ")");
