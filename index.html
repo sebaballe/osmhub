@@ -616,8 +616,8 @@
 <!-- ===== BUILDER ===== -->
 <div id="screen-builder" class="screen">
   <div style="max-width:600px;margin:0 auto;padding:24px 16px;">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--text);margin-bottom:4px;" id="builder-title-main">⚽ EXPLORADOR DE FORMACIONES</div>
-    <div style="font-size:13px;color:var(--text-dim);margin-bottom:20px;" id="builder-sub">Seleccioná una formación para ver sus características y tácticas oficiales</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--text);margin-bottom:4px;" id="builder-title-main">⚽ FORMATION EXPLORER</div>
+    <div style="font-size:13px;color:var(--text-dim);margin-bottom:20px;" id="builder-sub">Select a formation to see its characteristics and official tactics</div>
     <!-- Formation Grid -->
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:24px;" id="formation-explorer-grid"></div>
     <!-- Formation Detail -->
@@ -1141,9 +1141,8 @@
     if (!grid) return;
     var formations = Object.keys(formationData);
     grid.innerHTML = formations.map(function(f) {
-      return '<div onclick="showFormationDetail(\'' + f + '\')" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 8px;text-align:center;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor=\'var(--green)\';this.style.background=\'var(--surface2)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.background=\'var(--surface)\'">' +
-        '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:16px;font-weight:900;color:var(--green);">' + f + '</div>' +
-        '<div style="font-size:10px;color:var(--text-dim);margin-top:2px;">' + formationData[f].type + '</div>' +
+      return '<div onclick="showFormationDetail(\'' + f + '\')" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 8px;text-align:center;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor=\'var(--green)\';this.style.background=\'var(--surface2)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.background=\'var(--surface)\'">' +
+        '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:18px;font-weight:900;color:var(--green);">' + f + '</div>' +
         '</div>';
     }).join('');
   }
@@ -2690,16 +2689,19 @@
     document.querySelectorAll('.pill')[2].textContent = t('pill-top');
     document.querySelector('.vote-question').textContent = t('vote-question');
     document.querySelector('.vote-sub').textContent = t('vote-sub');
-    document.querySelector('.vote-yes').textContent = t('vote-yes');
-    document.querySelector('.vote-no').textContent = t('vote-no');
-    document.querySelector('.comments-title').textContent = t('comments-title');
-    document.querySelector('.builder-title').textContent = t('builder-title');
-    document.querySelector('.btn-share').textContent = t('share-tactic-btn');
-    document.getElementById('tactic-title-input').placeholder = t('tactic-title-ph');
-    document.getElementById('tactic-author-input').placeholder = t('tactic-author-ph');
-    document.querySelector('.ranking-title').textContent = t('ranking-title');
-    document.querySelector('.ranking-sub').textContent = t('ranking-sub');
-    document.querySelector('footer p').textContent = t('footer');
+    var voteYesEl = document.querySelector('.vote-yes'); if(voteYesEl) voteYesEl.textContent = t('vote-yes');
+    var voteNoEl = document.querySelector('.vote-no'); if(voteNoEl) voteNoEl.textContent = t('vote-no');
+    var commentsTitleEl = document.querySelector('.comments-title'); if(commentsTitleEl) commentsTitleEl.textContent = t('comments-title');
+    var builderTitleMain = document.getElementById('builder-title-main');
+    if (builderTitleMain) builderTitleMain.textContent = currentLang === 'es' ? '⚽ EXPLORADOR DE FORMACIONES' : '⚽ FORMATION EXPLORER';
+    var builderSubEl = document.getElementById('builder-sub');
+    if (builderSubEl) builderSubEl.textContent = currentLang === 'es' ? 'Seleccioná una formación para ver sus características y tácticas oficiales' : 'Select a formation to see its characteristics and official tactics';
+    var btnShareEl = document.querySelector('.btn-share'); if(btnShareEl) btnShareEl.textContent = t('share-tactic-btn');
+    var tacticTitleInput = document.getElementById('tactic-title-input'); if(tacticTitleInput) tacticTitleInput.placeholder = t('tactic-title-ph');
+    var tacticAuthorInput = document.getElementById('tactic-author-input'); if(tacticAuthorInput) tacticAuthorInput.placeholder = t('tactic-author-ph');
+    var rankingTitleEl = document.querySelector('.ranking-title'); if(rankingTitleEl) rankingTitleEl.textContent = t('ranking-title');
+    var rankingSubEl = document.querySelector('.ranking-sub'); if(rankingSubEl) rankingSubEl.textContent = t('ranking-sub');
+    var footerEl = document.querySelector('footer p'); if(footerEl) footerEl.textContent = t('footer');
     if (document.getElementById('detail-eff-title')) document.getElementById('detail-eff-title').textContent = currentLang === 'es' ? 'Tasa de Eficacia' : 'Effectiveness Rate';
     if (document.getElementById('lbl-total-votes')) document.getElementById('lbl-total-votes').textContent = currentLang === 'es' ? 'Total Votos' : 'Total Votes';
     if (document.getElementById('lbl-it-works')) document.getElementById('lbl-it-works').textContent = currentLang === 'es' ? '👍 Funcionó' : '👍 It Works';
