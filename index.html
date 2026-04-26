@@ -1337,7 +1337,6 @@
     // Translate title parts if auto-generated
     var titleParts = t.title ? t.title.split(' · ') : [];
     var translatedTitle = titleParts.map(function(part) {
-      // Translate vs formation part (starts with formation vs formation)
       if (part.indexOf(' vs ') !== -1) {
         var vsParts = part.split(' vs ');
         return vsParts[0] + ' vs ' + vsParts[1];
@@ -1709,11 +1708,11 @@
   function translateVsValue(value) {
     var esToEn = {
       'Cualquiera': 'Any',
-      'Balon largo': 'Long ball', 'Balón largo': 'Long ball',
-      'Juego de bandas': 'Wing play',
-      'Posesion': 'Possession', 'Posesión': 'Possession',
-      'Contraataque': 'Counter-attack',
-      'Tiros de repente': 'Shoot on sight',
+      'Balon largo': 'Long ball', 'Balón largo': 'Long ball', 'Balon Largo': 'Long ball',
+      'Juego de bandas': 'Wing play', 'Bandas': 'Wing play',
+      'Posesion': 'Possession', 'Posesión': 'Possession', 'Pases': 'Possession',
+      'Contraataque': 'Counter-attack', 'Contra': 'Counter-attack',
+      'Tiros de repente': 'Shoot on sight', 'Tiros': 'Shoot on sight',
       'Mixto': 'Mixed',
       'De local': 'Home', 'De visitante': 'Away', 'Ambos': 'Both',
       'Local': 'Home', 'Visitante': 'Away',
@@ -1724,7 +1723,7 @@
     };
     var enToEs = {
       'Any': 'Cualquiera',
-      'Long ball': 'Balón largo', 'Wing play': 'Juego de bandas',
+      'Long ball': 'Balón largo', 'Wing play': 'Juego de bandas', 'Bandas': 'Juego de bandas',
       'Possession': 'Posesión', 'Counter-attack': 'Contraataque',
       'Long shots': 'Tiros de repente', 'Shoot on sight': 'Tiros de repente', 'Mixed': 'Mixto',
       'Home': 'De local', 'Away': 'De visitante', 'Both': 'Ambos',
