@@ -2351,14 +2351,15 @@
     else { if(logged) logged.style.display='none'; if(guest) guest.style.display='block'; }
     var list = document.getElementById('tournament-comments-list');
     if (!list) return;
-    var res = await db.from('comments').select('*').eq('tactic_id', 'tournament-copa-nostalgia').order('created_at', { ascending: false }).limit(20);
+    var res = await db.from('tournament_signups').select('*').eq('tournament', 'copa-nostalgia-2').order('created_at', { ascending: false });
     if (!res.data || res.data.length === 0) { list.innerHTML = ''; return; }
-    list.innerHTML = res.data.map(function(c) {
-      return '<div style="background:var(--surface2);border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:10px;">' +
-        '<div style="width:32px;height:32px;border-radius:50%;background:rgba(0,230,118,0.15);color:var(--green);display:flex;align-items:center;justify-content:center;font-family:\'Barlow Condensed\',sans-serif;font-size:13px;font-weight:900;flex-shrink:0;">' + (c.author || '?').substring(0,2).toUpperCase() + '</div>' +
-        '<div><div style="font-size:13px;font-weight:600;color:var(--text);">@' + (c.author || 'usuario') + '</div><div style="font-size:12px;color:var(--text-dim);">' + c.text + '</div></div>' +
-        '</div>';
-    }).join('');
+    list.innerHTML = '<div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:8px;letter-spacing:0.5px;">' + (currentLang === 'es' ? 'ANOTADOS HASTA AHORA' : 'SIGNED UP SO FAR') + ' (' + res.data.length + ')</div>' +
+      res.data.map(function(c) {
+        return '<div style="background:var(--surface2);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:10px;">' +
+          '<div style="width:32px;height:32px;border-radius:50%;background:rgba(0,230,118,0.15);color:var(--green);display:flex;align-items:center;justify-content:center;font-family:\'Barlow Condensed\',sans-serif;font-size:13px;font-weight:900;flex-shrink:0;">' + (c.osm_username || '?').substring(0,2).toUpperCase() + '</div>' +
+          '<div><div style="font-size:13px;font-weight:600;color:var(--text);">⚽ ' + c.osm_username + '</div></div>' +
+          '</div>';
+      }).join('');
   }
 
   async function submitTournamentComment() {
@@ -2369,8 +2370,14 @@
     if (!text) { if(msg) { msg.textContent = currentLang === 'es' ? 'Escribí tu usuario de OSM' : 'Enter your OSM username'; msg.style.color = 'var(--red)'; } return; }
     var btn = document.getElementById('tournament-comment-btn');
     if(btn) btn.textContent = currentLang === 'es' ? 'Enviando...' : 'Sending...';
-    var username = currentUser.user_metadata && currentUser.user_metadata.username ? currentUser.user_metadata.username : currentUser.email.split('@')[0];
-    await db.from('comments').insert({ tactic_id: 'tournament-copa-nostalgia', author: username, text: text, user_id: currentUser.id });
+    // Check if already signed up
+    var existing = await db.from('tournament_signups').select('id').eq('user_id', currentUser.id).eq('tournament', 'copa-nostalgia-2').single();
+    if (existing.data) {
+      if(msg) { msg.textContent = currentLang === 'es' ? 'Ya estás anotado!' : 'Already signed up!'; msg.style.color = 'var(--yellow)'; }
+      if(btn) btn.textContent = currentLang === 'es' ? '✅ DEJAR MI USUARIO' : '✅ LEAVE MY USERNAME';
+      return;
+    }
+    await db.from('tournament_signups').insert({ user_id: currentUser.id, osm_username: text, tournament: 'copa-nostalgia-2' });
     if(msg) { msg.textContent = currentLang === 'es' ? '✅ ¡Usuario registrado!' : '✅ Username registered!'; msg.style.color = 'var(--green)'; }
     if(btn) btn.textContent = currentLang === 'es' ? '✅ DEJAR MI USUARIO' : '✅ LEAVE MY USERNAME';
     if(input) input.value = '';
