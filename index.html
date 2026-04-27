@@ -500,7 +500,7 @@ footer strong { color:var(–green); }
 
 <div id="screen-detail" class="screen">
   <div class="detail-page">
-    <button class="back-btn" onclick="showScreen('feed',document.getElementById('tab-trending'))" id="back-btn">← Back to feed</button>
+    <button class="back-btn" onclick="showScreen(previousScreen, document.getElementById('tab-' + previousScreen))" id="back-btn">← Back</button>
     <div class="detail-header">
       <div class="detail-formation" id="detail-formation"></div>
       <div style="flex:1;">
@@ -1453,9 +1453,14 @@ footer strong { color:var(–green); }
 
   // ===== LOAD TACTIC DETAIL =====
   let currentTacticId = null;
+  var previousScreen = 'feed';
+
   async function loadTacticDetail(id) {
+    // Remember where we came from
+    var activeScreen = document.querySelector('.screen.active');
+    if (activeScreen && activeScreen.id) previousScreen = activeScreen.id.replace('screen-', '');
     currentTacticId = id;
-    showScreen('detail', document.querySelectorAll('.tab')[1]);
+    showScreen('detail', document.getElementById('tab-detail'));
     const { data: t } = await db.from('tactics').select('*').eq('id', id).single();
     if (!t) return;
     const total = t.votes_yes + t.votes_no;
