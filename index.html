@@ -1000,21 +1000,15 @@
       <div id="tournament-comments-list" style="margin-top:14px;display:flex;flex-direction:column;gap:6px;"></div>
     </div>
 
-    <!-- Draw Animation -->
+    <!-- Draw Results (collapsible) -->
     <div id="tournament-draw-section" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;display:none;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:14px;text-align:center;" id="bracket-title">🎲 DRAW — TEAM ASSIGNMENTS</div>
-      
-      <!-- Animation area -->
-      <div id="draw-animation" style="display:none;text-align:center;padding:20px 0;">
-        <div style="font-size:13px;color:var(--text-dim);margin-bottom:16px;" id="draw-anim-label">Mezclando equipos...</div>
-        <div id="draw-spinning" style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--yellow);min-height:40px;transition:all 0.1s;"></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:0;" onclick="var bl=document.getElementById('bracket-list');var ba=document.getElementById('draw-animation');var btn=document.getElementById('draw-toggle');var show=bl.style.display==='none';bl.style.display=show?'flex':'none';btn.textContent=show?'▲':'▼';">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);" id="bracket-title">⚽ DRAW — TEAM ASSIGNMENTS</div>
+        <span id="draw-toggle" style="color:var(--text-dim);font-size:14px;">▼</span>
       </div>
-
-      <!-- Start button -->
+      <div id="draw-animation" style="display:none;"></div>
       <!-- Draw button removed - draw already done -->
-
-      <!-- Results list -->
-      <div id="bracket-list" style="display:flex;flex-direction:column;gap:4px;"></div>
+      <div id="bracket-list" style="display:none;flex-direction:column;gap:4px;margin-top:12px;"></div>
     </div>
 
     <!-- Not logged in draw prompt -->
