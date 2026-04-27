@@ -432,9 +432,7 @@
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--yellow);" id="home-copa-title">🏆 COPA NOSTALGIA</div>
         <button onclick="showScreen('tournament',document.getElementById('tab-tournament'));applyTournamentTranslations();loadTournamentComments();" style="background:none;border:1px solid rgba(255,214,0,0.3);color:var(--yellow);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;" id="home-see-tournament">See tournament →</button>
       </div>
-      <div id="home-copa-results" style="display:flex;flex-direction:column;gap:6px;">
-        <div style="font-size:13px;color:var(--text-dim);">Cargando resultados...</div>
-      </div>
+      <div id="home-copa-results"></div>
     </div>
 
     <!-- Top tactics section -->
@@ -443,9 +441,7 @@
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--text);" id="home-top-title">⭐ TOP TACTICS</div>
         <button onclick="showScreen('ranking',document.getElementById('tab-ranking'));loadRankings();" style="background:none;border:1px solid var(--border2);color:var(--text-dim);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;" id="home-see-rankings">See all →</button>
       </div>
-      <div id="home-top-tactics" style="display:flex;flex-direction:column;gap:8px;">
-        <div style="font-size:13px;color:var(--text-dim);">Loading...</div>
-      </div>
+      <div id="home-top-tactics"></div>
     </div>
 
   </div>
@@ -793,7 +789,7 @@
 </div>
 
 <footer>
-  <p><strong>OSM Hub</strong> · Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM · Construida por la comunidad, para la comunidad</p>
+  <p id="footer-text"><strong>OSM Hub</strong> · Fan-made tactic platform · Not affiliated with GameBasics or OSM</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1019,8 +1015,8 @@
   ];
 
   async function loadHomeScreen() {
-    updateBanner();
     renderCopaResults();
+    updateBanner();
     loadHomeTopTactics();
   }
 
@@ -2647,7 +2643,8 @@
     var tacticAuthorInput = document.getElementById('tactic-author-input'); if(tacticAuthorInput) tacticAuthorInput.placeholder = t('tactic-author-ph');
     var rankingTitleEl = document.querySelector('.ranking-title'); if(rankingTitleEl) rankingTitleEl.textContent = t('ranking-title');
     var rankingSubEl = document.querySelector('.ranking-sub'); if(rankingSubEl) rankingSubEl.textContent = t('ranking-sub');
-    var footerEl = document.querySelector('footer p'); if(footerEl) footerEl.textContent = t('footer');
+    var footerEl = document.getElementById('footer-text');
+    if (footerEl) footerEl.innerHTML = '<strong>OSM Hub</strong> · ' + (currentLang === 'es' ? 'Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM' : 'Fan-made tactic platform · Not affiliated with GameBasics or OSM');
     if (document.getElementById('detail-eff-title')) document.getElementById('detail-eff-title').textContent = currentLang === 'es' ? 'Tasa de Eficacia' : 'Effectiveness Rate';
     if (document.getElementById('lbl-total-votes')) document.getElementById('lbl-total-votes').textContent = currentLang === 'es' ? 'Total Votos' : 'Total Votes';
     if (document.getElementById('lbl-it-works')) document.getElementById('lbl-it-works').textContent = currentLang === 'es' ? '👍 Funcionó' : '👍 It Works';
@@ -2973,7 +2970,7 @@
   // Load home on start
   initAuth();
   applyTranslations();
-  loadHomeScreen();
+  setTimeout(function() { loadHomeScreen(); }, 100);
   setTimeout(updateBanner, 500);
 </script>
 </body>
