@@ -524,17 +524,15 @@ footer strong { color:var(–green); }
       <div class="stat-box"><div class="stat-num yellow" id="detail-votes-yes">0</div><div class="stat-label" id="detail-works-label">👍 It Works</div></div>
       <div class="stat-box"><div class="stat-num red" id="detail-votes-no">0</div><div class="stat-label" id="detail-didnt-label">👎 Didn't Work</div></div>
     </div>
-    <div id="detail-vs-section"></div>
-    <div class="tactic-config" id="detail-config">
-      <div class="config-row">
-        <div class="config-item"><div class="config-label" id="config-pressing-label">PRESSING</div><div class="config-val" id="config-pressing-val"></div></div>
-        <div class="config-item"><div class="config-label" id="config-style-label">STYLE</div><div class="config-val" id="config-style-val"></div></div>
-        <div class="config-item"><div class="config-label" id="config-tempo-label">TEMPO</div><div class="config-val" id="config-tempo-val"></div></div>
-      </div>
-      <div class="line-tactics" id="detail-line-tactics"></div>
-    </div>
+    <div id="detail-vs-section"><div id="detail-slider-info"></div></div>
     <div style="display:flex;gap:16px;margin-bottom:24px;">
-      <div id="detail-pitch" style="width:160px;flex-shrink:0;"></div>
+      <div id="detail-pitch" style="width:140px;flex-shrink:0;">
+        <div style="position:relative;width:140px;height:210px;background:#1a5c2a;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);">
+          <div style="position:absolute;top:50%;left:5%;right:5%;height:1px;background:rgba(255,255,255,0.2);"></div>
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border:1px solid rgba(255,255,255,0.2);border-radius:50%;"></div>
+          <div id="detail-pitch-players"></div>
+        </div>
+      </div>
       <div style="flex:1;" id="detail-vote-section">
         <div class="vote-section">
           <div id="vote-step1">
