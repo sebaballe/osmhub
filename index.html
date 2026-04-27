@@ -1241,9 +1241,14 @@
     tacticsList.innerHTML = res.data.map(function(t) {
       var total = t.votes_yes + t.votes_no;
       var pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
-      var titleDisplay = translateVsValue(t.title.substring(0, 40));
+      var titleParts = t.title ? t.title.split(' · ') : [t.formation];
+      var translated = titleParts.map(function(p) {
+        if (p.indexOf(' vs ') !== -1) return p;
+        return translateVsValue(p);
+      }).join(' · ');
+      var shortTitle = translated.length > 40 ? translated.substring(0, 40) + '...' : translated;
       return '<div onclick="loadTacticDetail(\'' + t.id + '\')" style="display:flex;align-items:center;gap:10px;background:var(--surface2);border-radius:8px;padding:10px 12px;cursor:pointer;">' +
-        '<div style="flex:1;font-size:13px;font-weight:600;color:var(--text);">' + titleDisplay + '...</div>' +
+        '<div style="flex:1;font-size:13px;font-weight:600;color:var(--text);">' + shortTitle + '</div>' +
         '<div style="font-size:13px;font-weight:800;color:' + (pct>=70?'var(--green)':pct>=50?'var(--yellow)':'var(--red)') + ';">' + pct + '%</div>' +
         '</div>';
     }).join('');
