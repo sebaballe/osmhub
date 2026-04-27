@@ -743,23 +743,23 @@
 
     <!-- Comment to join next cup -->
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px;" id="tournament-comment-title">💬 ¿QUERÉS PARTICIPAR EN LA PRÓXIMA?</div>
-      <div style="font-size:13px;color:var(--text-dim);margin-bottom:12px;" id="tournament-comment-sub">Dejá tu usuario de OSM para ser considerado en la Copa Nostalgia II</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px;" id="tournament-comment-title">💬 WANT TO JOIN THE NEXT ONE?</div>
+      <div style="font-size:13px;color:var(--text-dim);margin-bottom:12px;" id="tournament-comment-sub">Leave your OSM username to be considered for Copa Nostalgia II</div>
       <div id="tournament-comment-logged" style="display:none;">
-        <textarea id="tournament-comment-input" placeholder="Escribí tu usuario de OSM..." style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;resize:none;height:70px;margin-bottom:8px;box-sizing:border-box;"></textarea>
-        <button onclick="submitTournamentComment()" style="width:100%;background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="tournament-comment-btn">✅ DEJAR MI USUARIO</button>
+        <textarea id="tournament-comment-input" placeholder="Write your OSM username..." style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;resize:none;height:70px;margin-bottom:8px;box-sizing:border-box;"></textarea>
+        <button onclick="submitTournamentComment()" style="width:100%;background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="tournament-comment-btn">✅ LEAVE MY USERNAME</button>
         <div id="tournament-comment-msg" style="text-align:center;font-size:13px;margin-top:8px;"></div>
       </div>
       <div id="tournament-comment-guest" style="display:none;text-align:center;">
-        <div style="font-size:13px;color:var(--text-dim);margin-bottom:10px;" id="tournament-comment-login-msg">Registrate para dejar tu usuario</div>
-        <button onclick="openAuth()" style="background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:10px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="tournament-comment-login-btn">⚡ REGISTRARME</button>
+        <div style="font-size:13px;color:var(--text-dim);margin-bottom:10px;" id="tournament-comment-login-msg">Sign up to leave your username</div>
+        <button onclick="openAuth()" style="background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:10px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="tournament-comment-login-btn">⚡ SIGN UP</button>
       </div>
       <div id="tournament-comments-list" style="margin-top:14px;display:flex;flex-direction:column;gap:6px;"></div>
     </div>
 
     <!-- Draw Animation -->
     <div id="tournament-draw-section" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;display:none;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:14px;text-align:center;" id="bracket-title">🎲 SORTEO — EQUIPOS ASIGNADOS</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:14px;text-align:center;" id="bracket-title">🎲 DRAW — TEAM ASSIGNMENTS</div>
       
       <!-- Animation area -->
       <div id="draw-animation" style="display:none;text-align:center;padding:20px 0;">
@@ -768,10 +768,7 @@
       </div>
 
       <!-- Start button -->
-      <div id="draw-start-section" style="text-align:center;margin-bottom:16px;">
-        <button onclick="startDrawAnimation()" id="draw-start-btn" style="background:var(--yellow);color:var(--bg);border:none;border-radius:10px;padding:12px 28px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;">🎲 INICIAR SORTEO</button>
-        <div style="font-size:12px;color:var(--text-dim);margin-top:8px;" id="draw-start-note">La animación revelará los equipos uno por uno</div>
-      </div>
+      <!-- Draw button removed - draw already done -->
 
       <!-- Results list -->
       <div id="bracket-list" style="display:flex;flex-direction:column;gap:4px;"></div>
@@ -1023,8 +1020,8 @@
 
   async function loadHomeScreen() {
     updateBanner();
-    loadHomeTopTactics();
     renderCopaResults();
+    loadHomeTopTactics();
   }
 
   function renderCopaResults() {
