@@ -429,8 +429,8 @@
     <!-- Copa Nostalgia section -->
     <div style="background:linear-gradient(135deg,rgba(255,214,0,0.06),rgba(0,230,118,0.04));border:1px solid rgba(255,214,0,0.2);border-radius:16px;padding:20px;margin-bottom:16px;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--yellow);">🏆 COPA NOSTALGIA</div>
-        <button onclick="showScreen('tournament',document.getElementById('tab-tournament'))" style="background:none;border:1px solid rgba(255,214,0,0.3);color:var(--yellow);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;" id="home-see-tournament">Ver torneo →</button>
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--yellow);" id="home-copa-title">🏆 COPA NOSTALGIA</div>
+        <button onclick="showScreen('tournament',document.getElementById('tab-tournament'));applyTournamentTranslations();loadTournamentComments();" style="background:none;border:1px solid rgba(255,214,0,0.3);color:var(--yellow);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;" id="home-see-tournament">See tournament →</button>
       </div>
       <div id="home-copa-results" style="display:flex;flex-direction:column;gap:6px;">
         <div style="font-size:13px;color:var(--text-dim);">Cargando resultados...</div>
@@ -441,7 +441,7 @@
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--text);" id="home-top-title">⭐ TOP TACTICS</div>
-        <button onclick="showScreen('ranking',document.getElementById('tab-ranking'))" style="background:none;border:1px solid var(--border2);color:var(--text-dim);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;" id="home-see-rankings">See all →</button>
+        <button onclick="showScreen('ranking',document.getElementById('tab-ranking'));loadRankings();" style="background:none;border:1px solid var(--border2);color:var(--text-dim);border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;" id="home-see-rankings">See all →</button>
       </div>
       <div id="home-top-tactics" style="display:flex;flex-direction:column;gap:8px;">
         <div style="font-size:13px;color:var(--text-dim);">Loading...</div>
@@ -1034,27 +1034,30 @@
     if(seeTournament) seeTournament.textContent = es ? 'Ver torneo →' : 'See tournament →';
     if (!container) return;
     var jornada = es ? 'JORNADA 1' : 'ROUND 1';
-    container.innerHTML = '<div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:10px;letter-spacing:0.5px;">' + jornada + '</div>' +
-      copaResults.map(function(r) {
-        var homeWin = r.homeScore > r.awayScore;
-        var awayWin = r.awayScore > r.homeScore;
-        var isDraw = r.homeScore === r.awayScore;
-        return '<div style="background:var(--surface2);border-radius:8px;padding:10px 14px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;margin-bottom:6px;">' +
-          '<div>' +
-            '<div style="font-size:13px;font-weight:' + (homeWin?'800':'500') + ';color:' + (homeWin?'var(--text)':'var(--text-dim)') + ';">⚽ ' + r.homeTeam + '</div>' +
+    var html = '<div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:10px;letter-spacing:0.5px;">' + jornada + '</div>';
+    copaResults.forEach(function(r) {
+      var homeWin = r.homeScore > r.awayScore;
+      var awayWin = r.awayScore > r.homeScore;
+      var isDraw = r.homeScore === r.awayScore;
+      html += '<div style="background:var(--surface2);border-radius:8px;padding:10px 14px;margin-bottom:6px;">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">' +
+          '<div style="flex:1;">' +
+            '<div style="font-size:13px;font-weight:' + (homeWin?'700':'400') + ';color:' + (homeWin?'var(--text)':'var(--text-dim)') + ';">⚽ ' + r.homeTeam + '</div>' +
             '<div style="font-size:10px;color:var(--text-dim);">@' + r.home + '</div>' +
           '</div>' +
-          '<div style="text-align:center;">' +
-            '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:20px;font-weight:900;color:' + (isDraw?'var(--yellow)':homeWin?'var(--green)':'var(--text)') + ';">' + r.homeScore + '</div>' +
-            '<div style="font-size:10px;color:var(--text-dim);">-</div>' +
-            '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:20px;font-weight:900;color:' + (isDraw?'var(--yellow)':awayWin?'var(--green)':'var(--text)') + ';">' + r.awayScore + '</div>' +
+          '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:22px;font-weight:900;text-align:center;white-space:nowrap;">' +
+            '<span style="color:' + (homeWin?'var(--green)':isDraw?'var(--yellow)':'var(--text-dim)') + ';">' + r.homeScore + '</span>' +
+            '<span style="color:var(--text-dim);margin:0 4px;">-</span>' +
+            '<span style="color:' + (awayWin?'var(--green)':isDraw?'var(--yellow)':'var(--text-dim)') + ';">' + r.awayScore + '</span>' +
           '</div>' +
-          '<div style="text-align:right;">' +
-            '<div style="font-size:13px;font-weight:' + (awayWin?'800':'500') + ';color:' + (awayWin?'var(--text)':'var(--text-dim)') + ';">⚽ ' + r.awayTeam + '</div>' +
+          '<div style="flex:1;text-align:right;">' +
+            '<div style="font-size:13px;font-weight:' + (awayWin?'700':'400') + ';color:' + (awayWin?'var(--text)':'var(--text-dim)') + ';">⚽ ' + r.awayTeam + '</div>' +
             '<div style="font-size:10px;color:var(--text-dim);">@' + r.away + '</div>' +
           '</div>' +
-          '</div>';
-      }).join('');
+        '</div>' +
+      '</div>';
+    });
+    container.innerHTML = html;
   }
 
   async function loadHomeTopTactics() {
@@ -2629,9 +2632,10 @@
     if (h2hOppEl) h2hOppEl.placeholder = currentLang === 'es' ? 'Usuario del rival (ej: hola123)' : 'Rival username (e.g. hola123)';
     var feedTitleEl = document.querySelector('.feed-title');
     if (feedTitleEl) feedTitleEl.textContent = t('feed-title');
-    document.querySelectorAll('.pill')[0].textContent = t('pill-hot');
-    document.querySelectorAll('.pill')[1].textContent = t('pill-new');
-    document.querySelectorAll('.pill')[2].textContent = t('pill-top');
+    var pills = document.querySelectorAll('.pill');
+    if(pills[0]) pills[0].textContent = t('pill-hot');
+    if(pills[1]) pills[1].textContent = t('pill-new');
+    if(pills[2]) pills[2].textContent = t('pill-top');
     document.querySelector('.vote-question').textContent = t('vote-question');
     document.querySelector('.vote-sub').textContent = t('vote-sub');
     var voteYesEl = document.querySelector('.vote-yes'); if(voteYesEl) voteYesEl.textContent = t('vote-yes');
