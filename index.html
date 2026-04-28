@@ -1671,6 +1671,7 @@ footer strong { color:var(–green); }
     var a = statsTeams.find(function(t){return t.name===aEl.value;});
     var b = statsTeams.find(function(t){return t.name===bEl.value;});
     if(!a||!b) return;
+    var es = currentLang === 'es';
     var maxS=13, maxP=61.5;
     var csA=document.getElementById('stats-cbar-shots-a'); if(csA) csA.style.width=(a.shots/maxS*100)+'%';
     var csB=document.getElementById('stats-cbar-shots-b'); if(csB) csB.style.width=(b.shots/maxS*100)+'%';
@@ -1682,11 +1683,24 @@ footer strong { color:var(–green); }
     var cvPB=document.getElementById('stats-cval-poss-b'); if(cvPB) cvPB.textContent=b.poss+'%';
     var aScore=a.shots*0.6+a.poss*0.4, bScore=b.shots*0.6+b.poss*0.4;
     var v='';
-    if(a.name===b.name) v='Select two different teams.';
-    else if(Math.abs(aScore-bScore)<3) v='<strong>'+a.name+'</strong> and <strong>'+b.name+'</strong> are statistically very close. Either could win.';
-    else if(aScore>bScore) v='<strong style="color:#FFD700">'+a.name+'</strong> has a clear statistical edge. The numbers strongly favor them.';
-    else v='<strong style="color:#FFD700">'+b.name+'</strong> comes out ahead. They would be the statistical favorite.';
+    if(a.name===b.name) {
+      v = es ? 'Elegí dos equipos diferentes.' : 'Select two different teams.';
+    } else if(Math.abs(aScore-bScore)<3) {
+      v = es
+        ? '<strong>'+a.name+'</strong> y <strong>'+b.name+'</strong> están muy parejos estadísticamente. Cualquiera puede ganar.'
+        : '<strong>'+a.name+'</strong> and <strong>'+b.name+'</strong> are statistically very close. Either could win.';
+    } else if(aScore>bScore) {
+      v = es
+        ? '<strong style="color:#FFD700">'+a.name+'</strong> tiene una ventaja estadística clara. Los números los favorecen.'
+        : '<strong style="color:#FFD700">'+a.name+'</strong> has a clear statistical edge. The numbers strongly favor them.';
+    } else {
+      v = es
+        ? '<strong style="color:#FFD700">'+b.name+'</strong> sale adelante. Serían el favorito estadístico.'
+        : '<strong style="color:#FFD700">'+b.name+'</strong> comes out ahead. They would be the statistical favorite.';
+    }
     var vEl=document.getElementById('stats-verdict-text'); if(vEl) vEl.innerHTML=v;
+    // Update verdict label
+    var vlEl=document.getElementById('stats-verdict-label'); if(vlEl) vlEl.textContent=es?'📊 Veredicto estadístico':'📊 Statistical Verdict';
   }
   function applyStatsTranslations() {
     var es = currentLang === 'es';
@@ -1740,7 +1754,8 @@ footer strong { color:var(–green); }
     for(var bid in blocks) {
       var bel = document.getElementById(bid); if(bel) bel.textContent = blocks[bid];
     }
-    avgLabels.forEach(function(l){ if(l.dataset.key==='top') l.textContent=es?'Arsenal':'Arsenal'; if(l.dataset.key==='avg') l.textContent=es?'Promedio liga':'League avg'; });
+    avgLabels.forEach(function(l){ if(l.dataset.key==='top') l.textContent='Arsenal'; if(l.dataset.key==='avg') l.textContent=es?'Promedio liga':'League avg'; });
+    updateStatsCompare();
   }
 
   function initStats() {
