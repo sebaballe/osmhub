@@ -1,405 +1,461 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OSM HUB</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-:root {
-–bg: #F5F5F7;
-–white: #FFFFFF;
-–text: #111111;
-–muted: #888893;
-–border: #E5E5EA;
-–accent: #1A73E8;
-–green: #34C759;
-–red: #FF3B30;
-–orange: #FF9500;
-–hero-bg: #1C1C1E;
-}
+  :root {
+    --gold:       #D4A017;
+    --gold-light: #F0C040;
+    --gold-dim:   rgba(212,160,23,0.12);
+    --gold-border:rgba(212,160,23,0.25);
+    --bg0: #000000;
+    --bg1: #0D0D0D;
+    --bg2: #141414;
+    --bg3: #1C1C1C;
+    --text: #F0EAD6;
+    --muted:#7A7060;
+    --red:  #E05050;
+    --green:#50C060;
+  }
 
-body {
-background: var(–bg);
-color: var(–text);
-font-family: ‘DM Sans’, sans-serif;
-font-size: 14px;
-max-width: 430px;
-margin: 0 auto;
-min-height: 100vh;
-}
+  body {
+    background: var(--bg0);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    max-width: 430px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
 
-header {
-background: var(–white);
-padding: 16px 18px 12px;
-display: flex;
-align-items: center;
-gap: 10px;
-border-bottom: 1px solid var(–border);
-}
+  /* ── HEADER ── */
+  header {
+    background: var(--bg1);
+    border-bottom: 1px solid var(--gold-border);
+    padding: 14px 16px 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: sticky; top: 0; z-index: 100;
+  }
 
-.logo {
-font-family: ‘Syne’, sans-serif;
-font-size: 20px;
-font-weight: 800;
-line-height: 1.1;
-letter-spacing: -0.5px;
-flex-shrink: 0;
-}
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 1.5px;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+  .logo em { color: var(--gold); font-style: normal; }
 
-.header-center {
-display: flex;
-gap: 7px;
-align-items: center;
-flex: 1;
-flex-wrap: wrap;
-}
+  .hdr-pills { display: flex; gap: 6px; flex: 1; }
 
-.pill {
-background: var(–bg);
-border: 1px solid var(–border);
-border-radius: 20px;
-padding: 5px 11px;
-font-size: 12px;
-font-weight: 500;
-color: var(–accent);
-cursor: pointer;
-white-space: nowrap;
-display: flex; align-items: center; gap: 5px;
-}
-.pill-user { color: var(–text); }
+  .pill {
+    background: var(--bg3);
+    border: 1px solid var(--gold-border);
+    border-radius: 20px;
+    padding: 5px 11px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    white-space: nowrap;
+  }
 
-.btn-share {
-background: var(–bg);
-border: 1px solid var(–border);
-border-radius: 12px;
-padding: 8px 13px;
-font-family: ‘DM Sans’, sans-serif;
-font-size: 11px;
-font-weight: 700;
-color: var(–text);
-cursor: pointer;
-text-align: center;
-line-height: 1.35;
-flex-shrink: 0;
-}
+  .btn-share {
+    background: var(--gold);
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    padding: 7px 13px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    cursor: pointer;
+    white-space: nowrap;
+    letter-spacing: 0.2px;
+    flex-shrink: 0;
+  }
 
-nav.top-nav {
-background: var(–white);
-display: flex;
-overflow-x: auto;
-padding: 0 10px;
-border-bottom: 1px solid var(–border);
-scrollbar-width: none;
-}
-nav.top-nav::-webkit-scrollbar { display: none; }
+  /* ── TOP NAV ── */
+  nav.top-nav {
+    background: var(--bg1);
+    display: flex;
+    overflow-x: auto;
+    padding: 0 8px;
+    border-bottom: 1px solid var(--gold-border);
+    scrollbar-width: none;
+  }
+  nav.top-nav::-webkit-scrollbar { display: none; }
 
-.nav-item {
-display: flex; align-items: center; gap: 5px;
-padding: 11px 12px;
-font-size: 13px;
-font-weight: 600;
-color: var(–muted);
-cursor: pointer;
-white-space: nowrap;
-border-bottom: 2px solid transparent;
-}
-.nav-item.active { color: var(–accent); border-bottom-color: var(–accent); }
+  .ni {
+    padding: 11px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    letter-spacing: 0.3px;
+  }
+  .ni.active { color: var(--gold); border-bottom-color: var(--gold); }
 
-main {
-padding: 14px 14px 90px;
-display: flex;
-flex-direction: column;
-gap: 14px;
-}
+  /* ── MAIN ── */
+  main {
+    padding: 14px 12px 90px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
 
-/* HERO */
-.hero-card {
-background: var(–hero-bg);
-border-radius: 18px;
-padding: 22px 18px 18px;
-position: relative;
-overflow: hidden;
-}
-.hero-card::after {
-content: ‘’;
-position: absolute; top: 0; right: 0;
-width: 160px; height: 160px;
-background: radial-gradient(circle at 80% 20%, rgba(255,180,0,0.13), transparent 70%);
-pointer-events: none;
-}
-.trophy-float {
-position: absolute; top: 16px; right: 16px;
-font-size: 56px;
-animation: float 3.5s ease-in-out infinite;
-filter: drop-shadow(0 8px 16px rgba(0,0,0,0.4));
-}
-@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(140deg, #1A1200 0%, #0A0A0A 55%);
+    border: 1px solid var(--gold-border);
+    border-radius: 16px;
+    padding: 22px 18px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    background: radial-gradient(circle, rgba(212,160,23,0.18) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .trophy {
+    position: absolute; top: 14px; right: 14px;
+    font-size: 62px;
+    filter: drop-shadow(0 0 18px rgba(212,160,23,0.55));
+    animation: float 3.5s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
 
-.hero-card h1 {
-color: #fff;
-font-family: ‘Syne’, sans-serif;
-font-size: 20px;
-font-weight: 800;
-line-height: 1.25;
-max-width: 60%;
-margin-bottom: 8px;
-}
-.hero-card p {
-color: #9999A8;
-font-size: 12px;
-line-height: 1.6;
-max-width: 64%;
-margin-bottom: 16px;
-}
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    line-height: 1.15;
+    letter-spacing: 0.5px;
+    max-width: 58%;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .hero h1 span { color: var(--gold); }
 
-.hero-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+  .hero p {
+    font-size: 12px;
+    color: var(--muted);
+    max-width: 62%;
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
 
-.btn-white {
-background: #fff; color: #111; border: none;
-border-radius: 10px; padding: 10px 15px;
-font-family: ‘DM Sans’, sans-serif; font-size: 13px; font-weight: 700;
-cursor: pointer; display: flex; align-items: center; gap: 6px;
-}
-.btn-ghost {
-background: rgba(255,255,255,0.1); color: var(–accent);
-border: 1px solid rgba(255,255,255,0.18);
-border-radius: 10px; padding: 10px 15px;
-font-family: ‘DM Sans’, sans-serif; font-size: 13px; font-weight: 700;
-cursor: pointer; display: flex; align-items: center; gap: 6px;
-}
+  .hero-btns { display: flex; gap: 8px; flex-wrap: wrap; }
 
-.managers-row { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
-.avatars { display: flex; }
-.av {
-width: 26px; height: 26px; border-radius: 50%;
-border: 2px solid var(–hero-bg);
-display: flex; align-items: center; justify-content: center;
-font-size: 9px; font-weight: 700; margin-left: -6px;
-}
-.av:first-child { margin-left: 0; }
-.av-kv { background: #C0392B; color: #fff; }
-.av-al { background: var(–accent); color: #fff; }
-.managers-row span { font-size: 12px; color: #888; }
-.managers-row strong { color: #ccc; }
+  .btn-gold {
+    background: var(--gold);
+    color: #000;
+    border: none;
+    border-radius: 9px;
+    padding: 10px 16px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .btn-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 9px;
+    padding: 10px 16px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+  }
 
-/* CARDS */
-.card {
-background: var(–white);
-border-radius: 16px;
-padding: 16px;
-}
+  .mgr-row { display: flex; align-items: center; gap: 8px; margin-top: 14px; }
+  .avs { display: flex; }
+  .av {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 2px solid #0A0A0A;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 800;
+    margin-left: -6px;
+  }
+  .av:first-child { margin-left: 0; }
+  .a1 { background: #8B1A1A; color: #F0C0C0; }
+  .a2 { background: #1A3A8B; color: #C0D0F0; }
+  .a3 { background: var(--gold-dim); color: var(--gold); border: 1px solid var(--gold-border); }
+  .mgr-row span { font-size: 12px; color: var(--muted); }
+  .mgr-row strong { color: var(--text); }
 
-.copa-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-.copa-title {
-display: flex; align-items: center; gap: 7px;
-font-family: ‘Syne’, sans-serif; font-size: 17px; font-weight: 800;
-}
-.badge-live {
-background: #FFF0F0; color: var(–red);
-border: 1px solid #FFCDD2; border-radius: 6px;
-padding: 3px 8px; font-size: 10px; font-weight: 700; letter-spacing: 0.3px;
-animation: blink 1.8s infinite;
-}
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.55} }
+  /* ── CARD ── */
+  .card {
+    background: var(--bg1);
+    border: 1px solid var(--gold-border);
+    border-radius: 16px;
+    padding: 16px;
+  }
 
-.meta-list { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
-.meta-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: var(–muted); }
+  .card-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
 
-.match-box {
-background: var(–bg); border-radius: 12px;
-padding: 14px 12px 10px; text-align: center; margin-bottom: 16px;
-}
-.match-label { font-size: 10px; color: var(–muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; font-weight: 600; }
-.match-row { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
-.team-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.team-badge {
-width: 40px; height: 40px; border-radius: 10px;
-display: flex; align-items: center; justify-content: center;
-font-size: 12px; font-weight: 800;
-}
-.badge-ars { background: #FFEBEE; color: #C62828; border: 1.5px solid #FFCDD2; }
-.badge-bar { background: #E3F2FD; color: #1565C0; border: 1.5px solid #BBDEFB; }
-.team-name { font-size: 13px; font-weight: 700; }
-.team-user { font-size: 10px; color: var(–muted); }
+  .card-title {
+    display: flex; align-items: center; gap: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 0.5px;
+    color: var(--gold);
+  }
 
-.score-center { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
-.score-num { font-family: ‘Syne’, sans-serif; font-size: 36px; font-weight: 800; line-height: 1; }
-.score-dash { color: var(–muted); font-size: 20px; font-weight: 300; }
+  .badge-live {
+    background: rgba(224,80,80,0.15);
+    color: var(--red);
+    border: 1px solid rgba(224,80,80,0.4);
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    animation: blink 1.8s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.5} }
 
-.link-blue { color: var(–accent); font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 10px; display: inline-block; }
+  .meta-list { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+  .meta-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
 
-.section-label { font-size: 10px; color: var(–muted); letter-spacing: 1px; text-transform: uppercase; font-weight: 600; margin-bottom: 10px; }
-.standing-row {
-display: flex; align-items: center; gap: 10px;
-padding: 7px 0; border-bottom: 1px solid var(–border); font-size: 13px;
-}
-.standing-row:last-child { border-bottom: none; }
-.s-pos { width: 14px; text-align: center; font-weight: 700; color: var(–muted); font-size: 12px; }
-.s-dot { width: 9px; height: 9px; border-radius: 3px; flex-shrink: 0; }
-.s-name { flex: 1; font-weight: 600; }
-.s-pts { font-weight: 700; color: var(–muted); font-size: 12px; }
-.link-subtle { color: var(–accent); font-size: 12px; font-weight: 600; cursor: pointer; margin-top: 10px; display: flex; align-items: center; gap: 3px; }
+  /* ── MATCH BOX ── */
+  .match-box {
+    background: var(--bg2);
+    border: 1px solid var(--gold-border);
+    border-radius: 12px;
+    padding: 14px 12px 10px;
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .match-lbl { font-size: 10px; color: var(--muted); letter-spacing: 1.2px; text-transform: uppercase; font-weight: 700; margin-bottom: 12px; }
 
-/* NEXT TORNEO */
-.next-inner { display: flex; align-items: flex-start; gap: 12px; }
-.next-icon {
-width: 44px; height: 44px; background: #E8F0FE;
-border-radius: 12px; display: flex; align-items: center; justify-content: center;
-font-size: 20px; flex-shrink: 0;
-}
-.next-text { flex: 1; }
-.next-label { font-size: 10px; color: var(–muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; margin-bottom: 2px; }
-.next-title { font-weight: 700; font-size: 14px; margin-bottom: 3px; }
-.next-time { font-size: 11px; color: var(–muted); }
-.next-time strong { color: var(–text); }
+  .match-row { display: flex; align-items: center; justify-content: space-between; gap: 4px; }
+  .tc { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
 
-.next-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; gap: 12px; flex-wrap: wrap; }
-.slots-section { display: flex; flex-direction: column; gap: 2px; }
-.slots-num { font-family: ‘Syne’, sans-serif; font-size: 22px; font-weight: 800; line-height: 1; }
-.progress-wrap { width: 80px; height: 4px; background: var(–border); border-radius: 2px; margin: 4px 0; overflow: hidden; }
-.progress-fill { height: 100%; background: var(–accent); border-radius: 2px; width: 75%; }
-.slots-warn { font-size: 10px; color: var(–orange); font-weight: 600; }
+  .team-badge {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900;
+  }
+  .b-ars { background: rgba(192,40,40,0.15); border: 1px solid rgba(192,40,40,0.4); color: #E06060; }
+  .b-bar { background: rgba(30,80,180,0.15); border: 1px solid rgba(30,80,180,0.4); color: #6090E0; }
 
-.btn-primary {
-background: var(–accent); color: #fff; border: none;
-border-radius: 10px; padding: 11px 18px;
-font-family: ‘DM Sans’, sans-serif; font-size: 13px; font-weight: 700; cursor: pointer;
-}
-.free-tag { font-size: 11px; color: var(–muted); text-align: center; margin-top: 3px; }
+  .team-name { font-size: 12px; font-weight: 800; }
+  .team-user { font-size: 10px; color: var(--muted); }
 
-/* TACTICS */
-.sec-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
-.sec-title { font-family: ‘Syne’, sans-serif; font-size: 16px; font-weight: 800; }
-.see-all { color: var(–accent); font-size: 12px; font-weight: 600; cursor: pointer; }
+  .score-c { display: flex; align-items: center; gap: 5px; flex-shrink: 0; }
+  .s-num { font-family: 'Bebas Neue', sans-serif; font-size: 38px; color: var(--gold-light); line-height: 1; }
+  .s-dash { color: var(--muted); font-size: 22px; font-weight: 300; }
 
-.tactics-scroll {
-display: flex; gap: 10px; overflow-x: auto;
-padding-bottom: 6px; scrollbar-width: none;
-}
-.tactics-scroll::-webkit-scrollbar { display: none; }
+  .btn-sm {
+    background: transparent;
+    border: 1px solid var(--gold-border);
+    color: var(--gold);
+    border-radius: 7px;
+    padding: 5px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
+    letter-spacing: 0.2px;
+  }
 
-.tactic-card {
-background: var(–bg); border-radius: 14px;
-padding: 12px 10px; min-width: 128px; flex-shrink: 0;
-border: 1px solid var(–border); position: relative;
-}
+  /* ── STANDINGS ── */
+  .sec-lbl { font-size: 10px; color: var(--muted); letter-spacing: 1.2px; text-transform: uppercase; font-weight: 700; margin-bottom: 10px; }
+  .s-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid rgba(212,160,23,0.08);
+    font-size: 13px;
+  }
+  .s-row:last-child { border-bottom: none; }
+  .s-pos { width: 14px; text-align: center; font-weight: 800; color: var(--muted); font-size: 12px; }
+  .s-dot { width: 9px; height: 9px; border-radius: 3px; flex-shrink: 0; }
+  .s-name { flex: 1; font-weight: 700; }
+  .s-pts { font-weight: 800; color: var(--gold); font-size: 12px; }
 
-.t-rank {
-position: absolute; top: 9px; left: 9px;
-width: 22px; height: 22px; border-radius: 50%;
-display: flex; align-items: center; justify-content: center;
-font-size: 11px; font-weight: 800;
-}
-.r1 { background: #FFB800; color: #fff; }
-.r2 { background: #8E8E93; color: #fff; }
-.r3 { background: #A0522D; color: #fff; }
+  .link-gold { color: var(--gold); font-size: 12px; font-weight: 700; cursor: pointer; margin-top: 10px; display: flex; align-items: center; gap: 3px; }
 
-.tactic-field {
-width: 68px; height: 88px;
-background: linear-gradient(175deg, #2D5A27 0%, #1A3D16 100%);
-border-radius: 8px; margin: 0 auto 10px;
-position: relative; overflow: hidden;
-border: 1px solid rgba(255,255,255,0.08);
-}
-.f-line { position: absolute; top: 50%; left: 8%; right: 8%; height: 1px; background: rgba(255,255,255,0.2); }
-.f-circle { position: absolute; top: 50%; left: 50%; width: 22px; height: 22px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; transform: translate(-50%,-50%); }
-.pd { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: #FFD700; box-shadow: 0 0 5px rgba(255,215,0,0.6); transform: translate(-50%,-50%); }
+  /* ── NEXT TORNEO ── */
+  .next-top { display: flex; align-items: flex-start; gap: 12px; }
+  .next-icon {
+    width: 46px; height: 46px;
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .next-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; margin-bottom: 2px; }
+  .next-title { font-weight: 800; font-size: 14px; margin-bottom: 3px; }
+  .next-time { font-size: 11px; color: var(--muted); }
+  .next-time strong { color: var(--gold); }
 
-.t-name { font-family: ‘Syne’, sans-serif; font-size: 14px; font-weight: 800; text-align: center; }
-.t-style { font-size: 10px; color: var(–muted); text-align: center; margin-bottom: 3px; }
-.t-wr { font-size: 11px; color: var(–green); font-weight: 700; text-align: center; margin-bottom: 8px; }
-.t-votes { display: flex; justify-content: space-between; margin-bottom: 7px; }
-.vote { font-size: 11px; display: flex; align-items: center; gap: 3px; }
-.v-up { color: var(–green); }
-.v-dn { color: var(–red); }
-.btn-copy {
-width: 100%; background: #fff; border: 1px solid var(–border);
-border-radius: 8px; padding: 6px 0;
-font-family: ‘DM Sans’, sans-serif; font-size: 11px; font-weight: 700;
-color: var(–text); cursor: pointer;
-}
+  .next-bot { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; gap: 10px; flex-wrap: wrap; }
+  .slots-num { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: var(--gold-light); line-height: 1; }
+  .progress-wrap { width: 80px; height: 4px; background: var(--bg3); border-radius: 2px; margin: 4px 0; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--gold); border-radius: 2px; width: 75%; }
+  .slots-warn { font-size: 10px; color: #FF7043; font-weight: 700; }
+  .free-tag { font-size: 11px; color: var(--muted); text-align: center; margin-top: 4px; }
 
-/* EVENTS */
-.event-row {
-display: flex; align-items: center; gap: 12px;
-padding: 10px 0; border-bottom: 1px solid var(–border); cursor: pointer;
-}
-.event-row:last-child { border-bottom: none; }
-.ev-icon {
-width: 38px; height: 38px; background: #F2F2F7;
-border-radius: 10px; display: flex; align-items: center; justify-content: center;
-font-size: 18px; flex-shrink: 0;
-}
-.ev-name { font-weight: 700; font-size: 13px; }
-.ev-time { font-size: 11px; color: var(–muted); }
-.ev-chevron { color: var(–muted); font-size: 20px; margin-left: auto; flex-shrink: 0; }
+  /* ── TACTICS ── */
+  .sec-hdr { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .sec-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: var(--text); letter-spacing: 0.5px; }
+  .see-all { color: var(--gold); font-size: 12px; font-weight: 700; cursor: pointer; }
 
-/* BOTTOM NAV */
-.bottom-nav {
-position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
-width: 100%; max-width: 430px;
-background: rgba(255,255,255,0.95);
-backdrop-filter: blur(12px);
-border-top: 1px solid var(–border);
-display: flex; padding: 6px 0 16px; z-index: 100;
-}
-.bn-item {
-flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
-font-size: 10px; font-weight: 600; color: var(–muted);
-cursor: pointer; padding: 4px 0; border: none; background: none;
-font-family: ‘DM Sans’, sans-serif;
-}
-.bn-item.active { color: var(–accent); }
-.bn-item svg { width: 22px; height: 22px; }
+  .tactics-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
+  .tactics-scroll::-webkit-scrollbar { display: none; }
+
+  .tc-card {
+    background: var(--bg2);
+    border: 1px solid var(--gold-border);
+    border-radius: 14px;
+    padding: 12px 10px;
+    min-width: 128px;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .t-rank {
+    position: absolute; top: 9px; left: 9px;
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 900;
+  }
+  .r1 { background: var(--gold); color: #000; }
+  .r2 { background: #666; color: #fff; }
+  .r3 { background: #7A4020; color: #fff; }
+
+  .tfield {
+    width: 68px; height: 88px;
+    background: linear-gradient(175deg, #1E4018 0%, #0E2A0A 100%);
+    border-radius: 8px;
+    margin: 0 auto 10px;
+    position: relative; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .fl { position: absolute; top: 50%; left: 8%; right: 8%; height: 1px; background: rgba(255,255,255,0.15); }
+  .fc { position: absolute; top: 50%; left: 50%; width: 22px; height: 22px; border: 1px solid rgba(255,255,255,0.15); border-radius: 50%; transform: translate(-50%,-50%); }
+  .pd { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 6px rgba(212,160,23,0.7); transform: translate(-50%,-50%); }
+
+  .t-name { font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 0.3px; text-align: center; color: var(--text); }
+  .t-style { font-size: 10px; color: var(--muted); text-align: center; margin-bottom: 3px; }
+  .t-wr { font-size: 11px; color: var(--green); font-weight: 800; text-align: center; margin-bottom: 8px; }
+  .t-votes { display: flex; justify-content: space-between; margin-bottom: 7px; }
+  .vote { font-size: 11px; display: flex; align-items: center; gap: 3px; }
+  .v-up { color: var(--green); }
+  .v-dn { color: var(--red); }
+
+  .btn-copy {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--gold-border);
+    color: var(--gold);
+    border-radius: 7px; padding: 6px 0;
+    font-family: 'Barlow', sans-serif;
+    font-size: 11px; font-weight: 800; cursor: pointer;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── EVENTS ── */
+  .ev-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(212,160,23,0.1);
+    cursor: pointer;
+  }
+  .ev-row:last-child { border-bottom: none; }
+  .ev-icon {
+    width: 38px; height: 38px;
+    background: var(--gold-dim);
+    border: 1px solid var(--gold-border);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 17px; flex-shrink: 0;
+  }
+  .ev-name { font-weight: 700; font-size: 13px; }
+  .ev-time { font-size: 11px; color: var(--muted); }
+  .ev-chev { color: var(--muted); font-size: 20px; margin-left: auto; flex-shrink: 0; }
+
+  /* ── BOTTOM NAV ── */
+  .bnav {
+    position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+    width: 100%; max-width: 430px;
+    background: rgba(10,10,10,0.97);
+    backdrop-filter: blur(14px);
+    border-top: 1px solid var(--gold-border);
+    display: flex; padding: 6px 0 16px; z-index: 100;
+  }
+  .bi {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+    font-size: 10px; font-weight: 700; color: var(--muted);
+    cursor: pointer; padding: 4px 0; border: none; background: none;
+    font-family: 'Barlow', sans-serif; letter-spacing: 0.2px;
+  }
+  .bi.active { color: var(--gold); }
+  .bi svg { width: 20px; height: 20px; }
 </style>
-
 </head>
 <body>
 
 <header>
-  <div class="logo">OSM<br>HUB</div>
-  <div class="header-center">
+  <div class="logo">OSM <em>HUB</em></div>
+  <div class="hdr-pills">
     <div class="pill">🌐 ES / EN</div>
-    <div class="pill pill-user">👤 sir nacho ▾</div>
+    <div class="pill">👤 sir nacho ▾</div>
   </div>
-  <button class="btn-share">+&nbsp;Compartir<br>táctica</button>
+  <button class="btn-share">+ Compartir táctica</button>
 </header>
 
 <nav class="top-nav">
-  <div class="nav-item active">🏠 Inicio</div>
-  <div class="nav-item">🏆 Torneos</div>
-  <div class="nav-item">⚽ Tácticas</div>
-  <div class="nav-item">📊 Rankings</div>
-  <div class="nav-item">H2H</div>
-  <div class="nav-item">📅 Eventos</div>
+  <div class="ni active">🏠 Inicio</div>
+  <div class="ni">🏆 Torneos</div>
+  <div class="ni">⚽ Tácticas</div>
+  <div class="ni">📊 Rankings</div>
+  <div class="ni">H2H</div>
+  <div class="ni">📅 Eventos</div>
 </nav>
 
 <main>
 
-  <div class="hero-card">
-    <div class="trophy-float">🏆</div>
-    <h1>Compite en torneos de OSM y demuestra que sos el mejor manager</h1>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="trophy">🏆</div>
+    <h1>Compite en torneos de OSM y demuestra que sos <span>el mejor manager</span></h1>
     <p>Únete gratis, gana premios y enfréntate a jugadores de todo el mundo.</p>
     <div class="hero-btns">
-      <button class="btn-white">🚀 Entrar al próximo torneo</button>
-      <button class="btn-ghost">📊 Ver resultados</button>
+      <button class="btn-gold">🚀 Entrar al próximo torneo</button>
+      <button class="btn-outline">📊 Ver resultados</button>
     </div>
-    <div class="managers-row">
-      <div class="avatars">
-        <div class="av av-kv">KV</div>
-        <div class="av av-al">AL</div>
+    <div class="mgr-row">
+      <div class="avs">
+        <div class="av a1">KV</div>
+        <div class="av a2">AL</div>
+        <div class="av a3">+</div>
       </div>
       <span><strong>+500</strong> managers ya compitiendo</span>
     </div>
   </div>
 
+  <!-- COPA NOSTALGIA -->
   <div class="card">
-    <div class="copa-header">
-      <div class="copa-title">🏆 COPA NOSTALGIA</div>
+    <div class="card-hdr">
+      <div class="card-title">🏆 COPA NOSTALGIA</div>
       <div class="badge-live">EN JUEGO</div>
     </div>
     <div class="meta-list">
@@ -408,176 +464,165 @@ font-family: ‘DM Sans’, sans-serif;
       <div class="meta-item">🏅 Premio final</div>
     </div>
     <div class="match-box">
-      <div class="match-label">Partido destacado</div>
+      <div class="match-lbl">Partido destacado</div>
       <div class="match-row">
-        <div class="team-col">
-          <div class="team-badge badge-ars">ARS</div>
+        <div class="tc">
+          <div class="team-badge b-ars">ARS</div>
           <div class="team-name">Arsenal</div>
           <div class="team-user">@Sir Nacho Ruglio</div>
         </div>
-        <div class="score-center">
-          <span class="score-num">4</span>
-          <span class="score-dash">-</span>
-          <span class="score-num">1</span>
+        <div class="score-c">
+          <span class="s-num">4</span>
+          <span class="s-dash">-</span>
+          <span class="s-num">1</span>
         </div>
-        <div class="team-col">
-          <div class="team-badge badge-bar">BAR</div>
+        <div class="tc">
+          <div class="team-badge b-bar">BAR</div>
           <div class="team-name">Barcelona</div>
           <div class="team-user">@kevinp_388</div>
         </div>
       </div>
-      <a class="link-blue">Ver resultado</a>
+      <button class="btn-sm">Ver resultado</button>
     </div>
-    <div class="section-label">Tabla de posiciones</div>
-    <div class="standing-row">
-      <div class="s-pos">1</div><div class="s-dot" style="background:#34C759"></div>
-      <div class="s-name">Boca Juniors</div><div class="s-pts">9 pts</div>
-    </div>
-    <div class="standing-row">
-      <div class="s-pos">2</div><div class="s-dot" style="background:#FF3B30"></div>
-      <div class="s-name">Ajax</div><div class="s-pts">6 pts</div>
-    </div>
-    <div class="standing-row">
-      <div class="s-pos">3</div><div class="s-dot" style="background:#1A73E8"></div>
-      <div class="s-name">AC Milan</div><div class="s-pts">4 pts</div>
-    </div>
-    <div class="standing-row">
-      <div class="s-pos">4</div><div class="s-dot" style="background:#FF9500"></div>
-      <div class="s-name">Fenerbahce</div><div class="s-pts">3 pts</div>
-    </div>
-    <div class="link-subtle">Ver tabla completa →</div>
+
+    <div class="sec-lbl">Tabla de posiciones</div>
+    <div class="s-row"><div class="s-pos" style="color:var(--gold)">1</div><div class="s-dot" style="background:#34C759"></div><div class="s-name">Boca Juniors</div><div class="s-pts">9 pts</div></div>
+    <div class="s-row"><div class="s-pos" style="color:var(--gold)">2</div><div class="s-dot" style="background:#E05050"></div><div class="s-name">Ajax</div><div class="s-pts">6 pts</div></div>
+    <div class="s-row"><div class="s-pos">3</div><div class="s-dot" style="background:#5080E0"></div><div class="s-name">AC Milan</div><div class="s-pts">4 pts</div></div>
+    <div class="s-row"><div class="s-pos">4</div><div class="s-dot" style="background:#FF9500"></div><div class="s-name">Fenerbahce</div><div class="s-pts">3 pts</div></div>
+    <div class="link-gold">Ver tabla completa →</div>
   </div>
 
+  <!-- PRÓXIMO TORNEO -->
   <div class="card">
-    <div class="next-inner">
+    <div class="next-top">
       <div class="next-icon">📅</div>
-      <div class="next-text">
-        <div class="next-label">Próximo torneo</div>
+      <div>
+        <div class="next-lbl">Próximo torneo</div>
         <div class="next-title">Únete a la próxima edición</div>
         <div class="next-time">⏱ Empieza en: <strong>3 días</strong></div>
       </div>
     </div>
-    <div class="next-bottom">
-      <div class="slots-section">
+    <div class="next-bot">
+      <div>
         <div class="slots-num">12 / 16</div>
         <div class="progress-wrap"><div class="progress-fill"></div></div>
         <div class="slots-warn">🔥 Solo quedan 4 lugares</div>
       </div>
       <div>
-        <button class="btn-primary">Reservar mi lugar</button>
+        <button class="btn-gold" style="font-size:12px; padding:9px 16px;">Reservar mi lugar</button>
         <div class="free-tag">Es gratis</div>
       </div>
     </div>
   </div>
 
+  <!-- TÁCTICAS TOP -->
   <div class="card">
-    <div class="sec-header">
-      <div class="sec-title">Tácticas top de la semana</div>
+    <div class="sec-hdr">
+      <div class="sec-title">TÁCTICAS TOP DE LA SEMANA</div>
       <div class="see-all">Ver todas →</div>
     </div>
     <div class="tactics-scroll">
 
-```
-  <div class="tactic-card">
-    <div class="t-rank r1">1</div>
-    <div class="tactic-field">
-      <div class="f-line"></div><div class="f-circle"></div>
-      <div class="pd" style="left:50%;top:90%"></div>
-      <div class="pd" style="left:18%;top:74%"></div><div class="pd" style="left:39%;top:74%"></div>
-      <div class="pd" style="left:61%;top:74%"></div><div class="pd" style="left:82%;top:74%"></div>
-      <div class="pd" style="left:25%;top:53%"></div><div class="pd" style="left:50%;top:53%"></div><div class="pd" style="left:75%;top:53%"></div>
-      <div class="pd" style="left:22%;top:28%"></div><div class="pd" style="left:50%;top:20%"></div><div class="pd" style="left:78%;top:28%"></div>
+      <div class="tc-card">
+        <div class="t-rank r1">1</div>
+        <div class="tfield">
+          <div class="fl"></div><div class="fc"></div>
+          <div class="pd" style="left:50%;top:90%"></div>
+          <div class="pd" style="left:18%;top:74%"></div><div class="pd" style="left:39%;top:74%"></div>
+          <div class="pd" style="left:61%;top:74%"></div><div class="pd" style="left:82%;top:74%"></div>
+          <div class="pd" style="left:25%;top:53%"></div><div class="pd" style="left:50%;top:53%"></div><div class="pd" style="left:75%;top:53%"></div>
+          <div class="pd" style="left:22%;top:28%"></div><div class="pd" style="left:50%;top:20%"></div><div class="pd" style="left:78%;top:28%"></div>
+        </div>
+        <div class="t-name">4-3-3</div>
+        <div class="t-style">Presión Alta</div>
+        <div class="t-wr">Win rate 92%</div>
+        <div class="t-votes"><span class="vote v-up">👍 120</span><span class="vote v-dn">👎 10</span></div>
+        <button class="btn-copy">Copiar</button>
+      </div>
+
+      <div class="tc-card">
+        <div class="t-rank r2">2</div>
+        <div class="tfield">
+          <div class="fl"></div><div class="fc"></div>
+          <div class="pd" style="left:50%;top:90%"></div>
+          <div class="pd" style="left:18%;top:74%"></div><div class="pd" style="left:39%;top:74%"></div>
+          <div class="pd" style="left:61%;top:74%"></div><div class="pd" style="left:82%;top:74%"></div>
+          <div class="pd" style="left:25%;top:54%"></div><div class="pd" style="left:75%;top:54%"></div>
+          <div class="pd" style="left:20%;top:36%"></div><div class="pd" style="left:50%;top:32%"></div><div class="pd" style="left:80%;top:36%"></div>
+          <div class="pd" style="left:50%;top:18%"></div>
+        </div>
+        <div class="t-name">4-2-3-1</div>
+        <div class="t-style">Balanceado</div>
+        <div class="t-wr">Win rate 87%</div>
+        <div class="t-votes"><span class="vote v-up">👍 98</span><span class="vote v-dn">👎 8</span></div>
+        <button class="btn-copy">Copiar</button>
+      </div>
+
+      <div class="tc-card">
+        <div class="t-rank r3">3</div>
+        <div class="tfield">
+          <div class="fl"></div><div class="fc"></div>
+          <div class="pd" style="left:50%;top:90%"></div>
+          <div class="pd" style="left:12%;top:74%"></div><div class="pd" style="left:31%;top:74%"></div>
+          <div class="pd" style="left:50%;top:74%"></div><div class="pd" style="left:69%;top:74%"></div><div class="pd" style="left:88%;top:74%"></div>
+          <div class="pd" style="left:25%;top:52%"></div><div class="pd" style="left:50%;top:52%"></div><div class="pd" style="left:75%;top:52%"></div>
+          <div class="pd" style="left:33%;top:24%"></div><div class="pd" style="left:67%;top:24%"></div>
+        </div>
+        <div class="t-name">5-3-2</div>
+        <div class="t-style">Contraataque</div>
+        <div class="t-wr">Win rate 84%</div>
+        <div class="t-votes"><span class="vote v-up">👍 76</span><span class="vote v-dn">👎 7</span></div>
+        <button class="btn-copy">Copiar</button>
+      </div>
+
     </div>
-    <div class="t-name">4-3-3</div>
-    <div class="t-style">Presión Alta</div>
-    <div class="t-wr">Win rate 92%</div>
-    <div class="t-votes"><span class="vote v-up">👍 120</span><span class="vote v-dn">👎 10</span></div>
-    <button class="btn-copy">Copiar</button>
   </div>
 
-  <div class="tactic-card">
-    <div class="t-rank r2">2</div>
-    <div class="tactic-field">
-      <div class="f-line"></div><div class="f-circle"></div>
-      <div class="pd" style="left:50%;top:90%"></div>
-      <div class="pd" style="left:18%;top:74%"></div><div class="pd" style="left:39%;top:74%"></div>
-      <div class="pd" style="left:61%;top:74%"></div><div class="pd" style="left:82%;top:74%"></div>
-      <div class="pd" style="left:25%;top:54%"></div><div class="pd" style="left:75%;top:54%"></div>
-      <div class="pd" style="left:20%;top:36%"></div><div class="pd" style="left:50%;top:32%"></div><div class="pd" style="left:80%;top:36%"></div>
-      <div class="pd" style="left:50%;top:18%"></div>
-    </div>
-    <div class="t-name">4-2-3-1</div>
-    <div class="t-style">Balanceado</div>
-    <div class="t-wr">Win rate 87%</div>
-    <div class="t-votes"><span class="vote v-up">👍 98</span><span class="vote v-dn">👎 8</span></div>
-    <button class="btn-copy">Copiar</button>
-  </div>
-
-  <div class="tactic-card">
-    <div class="t-rank r3">3</div>
-    <div class="tactic-field">
-      <div class="f-line"></div><div class="f-circle"></div>
-      <div class="pd" style="left:50%;top:90%"></div>
-      <div class="pd" style="left:12%;top:74%"></div><div class="pd" style="left:31%;top:74%"></div>
-      <div class="pd" style="left:50%;top:74%"></div><div class="pd" style="left:69%;top:74%"></div><div class="pd" style="left:88%;top:74%"></div>
-      <div class="pd" style="left:25%;top:52%"></div><div class="pd" style="left:50%;top:52%"></div><div class="pd" style="left:75%;top:52%"></div>
-      <div class="pd" style="left:33%;top:24%"></div><div class="pd" style="left:67%;top:24%"></div>
-    </div>
-    <div class="t-name">5-3-2</div>
-    <div class="t-style">Contraataque</div>
-    <div class="t-wr">Win rate 84%</div>
-    <div class="t-votes"><span class="vote v-up">👍 76</span><span class="vote v-dn">👎 7</span></div>
-    <button class="btn-copy">Copiar</button>
-  </div>
-
-</div>
-```
-
-  </div>
-
+  <!-- EVENTOS -->
   <div class="card">
-    <div class="sec-header">
-      <div class="sec-title">Eventos de OSM</div>
+    <div class="sec-hdr">
+      <div class="sec-title">EVENTOS DE OSM</div>
       <div class="see-all">Ver todas →</div>
     </div>
-    <div class="event-row">
+    <div class="ev-row">
       <div class="ev-icon">🎁</div>
       <div><div class="ev-name">Evento Aniversario</div><div class="ev-time">Inicia en 2 días</div></div>
-      <div class="ev-chevron">›</div>
+      <div class="ev-chev">›</div>
     </div>
-    <div class="event-row">
+    <div class="ev-row">
       <div class="ev-icon">🛡️</div>
       <div><div class="ev-name">Battle of the Clubs</div><div class="ev-time">Inicia en 5 días</div></div>
-      <div class="ev-chevron">›</div>
+      <div class="ev-chev">›</div>
     </div>
-    <div class="event-row">
+    <div class="ev-row">
       <div class="ev-icon">🏆</div>
       <div><div class="ev-name">Champions League</div><div class="ev-time">Inicia en 8 días</div></div>
-      <div class="ev-chevron">›</div>
+      <div class="ev-chev">›</div>
     </div>
   </div>
 
 </main>
 
-<nav class="bottom-nav">
-  <button class="bn-item active">
+<nav class="bnav">
+  <button class="bi active">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
     Inicio
   </button>
-  <button class="bn-item">
+  <button class="bi">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0011 15.9V18H9v2h6v-2h-2v-2.1a5.01 5.01 0 003.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2z"/></svg>
     Torneos
   </button>
-  <button class="bn-item">
+  <button class="bi">
     <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
     Tácticas
   </button>
-  <button class="bn-item">
+  <button class="bi">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3z"/></svg>
     Rankings
   </button>
-  <button class="bn-item">H2H</button>
-  <button class="bn-item">
+  <button class="bi">H2H</button>
+  <button class="bi">
     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
     Eventos
   </button>
