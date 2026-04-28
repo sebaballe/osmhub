@@ -3720,6 +3720,7 @@
     currentLang = currentLang === 'es' ? 'en' : 'es';
     document.getElementById('lang-btn').textContent = currentLang === 'es' ? '🌐 EN / ES' : '🌐 ES / EN';
     applyTranslations();
+    loadHomeScreen();
   }
 
   function applyTranslations() {
@@ -3909,15 +3910,13 @@
       var el = document.getElementById('label-' + k);
       if (el) el.textContent = t('label-' + k);
     });
-    // Reload detail if open
+    // Reload screens based on which is active
     var statsScreen = document.getElementById('screen-stats');
     if (statsScreen && statsScreen.classList.contains('active')) applyStatsTranslations();
-    var feedScreen = document.getElementById('screen-feed');
-    if (feedScreen && feedScreen.classList.contains('active')) loadHomeScreen();
+    var tournamentScreen = document.getElementById('screen-tournament');
+    if (tournamentScreen && tournamentScreen.classList.contains('active')) applyTournamentTranslations();
     var detailScreen = document.getElementById('screen-detail');
     if (currentTacticId && detailScreen && detailScreen.classList.contains('active')) loadTacticDetail(currentTacticId);
-    // Reload feed with new language
-    loadTactics();
     updateSliderLabels();
     renderEvents();
     updateBanner();
