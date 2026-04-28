@@ -435,7 +435,7 @@ footer strong { color:var(–green); }
   </div>
   <div class="nav-badge">FAN-MADE</div>
   <div class="nav-right">
-    <button class="btn-ghost" id="lang-btn" onclick="currentLang = currentLang === 'es' ? 'en' : 'es'; this.textContent = currentLang === 'es' ? '🌐 EN / ES' : '🌐 ES / EN'; applyTranslations(); loadHomeScreen();">🌐 ES / EN</button>
+    <button class="btn-ghost" id="lang-btn" style="display:none;" onclick="currentLang = currentLang === 'es' ? 'en' : 'es'; this.textContent = currentLang === 'es' ? '🌐 EN / ES' : '🌐 ES / EN'; applyTranslations(); loadHomeScreen();">🌐 ES / EN</button>
     <div class="user-menu" id="user-menu">
       <button class="btn-ghost" id="auth-btn" onclick="openAuth()">Iniciar sesión</button>
     </div>
@@ -462,15 +462,15 @@ footer strong { color:var(–green); }
   <div style="background:linear-gradient(160deg,#000000 0%,#131A22 60%,#1A1200 100%);padding:40px 20px 32px;text-align:center;border-bottom:1px solid rgba(255,215,0,0.15);position:relative;overflow:hidden;">
     <div style="position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(255,215,0,0.08) 0%,transparent 70%);pointer-events:none;"></div>
     <div style="font-size:64px;margin-bottom:16px;filter:drop-shadow(0 0 20px rgba(255,215,0,0.4));">🏆</div>
-    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:#FFFFFF;line-height:1.15;margin-bottom:10px;letter-spacing:0.5px;" id="hero-title">Compete in OSM tournaments and prove you are the best manager</h1>
-    <p style="font-size:14px;color:#9AA5B4;margin-bottom:24px;line-height:1.5;" id="hero-sub">Join free, win prizes and face real players</p>
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:#FFFFFF;line-height:1.15;margin-bottom:10px;letter-spacing:0.5px;" id="hero-title">Compite en torneos de OSM y demostrá que sos el mejor manager</h1>
+    <p style="font-size:14px;color:#9AA5B4;margin-bottom:24px;line-height:1.5;" id="hero-sub">Unite gratis, ganá premios y enfrentate a jugadores reales</p>
     <div style="display:flex;flex-direction:column;gap:10px;max-width:320px;margin:0 auto 20px;">
-      <button onclick="openSignupModal()" style="background:linear-gradient(135deg,#FFD700,#E6C200);color:#000000;border:none;border-radius:12px;padding:16px 24px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;letter-spacing:0.5px;box-shadow:0 4px 20px rgba(255,215,0,0.3);" id="hero-btn-primary">⚡ JOIN THE NEXT TOURNAMENT</button>
-      <button onclick="showScreen('tournament',document.getElementById('tab-tournament'));applyTournamentTranslations();loadTournamentComments();" style="background:transparent;color:#FFD700;border:1px solid rgba(255,215,0,0.4);border-radius:12px;padding:14px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;cursor:pointer;" id="hero-btn-secondary">See results →</button>
+      <button onclick="openSignupModal()" style="background:linear-gradient(135deg,#FFD700,#E6C200);color:#000000;border:none;border-radius:12px;padding:16px 24px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;letter-spacing:0.5px;box-shadow:0 4px 20px rgba(255,215,0,0.3);" id="hero-btn-primary">⚡ ENTRAR AL PRÓXIMO TORNEO</button>
+      <button onclick="showScreen('tournament',document.getElementById('tab-tournament'));applyTournamentTranslations();loadTournamentComments();" style="background:transparent;color:#FFD700;border:1px solid rgba(255,215,0,0.4);border-radius:12px;padding:14px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;cursor:pointer;" id="hero-btn-secondary">Ver resultados →</button>
     </div>
     <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:20px;padding:6px 14px;">
       <span style="font-size:16px;">👥</span>
-      <span style="font-size:13px;font-weight:600;color:#FFD700;" id="hero-social-proof">+500 managers already competing</span>
+      <span style="font-size:13px;font-weight:600;color:#FFD700;" id="hero-social-proof">+500 managers ya compitiendo</span>
     </div>
   </div>
 
@@ -484,7 +484,7 @@ footer strong { color:var(–green); }
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:#FFFFFF;margin-bottom:4px;" id="banner-title">🏆 Join the tactics community</div>
       <div style="font-size:13px;color:#9AA5B4;line-height:1.5;" id="banner-sub">Sign up free to vote tactics, comment and compete.</div>
     </div>
-    <button onclick="openAuth()" style="background:linear-gradient(135deg,#FFD700,#E6C200);color:#000000;border:none;border-radius:10px;padding:12px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;white-space:nowrap;flex-shrink:0;" id="banner-btn">⚡ SIGN UP FREE</button>
+    <button onclick="openAuth()" style="background:linear-gradient(135deg,#FFD700,#E6C200);color:#000000;border:none;border-radius:10px;padding:12px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;white-space:nowrap;flex-shrink:0;" id="banner-btn">⚡ REGISTRARME FREE</button>
   </div>
   <div style="display:flex;gap:20px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,215,0,0.15);flex-wrap:wrap;">
     <div style="text-align:center;"><div id="banner-stat-users" style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:#FFD700;">40+</div><div style="font-size:11px;color:#4A5A6E;" id="banner-stat-users-label">active managers</div></div>
@@ -501,12 +501,12 @@ footer strong { color:var(–green); }
       <span style="font-size:22px;">🏆</span>
       <div>
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:#FFD700;">COPA NOSTALGIA</div>
-        <div style="font-size:11px;color:#4A5A6E;" id="home-round-label">ROUND 2 · 30 ROUNDS TOTAL</div>
+        <div style="font-size:11px;color:#4A5A6E;" id="home-round-label">JORNADA 2 · 30 ROUNDS TOTAL</div>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-      <div style="background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);color:#FFD700;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;letter-spacing:0.5px;" id="copa-status-badge">🔴 LIVE</div>
-      <button onclick="showScreen('tournament',document.getElementById('tab-tournament'));applyTournamentTranslations();loadTournamentComments();" style="background:none;border:none;color:#FFD700;font-size:12px;font-weight:600;cursor:pointer;" id="home-see-tournament">See table →</button>
+      <div style="background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);color:#FFD700;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;letter-spacing:0.5px;" id="copa-status-badge">🔴 EN JUEGO</div>
+      <button onclick="showScreen('tournament',document.getElementById('tab-tournament'));applyTournamentTranslations();loadTournamentComments();" style="background:none;border:none;color:#FFD700;font-size:12px;font-weight:600;cursor:pointer;" id="home-see-tournament">Ver tabla →</button>
     </div>
   </div>
 
@@ -543,9 +543,9 @@ footer strong { color:var(–green); }
 
   <!-- Results section -->
   <div>
-    <div style="font-size:10px;font-weight:700;color:#4A5A6E;letter-spacing:1px;margin-bottom:8px;" id="home-results-label">LATEST RESULTS</div>
+    <div style="font-size:10px;font-weight:700;color:#4A5A6E;letter-spacing:1px;margin-bottom:8px;" id="home-results-label">ÚLTIMOS RESULTADOS</div>
     <div id="home-copa-results">
-    <div style="font-size:10px;font-weight:700;color:#4A5A6E;margin-bottom:6px;letter-spacing:0.5px;">ROUND 2</div>
+    <div style="font-size:10px;font-weight:700;color:#4A5A6E;margin-bottom:6px;letter-spacing:0.5px;">JORNADA 2</div>
     <div style="display:flex;flex-direction:column;gap:4px;">
       <div style="background:rgba(0,0,0,0.6);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;">
         <div style="flex:1;"><div style="font-size:12px;font-weight:400;color:#9AA5B4;">Real Madrid</div><div style="font-size:9px;color:#4A5A6E;">@Jramos_9</div></div>
@@ -598,41 +598,41 @@ footer strong { color:var(–green); }
     <div style="font-size:32px;flex-shrink:0;">📊</div>
     <div style="flex:1;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;color:var(--text);margin-bottom:2px;" id="stats-hub-title">STATS HUB</div>
-      <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px;" id="stats-hub-sub">Find out which teams are dominating</div>
+      <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px;" id="stats-hub-sub">Descubrí qué equipos dominan el torneo</div>
       <div style="display:flex;align-items:center;gap:6px;">
-        <div style="background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.2);border-radius:20px;padding:2px 8px;font-size:11px;font-weight:700;color:var(--gold);" id="stats-hub-badge">🏆 Arsenal leads in shots & possession</div>
+        <div style="background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.2);border-radius:20px;padding:2px 8px;font-size:11px;font-weight:700;color:var(--gold);" id="stats-hub-badge">🏆 Arsenal lidera en tiros y posesión</div>
       </div>
     </div>
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--gold);white-space:nowrap;" id="stats-hub-cta">See stats →</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--gold);white-space:nowrap;" id="stats-hub-cta">Ver stats →</div>
   </div>
 </a>
 
 <!-- NEXT TOURNAMENT CTA -->
 <div style="background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,215,0,0.04));border:1px solid rgba(255,215,0,0.35);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 0 30px rgba(255,215,0,0.08);">
   <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#FFFFFF;margin-bottom:4px;" id="next-cup-title">🚀 COPA NOSTALGIA II</div>
-  <div style="font-size:13px;color:#9AA5B4;margin-bottom:16px;" id="next-cup-sub">Join the next edition — spots fill up fast</div>
+  <div style="font-size:13px;color:#9AA5B4;margin-bottom:16px;" id="next-cup-sub">Únete a la próxima edición — los cupos se llenan rápido</div>
   <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
     <div style="flex:1;min-width:100px;background:rgba(0,0,0,0.3);border-radius:10px;padding:12px;text-align:center;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#FFD700;">📅</div>
-      <div style="font-size:11px;color:#4A5A6E;" id="next-cup-date">Date TBD</div>
+      <div style="font-size:11px;color:#4A5A6E;" id="next-cup-date">Fecha por confirmar</div>
     </div>
     <div style="flex:1;min-width:100px;background:rgba(0,0,0,0.3);border-radius:10px;padding:12px;text-align:center;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#FFD700;" id="next-cup-spots">0/16</div>
-      <div style="font-size:11px;color:#4A5A6E;" id="next-cup-spots-label">Spots taken</div>
+      <div style="font-size:11px;color:#4A5A6E;" id="next-cup-spots-label">Cupos ocupados</div>
     </div>
     <div style="flex:1;min-width:100px;background:rgba(0,0,0,0.3);border-radius:10px;padding:12px;text-align:center;">
       <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#FFD700;">💰</div>
-      <div style="font-size:11px;color:#4A5A6E;" id="next-cup-prize">PayPal prize</div>
+      <div style="font-size:11px;color:#4A5A6E;" id="next-cup-prize">Premio PayPal</div>
     </div>
   </div>
-  <button onclick="openSignupModal()" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000000;border:none;border-radius:12px;padding:16px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;box-shadow:0 4px 20px rgba(255,215,0,0.25);" id="next-cup-btn">⚡ RESERVE MY SPOT</button>
+  <button onclick="openSignupModal()" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000000;border:none;border-radius:12px;padding:16px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;box-shadow:0 4px 20px rgba(255,215,0,0.25);" id="next-cup-btn">⚡ RESERVAR MI LUGAR</button>
 </div>
 
 <!-- TOP TACTICS -->
 <div style="background:#0D0D0D;border:1px solid #1E2830;border-radius:20px;padding:20px;margin-bottom:16px;">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:#FFFFFF;" id="home-top-title">⭐ TOP TACTICS</div>
-    <button onclick="showScreen('ranking',document.getElementById('tab-ranking'));loadRankings();" style="background:none;border:1px solid #1E2830;color:#9AA5B4;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;" id="home-see-rankings">See all →</button>
+    <button onclick="showScreen('ranking',document.getElementById('tab-ranking'));loadRankings();" style="background:none;border:1px solid #1E2830;color:#9AA5B4;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;" id="home-see-rankings">Ver todas →</button>
   </div>
   <div id="home-top-tactics">
     <div style="font-size:13px;color:#4A5A6E;text-align:center;padding:20px;">Loading...</div>
@@ -647,7 +647,7 @@ footer strong { color:var(–green); }
 
 <div id="screen-detail" class="screen">
   <div class="detail-page">
-    <button class="back-btn" onclick="showScreen(previousScreen, document.getElementById('tab-' + previousScreen))" id="back-btn">← Back</button>
+    <button class="back-btn" onclick="showScreen(previousScreen, document.getElementById('tab-' + previousScreen))" id="back-btn">← Volver</button>
     <div class="detail-header">
       <div class="detail-formation" id="detail-formation"></div>
       <div style="flex:1;">
@@ -659,14 +659,14 @@ footer strong { color:var(–green); }
     <div class="detail-eff">
       <div class="detail-pct" id="detail-pct">0%</div>
       <div>
-        <div class="detail-eff-label" id="detail-eff-label">EFFECTIVENESS RATE</div>
+        <div class="detail-eff-label" id="detail-eff-label">EFECTIVIDAD</div>
         <div class="detail-eff-sub" id="detail-eff-sub"></div>
       </div>
     </div>
     <div class="detail-stats">
-      <div class="stat-box"><div class="stat-num" id="detail-votes-total">0</div><div class="stat-label" id="detail-total-label">Total Votes</div></div>
-      <div class="stat-box"><div class="stat-num yellow" id="detail-votes-yes">0</div><div class="stat-label" id="detail-works-label">👍 It Works</div></div>
-      <div class="stat-box"><div class="stat-num red" id="detail-votes-no">0</div><div class="stat-label" id="detail-didnt-label">👎 Didn't Work</div></div>
+      <div class="stat-box"><div class="stat-num" id="detail-votes-total">0</div><div class="stat-label" id="detail-total-label">Votos totales</div></div>
+      <div class="stat-box"><div class="stat-num yellow" id="detail-votes-yes">0</div><div class="stat-label" id="detail-works-label">👍 Funcionó</div></div>
+      <div class="stat-box"><div class="stat-num red" id="detail-votes-no">0</div><div class="stat-label" id="detail-didnt-label">👎 No funcionó</div></div>
     </div>
     <div id="detail-vs-section"><div id="detail-slider-info"></div></div>
     <div style="display:flex;gap:16px;margin-bottom:24px;">
@@ -691,8 +691,8 @@ footer strong { color:var(–green); }
             <div style="font-size:32px;margin-bottom:8px;">🏆</div>
             <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;margin-bottom:8px;" id="vote-reg-title">Your vote matters to the community</div>
             <div style="font-size:13px;color:var(--text-dim);margin-bottom:16px;" id="vote-reg-sub">Sign up free to vote. Your votes help managers find the best tactics.</div>
-            <button onclick="openAuth()" style="width:100%;background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;" id="vote-reg-btn">⚡ SIGN UP FREE</button>
-            <div style="margin-top:8px;font-size:12px;color:var(--text-dim);" id="vote-reg-note">Just your email. No spam. No credit card.</div>
+            <button onclick="openAuth()" style="width:100%;background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;" id="vote-reg-btn">⚡ REGISTRARME FREE</button>
+            <div style="margin-top:8px;font-size:12px;color:var(--text-dim);" id="vote-reg-note">Solo tu email. Sin spam. No credit card.</div>
             <span onclick="var s=document.getElementById('vote-step-register');var s1=document.getElementById('vote-step1');if(s)s.style.display='none';if(s1)s1.style.display='block';" style="font-size:12px;color:var(--text-dim);cursor:pointer;text-decoration:underline;" id="vote-register-back">Go back</span>
           </div>
           <div id="vote-step2" style="display:none;">
@@ -748,8 +748,8 @@ footer strong { color:var(–green); }
 
 <div id="screen-builder" class="screen">
   <div style="max-width:600px;margin:0 auto;padding:24px 16px;">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--text);margin-bottom:4px;" id="builder-title-main">⚽ FORMATION EXPLORER</div>
-    <div style="font-size:13px;color:var(--text-dim);margin-bottom:20px;" id="builder-sub">Select a formation to see its characteristics and official tactics</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--text);margin-bottom:4px;" id="builder-title-main">⚽ EXPLORADOR DE FORMACIONES</div>
+    <div style="font-size:13px;color:var(--text-dim);margin-bottom:20px;" id="builder-sub">Seleccioná una formación para ver sus características y tácticas oficiales</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:24px;" id="formation-explorer-grid"></div>
     <div id="formation-detail" style="display:none;">
       <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;">
@@ -764,7 +764,7 @@ footer strong { color:var(–green); }
           <div id="fe-pitch-players"></div>
         </div>
         <div style="border-top:1px solid var(--border);padding-top:12px;">
-          <div style="font-size:12px;font-weight:700;color:var(--text-dim);margin-bottom:8px;" id="fe-tactics-title">✦ OSM HUB OFFICIAL TACTICS</div>
+          <div style="font-size:12px;font-weight:700;color:var(--text-dim);margin-bottom:8px;" id="fe-tactics-title">✦ TÁCTICAS OFICIALES OSM HUB</div>
           <div id="fe-tactics-list" style="display:flex;flex-direction:column;gap:6px;"></div>
         </div>
       </div>
@@ -860,22 +860,22 @@ footer strong { color:var(–green); }
     <div style="position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(255,215,0,0.06) 0%,transparent 65%);pointer-events:none;"></div>
     <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:#FFD700;text-transform:uppercase;margin-bottom:8px;">Copa Nostalgia · Season 1</div>
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;letter-spacing:1px;margin-bottom:4px;">STATS <span style="color:#FFD700;">HUB</span></div>
-    <div style="font-size:13px;color:var(--text-mid);">Who's dominating the tournament?</div>
+    <div style="font-size:13px;color:var(--text-mid);">¿Quién domina el torneo?</div>
   </div>
   <div style="display:flex;border-bottom:1px solid rgba(255,215,0,0.1);background:var(--surface);overflow-x:auto;" id="stats-tab-bar">
-    <button class="stats-tab-btn active" onclick="switchStatsTab('s-overview',this)">📊 Overview</button>
-    <button class="stats-tab-btn" onclick="switchStatsTab('s-teams',this)">👥 Teams</button>
-    <button class="stats-tab-btn" onclick="switchStatsTab('s-compare',this)">⚖️ Compare</button>
-    <button class="stats-tab-btn" onclick="switchStatsTab('s-insights',this)">💡 Insights</button>
+    <button class="stats-tab-btn active" onclick="switchStatsTab('s-overview',this)">📊 Resumen</button>
+    <button class="stats-tab-btn" onclick="switchStatsTab('s-teams',this)">👥 Equipos</button>
+    <button class="stats-tab-btn" onclick="switchStatsTab('s-compare',this)">⚖️ Comparar</button>
+    <button class="stats-tab-btn" onclick="switchStatsTab('s-insights',this)">💡 Análisis</button>
   </div>
 
   <!-- OVERVIEW -->
 
   <div id="s-overview" class="stats-pane active" style="padding:16px;max-width:700px;margin:0 auto;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:14px;margin-top:4px;" id="stats-top-title">🏆 Top Performers</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:14px;margin-top:4px;" id="stats-top-title">🏆 Mejores del torneo</div>
     <!-- #1 -->
     <div style="background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,215,0,0.03));border:1px solid rgba(255,215,0,0.25);border-radius:20px;padding:20px;margin-bottom:10px;box-shadow:0 0 30px rgba(255,215,0,0.08);">
-      <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:#FFD700;margin-bottom:12px;"><span id="stats-dominant-badge">🔥 Dominant</span></div>
+      <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:#FFD700;margin-bottom:12px;"><span id="stats-dominant-badge">🔥 Dominante</span></div>
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
         <div style="display:flex;align-items:center;gap:12px;">
           <div style="font-size:26px;">🥇</div>
@@ -883,7 +883,7 @@ footer strong { color:var(–green); }
         </div>
         <div style="text-align:right;">
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:#FFD700;line-height:1;">13</div>
-          <div style="font-size:11px;color:var(--text-dim);" id="stats-shots-unit">shots / game</div>
+          <div style="font-size:11px;color:var(--text-dim);" id="stats-shots-unit">tiros / partido</div>
           <div style="font-size:12px;color:var(--text-mid);margin-top:2px;">📊 61.5% possession</div>
         </div>
       </div>
@@ -902,21 +902,21 @@ footer strong { color:var(–green); }
       </div>
     </div>
     <!-- AVG COMPARISON -->
-    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;" id="stats-avg-title">📈 Top Team vs League Average</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;" id="stats-avg-title">📈 Mejor equipo vs Promedio</div>
     <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:14px;padding:16px;margin-bottom:16px;">
       <div style="margin-bottom:14px;">
         <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;"><span id="stats-shots-label">Shots per game</span><div style="display:flex;gap:10px;"><span style="color:#FFD700;">● Arsenal</span><span>● Avg</span></div></div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="top" class="stats-avg-team-label">Arsenal</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#E6C200,#FFD700);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:#FFD700;min-width:36px;text-align:right;">13</span></div>
-        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="avg" class="stats-avg-team-label">League avg</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:70%;height:100%;background:rgba(255,255,255,0.15);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--text-dim);min-width:36px;text-align:right;">9.1</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="avg" class="stats-avg-team-label">Promedio liga</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:70%;height:100%;background:rgba(255,255,255,0.15);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--text-dim);min-width:36px;text-align:right;">9.1</span></div>
       </div>
       <div>
         <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;"><span id="stats-poss-label">Possession %</span><div style="display:flex;gap:10px;"><span style="color:#FFD700;">● Arsenal</span><span>● Avg</span></div></div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="top" class="stats-avg-team-label">Arsenal</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#E6C200,#FFD700);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:#FFD700;min-width:40px;text-align:right;">61.5%</span></div>
-        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="avg" class="stats-avg-team-label">League avg</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:81%;height:100%;background:rgba(255,255,255,0.15);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--text-dim);min-width:40px;text-align:right;">49.7%</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="avg" class="stats-avg-team-label">Promedio liga</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:81%;height:100%;background:rgba(255,255,255,0.15);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--text-dim);min-width:40px;text-align:right;">49.7%</span></div>
       </div>
     </div>
     <!-- INSIGHTS -->
-    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;" id="stats-insights-title">⚡ Quick Insights</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;" id="stats-insights-title">⚡ Puntos clave</div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
       <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">👑</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><span id="stats-i1"><strong style="color:var(--text);">Arsenal is dominating the tournament</strong> — leading in both shots and possession. No team is close.</span></span></div>
       <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">❌</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><span id="stats-i2"><strong style="color:var(--text);">Barcelona is the weakest team so far</strong> — only 5 shots/game and 37.5% possession.</span></span></div>
@@ -924,7 +924,7 @@ footer strong { color:var(–green); }
       <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">🌑</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><span id="stats-i4"><strong style="color:var(--text);">AC Milan is the dark horse</strong> — 11.5 shots and 60.5% possession. Quietly dangerous.</span></span></div>
     </div>
     <button onclick="switchStatsTab('s-compare',document.querySelectorAll('.stats-tab-btn')[2])" style="width:100%;background:linear-gradient(135deg,rgba(255,215,0,0.12),rgba(255,215,0,0.06));border:1px solid rgba(255,215,0,0.25);border-radius:12px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
-      <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:#FFD700;" id="stats-compare-cta">Compare any two teams →</span>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:#FFD700;" id="stats-compare-cta">Comparar dos equipos →</span>
       <span style="font-size:18px;">⚖️</span>
     </button>
   </div>
@@ -932,7 +932,7 @@ footer strong { color:var(–green); }
   <!-- TEAMS -->
 
   <div id="s-teams" class="stats-pane" style="padding:16px;max-width:700px;margin:0 auto;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;" id="stats-teams-title">All 16 Teams</div><div style="font-size:11px;color:var(--text-dim);" id="stats-sort-hint">Tap headers to sort</div></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;" id="stats-teams-title">Los 16 equipos</div><div style="font-size:11px;color:var(--text-dim);" id="stats-sort-hint">Tocá los títulos para ordenar</div></div>
     <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:14px;overflow:hidden;">
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;font-size:12px;">
@@ -951,7 +951,7 @@ footer strong { color:var(–green); }
   <!-- COMPARE -->
 
   <div id="s-compare" class="stats-pane" style="padding:16px;max-width:700px;margin:0 auto;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:14px;" id="stats-compare-title">Pick Two Teams</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:14px;" id="stats-compare-title">Elegí dos equipos</div>
     <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;margin-bottom:20px;align-items:center;">
       <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.15);border-radius:12px;">
         <select id="stats-team-a" onchange="updateStatsCompare()" style="width:100%;background:transparent;border:none;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;padding:12px 14px;outline:none;cursor:pointer;">
@@ -989,7 +989,7 @@ footer strong { color:var(–green); }
         </div>
       </div>
       <div style="background:linear-gradient(135deg,rgba(255,215,0,0.07),rgba(255,215,0,0.02));border:1px solid rgba(255,215,0,0.2);border-radius:14px;padding:16px;text-align:center;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:10px;" id="stats-verdict-label">📊 Statistical Verdict</div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:10px;" id="stats-verdict-label">📊 Veredicto estadístico</div>
         <div id="stats-verdict-text" style="font-size:14px;color:var(--text-mid);line-height:1.6;">Arsenal dominates Barcelona in every metric. It wouldn't even be close.</div>
       </div>
     </div>
@@ -998,14 +998,14 @@ footer strong { color:var(–green); }
   <!-- INSIGHTS -->
 
   <div id="s-insights" class="stats-pane" style="padding:16px;max-width:700px;margin:0 auto;">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFD700;margin:4px 0 10px;" id="stats-insights-page-title">🏆 Title Race</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFD700;margin:4px 0 10px;" id="stats-insights-page-title">🏆 Lucha por el título</div>
     <div style="border-left:3px solid #FFD700;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b1">Arsenal is running away with this tournament.</strong> They lead in shots (13/game) AND possession (61.5%). No team has both. That combination wins leagues.</div>
     <div style="border-left:3px solid #FFD700;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b2">Fenerbahce controls possession better than any team except Arsenal.</strong> 61% is elite. If they convert more chances, they're the biggest threat.</div>
     <div style="border-left:3px solid #FFD700;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:16px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b3">Boca Juniors doesn't need the ball.</strong> 12 shots on 49.5% possession — brutally efficient counter-attacking.</div>
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FF4D4D;margin-bottom:10px;" id="stats-risk-title">⚠️ Teams at Risk</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FF4D4D;margin-bottom:10px;" id="stats-risk-title">⚠️ Equipos en riesgo</div>
     <div style="border-left:3px solid #FF4D4D;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b4">Barcelona is in crisis.</strong> 5 shots. 37.5% possession. Worst numbers in the tournament — not even close.</div>
     <div style="border-left:3px solid #FF4D4D;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:16px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b5">River Plate and Galatasaray are barely competing.</strong> Both under 7 shots and 45% possession. Getting outplayed every game.</div>
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--text-dim);margin-bottom:10px;" id="stats-patterns-title">🔍 Tactical Patterns</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--text-dim);margin-bottom:10px;" id="stats-patterns-title">🔍 Patrones tácticos</div>
     <div style="border-left:3px solid var(--text-dim);border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b6">Counter-attack kings:</strong> Boca Juniors and Benfica generate high shots despite below-average possession. Speed over control — and it's working.</div>
     <div style="border-left:3px solid var(--text-dim);border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b7">The quiet middle:</strong> Ajax and Bayern sit in the middle of every metric. Competitive, not dominant.</div>
   </div>
@@ -1075,7 +1075,7 @@ footer strong { color:var(–green); }
 <!-- Not logged in -->
 <div id="h2h-login-prompt" style="display:none;text-align:center;padding:40px 20px;background:var(--surface);border:1px solid var(--border);border-radius:16px;">
   <div style="font-size:36px;margin-bottom:12px;">⚔️</div>
-  <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--text);margin-bottom:8px;" id="h2h-login-title">Sign in to see your H2H</div>
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--text);margin-bottom:8px;" id="h2h-login-title">Iniciar sesión to see your H2H</div>
   <div style="font-size:13px;color:var(--text-dim);margin-bottom:20px;" id="h2h-login-sub">Keep track of your matches against other managers</div>
   <button onclick="openAuth()" style="background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:12px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="h2h-login-btn">⚡ SIGN IN</button>
 </div>
@@ -1147,22 +1147,22 @@ footer strong { color:var(–green); }
     <div style="position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(255,215,0,0.06) 0%,transparent 65%);pointer-events:none;"></div>
     <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:#FFD700;text-transform:uppercase;margin-bottom:8px;">Copa Nostalgia · Season 1</div>
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;letter-spacing:1px;margin-bottom:4px;">STATS <span style="color:#FFD700;">HUB</span></div>
-    <div style="font-size:13px;color:var(--text-mid);">Who's dominating the tournament?</div>
+    <div style="font-size:13px;color:var(--text-mid);">¿Quién domina el torneo?</div>
   </div>
   <div style="display:flex;border-bottom:1px solid rgba(255,215,0,0.1);background:var(--surface);overflow-x:auto;" id="stats-tab-bar">
-    <button class="stats-tab-btn active" onclick="switchStatsTab('s-overview',this)">📊 Overview</button>
-    <button class="stats-tab-btn" onclick="switchStatsTab('s-teams',this)">👥 Teams</button>
-    <button class="stats-tab-btn" onclick="switchStatsTab('s-compare',this)">⚖️ Compare</button>
-    <button class="stats-tab-btn" onclick="switchStatsTab('s-insights',this)">💡 Insights</button>
+    <button class="stats-tab-btn active" onclick="switchStatsTab('s-overview',this)">📊 Resumen</button>
+    <button class="stats-tab-btn" onclick="switchStatsTab('s-teams',this)">👥 Equipos</button>
+    <button class="stats-tab-btn" onclick="switchStatsTab('s-compare',this)">⚖️ Comparar</button>
+    <button class="stats-tab-btn" onclick="switchStatsTab('s-insights',this)">💡 Análisis</button>
   </div>
 
   <!-- OVERVIEW -->
 
   <div id="s-overview" class="stats-pane active" style="padding:16px;max-width:700px;margin:0 auto;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:14px;margin-top:4px;" id="stats-top-title">🏆 Top Performers</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:14px;margin-top:4px;" id="stats-top-title">🏆 Mejores del torneo</div>
     <!-- #1 -->
     <div style="background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,215,0,0.03));border:1px solid rgba(255,215,0,0.25);border-radius:20px;padding:20px;margin-bottom:10px;box-shadow:0 0 30px rgba(255,215,0,0.08);">
-      <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:#FFD700;margin-bottom:12px;"><span id="stats-dominant-badge">🔥 Dominant</span></div>
+      <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:#FFD700;margin-bottom:12px;"><span id="stats-dominant-badge">🔥 Dominante</span></div>
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
         <div style="display:flex;align-items:center;gap:12px;">
           <div style="font-size:26px;">🥇</div>
@@ -1170,7 +1170,7 @@ footer strong { color:var(–green); }
         </div>
         <div style="text-align:right;">
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:#FFD700;line-height:1;">13</div>
-          <div style="font-size:11px;color:var(--text-dim);" id="stats-shots-unit">shots / game</div>
+          <div style="font-size:11px;color:var(--text-dim);" id="stats-shots-unit">tiros / partido</div>
           <div style="font-size:12px;color:var(--text-mid);margin-top:2px;">📊 61.5% possession</div>
         </div>
       </div>
@@ -1189,21 +1189,21 @@ footer strong { color:var(–green); }
       </div>
     </div>
     <!-- AVG COMPARISON -->
-    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;" id="stats-avg-title">📈 Top Team vs League Average</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;" id="stats-avg-title">📈 Mejor equipo vs Promedio</div>
     <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:14px;padding:16px;margin-bottom:16px;">
       <div style="margin-bottom:14px;">
         <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;"><span id="stats-shots-label">Shots per game</span><div style="display:flex;gap:10px;"><span style="color:#FFD700;">● Arsenal</span><span>● Avg</span></div></div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="top" class="stats-avg-team-label">Arsenal</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#E6C200,#FFD700);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:#FFD700;min-width:36px;text-align:right;">13</span></div>
-        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="avg" class="stats-avg-team-label">League avg</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:70%;height:100%;background:rgba(255,255,255,0.15);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--text-dim);min-width:36px;text-align:right;">9.1</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="avg" class="stats-avg-team-label">Promedio liga</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:70%;height:100%;background:rgba(255,255,255,0.15);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--text-dim);min-width:36px;text-align:right;">9.1</span></div>
       </div>
       <div>
         <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;"><span id="stats-poss-label">Possession %</span><div style="display:flex;gap:10px;"><span style="color:#FFD700;">● Arsenal</span><span>● Avg</span></div></div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="top" class="stats-avg-team-label">Arsenal</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#E6C200,#FFD700);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:#FFD700;min-width:40px;text-align:right;">61.5%</span></div>
-        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="avg" class="stats-avg-team-label">League avg</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:81%;height:100%;background:rgba(255,255,255,0.15);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--text-dim);min-width:40px;text-align:right;">49.7%</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="avg" class="stats-avg-team-label">Promedio liga</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:81%;height:100%;background:rgba(255,255,255,0.15);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--text-dim);min-width:40px;text-align:right;">49.7%</span></div>
       </div>
     </div>
     <!-- INSIGHTS -->
-    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;" id="stats-insights-title">⚡ Quick Insights</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;" id="stats-insights-title">⚡ Puntos clave</div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
       <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">👑</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><span id="stats-i1"><strong style="color:var(--text);">Arsenal is dominating the tournament</strong> — leading in both shots and possession. No team is close.</span></span></div>
       <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">❌</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><span id="stats-i2"><strong style="color:var(--text);">Barcelona is the weakest team so far</strong> — only 5 shots/game and 37.5% possession.</span></span></div>
@@ -1211,7 +1211,7 @@ footer strong { color:var(–green); }
       <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">🌑</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><span id="stats-i4"><strong style="color:var(--text);">AC Milan is the dark horse</strong> — 11.5 shots and 60.5% possession. Quietly dangerous.</span></span></div>
     </div>
     <button onclick="switchStatsTab('s-compare',document.querySelectorAll('.stats-tab-btn')[2])" style="width:100%;background:linear-gradient(135deg,rgba(255,215,0,0.12),rgba(255,215,0,0.06));border:1px solid rgba(255,215,0,0.25);border-radius:12px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
-      <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:#FFD700;" id="stats-compare-cta">Compare any two teams →</span>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:#FFD700;" id="stats-compare-cta">Comparar dos equipos →</span>
       <span style="font-size:18px;">⚖️</span>
     </button>
   </div>
@@ -1219,7 +1219,7 @@ footer strong { color:var(–green); }
   <!-- TEAMS -->
 
   <div id="s-teams" class="stats-pane" style="padding:16px;max-width:700px;margin:0 auto;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;" id="stats-teams-title">All 16 Teams</div><div style="font-size:11px;color:var(--text-dim);" id="stats-sort-hint">Tap headers to sort</div></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;" id="stats-teams-title">Los 16 equipos</div><div style="font-size:11px;color:var(--text-dim);" id="stats-sort-hint">Tocá los títulos para ordenar</div></div>
     <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:14px;overflow:hidden;">
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;font-size:12px;">
@@ -1238,7 +1238,7 @@ footer strong { color:var(–green); }
   <!-- COMPARE -->
 
   <div id="s-compare" class="stats-pane" style="padding:16px;max-width:700px;margin:0 auto;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:14px;" id="stats-compare-title">Pick Two Teams</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:14px;" id="stats-compare-title">Elegí dos equipos</div>
     <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;margin-bottom:20px;align-items:center;">
       <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.15);border-radius:12px;">
         <select id="stats-team-a" onchange="updateStatsCompare()" style="width:100%;background:transparent;border:none;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;padding:12px 14px;outline:none;cursor:pointer;">
@@ -1276,7 +1276,7 @@ footer strong { color:var(–green); }
         </div>
       </div>
       <div style="background:linear-gradient(135deg,rgba(255,215,0,0.07),rgba(255,215,0,0.02));border:1px solid rgba(255,215,0,0.2);border-radius:14px;padding:16px;text-align:center;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:10px;" id="stats-verdict-label">📊 Statistical Verdict</div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:10px;" id="stats-verdict-label">📊 Veredicto estadístico</div>
         <div id="stats-verdict-text" style="font-size:14px;color:var(--text-mid);line-height:1.6;">Arsenal dominates Barcelona in every metric. It wouldn't even be close.</div>
       </div>
     </div>
@@ -1285,14 +1285,14 @@ footer strong { color:var(–green); }
   <!-- INSIGHTS -->
 
   <div id="s-insights" class="stats-pane" style="padding:16px;max-width:700px;margin:0 auto;">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFD700;margin:4px 0 10px;" id="stats-insights-page-title">🏆 Title Race</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFD700;margin:4px 0 10px;" id="stats-insights-page-title">🏆 Lucha por el título</div>
     <div style="border-left:3px solid #FFD700;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b1">Arsenal is running away with this tournament.</strong> They lead in shots (13/game) AND possession (61.5%). No team has both. That combination wins leagues.</div>
     <div style="border-left:3px solid #FFD700;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b2">Fenerbahce controls possession better than any team except Arsenal.</strong> 61% is elite. If they convert more chances, they're the biggest threat.</div>
     <div style="border-left:3px solid #FFD700;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:16px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b3">Boca Juniors doesn't need the ball.</strong> 12 shots on 49.5% possession — brutally efficient counter-attacking.</div>
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FF4D4D;margin-bottom:10px;" id="stats-risk-title">⚠️ Teams at Risk</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FF4D4D;margin-bottom:10px;" id="stats-risk-title">⚠️ Equipos en riesgo</div>
     <div style="border-left:3px solid #FF4D4D;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b4">Barcelona is in crisis.</strong> 5 shots. 37.5% possession. Worst numbers in the tournament — not even close.</div>
     <div style="border-left:3px solid #FF4D4D;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:16px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b5">River Plate and Galatasaray are barely competing.</strong> Both under 7 shots and 45% possession. Getting outplayed every game.</div>
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--text-dim);margin-bottom:10px;" id="stats-patterns-title">🔍 Tactical Patterns</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--text-dim);margin-bottom:10px;" id="stats-patterns-title">🔍 Patrones tácticos</div>
     <div style="border-left:3px solid var(--text-dim);border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b6">Counter-attack kings:</strong> Boca Juniors and Benfica generate high shots despite below-average possession. Speed over control — and it's working.</div>
     <div style="border-left:3px solid var(--text-dim);border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b7">The quiet middle:</strong> Ajax and Bayern sit in the middle of every metric. Competitive, not dominant.</div>
   </div>
@@ -1362,7 +1362,7 @@ footer strong { color:var(–green); }
 <!-- Not logged in -->
 <div id="h2h-login-prompt" style="display:none;text-align:center;padding:40px 20px;background:var(--surface);border:1px solid var(--border);border-radius:16px;">
   <div style="font-size:36px;margin-bottom:12px;">⚔️</div>
-  <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--text);margin-bottom:8px;" id="h2h-login-title">Sign in to see your H2H</div>
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--text);margin-bottom:8px;" id="h2h-login-title">Iniciar sesión to see your H2H</div>
   <div style="font-size:13px;color:var(--text-dim);margin-bottom:20px;" id="h2h-login-sub">Keep track of your matches against other managers</div>
   <button onclick="openAuth()" style="background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:12px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="h2h-login-btn">⚡ SIGN IN</button>
 </div>
@@ -1514,7 +1514,7 @@ footer strong { color:var(–green); }
 <!-- Participants collapsed -->
 <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">
   <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="var p=document.getElementById('participants-list');var btn=document.getElementById('participants-toggle');if(p.style.display==='none'){p.style.display='flex';btn.textContent='▲';}else{p.style.display='none';btn.textContent='▼';}">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);" id="tournament-participants-title">👥 PARTICIPANTS (16/16)</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);" id="tournament-participants-title">👥 PARTICIPANTES (16/16)</div>
     <span id="participants-toggle" style="color:var(--text-dim);font-size:14px;">▼</span>
   </div>
   <div style="display:none;flex-direction:column;gap:8px;margin-top:12px;" id="participants-list">
@@ -1573,15 +1573,15 @@ footer strong { color:var(–green); }
 <!-- Comment to join next cup -->
 <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">
   <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px;" id="tournament-comment-title">💬 WANT TO JOIN THE NEXT ONE?</div>
-  <div style="font-size:13px;color:var(--text-dim);margin-bottom:12px;" id="tournament-comment-sub">Leave your OSM username to be considered for Copa Nostalgia II</div>
+  <div style="font-size:13px;color:var(--text-dim);margin-bottom:12px;" id="tournament-comment-sub">Dejá tu usuario de OSM para la Copa Nostalgia II</div>
   <div id="tournament-comment-logged" style="display:none;">
-    <textarea id="tournament-comment-input" placeholder="Write your OSM username..." style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;resize:none;height:70px;margin-bottom:8px;box-sizing:border-box;"></textarea>
-    <button onclick="submitTournamentComment()" style="width:100%;background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="tournament-comment-btn">✅ LEAVE MY USERNAME</button>
+    <textarea id="tournament-comment-input" placeholder="Escribí tu usuario de OSM..." style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;resize:none;height:70px;margin-bottom:8px;box-sizing:border-box;"></textarea>
+    <button onclick="submitTournamentComment()" style="width:100%;background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="tournament-comment-btn">✅ DEJAR MI USUARIO</button>
     <div id="tournament-comment-msg" style="text-align:center;font-size:13px;margin-top:8px;"></div>
   </div>
   <div id="tournament-comment-guest" style="display:none;text-align:center;">
-    <div style="font-size:13px;color:var(--text-dim);margin-bottom:10px;" id="tournament-comment-login-msg">Sign up to leave your username</div>
-    <button onclick="openAuth()" style="background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:10px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="tournament-comment-login-btn">⚡ SIGN UP</button>
+    <div style="font-size:13px;color:var(--text-dim);margin-bottom:10px;" id="tournament-comment-login-msg">Registrate para dejar tu usuario</div>
+    <button onclick="openAuth()" style="background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:10px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="tournament-comment-login-btn">⚡ REGISTRARME</button>
   </div>
   <div id="tournament-comments-list" style="margin-top:14px;display:flex;flex-direction:column;gap:6px;"></div>
 </div>
@@ -1617,7 +1617,7 @@ footer strong { color:var(–green); }
 </div>
 
 <footer>
-  <p id="footer-text"><strong>OSM Hub</strong> · Fan-made tactic platform · Not affiliated with GameBasics or OSM</p>
+  <p id="footer-text"><strong>OSM Hub</strong> · Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1802,7 +1802,7 @@ footer strong { color:var(–green); }
     var feType = document.getElementById('fe-formation-type'); if(feType) feType.textContent = data.type || '';
     var feProsTitle = document.getElementById('fe-pros-title'); if(feProsTitle) feProsTitle.textContent = es ? '✅ VENTAJAS' : '✅ STRENGTHS';
     var feConsTitle = document.getElementById('fe-cons-title'); if(feConsTitle) feConsTitle.textContent = es ? '❌ DESVENTAJAS' : '❌ WEAKNESSES';
-    var feTacticsTitle = document.getElementById('fe-tactics-title'); if(feTacticsTitle) feTacticsTitle.textContent = es ? '✦ TÁCTICAS OFICIALES OSM HUB' : '✦ OSM HUB OFFICIAL TACTICS';
+    var feTacticsTitle = document.getElementById('fe-tactics-title'); if(feTacticsTitle) feTacticsTitle.textContent = es ? '✦ TÁCTICAS OFICIALES OSM HUB' : '✦ TÁCTICAS OFICIALES OSM HUB';
     var fePros = document.getElementById('fe-pros'); if(fePros) fePros.innerHTML = data.pros.map(function(p) { return '• ' + p; }).join('<br>');
     var feCons = document.getElementById('fe-cons'); if(feCons) feCons.innerHTML = data.cons.map(function(c) { return '• ' + c; }).join('<br>');
     var pitchEl = document.getElementById('fe-pitch-players');
@@ -1909,21 +1909,21 @@ footer strong { color:var(–green); }
     document.body.style.overflow = 'hidden';
     // Translations
     document.getElementById('signup-modal-title').textContent = 'COPA NOSTALGIA II';
-    document.getElementById('signup-modal-sub').textContent = es ? 'Dejá tu usuario de OSM y reservá tu lugar' : 'Leave your OSM username and reserve your spot';
-    document.getElementById('rules-title').textContent = es ? '📋 REGLAS DEL TORNEO' : '📋 TOURNAMENT RULES';
-    document.getElementById('rules-1').textContent = es ? 'Liga Estrellas de Clubes' : 'Club Stars League';
-    document.getElementById('rules-2').textContent = es ? 'Sin timers' : 'No timers';
-    document.getElementById('rules-3').textContent = es ? 'Sin campus' : 'No campus';
-    document.getElementById('rules-4').textContent = es ? 'Sin entrenamiento secreto' : 'No secret training';
-    document.getElementById('rules-5').textContent = es ? 'Premio al ganador' : 'Prize for the winner';
-    document.getElementById('signup-modal-btn').textContent = es ? '✅ RESERVAR MI LUGAR' : '✅ RESERVE MY SPOT';
-    var osmInput = document.getElementById('signup-osm-input'); if(osmInput) osmInput.placeholder = es ? 'ej: hola123' : 'e.g. hola123';
-    document.getElementById('signup-modal-login-btn').textContent = es ? '⚡ CREAR CUENTA GRATIS' : '⚡ CREATE FREE ACCOUNT';
-    document.getElementById('signup-modal-login-note').textContent = es ? 'Solo tu email. Sin spam.' : 'Just your email. No spam.';
-    document.getElementById('signup-modal-login-msg').textContent = es ? 'Necesitás una cuenta para anotarte' : 'You need an account to sign up';
+    document.getElementById('signup-modal-sub').textContent = es ? 'Dejá tu usuario de OSM y reservá tu lugar' : 'Dejá tu usuario de OSM y reservá tu lugar';
+    document.getElementById('rules-title').textContent = es ? '📋 REGLAS DEL TORNEO' : '📋 REGLAS DEL TORNEO';
+    document.getElementById('rules-1').textContent = es ? 'Liga Estrellas de Clubes' : 'Liga Estrellas de Clubes';
+    document.getElementById('rules-2').textContent = es ? 'Sin timers' : 'Sin timers';
+    document.getElementById('rules-3').textContent = es ? 'Sin campus' : 'Sin campus';
+    document.getElementById('rules-4').textContent = es ? 'Sin entrenamiento secreto' : 'Sin entrenamiento secreto';
+    document.getElementById('rules-5').textContent = es ? 'Premio al ganador' : 'Premio al ganador';
+    document.getElementById('signup-modal-btn').textContent = es ? '✅ RESERVAR MI LUGAR' : '✅ RESERVAR MI LUGAR';
+    var osmInput = document.getElementById('signup-osm-input'); if(osmInput) osmInput.placeholder = es ? 'ej: hola123' : 'ej: hola123';
+    document.getElementById('signup-modal-login-btn').textContent = es ? '⚡ CREAR CUENTA GRATIS' : '⚡ CREAR CUENTA GRATIS';
+    document.getElementById('signup-modal-login-note').textContent = es ? 'Solo tu email. Sin spam.' : 'Solo tu email. Sin spam.';
+    document.getElementById('signup-modal-login-msg').textContent = es ? 'Necesitás una cuenta para anotarte' : 'Necesitás una cuenta para anotarte';
     document.getElementById('signup-success-title').textContent = es ? '¡Estás anotado!' : 'You\'re in!';
     document.getElementById('signup-success-sub').textContent = es ? 'Te avisaremos cuando empiece la Copa Nostalgia II.' : 'We\'ll notify you when Copa Nostalgia II starts.';
-    document.getElementById('signup-close-btn').textContent = es ? 'Cerrar' : 'Close';
+    document.getElementById('signup-close-btn').textContent = es ? 'Cerrar' : 'Cerrar';
     // Get spots count
     var signups = await db.from('tournament_signups').select('id').eq('tournament', 'copa-nostalgia-2');
     var count = (signups.data && signups.data.length) ? signups.data.length : 0;
@@ -1975,7 +1975,7 @@ footer strong { color:var(–green); }
     if (res.error) {
       msg.textContent = es ? 'Error. Intentá de nuevo.' : 'Error. Please try again.';
       msg.style.color = 'var(--red)';
-      btn.textContent = es ? '✅ RESERVAR MI LUGAR' : '✅ RESERVE MY SPOT';
+      btn.textContent = es ? '✅ RESERVAR MI LUGAR' : '✅ RESERVAR MI LUGAR';
       return;
     }
     document.getElementById('signup-modal-logged').style.display = 'none';
@@ -1983,7 +1983,7 @@ footer strong { color:var(–green); }
     loadHomeScreen();
   }
 
-  // Close modal on backdrop click
+  // Cerrar modal on backdrop click
   document.getElementById('signup-modal').addEventListener('click', function(e) {
     if (e.target === this) closeSignupModal();
   });
@@ -2074,7 +2074,7 @@ footer strong { color:var(–green); }
     }
     var vEl=document.getElementById('stats-verdict-text'); if(vEl) vEl.innerHTML=v;
     // Update verdict label
-    var vlEl=document.getElementById('stats-verdict-label'); if(vlEl) vlEl.textContent=es?'📊 Veredicto estadístico':'📊 Statistical Verdict';
+    var vlEl=document.getElementById('stats-verdict-label'); if(vlEl) vlEl.textContent=es?'📊 Veredicto estadístico':'📊 Veredicto estadístico';
   }
   function applyStatsTranslations() {
     var es = currentLang === 'es';
@@ -2082,27 +2082,27 @@ footer strong { color:var(–green); }
     var statsHeader = document.querySelector('#screen-stats .stats-pane.active');
     // Tabs
     var tabBtns = document.querySelectorAll('.stats-tab-btn');
-    if(tabBtns[0]) tabBtns[0].textContent = es ? '📊 Resumen' : '📊 Overview';
-    if(tabBtns[1]) tabBtns[1].textContent = es ? '👥 Equipos' : '👥 Teams';
-    if(tabBtns[2]) tabBtns[2].textContent = es ? '⚖️ Comparar' : '⚖️ Compare';
-    if(tabBtns[3]) tabBtns[3].textContent = es ? '💡 Análisis' : '💡 Insights';
+    if(tabBtns[0]) tabBtns[0].textContent = es ? '📊 Resumen' : '📊 Resumen';
+    if(tabBtns[1]) tabBtns[1].textContent = es ? '👥 Equipos' : '👥 Equipos';
+    if(tabBtns[2]) tabBtns[2].textContent = es ? '⚖️ Comparar' : '⚖️ Comparar';
+    if(tabBtns[3]) tabBtns[3].textContent = es ? '💡 Análisis' : '💡 Análisis';
     // Overview labels
     var els = {
-      'stats-top-title': [es?'🏆 Mejores del torneo':'🏆 Top Performers'],
-      'stats-avg-title': [es?'📈 Mejor equipo vs Promedio':'📈 Top Team vs League Average'],
-      'stats-insights-title': [es?'⚡ Puntos clave':'⚡ Quick Insights'],
-      'stats-compare-cta': [es?'Comparar dos equipos →':'Compare any two teams →'],
-      'stats-teams-title': [es?'Los 16 equipos':'All 16 Teams'],
-      'stats-sort-hint': [es?'Toca los títulos para ordenar':'Tap headers to sort'],
-      'stats-compare-title': [es?'Elegí dos equipos':'Pick Two Teams'],
+      'stats-top-title': [es?'🏆 Mejores del torneo':'🏆 Mejores del torneo'],
+      'stats-avg-title': [es?'📈 Mejor equipo vs Promedio':'📈 Mejor equipo vs Promedio'],
+      'stats-insights-title': [es?'⚡ Puntos clave':'⚡ Puntos clave'],
+      'stats-compare-cta': [es?'Comparar dos equipos →':'Comparar dos equipos →'],
+      'stats-teams-title': [es?'Los 16 equipos':'Los 16 equipos'],
+      'stats-sort-hint': [es?'Toca los títulos para ordenar':'Tocá los títulos para ordenar'],
+      'stats-compare-title': [es?'Elegí dos equipos':'Elegí dos equipos'],
       'stats-shots-label': [es?'Tiros por partido':'Shots per game'],
       'stats-poss-label': [es?'Posesión %':'Possession %'],
-      'stats-verdict-label': [es?'📊 Veredicto estadístico':'📊 Statistical Verdict'],
-      'stats-insights-page-title': [es?'🏆 Lucha por el título':'🏆 Title Race'],
-      'stats-risk-title': [es?'⚠️ Equipos en riesgo':'⚠️ Teams at Risk'],
-      'stats-patterns-title': [es?'🔍 Patrones tácticos':'🔍 Tactical Patterns'],
-      'stats-dominant-badge': [es?'🔥 Dominante':'🔥 Dominant'],
-      'stats-shots-unit': [es?'tiros / partido':'shots / game'],
+      'stats-verdict-label': [es?'📊 Veredicto estadístico':'📊 Veredicto estadístico'],
+      'stats-insights-page-title': [es?'🏆 Lucha por el título':'🏆 Lucha por el título'],
+      'stats-risk-title': [es?'⚠️ Equipos en riesgo':'⚠️ Equipos en riesgo'],
+      'stats-patterns-title': [es?'🔍 Patrones tácticos':'🔍 Patrones tácticos'],
+      'stats-dominant-badge': [es?'🔥 Dominantee':'🔥 Dominante'],
+      'stats-shots-unit': [es?'tiros / partido':'tiros / partido'],
       'stats-i1': [es?'<strong style="color:var(--text);">Arsenal domina el torneo</strong> — lidera en tiros y posesión. Ningún equipo se le acerca.':'<strong style="color:var(--text);">Arsenal is dominating the tournament</strong> — leading in both shots and possession. No team is close.'],
       'stats-i2': [es?'<strong style="color:var(--text);">Barcelona es el equipo más débil</strong> — solo 5 tiros por partido y 37.5% de posesión.':'<strong style="color:var(--text);">Barcelona is the weakest team so far</strong> — only 5 shots/game and 37.5% possession.'],
       'stats-i3': [es?'<strong style="color:var(--text);">Boca Juniors no necesita la pelota para anotar</strong> — 12 tiros con menos del 50% de posesión.':'<strong style="color:var(--text);">Boca Juniors doesn\'t need the ball to score</strong> — 12 shots with under 50% possession.'],
@@ -2128,7 +2128,7 @@ footer strong { color:var(–green); }
     for(var bid in blocks) {
       var bel = document.getElementById(bid); if(bel) bel.textContent = blocks[bid];
     }
-    avgLabels.forEach(function(l){ if(l.dataset.key==='top') l.textContent='Arsenal'; if(l.dataset.key==='avg') l.textContent=es?'Promedio liga':'League avg'; });
+    avgLabels.forEach(function(l){ if(l.dataset.key==='top') l.textContent='Arsenal'; if(l.dataset.key==='avg') l.textContent=es?'Promedio liga':'Promedio liga'; });
     updateStatsCompare();
   }
 
@@ -2155,37 +2155,37 @@ footer strong { color:var(–green); }
     var es = currentLang === 'es';
     // Update hero translations
     var heroTitle = document.getElementById('hero-title');
-    if(heroTitle) heroTitle.textContent = es ? 'Compite en torneos de OSM y demuestra que sos el mejor manager' : 'Compete in OSM tournaments and prove you are the best manager';
+    if(heroTitle) heroTitle.textContent = es ? 'Compite en torneos de OSM y demuestra que sos el mejor manager' : 'Compite en torneos de OSM y demostrá que sos el mejor manager';
     var heroSub = document.getElementById('hero-sub');
-    if(heroSub) heroSub.textContent = es ? 'Únete gratis, gana premios y enfréntate a jugadores reales' : 'Join free, win prizes and face real players';
+    if(heroSub) heroSub.textContent = es ? 'Únete gratis, gana premios y enfréntate a jugadores reales' : 'Unite gratis, ganá premios y enfrentate a jugadores reales';
     var heroPrimary = document.getElementById('hero-btn-primary');
-    if(heroPrimary) heroPrimary.textContent = es ? '⚡ ENTRAR AL PRÓXIMO TORNEO' : '⚡ JOIN THE NEXT TOURNAMENT';
+    if(heroPrimary) heroPrimary.textContent = es ? '⚡ ENTRAR AL PRÓXIMO TORNEO' : '⚡ ENTRAR AL PRÓXIMO TORNEO';
     var heroSecondary = document.getElementById('hero-btn-secondary');
-    if(heroSecondary) heroSecondary.textContent = es ? 'Ver resultados →' : 'See results →';
+    if(heroSecondary) heroSecondary.textContent = es ? 'Ver resultados →' : 'Ver resultados →';
     var heroProof = document.getElementById('hero-social-proof');
-    if(heroProof) heroProof.textContent = es ? '+500 managers ya compitiendo' : '+500 managers already competing';
+    if(heroProof) heroProof.textContent = es ? '+500 managers ya compitiendo' : '+500 managers ya compitiendo';
     var copaStatus = document.getElementById('copa-status-badge');
-    if(copaStatus) copaStatus.textContent = es ? '🔴 EN JUEGO' : '🔴 LIVE';
+    if(copaStatus) copaStatus.textContent = es ? '🔴 EN JUEGO' : '🔴 EN JUEGO';
     var top4Label = document.getElementById('home-top4-label');
     if(top4Label) top4Label.textContent = es ? 'TOP 4' : 'TOP 4';
     var resultsLabel = document.getElementById('home-results-label');
-    if(resultsLabel) resultsLabel.textContent = es ? 'ÚLTIMOS RESULTADOS' : 'LATEST RESULTS';
+    if(resultsLabel) resultsLabel.textContent = es ? 'ÚLTIMOS RESULTADOS' : 'ÚLTIMOS RESULTADOS';
     var nextCupTitle = document.getElementById('next-cup-title');
     if(nextCupTitle) nextCupTitle.textContent = es ? '🚀 COPA NOSTALGIA II' : '🚀 COPA NOSTALGIA II';
     var nextCupSub = document.getElementById('next-cup-sub');
-    if(nextCupSub) nextCupSub.textContent = es ? 'Únete a la próxima edición — los cupos se llenan rápido' : 'Join the next edition — spots fill up fast';
+    if(nextCupSub) nextCupSub.textContent = es ? 'Únete a la próxima edición — los cupos se llenan rápido' : 'Únete a la próxima edición — los cupos se llenan rápido';
     var nextCupBtn = document.getElementById('next-cup-btn');
-    if(nextCupBtn) nextCupBtn.textContent = es ? '⚡ RESERVAR MI LUGAR' : '⚡ RESERVE MY SPOT';
+    if(nextCupBtn) nextCupBtn.textContent = es ? '⚡ RESERVAR MI LUGAR' : '⚡ RESERVAR MI LUGAR';
     var nextCupDate = document.getElementById('next-cup-date');
-    if(nextCupDate) nextCupDate.textContent = es ? 'Fecha por confirmar' : 'Date TBD';
+    if(nextCupDate) nextCupDate.textContent = es ? 'Fecha por confirmar' : 'Fecha por confirmar';
     var nextCupPrize = document.getElementById('next-cup-prize');
-    if(nextCupPrize) nextCupPrize.textContent = es ? 'Premio PayPal' : 'PayPal prize';
+    if(nextCupPrize) nextCupPrize.textContent = es ? 'Premio PayPal' : 'Premio PayPal';
     var statsTitle = document.getElementById('stats-hub-title'); if(statsTitle) statsTitle.textContent = 'STATS HUB';
-    var statsSub = document.getElementById('stats-hub-sub'); if(statsSub) statsSub.textContent = es ? 'Descubre qué equipos dominan el torneo' : 'Find out which teams are dominating';
-    var statsBadge = document.getElementById('stats-hub-badge'); if(statsBadge) statsBadge.textContent = es ? '🏆 Arsenal lidera en tiros y posesión' : '🏆 Arsenal leads in shots & possession';
-    var statsCta = document.getElementById('stats-hub-cta'); if(statsCta) statsCta.textContent = es ? 'Ver stats →' : 'See stats →';
+    var statsSub = document.getElementById('stats-hub-sub'); if(statsSub) statsSub.textContent = es ? 'Descubre qué equipos dominan el torneo' : 'Descubrí qué equipos dominan el torneo';
+    var statsBadge = document.getElementById('stats-hub-badge'); if(statsBadge) statsBadge.textContent = es ? '🏆 Arsenal lidera en tiros y posesión' : '🏆 Arsenal lidera en tiros y posesión';
+    var statsCta = document.getElementById('stats-hub-cta'); if(statsCta) statsCta.textContent = es ? 'Ver stats →' : 'Ver stats →';
     var seeTournament = document.getElementById('home-see-tournament');
-    if(seeTournament) seeTournament.textContent = es ? 'Ver tabla →' : 'See table →';
+    if(seeTournament) seeTournament.textContent = es ? 'Ver tabla →' : 'Ver tabla →';
     // Load signups count for next cup
     var spotsEl = document.getElementById('next-cup-spots');
     var spotsLabel = document.getElementById('next-cup-spots-label');
@@ -2193,7 +2193,7 @@ footer strong { color:var(–green); }
       var signups = await db.from('tournament_signups').select('id').eq('tournament', 'copa-nostalgia-2');
       var count = (signups.data && signups.data.length) ? signups.data.length : 0;
       spotsEl.textContent = count + '/16';
-      if(spotsLabel) spotsLabel.textContent = es ? 'Cupos ocupados' : 'Spots taken';
+      if(spotsLabel) spotsLabel.textContent = es ? 'Cupos ocupados' : 'Cupos ocupados';
     }
     renderCopaResults();
     updateBanner();
@@ -2206,7 +2206,7 @@ footer strong { color:var(–green); }
     var seeTournament = document.getElementById('home-see-tournament');
     if(seeTournament) seeTournament.textContent = es ? 'Ver torneo →' : 'See tournament →';
     if (!container) return;
-    var jornada = es ? 'JORNADA 2' : 'ROUND 2';
+    var jornada = es ? 'JORNADA 2' : 'JORNADA 2';
     var html = '<div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:10px;letter-spacing:0.5px;">' + jornada + '</div>';
     copaResults.forEach(function(r) {
       var homeWin = r.homeScore > r.awayScore;
@@ -2238,7 +2238,7 @@ footer strong { color:var(–green); }
     var titleEl = document.getElementById('home-top-title');
     var seeAll = document.getElementById('home-see-rankings');
     if(titleEl) titleEl.textContent = es ? '⭐ TÁCTICAS MÁS VOTADAS' : '⭐ TOP TACTICS';
-    if(seeAll) seeAll.textContent = es ? 'Ver todas →' : 'See all →';
+    if(seeAll) seeAll.textContent = es ? 'Ver todas →' : 'Ver todas →';
     var container = document.getElementById('home-top-tactics');
     if (!container) return;
     var res = await db.from('tactics').select('*').gt('votes_yes', 0).limit(20);
@@ -2908,7 +2908,7 @@ footer strong { color:var(–green); }
     }).join('');
   }
   // ===== AUTH =====
-  var currentLang = 'en';
+  var currentLang = 'es';
   var currentUser = null;
 
   async function initAuth() {
@@ -2940,7 +2940,7 @@ footer strong { color:var(–green); }
         '</div>';
     } else {
       menu.innerHTML = '<button class="btn-ghost" id="auth-btn" onclick="openAuth()">' +
-        (currentLang === 'es' ? 'Iniciar sesión' : 'Sign in') + '</button>';
+        (currentLang === 'es' ? 'Iniciar sesión' : 'Iniciar sesión') + '</button>';
     }
   }
 
@@ -2955,7 +2955,7 @@ footer strong { color:var(–green); }
     // Apply current language to modal
     var es = currentLang === 'es';
     document.getElementById('auth-modal-sub').textContent = es ? 'Uníte a la comunidad de tácticas' : 'Join the tactics community';
-    document.getElementById('tab-login').textContent = es ? 'Iniciar sesión' : 'Sign in';
+    document.getElementById('tab-login').textContent = es ? 'Iniciar sesión' : 'Iniciar sesión';
     document.getElementById('tab-register').textContent = es ? 'Registrarse' : 'Sign up';
     document.getElementById('login-email').placeholder = 'Email';
     document.getElementById('login-password').placeholder = es ? 'Contraseña' : 'Password';
@@ -3072,7 +3072,7 @@ footer strong { color:var(–green); }
     var wl = document.getElementById('banner-stat-world-label');
     if (title) title.textContent = currentLang === 'es' ? '🏆 Unite a la comunidad de tácticas' : '🏆 Join the tactics community';
     if (sub) sub.textContent = currentLang === 'es' ? 'Registrate gratis para votar tácticas, comentar y compartir las tuyas. Ya somos managers de todo el mundo.' : 'Sign up free to vote tactics, comment and share yours. Managers from all over the world are already here.';
-    if (btn) btn.textContent = currentLang === 'es' ? '⚡ REGISTRARME' : '⚡ SIGN UP FREE';
+    if (btn) btn.textContent = currentLang === 'es' ? '⚡ REGISTRARME' : '⚡ REGISTRARME FREE';
     if (ul) ul.textContent = currentLang === 'es' ? 'managers activos' : 'active managers';
     if (tl) tl.textContent = currentLang === 'es' ? 'tácticas publicadas' : 'tactics published';
     if (vl) vl.textContent = currentLang === 'es' ? 'votos de la comunidad' : 'community votes';
@@ -3181,7 +3181,7 @@ footer strong { color:var(–green); }
       openAuth();
       setTimeout(function() {
         var msg = document.getElementById('auth-msg');
-        if (msg) { msg.textContent = currentLang === 'es' ? 'Iniciá sesión para compartir tácticas' : 'Sign in to share tactics'; msg.className = 'auth-msg error'; }
+        if (msg) { msg.textContent = currentLang === 'es' ? 'Iniciá sesión para compartir tácticas' : 'Iniciar sesión to share tactics'; msg.className = 'auth-msg error'; }
       }, 100);
       return;
     }
@@ -3306,12 +3306,12 @@ footer strong { color:var(–green); }
     var existing = await db.from('tournament_signups').select('id').eq('user_id', currentUser.id).eq('tournament', 'copa-nostalgia-2').single();
     if (existing.data) {
       if(msg) { msg.textContent = currentLang === 'es' ? 'Ya estás anotado!' : 'Already signed up!'; msg.style.color = 'var(--yellow)'; }
-      if(btn) btn.textContent = currentLang === 'es' ? '✅ DEJAR MI USUARIO' : '✅ LEAVE MY USERNAME';
+      if(btn) btn.textContent = currentLang === 'es' ? '✅ DEJAR MI USUARIO' : '✅ DEJAR MI USUARIO';
       return;
     }
     await db.from('tournament_signups').insert({ user_id: currentUser.id, osm_username: text, tournament: 'copa-nostalgia-2' });
     if(msg) { msg.textContent = currentLang === 'es' ? '✅ ¡Usuario registrado!' : '✅ Username registered!'; msg.style.color = 'var(--green)'; }
-    if(btn) btn.textContent = currentLang === 'es' ? '✅ DEJAR MI USUARIO' : '✅ LEAVE MY USERNAME';
+    if(btn) btn.textContent = currentLang === 'es' ? '✅ DEJAR MI USUARIO' : '✅ DEJAR MI USUARIO';
     if(input) input.value = '';
     loadTournamentComments();
   }
@@ -3321,21 +3321,21 @@ footer strong { color:var(–green); }
     var sub = document.getElementById('tournament-sub'); if(sub) sub.textContent = es ? 'Primer torneo oficial de OSM Hub · Mayo 2026' : 'First official OSM Hub tournament · May 2026';
     var cl = document.getElementById('tournament-confirmed-label'); if(cl) cl.textContent = es ? 'Confirmados' : 'Confirmed';
     var sl = document.getElementById('tournament-spots-label'); if(sl) sl.textContent = es ? 'Cupos cerrados' : 'Registration closed';
-    var pl = document.getElementById('tournament-prize-label'); if(pl) pl.textContent = es ? 'Premio PayPal' : 'PayPal prize';
+    var pl = document.getElementById('tournament-prize-label'); if(pl) pl.textContent = es ? 'Premio PayPal' : 'Premio PayPal';
     var rt = document.getElementById('tournament-req-title'); if(rt) rt.textContent = es ? '✅ REQUISITOS' : '✅ REQUIREMENTS';
     var r1 = document.getElementById('req-1'); if(r1) r1.textContent = es ? 'Registrarse gratis en OSM Hub' : 'Sign up free on OSM Hub';
     var r2 = document.getElementById('req-2'); if(r2) r2.textContent = es ? 'Tener cuenta de PayPal para recibir el premio' : 'Have a PayPal account to receive the prize';
     var r3 = document.getElementById('req-3'); if(r3) r3.textContent = es ? 'Confirmar inscripción comentando en el grupo' : 'Confirm registration by commenting in the group';
-    var st = document.getElementById('standings-title'); if(st) st.textContent = es ? '📊 TABLA DE POSICIONES' : '📊 STANDINGS';
-    var pt = document.getElementById('tournament-participants-title'); if(pt) pt.textContent = es ? '👥 PARTICIPANTES (16/16)' : '👥 PARTICIPANTS (16/16)';
+    var st = document.getElementById('standings-title'); if(st) st.textContent = es ? '📊 TABLA DE POSICIONES' : '📊 TABLA DE POSICIONES';
+    var pt = document.getElementById('tournament-participants-title'); if(pt) pt.textContent = es ? '👥 PARTICIPANTES (16/16)' : '👥 PARTICIPANTES (16/16)';
     var cta = document.getElementById('tournament-cta-text'); if(cta) cta.textContent = es ? '¡Cupos completos!' : 'Registration closed!';
     var ctan = document.getElementById('tournament-cta-note'); if(ctan) ctan.textContent = es ? 'El sorteo se realizará próximamente. Registrate para ver los resultados.' : 'The draw will take place soon. Sign up to see the results.';
     var tct = document.getElementById('tournament-comment-title'); if(tct) tct.textContent = es ? '💬 ¿QUERÉS PARTICIPAR EN LA PRÓXIMA?' : '💬 WANT TO JOIN THE NEXT ONE?';
-    var tcs = document.getElementById('tournament-comment-sub'); if(tcs) tcs.textContent = es ? 'Dejá tu usuario de OSM para ser considerado en la Copa Nostalgia II' : 'Leave your OSM username to be considered for Copa Nostalgia II';
-    var tcb = document.getElementById('tournament-comment-btn'); if(tcb) tcb.textContent = es ? '✅ DEJAR MI USUARIO' : '✅ LEAVE MY USERNAME';
-    var tci = document.getElementById('tournament-comment-input'); if(tci) tci.placeholder = es ? 'Escribí tu usuario de OSM...' : 'Write your OSM username...';
-    var tclm = document.getElementById('tournament-comment-login-msg'); if(tclm) tclm.textContent = es ? 'Registrate para dejar tu usuario' : 'Sign up to leave your username';
-    var tclb = document.getElementById('tournament-comment-login-btn'); if(tclb) tclb.textContent = es ? '⚡ REGISTRARME' : '⚡ SIGN UP';
+    var tcs = document.getElementById('tournament-comment-sub'); if(tcs) tcs.textContent = es ? 'Dejá tu usuario de OSM para ser considerado en la Copa Nostalgia II' : 'Dejá tu usuario de OSM para la Copa Nostalgia II';
+    var tcb = document.getElementById('tournament-comment-btn'); if(tcb) tcb.textContent = es ? '✅ DEJAR MI USUARIO' : '✅ DEJAR MI USUARIO';
+    var tci = document.getElementById('tournament-comment-input'); if(tci) tci.placeholder = es ? 'Escribí tu usuario de OSM...' : 'Escribí tu usuario de OSM...';
+    var tclm = document.getElementById('tournament-comment-login-msg'); if(tclm) tclm.textContent = es ? 'Registrate para dejar tu usuario' : 'Registrate para dejar tu usuario';
+    var tclb = document.getElementById('tournament-comment-login-btn'); if(tclb) tclb.textContent = es ? '⚡ REGISTRARME' : '⚡ REGISTRARME';
     var dlt = document.getElementById('draw-locked-title'); if(dlt) dlt.textContent = es ? 'El sorteo ya está disponible' : 'The draw is now available';
     var dls = document.getElementById('draw-locked-sub'); if(dls) dls.textContent = es ? 'Registrate para ver tu rival en el bracket' : 'Sign up to see your rival in the bracket';
     var dlb = document.getElementById('draw-locked-btn'); if(dlb) dlb.textContent = es ? '⚡ VER EL SORTEO' : '⚡ SEE THE DRAW';
@@ -3698,7 +3698,7 @@ footer strong { color:var(–green); }
       'label-def': 'DEFENSORES',
     },
     en: {
-      'nav-share': '+ Share Tactic',
+      'nav-share': '+ Compartir Táctica',
       'tab-trending': '🔥 Trending',
       'tab-detail': '📋 Tactic Detail',
       'tab-builder': '⚽ Lineup Builder',
@@ -3712,9 +3712,9 @@ footer strong { color:var(–green); }
       'pill-top': 'Top',
       'no-tactics': 'No tactics yet. Be the first to share one!',
       'effectiveness': 'EFFECTIVENESS',
-      'total-votes': 'Total Votes',
-      'it-works': '👍 It Works',
-      'didnt-work': "👎 Didn't Work",
+      'total-votes': 'Votos totales',
+      'it-works': '👍 Funcionó',
+      'didnt-work': "👎 No funcionó",
       'vote-question': 'Did this tactic work for you?',
       'vote-sub': 'Your vote helps the community find the best tactics',
       'vote-yes': '👍 YES, IT WORKED',
@@ -3744,7 +3744,7 @@ footer strong { color:var(–green); }
       'top-formations': '🏆 Top Formations',
       'stats-title': '📊 Stats',
       'be-first': 'Be the first!',
-      'footer': 'OSM Hub · Fan-made tactic platform · Not affiliated with GameBasics or OSM',
+      'footer': 'OSM Hub · Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM',
       'logo-sub': 'fan-made tactic platform',
       'loading': 'Loading tactics...',
       'local-home': '🏠 Home',
@@ -3793,7 +3793,7 @@ footer strong { color:var(–green); }
     if (tabTournament) tabTournament.textContent = '🏆 ' + (currentLang === 'es' ? 'Copa Nostalgia' : 'Tournament');
     applyTournamentTranslations();
     var h2hLoginTitle = document.getElementById('h2h-login-title');
-    if (h2hLoginTitle) h2hLoginTitle.textContent = currentLang === 'es' ? 'Iniciá sesión para ver tu H2H' : 'Sign in to see your H2H';
+    if (h2hLoginTitle) h2hLoginTitle.textContent = currentLang === 'es' ? 'Iniciá sesión para ver tu H2H' : 'Iniciar sesión to see your H2H';
     var h2hLoginSub = document.getElementById('h2h-login-sub');
     if (h2hLoginSub) h2hLoginSub.textContent = currentLang === 'es' ? 'Llevá el registro de tus partidos contra otros managers' : 'Keep track of your matches against other managers';
     var h2hLoginBtn = document.getElementById('h2h-login-btn');
@@ -3825,7 +3825,7 @@ footer strong { color:var(–green); }
     var h2hOther = document.getElementById('h2h-score-other');
     if (h2hOther) h2hOther.textContent = currentLang === 'es' ? 'Otro' : 'Other';
     var h2hOppEl = document.getElementById('h2h-opponent');
-    if (h2hOppEl) h2hOppEl.placeholder = currentLang === 'es' ? 'Usuario del rival (ej: hola123)' : 'Rival username (e.g. hola123)';
+    if (h2hOppEl) h2hOppEl.placeholder = currentLang === 'es' ? 'Usuario del rival (ej: hola123)' : 'Rival username (ej: hola123)';
     var bnavHome = document.getElementById('bnav-home-label'); if(bnavHome) bnavHome.textContent = currentLang === 'es' ? 'Inicio' : 'Home';
     var bnavTournament = document.getElementById('bnav-tournament-label'); if(bnavTournament) bnavTournament.textContent = currentLang === 'es' ? 'Torneo' : 'Tournament';
     var bnavTactics = document.getElementById('bnav-tactics-label'); if(bnavTactics) bnavTactics.textContent = currentLang === 'es' ? 'Tácticas' : 'Tactics';
@@ -3841,20 +3841,20 @@ footer strong { color:var(–green); }
     var voteNoEl = document.querySelector('.vote-no'); if(voteNoEl) voteNoEl.textContent = t('vote-no');
     var commentsTitleEl = document.querySelector('.comments-title'); if(commentsTitleEl) commentsTitleEl.textContent = t('comments-title');
     var builderTitleMain = document.getElementById('builder-title-main');
-    if (builderTitleMain) builderTitleMain.textContent = currentLang === 'es' ? '⚽ EXPLORADOR DE FORMACIONES' : '⚽ FORMATION EXPLORER';
+    if (builderTitleMain) builderTitleMain.textContent = currentLang === 'es' ? '⚽ EXPLORADOR DE FORMACIONES' : '⚽ EXPLORADOR DE FORMACIONES';
     var builderSubEl = document.getElementById('builder-sub');
-    if (builderSubEl) builderSubEl.textContent = currentLang === 'es' ? 'Seleccioná una formación para ver sus características y tácticas oficiales' : 'Select a formation to see its characteristics and official tactics';
+    if (builderSubEl) builderSubEl.textContent = currentLang === 'es' ? 'Seleccioná una formación para ver sus características y tácticas oficiales' : 'Seleccioná una formación para ver sus características y tácticas oficiales';
     var btnShareEl = document.querySelector('.btn-share'); if(btnShareEl) btnShareEl.textContent = t('share-tactic-btn');
     var tacticTitleInput = document.getElementById('tactic-title-input'); if(tacticTitleInput) tacticTitleInput.placeholder = t('tactic-title-ph');
     var tacticAuthorInput = document.getElementById('tactic-author-input'); if(tacticAuthorInput) tacticAuthorInput.placeholder = t('tactic-author-ph');
     var rankingTitleEl = document.querySelector('.ranking-title'); if(rankingTitleEl) rankingTitleEl.textContent = t('ranking-title');
     var rankingSubEl = document.querySelector('.ranking-sub'); if(rankingSubEl) rankingSubEl.textContent = t('ranking-sub');
     var footerEl = document.getElementById('footer-text');
-    if (footerEl) footerEl.innerHTML = '<strong>OSM Hub</strong> · ' + (currentLang === 'es' ? 'Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM' : 'Fan-made tactic platform · Not affiliated with GameBasics or OSM');
+    if (footerEl) footerEl.innerHTML = '<strong>OSM Hub</strong> · ' + (currentLang === 'es' ? 'Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM' : 'Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM');
     if (document.getElementById('detail-eff-title')) document.getElementById('detail-eff-title').textContent = currentLang === 'es' ? 'Tasa de Eficacia' : 'Effectiveness Rate';
-    if (document.getElementById('lbl-total-votes')) document.getElementById('lbl-total-votes').textContent = currentLang === 'es' ? 'Total Votos' : 'Total Votes';
-    if (document.getElementById('lbl-it-works')) document.getElementById('lbl-it-works').textContent = currentLang === 'es' ? '👍 Funcionó' : '👍 It Works';
-    if (document.getElementById('lbl-didnt-work')) document.getElementById('lbl-didnt-work').textContent = currentLang === 'es' ? '👎 No Funcionó' : "👎 Didn't Work";
+    if (document.getElementById('lbl-total-votes')) document.getElementById('lbl-total-votes').textContent = currentLang === 'es' ? 'Total Votos' : 'Votos totales';
+    if (document.getElementById('lbl-it-works')) document.getElementById('lbl-it-works').textContent = currentLang === 'es' ? '👍 Funcionó' : '👍 Funcionó';
+    if (document.getElementById('lbl-didnt-work')) document.getElementById('lbl-didnt-work').textContent = currentLang === 'es' ? '👎 No Funcionó' : "👎 No funcionó";
     // Context labels
     var ctxLabels = document.querySelectorAll('.context-label');
     if (ctxLabels[0]) ctxLabels[0].textContent = t('ctx-q-location');
@@ -3892,9 +3892,9 @@ footer strong { color:var(–green); }
     var commentBtn = document.getElementById('comment-submit-btn');
     if (commentBtn) commentBtn.textContent = currentLang === 'es' ? '💬 COMENTAR' : '💬 COMMENT';
     var commentLoginMsg = document.getElementById('comment-login-msg');
-    if (commentLoginMsg) commentLoginMsg.textContent = currentLang === 'es' ? 'Iniciá sesión para comentar' : 'Sign in to comment';
+    if (commentLoginMsg) commentLoginMsg.textContent = currentLang === 'es' ? 'Iniciá sesión para comentar' : 'Iniciar sesión to comment';
     var commentLoginLink = document.getElementById('comment-login-link');
-    if (commentLoginLink) commentLoginLink.textContent = currentLang === 'es' ? 'Entrar' : 'Sign in';
+    if (commentLoginLink) commentLoginLink.textContent = currentLang === 'es' ? 'Entrar' : 'Iniciar sesión';
     // Update Cualquiera/Any option in vs-formation and filter
     var vsFormEl = document.getElementById('vs-formation');
     if (vsFormEl && vsFormEl.options[1]) vsFormEl.options[1].text = currentLang === 'es' ? '🌐 Cualquiera' : '🌐 Any';
@@ -3929,9 +3929,9 @@ footer strong { color:var(–green); }
     var voteRegSub = document.getElementById('vote-register-sub');
     if (voteRegSub) voteRegSub.textContent = currentLang === 'es' ? 'Registrate gratis para votar. Tus votos ayudan a miles de managers a encontrar las mejores tácticas para cada situación.' : 'Sign up free to vote. Your votes help thousands of managers find the best tactics for every situation.';
     var voteRegBtn = document.getElementById('vote-register-btn');
-    if (voteRegBtn) voteRegBtn.textContent = currentLang === 'es' ? '⚡ REGISTRARME GRATIS' : '⚡ SIGN UP FREE';
+    if (voteRegBtn) voteRegBtn.textContent = currentLang === 'es' ? '⚡ REGISTRARME GRATIS' : '⚡ REGISTRARME FREE';
     var voteRegNote = document.getElementById('vote-register-note');
-    if (voteRegNote) voteRegNote.textContent = currentLang === 'es' ? 'Solo tu email. Sin spam. Sin tarjeta.' : 'Just your email. No spam. No credit card.';
+    if (voteRegNote) voteRegNote.textContent = currentLang === 'es' ? 'Solo tu email. Sin spam. Sin tarjeta.' : 'Solo tu email. Sin spam. No credit card.';
     var voteRegBack = document.getElementById('vote-register-back');
     if (voteRegBack) voteRegBack.textContent = currentLang === 'es' ? 'Volver' : 'Go back';
     var backFeedLabel = document.getElementById('back-feed-label');
@@ -4039,15 +4039,15 @@ footer strong { color:var(–green); }
   <div style="display:flex;justify-content:space-around;align-items:center;">
     <button onclick="showScreen('feed',document.getElementById('tab-trending'));loadHomeScreen();" class="bottom-nav-btn" id="bnav-home">
       <div style="font-size:20px;">🏠</div>
-      <div class="bnav-label" id="bnav-home-label">Home</div>
+      <div class="bnav-label" id="bnav-home-label">Inicio</div>
     </button>
     <button onclick="showScreen('tournament',document.getElementById('tab-tournament'));applyTournamentTranslations();loadTournamentComments();" class="bottom-nav-btn" id="bnav-tournament">
       <div style="font-size:20px;">🏆</div>
-      <div class="bnav-label" id="bnav-tournament-label">Tournament</div>
+      <div class="bnav-label" id="bnav-tournament-label">Torneo</div>
     </button>
     <button onclick="showScreen('builder',document.getElementById('tab-builder'));initFormationExplorer();" class="bottom-nav-btn" id="bnav-tactics">
       <div style="font-size:20px;">⚽</div>
-      <div class="bnav-label" id="bnav-tactics-label">Tactics</div>
+      <div class="bnav-label" id="bnav-tactics-label">Tácticas</div>
     </button>
     <button onclick="showScreen('ranking',document.getElementById('tab-ranking'));loadRankings();" class="bottom-nav-btn" id="bnav-rankings">
       <div style="font-size:20px;">🥇</div>
