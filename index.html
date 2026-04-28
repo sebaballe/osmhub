@@ -872,10 +872,10 @@ footer strong { color:var(–green); }
   <!-- OVERVIEW -->
 
   <div id="s-overview" class="stats-pane active" style="padding:16px;max-width:700px;margin:0 auto;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:14px;margin-top:4px;">🏆 Top Performers</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:14px;margin-top:4px;" id="stats-top-title">🏆 Top Performers</div>
     <!-- #1 -->
     <div style="background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,215,0,0.03));border:1px solid rgba(255,215,0,0.25);border-radius:20px;padding:20px;margin-bottom:10px;box-shadow:0 0 30px rgba(255,215,0,0.08);">
-      <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:#FFD700;margin-bottom:12px;">🔥 Dominant</div>
+      <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:#FFD700;margin-bottom:12px;"><span id="stats-dominant-badge">🔥 Dominant</span></div>
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
         <div style="display:flex;align-items:center;gap:12px;">
           <div style="font-size:26px;">🥇</div>
@@ -883,7 +883,7 @@ footer strong { color:var(–green); }
         </div>
         <div style="text-align:right;">
           <div style="font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:#FFD700;line-height:1;">13</div>
-          <div style="font-size:11px;color:var(--text-dim);">shots / game</div>
+          <div style="font-size:11px;color:var(--text-dim);" id="stats-shots-unit">shots / game</div>
           <div style="font-size:12px;color:var(--text-mid);margin-top:2px;">📊 61.5% possession</div>
         </div>
       </div>
@@ -902,29 +902,29 @@ footer strong { color:var(–green); }
       </div>
     </div>
     <!-- AVG COMPARISON -->
-    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;">📈 Top Team vs League Average</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;" id="stats-avg-title">📈 Top Team vs League Average</div>
     <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:14px;padding:16px;margin-bottom:16px;">
       <div style="margin-bottom:14px;">
         <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;"><span>Shots per game</span><div style="display:flex;gap:10px;"><span style="color:#FFD700;">● Arsenal</span><span>● Avg</span></div></div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;">Arsenal</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#E6C200,#FFD700);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:#FFD700;min-width:36px;text-align:right;">13</span></div>
-        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;">League avg</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:70%;height:100%;background:rgba(255,255,255,0.15);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--text-dim);min-width:36px;text-align:right;">9.1</span></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="top" class="stats-avg-team-label">Arsenal</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#E6C200,#FFD700);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:#FFD700;min-width:36px;text-align:right;">13</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="avg" class="stats-avg-team-label">League avg</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:70%;height:100%;background:rgba(255,255,255,0.15);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--text-dim);min-width:36px;text-align:right;">9.1</span></div>
       </div>
       <div>
         <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;"><span>Possession %</span><div style="display:flex;gap:10px;"><span style="color:#FFD700;">● Arsenal</span><span>● Avg</span></div></div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;">Arsenal</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#E6C200,#FFD700);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:#FFD700;min-width:40px;text-align:right;">61.5%</span></div>
-        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;">League avg</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:81%;height:100%;background:rgba(255,255,255,0.15);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--text-dim);min-width:40px;text-align:right;">49.7%</span></div>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="top" class="stats-avg-team-label">Arsenal</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#E6C200,#FFD700);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:#FFD700;min-width:40px;text-align:right;">61.5%</span></div>
+        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="avg" class="stats-avg-team-label">League avg</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:81%;height:100%;background:rgba(255,255,255,0.15);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--text-dim);min-width:40px;text-align:right;">49.7%</span></div>
       </div>
     </div>
     <!-- INSIGHTS -->
-    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;">⚡ Quick Insights</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;" id="stats-insights-title">⚡ Quick Insights</div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
-      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">👑</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><strong style="color:var(--text);">Arsenal is dominating the tournament</strong> — leading in both shots and possession. No team is close.</span></div>
-      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">❌</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><strong style="color:var(--text);">Barcelona is the weakest team so far</strong> — only 5 shots/game and 37.5% possession.</span></div>
-      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">🎯</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><strong style="color:var(--text);">Boca Juniors doesn't need the ball to score</strong> — 12 shots with under 50% possession.</span></div>
-      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">🌑</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><strong style="color:var(--text);">AC Milan is the dark horse</strong> — 11.5 shots and 60.5% possession. Quietly dangerous.</span></div>
+      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">👑</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><span id="stats-i1"><strong style="color:var(--text);">Arsenal is dominating the tournament</strong> — leading in both shots and possession. No team is close.</span></span></div>
+      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">❌</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><span id="stats-i2"><strong style="color:var(--text);">Barcelona is the weakest team so far</strong> — only 5 shots/game and 37.5% possession.</span></span></div>
+      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">🎯</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><span id="stats-i3"><strong style="color:var(--text);">Boca Juniors doesn't need the ball to score</strong> — 12 shots with under 50% possession.</span></span></div>
+      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">🌑</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><span id="stats-i4"><strong style="color:var(--text);">AC Milan is the dark horse</strong> — 11.5 shots and 60.5% possession. Quietly dangerous.</span></span></div>
     </div>
     <button onclick="switchStatsTab('s-compare',document.querySelectorAll('.stats-tab-btn')[2])" style="width:100%;background:linear-gradient(135deg,rgba(255,215,0,0.12),rgba(255,215,0,0.06));border:1px solid rgba(255,215,0,0.25);border-radius:12px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
-      <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:#FFD700;">Compare any two teams →</span>
+      <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:#FFD700;" id="stats-compare-cta">Compare any two teams →</span>
       <span style="font-size:18px;">⚖️</span>
     </button>
   </div>
@@ -932,7 +932,7 @@ footer strong { color:var(–green); }
   <!-- TEAMS -->
 
   <div id="s-teams" class="stats-pane" style="padding:16px;max-width:700px;margin:0 auto;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;">All 16 Teams</div><div style="font-size:11px;color:var(--text-dim);">Tap headers to sort</div></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;" id="stats-teams-title">All 16 Teams</div><div style="font-size:11px;color:var(--text-dim);" id="stats-sort-hint">Tap headers to sort</div></div>
     <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:14px;overflow:hidden;">
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;font-size:12px;">
@@ -951,7 +951,7 @@ footer strong { color:var(–green); }
   <!-- COMPARE -->
 
   <div id="s-compare" class="stats-pane" style="padding:16px;max-width:700px;margin:0 auto;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:14px;">Pick Two Teams</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:14px;" id="stats-compare-title">Pick Two Teams</div>
     <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;margin-bottom:20px;align-items:center;">
       <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.15);border-radius:12px;">
         <select id="stats-team-a" onchange="updateStatsCompare()" style="width:100%;background:transparent;border:none;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;padding:12px 14px;outline:none;cursor:pointer;">
@@ -989,7 +989,7 @@ footer strong { color:var(–green); }
         </div>
       </div>
       <div style="background:linear-gradient(135deg,rgba(255,215,0,0.07),rgba(255,215,0,0.02));border:1px solid rgba(255,215,0,0.2);border-radius:14px;padding:16px;text-align:center;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:10px;">📊 Statistical Verdict</div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:10px;" id="stats-verdict-label">📊 Statistical Verdict</div>
         <div id="stats-verdict-text" style="font-size:14px;color:var(--text-mid);line-height:1.6;">Arsenal dominates Barcelona in every metric. It wouldn't even be close.</div>
       </div>
     </div>
@@ -998,14 +998,14 @@ footer strong { color:var(–green); }
   <!-- INSIGHTS -->
 
   <div id="s-insights" class="stats-pane" style="padding:16px;max-width:700px;margin:0 auto;">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFD700;margin:4px 0 10px;">🏆 Title Race</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFD700;margin:4px 0 10px;" id="stats-insights-page-title">🏆 Title Race</div>
     <div style="border-left:3px solid #FFD700;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);">Arsenal is running away with this tournament.</strong> They lead in shots (13/game) AND possession (61.5%). No team has both. That combination wins leagues.</div>
     <div style="border-left:3px solid #FFD700;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);">Fenerbahce controls possession better than any team except Arsenal.</strong> 61% is elite. If they convert more chances, they're the biggest threat.</div>
     <div style="border-left:3px solid #FFD700;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:16px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);">Boca Juniors doesn't need the ball.</strong> 12 shots on 49.5% possession — brutally efficient counter-attacking.</div>
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FF4D4D;margin-bottom:10px;">⚠️ Teams at Risk</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FF4D4D;margin-bottom:10px;" id="stats-risk-title">⚠️ Teams at Risk</div>
     <div style="border-left:3px solid #FF4D4D;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);">Barcelona is in crisis.</strong> 5 shots. 37.5% possession. Worst numbers in the tournament — not even close.</div>
     <div style="border-left:3px solid #FF4D4D;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:16px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);">River Plate and Galatasaray are barely competing.</strong> Both under 7 shots and 45% possession. Getting outplayed every game.</div>
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--text-dim);margin-bottom:10px;">🔍 Tactical Patterns</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--text-dim);margin-bottom:10px;" id="stats-patterns-title">🔍 Tactical Patterns</div>
     <div style="border-left:3px solid var(--text-dim);border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);">Counter-attack kings:</strong> Boca Juniors and Benfica generate high shots despite below-average possession. Speed over control — and it's working.</div>
     <div style="border-left:3px solid var(--text-dim);border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);">The quiet middle:</strong> Ajax and Bayern sit in the middle of every metric. Competitive, not dominant.</div>
   </div>
@@ -1403,7 +1403,7 @@ footer strong { color:var(–green); }
     if (id === 'profile') loadProfile();
     if (id === 'h2h') loadH2H();
     if (id === 'tournament') { applyTournamentTranslations(); loadTournamentComments(); }
-    if (id === 'stats') { initStats(); }
+    if (id === 'stats') { initStats(); applyStatsTranslations(); }
   }
 
   var currentSort = 'hot';
@@ -1687,6 +1687,47 @@ footer strong { color:var(–green); }
     else v='<strong style="color:#FFD700">'+b.name+'</strong> comes out ahead. They would be the statistical favorite.';
     var vEl=document.getElementById('stats-verdict-text'); if(vEl) vEl.innerHTML=v;
   }
+  function applyStatsTranslations() {
+    var es = currentLang === 'es';
+    // Header
+    var statsHeader = document.querySelector('#screen-stats .stats-pane.active');
+    // Tabs
+    var tabBtns = document.querySelectorAll('.stats-tab-btn');
+    if(tabBtns[0]) tabBtns[0].textContent = es ? '📊 Resumen' : '📊 Overview';
+    if(tabBtns[1]) tabBtns[1].textContent = es ? '👥 Equipos' : '👥 Teams';
+    if(tabBtns[2]) tabBtns[2].textContent = es ? '⚖️ Comparar' : '⚖️ Compare';
+    if(tabBtns[3]) tabBtns[3].textContent = es ? '💡 Análisis' : '💡 Insights';
+    // Overview labels
+    var els = {
+      'stats-top-title': [es?'🏆 Mejores del torneo':'🏆 Top Performers'],
+      'stats-avg-title': [es?'📈 Mejor equipo vs Promedio':'📈 Top Team vs League Average'],
+      'stats-insights-title': [es?'⚡ Puntos clave':'⚡ Quick Insights'],
+      'stats-compare-cta': [es?'Comparar dos equipos →':'Compare any two teams →'],
+      'stats-teams-title': [es?'Los 16 equipos':'All 16 Teams'],
+      'stats-sort-hint': [es?'Toca los títulos para ordenar':'Tap headers to sort'],
+      'stats-compare-title': [es?'Elegí dos equipos':'Pick Two Teams'],
+      'stats-shots-label': [es?'Tiros por partido':'Shots per game'],
+      'stats-poss-label': [es?'Posesión %':'Possession %'],
+      'stats-verdict-label': [es?'📊 Veredicto estadístico':'📊 Statistical Verdict'],
+      'stats-insights-page-title': [es?'🏆 Lucha por el título':'🏆 Title Race'],
+      'stats-risk-title': [es?'⚠️ Equipos en riesgo':'⚠️ Teams at Risk'],
+      'stats-patterns-title': [es?'🔍 Patrones tácticos':'🔍 Tactical Patterns'],
+      'stats-dominant-badge': [es?'🔥 Dominante':'🔥 Dominant'],
+      'stats-shots-unit': [es?'tiros / partido':'shots / game'],
+      'stats-i1': [es?'<strong style="color:var(--text);">Arsenal domina el torneo</strong> — lidera en tiros y posesión. Ningún equipo se le acerca.':'<strong style="color:var(--text);">Arsenal is dominating the tournament</strong> — leading in both shots and possession. No team is close.'],
+      'stats-i2': [es?'<strong style="color:var(--text);">Barcelona es el equipo más débil</strong> — solo 5 tiros por partido y 37.5% de posesión.':'<strong style="color:var(--text);">Barcelona is the weakest team so far</strong> — only 5 shots/game and 37.5% possession.'],
+      'stats-i3': [es?'<strong style="color:var(--text);">Boca Juniors no necesita la pelota para anotar</strong> — 12 tiros con menos del 50% de posesión.':'<strong style="color:var(--text);">Boca Juniors doesn\'t need the ball to score</strong> — 12 shots with under 50% possession.'],
+      'stats-i4': [es?'<strong style="color:var(--text);">AC Milan es el caballo negro</strong> — 11.5 tiros y 60.5% de posesión. Peligrosamente silencioso.':'<strong style="color:var(--text);">AC Milan is the dark horse</strong> — 11.5 shots and 60.5% possession. Quietly dangerous.'],
+    };
+    for(var id in els) {
+      var el = document.getElementById(id);
+      if(el) el.innerHTML = els[id][0];
+    }
+    // Avg labels
+    var avgLabels = document.querySelectorAll('.stats-avg-team-label');
+    avgLabels.forEach(function(l){ if(l.dataset.key==='top') l.textContent=es?'Arsenal':'Arsenal'; if(l.dataset.key==='avg') l.textContent=es?'Promedio liga':'League avg'; });
+  }
+
   function initStats() {
     if(statsInitialized) return;
     statsInitialized = true;
@@ -3511,6 +3552,8 @@ footer strong { color:var(–green); }
       if (el) el.textContent = t('label-' + k);
     });
     // Reload detail if open
+    var statsScreen = document.getElementById('screen-stats');
+    if (statsScreen && statsScreen.classList.contains('active')) applyStatsTranslations();
     var feedScreen = document.getElementById('screen-feed');
     if (feedScreen && feedScreen.classList.contains('active')) loadHomeScreen();
     var detailScreen = document.getElementById('screen-detail');
