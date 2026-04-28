@@ -1623,8 +1623,13 @@ footer strong { color:var(–green); }
     // Translations
     document.getElementById('signup-modal-title').textContent = 'COPA NOSTALGIA II';
     document.getElementById('signup-modal-sub').textContent = es ? 'Dejá tu usuario de OSM y reservá tu lugar' : 'Leave your OSM username and reserve your spot';
+    document.getElementById('rules-title').textContent = es ? '📋 REGLAS DEL TORNEO' : '📋 TOURNAMENT RULES';
+    document.getElementById('rules-1').textContent = es ? 'Liga Estrellas de Clubes' : 'Club Stars League';
+    document.getElementById('rules-2').textContent = es ? 'Sin timers' : 'No timers';
+    document.getElementById('rules-3').textContent = es ? 'Sin campus' : 'No campus';
+    document.getElementById('rules-4').textContent = es ? 'Sin entrenamiento secreto' : 'No secret training';
+    document.getElementById('rules-5').textContent = es ? 'Premio al ganador' : 'Prize for the winner';
     document.getElementById('signup-modal-btn').textContent = es ? '✅ RESERVAR MI LUGAR' : '✅ RESERVE MY SPOT';
-    document.getElementById('signup-osm-label').textContent = es ? 'Tu usuario de OSM' : 'Your OSM username';
     document.getElementById('signup-osm-input').placeholder = es ? 'ej: hola123' : 'e.g. hola123';
     document.getElementById('signup-info-date').textContent = es ? 'Fecha por confirmar' : 'Date TBD';
     document.getElementById('signup-info-prize').textContent = es ? 'Premio en efectivo vía PayPal' : 'Cash prize via PayPal';
@@ -1635,8 +1640,8 @@ footer strong { color:var(–green); }
     document.getElementById('signup-success-sub').textContent = es ? 'Te avisaremos cuando empiece la Copa Nostalgia II.' : 'We\'ll notify you when Copa Nostalgia II starts.';
     document.getElementById('signup-close-btn').textContent = es ? 'Cerrar' : 'Close';
     // Get spots count
-    var signups = await db.from('tournament_signups').select('id', { count: 'exact', head: true }).eq('tournament', 'copa-nostalgia-2');
-    var count = signups.count || 0;
+    var signups = await db.from('tournament_signups').select('id').eq('tournament', 'copa-nostalgia-2');
+    var count = (signups.data && signups.data.length) ? signups.data.length : 0;
     document.getElementById('signup-info-spots').textContent = es ? (count + '/16 cupos ocupados') : (count + '/16 spots taken');
     // Show correct state
     document.getElementById('signup-modal-success').style.display = 'none';
@@ -1900,8 +1905,8 @@ footer strong { color:var(–green); }
     var spotsEl = document.getElementById('next-cup-spots');
     var spotsLabel = document.getElementById('next-cup-spots-label');
     if(spotsEl) {
-      var signups = await db.from('tournament_signups').select('id', { count: 'exact', head: true }).eq('tournament', 'copa-nostalgia-2');
-      var count = signups.count || 0;
+      var signups = await db.from('tournament_signups').select('id').eq('tournament', 'copa-nostalgia-2');
+      var count = (signups.data && signups.data.length) ? signups.data.length : 0;
       spotsEl.textContent = count + '/16';
       if(spotsLabel) spotsLabel.textContent = es ? 'Cupos ocupados' : 'Spots taken';
     }
@@ -3949,10 +3954,13 @@ footer strong { color:var(–green); }
           <input id="signup-osm-input" placeholder="ej: hola123" style="width:100%;background:transparent;border:none;outline:none;color:#FFFFFF;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;" />
         </div>
       </div>
-      <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:12px;margin-bottom:16px;font-size:12px;color:var(--text-dim);display:flex;flex-direction:column;gap:4px;">
-        <div>🗓 <span id="signup-info-date">Fecha por confirmar</span></div>
-        <div>👥 <span id="signup-info-spots">Cupos disponibles</span></div>
-        <div>💰 <span id="signup-info-prize">Premio en efectivo vía PayPal</span></div>
+      <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:12px;margin-bottom:16px;font-size:12px;color:var(--text-dim);display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:11px;font-weight:700;color:var(--gold);letter-spacing:0.5px;margin-bottom:2px;" id="rules-title">📋 REGLAS DEL TORNEO</div>
+        <div>🏆 <span id="rules-1">Liga Estrellas de Clubes</span></div>
+        <div>⏱ <span id="rules-2">Sin timers</span></div>
+        <div>🏫 <span id="rules-3">Sin campus</span></div>
+        <div>🔒 <span id="rules-4">Sin entrenamiento secreto</span></div>
+        <div>💰 <span id="rules-5">Premio al ganador</span></div>
       </div>
       <button onclick="submitSignupModal()" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:16px;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;cursor:pointer;box-shadow:0 4px 20px rgba(255,215,0,0.25);" id="signup-modal-btn">✅ RESERVAR MI LUGAR</button>
       <div id="signup-modal-msg" style="text-align:center;font-size:13px;margin-top:10px;min-height:18px;"></div>
