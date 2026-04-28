@@ -1630,9 +1630,7 @@ footer strong { color:var(–green); }
     document.getElementById('rules-4').textContent = es ? 'Sin entrenamiento secreto' : 'No secret training';
     document.getElementById('rules-5').textContent = es ? 'Premio al ganador' : 'Prize for the winner';
     document.getElementById('signup-modal-btn').textContent = es ? '✅ RESERVAR MI LUGAR' : '✅ RESERVE MY SPOT';
-    document.getElementById('signup-osm-input').placeholder = es ? 'ej: hola123' : 'e.g. hola123';
-    document.getElementById('signup-info-date').textContent = es ? 'Fecha por confirmar' : 'Date TBD';
-    document.getElementById('signup-info-prize').textContent = es ? 'Premio en efectivo vía PayPal' : 'Cash prize via PayPal';
+    var osmInput = document.getElementById('signup-osm-input'); if(osmInput) osmInput.placeholder = es ? 'ej: hola123' : 'e.g. hola123';
     document.getElementById('signup-modal-login-btn').textContent = es ? '⚡ CREAR CUENTA GRATIS' : '⚡ CREATE FREE ACCOUNT';
     document.getElementById('signup-modal-login-note').textContent = es ? 'Solo tu email. Sin spam.' : 'Just your email. No spam.';
     document.getElementById('signup-modal-login-msg').textContent = es ? 'Necesitás una cuenta para anotarte' : 'You need an account to sign up';
@@ -1642,7 +1640,7 @@ footer strong { color:var(–green); }
     // Get spots count
     var signups = await db.from('tournament_signups').select('id').eq('tournament', 'copa-nostalgia-2');
     var count = (signups.data && signups.data.length) ? signups.data.length : 0;
-    document.getElementById('signup-info-spots').textContent = es ? (count + '/16 cupos ocupados') : (count + '/16 spots taken');
+    // spots shown in next-cup-spots on home screen
     // Show correct state
     document.getElementById('signup-modal-success').style.display = 'none';
     if (currentUser) {
@@ -3488,8 +3486,8 @@ footer strong { color:var(–green); }
   }
 
   function applyTranslations() {
-    document.querySelector('.logo-sub').textContent = t('logo-sub');
-    document.getElementById('btn-share-nav').textContent = t('nav-share');
+    var logoSub = document.querySelector('.logo-sub'); if(logoSub) logoSub.textContent = t('logo-sub');
+    var btnShareNav = document.getElementById('btn-share-nav'); if(btnShareNav) btnShareNav.textContent = t('nav-share');
     var tabTrending = document.getElementById('tab-trending'); if(tabTrending) tabTrending.textContent = t('tab-trending');
     var tabDetail = document.getElementById('tab-detail'); if(tabDetail) tabDetail.textContent = t('tab-detail');
     var tabBuilder = document.getElementById('tab-builder'); if(tabBuilder) tabBuilder.textContent = t('tab-builder');
