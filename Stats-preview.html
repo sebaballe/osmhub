@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stats Hub — OSM Hub Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--bg:#000;--surface:#0D0D0D;--surface2:#111;--border:rgba(255,215,0,0.1);--border2:rgba(255,215,0,0.25);--gold:#FFD700;--gold-dim:#E6C200;--gold-glow:rgba(255,215,0,0.12);--text:#FFF;--text-mid:#9AA5B4;--text-dim:#4A5A6E;--red:#FF4D4D;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;padding-bottom:60px;}
+.nav{background:rgba(0,0,0,0.97);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;}.nav-logo span{color:var(--gold);}
+.nav-badge{background:var(--gold-glow);border:1px solid var(--border2);color:var(--gold);font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;letter-spacing:0.5px;}
+.back-link{font-size:12px;color:var(--text-dim);text-decoration:none;}.back-link:hover{color:var(--gold);}
+.header{padding:36px 20px 28px;text-align:center;background:linear-gradient(160deg,#000 0%,#0A0800 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:500px;height:500px;background:radial-gradient(circle,rgba(255,215,0,0.07) 0%,transparent 65%);pointer-events:none;}
+.header-label{font-size:11px;font-weight:700;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.header-label::before,.header-label::after{content:'';width:28px;height:1px;background:var(--border2);}
+.header h1{font-family:'Barlow Condensed',sans-serif;font-size:46px;font-weight:900;letter-spacing:1px;line-height:1;margin-bottom:10px;}.header h1 span{color:var(--gold);}
+.header p{font-size:15px;color:var(--text-mid);max-width:300px;margin:0 auto;font-weight:500;}
+.tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);overflow-x:auto;scrollbar-width:none;position:sticky;top:53px;z-index:90;}
+.tabs::-webkit-scrollbar{display:none;}
+.tab-btn{flex:1;min-width:80px;padding:14px 12px;background:none;border:none;color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;cursor:pointer;border-bottom:2px solid transparent;transition:all 0.2s;white-space:nowrap;letter-spacing:0.5px;}
+.tab-btn.active{color:var(--gold);border-bottom-color:var(--gold);background:rgba(255,215,0,0.03);}
+.tab-btn:hover:not(.active){color:var(--text);}
+.screen{display:none;padding:20px 16px;max-width:700px;margin:0 auto;}.screen.active{display:block;}
+.section-label{font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.top-performers{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.top-card-main{background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,215,0,0.03));border:1px solid var(--border2);border-radius:20px;padding:22px 20px;position:relative;overflow:hidden;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 0 30px rgba(255,215,0,0.08);}
+.top-card-main::before{content:'';position:absolute;top:-40px;right:-40px;width:120px;height:120px;background:radial-gradient(circle,rgba(255,215,0,0.12) 0%,transparent 70%);pointer-events:none;}
+.top-card-main:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(255,215,0,0.15);}
+.dominant-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:var(--gold);margin-bottom:12px;}
+.top-main-row{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.top-main-left{display:flex;align-items:center;gap:14px;}
+.top-medal{font-size:28px;}.top-team-name{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;line-height:1;}
+.top-manager{font-size:12px;color:var(--text-dim);margin-top:2px;}
+.top-main-stats{text-align:right;}
+.top-shots-num{font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:var(--gold);line-height:1;}
+.top-shots-label{font-size:11px;color:var(--text-dim);}.top-poss{font-size:13px;color:var(--text-mid);margin-top:4px;}
+.top-cards-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.top-card-minor{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:16px;transition:transform 0.2s,border-color 0.2s;}
+.top-card-minor:hover{transform:translateY(-2px);border-color:rgba(255,215,0,0.2);}
+.minor-top{display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+.minor-medal{font-size:20px;}.minor-team{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;}
+.minor-mgr{font-size:10px;color:var(--text-dim);}
+.minor-stat-row{display:flex;align-items:baseline;gap:4px;}
+.minor-num{font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--text-mid);}
+.minor-unit{font-size:11px;color:var(--text-dim);}.minor-poss{font-size:11px;color:var(--text-dim);margin-top:4px;}
+.comparison-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px;margin-bottom:16px;}
+.comp-row{margin-bottom:16px;}.comp-row:last-child{margin-bottom:0;}
+.comp-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+.comp-title{font-size:11px;font-weight:700;color:var(--text-dim);letter-spacing:0.5px;text-transform:uppercase;}
+.comp-legend{display:flex;gap:12px;}
+.legend-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text-dim);}
+.legend-dot{width:8px;height:8px;border-radius:50%;}.legend-dot.gold{background:var(--gold);}.legend-dot.gray{background:rgba(255,255,255,0.15);}
+.comp-bar-group{display:flex;flex-direction:column;gap:5px;}
+.comp-bar-row{display:flex;align-items:center;gap:8px;}
+.comp-bar-label{font-size:11px;color:var(--text-dim);min-width:70px;}
+.comp-bar-track{flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;}
+.comp-bar-fill{height:100%;border-radius:4px;}.comp-bar-fill.gold{background:linear-gradient(90deg,var(--gold-dim),var(--gold));}.comp-bar-fill.gray{background:rgba(255,255,255,0.15);}
+.comp-bar-val{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;min-width:40px;text-align:right;}
+.comp-bar-val.gold{color:var(--gold);}.comp-bar-val.gray{color:var(--text-dim);}
+.insight-list{display:flex;flex-direction:column;gap:8px;margin-bottom:16px;}
+.insight-item{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px;transition:border-color 0.2s,transform 0.2s;}
+.insight-item:hover{border-color:rgba(255,215,0,0.2);transform:translateX(3px);}
+.insight-icon{font-size:18px;flex-shrink:0;margin-top:1px;}
+.insight-text{font-size:13px;color:var(--text-mid);line-height:1.5;}.insight-text strong{color:var(--text);font-weight:600;}
+.cta-btn{width:100%;background:linear-gradient(135deg,rgba(255,215,0,0.12),rgba(255,215,0,0.06));border:1px solid var(--border2);border-radius:14px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:all 0.2s;margin-bottom:8px;}
+.cta-btn:hover{background:linear-gradient(135deg,rgba(255,215,0,0.18),rgba(255,215,0,0.08));transform:translateY(-1px);box-shadow:0 4px 20px rgba(255,215,0,0.1);}
+.cta-btn-text{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--gold);}
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead tr{border-bottom:1px solid var(--border2);}
+th{padding:10px 8px;color:var(--text-dim);font-weight:700;text-align:center;cursor:pointer;white-space:nowrap;font-family:'Barlow Condensed',sans-serif;font-size:13px;transition:color 0.2s;letter-spacing:0.5px;}
+th:first-child{text-align:left;padding-left:16px;}th:hover{color:var(--text);}th.sorted{color:var(--gold);}
+tbody tr{border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.15s;}
+tbody tr:hover{background:rgba(255,215,0,0.03);}
+td{padding:10px 8px;text-align:center;}td:first-child{text-align:left;padding-left:16px;}
+.rank-num{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text-dim);}
+.rank-1 .rank-num{color:var(--gold);}
+.team-name{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;}
+.team-mgr{font-size:10px;color:var(--text-dim);}
+.stat-val{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;}
+.stat-bar{height:3px;border-radius:2px;background:linear-gradient(90deg,var(--gold-dim),var(--gold));margin-top:3px;}
+.compare-selectors{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;margin-bottom:20px;align-items:center;}
+.select-wrap{background:var(--surface);border:1px solid var(--border);border-radius:12px;transition:border-color 0.2s;}
+.select-wrap:focus-within{border-color:var(--border2);}
+select{width:100%;background:transparent;border:none;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:800;padding:12px 14px;outline:none;cursor:pointer;}
+select option{background:#111;}
+.vs-pill{background:var(--surface2);border:1px solid var(--border);border-radius:20px;padding:6px 12px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:var(--text-dim);text-align:center;white-space:nowrap;}
+.compare-stat-block{margin-bottom:18px;}
+.compare-stat-label{font-size:10px;font-weight:700;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+.compare-bar-row{display:flex;align-items:center;gap:10px;}
+.cval{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;min-width:44px;}
+.cval.a{color:var(--gold);text-align:right;}.cval.b{color:var(--text-mid);}
+.cbar-wrap{flex:1;display:flex;flex-direction:column;gap:5px;}
+.cbar-track{background:rgba(255,255,255,0.06);border-radius:4px;height:8px;overflow:hidden;}
+.cbar-fill{height:100%;border-radius:4px;transition:width 0.7s ease;}
+.cbar-fill.gold-bar{background:linear-gradient(90deg,var(--gold-dim),var(--gold));}.cbar-fill.gray-bar{background:rgba(255,255,255,0.15);}
+.verdict-card{background:linear-gradient(135deg,rgba(255,215,0,0.07),rgba(255,215,0,0.02));border:1px solid var(--border2);border-radius:16px;padding:18px;text-align:center;margin-top:20px;}
+.verdict-label{font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:10px;}
+.verdict-text{font-size:14px;color:var(--text-mid);line-height:1.6;}.verdict-text strong{color:var(--gold);}
+.insight-section-title{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--gold);margin:24px 0 10px;letter-spacing:0.5px;display:flex;align-items:center;gap:8px;}
+.insight-section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.insight-block{border-left:3px solid var(--gold);border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);transition:transform 0.2s;}
+.insight-block:hover{transform:translateX(4px);}.insight-block strong{color:var(--text);}
+.insight-block.warning{border-left-color:var(--red);}.insight-block.neutral{border-left-color:var(--text-dim);}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div style="display:flex;align-items:center;gap:10px;">
+    <div class="nav-logo">OSM <span>HUB</span></div>
+    <span class="nav-badge">⚡ PREVIEW</span>
+  </div>
+  <a href="/" class="back-link">← Back to site</a>
+</nav>
+<div class="header">
+  <div class="header-label">Copa Nostalgia · Season 1</div>
+  <h1>STATS <span>HUB</span></h1>
+  <p>Who's dominating the tournament?</p>
+</div>
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('overview',this)">📊 Overview</button>
+  <button class="tab-btn" onclick="switchTab('teams',this)">👥 Teams</button>
+  <button class="tab-btn" onclick="switchTab('compare',this)">⚖️ Compare</button>
+  <button class="tab-btn" onclick="switchTab('insights',this)">💡 Insights</button>
+</div>
+
+<!-- OVERVIEW -->
+
+<div id="screen-overview" class="screen active">
+  <div class="section-label" style="margin-top:4px;">🏆 Top Performers</div>
+  <div class="top-performers">
+    <div class="top-card-main">
+      <div class="dominant-badge">🔥 Dominant</div>
+      <div class="top-main-row">
+        <div class="top-main-left">
+          <div class="top-medal">🥇</div>
+          <div><div class="top-team-name">Arsenal</div><div class="top-manager">@Sir Nacho Ruglio</div></div>
+        </div>
+        <div class="top-main-stats">
+          <div class="top-shots-num">13</div>
+          <div class="top-shots-label">shots / game</div>
+          <div class="top-poss">📊 61.5% possession</div>
+        </div>
+      </div>
+    </div>
+    <div class="top-cards-row">
+      <div class="top-card-minor">
+        <div class="minor-top"><div class="minor-medal">🥈</div><div><div class="minor-team">Benfica</div><div class="minor-mgr">@Griche espinosa 70</div></div></div>
+        <div class="minor-stat-row"><span class="minor-num">12.5</span><span class="minor-unit">shots/g</span></div>
+        <div class="minor-poss">📊 53.5% possession</div>
+      </div>
+      <div class="top-card-minor">
+        <div class="minor-top"><div class="minor-medal">🥉</div><div><div class="minor-team">Boca Jrs</div><div class="minor-mgr">@Nivekserolf</div></div></div>
+        <div class="minor-stat-row"><span class="minor-num">12</span><span class="minor-unit">shots/g</span></div>
+        <div class="minor-poss">📊 49.5% possession</div>
+      </div>
+    </div>
+  </div>
+  <div class="section-label">📈 Top Team vs League Average</div>
+  <div class="comparison-card">
+    <div class="comp-row">
+      <div class="comp-header">
+        <div class="comp-title">Shots per game</div>
+        <div class="comp-legend"><div class="legend-item"><div class="legend-dot gold"></div>Arsenal</div><div class="legend-item"><div class="legend-dot gray"></div>Avg</div></div>
+      </div>
+      <div class="comp-bar-group">
+        <div class="comp-bar-row"><div class="comp-bar-label">Arsenal</div><div class="comp-bar-track"><div class="comp-bar-fill gold" style="width:100%;"></div></div><div class="comp-bar-val gold">13</div></div>
+        <div class="comp-bar-row"><div class="comp-bar-label">League avg</div><div class="comp-bar-track"><div class="comp-bar-fill gray" style="width:70%;"></div></div><div class="comp-bar-val gray">9.1</div></div>
+      </div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-header">
+        <div class="comp-title">Possession %</div>
+        <div class="comp-legend"><div class="legend-item"><div class="legend-dot gold"></div>Arsenal</div><div class="legend-item"><div class="legend-dot gray"></div>Avg</div></div>
+      </div>
+      <div class="comp-bar-group">
+        <div class="comp-bar-row"><div class="comp-bar-label">Arsenal</div><div class="comp-bar-track"><div class="comp-bar-fill gold" style="width:100%;"></div></div><div class="comp-bar-val gold">61.5%</div></div>
+        <div class="comp-bar-row"><div class="comp-bar-label">League avg</div><div class="comp-bar-track"><div class="comp-bar-fill gray" style="width:81%;"></div></div><div class="comp-bar-val gray">49.7%</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="section-label">⚡ Quick Insights</div>
+  <div class="insight-list">
+    <div class="insight-item"><span class="insight-icon">👑</span><span class="insight-text"><strong>Arsenal is dominating the tournament</strong> — leading in both shots and possession. No team is close.</span></div>
+    <div class="insight-item"><span class="insight-icon">❌</span><span class="insight-text"><strong>Barcelona is the weakest team so far</strong> — only 5 shots/game and 37.5% possession. Worst by far.</span></div>
+    <div class="insight-item"><span class="insight-icon">🎯</span><span class="insight-text"><strong>Boca Juniors doesn't need the ball to score</strong> — 12 shots with under 50% possession. Pure counter-attack.</span></div>
+    <div class="insight-item"><span class="insight-icon">🌑</span><span class="insight-text"><strong>AC Milan is the dark horse</strong> — 11.5 shots and 60.5% possession. Quietly dangerous.</span></div>
+  </div>
+  <button class="cta-btn" onclick="switchTab('compare',null)">
+    <span class="cta-btn-text">Compare any two teams →</span>
+    <span>⚖️</span>
+  </button>
+</div>
+
+<!-- TEAMS -->
+
+<div id="screen-teams" class="screen">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;margin-top:4px;">
+    <div class="section-label" style="margin:0;flex:1;">All 16 Teams</div>
+    <div style="font-size:11px;color:var(--text-dim);margin-left:10px;">Tap headers to sort</div>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;">
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th>#</th><th style="text-align:left;">Team</th>
+          <th onclick="sortTable('shots')" id="th-shots">⚽ Shots</th>
+          <th onclick="sortTable('poss')" id="th-poss">📊 Poss%</th>
+        </tr></thead>
+        <tbody id="teams-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARE -->
+
+<div id="screen-compare" class="screen">
+  <div class="section-label" style="margin-top:4px;">Pick Two Teams</div>
+  <div class="compare-selectors">
+    <div class="select-wrap">
+      <select id="team-a" onchange="updateCompare()">
+        <option>Arsenal</option><option>Fenerbahce</option><option>Boca Juniors</option><option>Manchester United</option><option>Ajax</option><option>AC Milan</option><option>Benfica</option><option>Bayern Munich</option><option>Juventus</option><option>Inter Milan</option><option>Real Madrid</option><option>Liverpool</option><option>Galatasaray</option><option>Santos</option><option>River Plate</option><option>Barcelona</option>
+      </select>
+    </div>
+    <div class="vs-pill">VS</div>
+    <div class="select-wrap">
+      <select id="team-b" onchange="updateCompare()">
+        <option>Barcelona</option><option>Arsenal</option><option>Fenerbahce</option><option>Boca Juniors</option><option>Manchester United</option><option>Ajax</option><option>AC Milan</option><option>Benfica</option><option>Bayern Munich</option><option>Juventus</option><option>Inter Milan</option><option>Real Madrid</option><option>Liverpool</option><option>Galatasaray</option><option>Santos</option><option>River Plate</option>
+      </select>
+    </div>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;">
+    <div class="compare-stat-block">
+      <div class="compare-stat-label">Shots per game</div>
+      <div class="compare-bar-row">
+        <span class="cval a" id="cval-shots-a">13</span>
+        <div class="cbar-wrap">
+          <div class="cbar-track"><div id="cbar-shots-a" class="cbar-fill gold-bar" style="width:100%;"></div></div>
+          <div class="cbar-track"><div id="cbar-shots-b" class="cbar-fill gray-bar" style="width:38%;"></div></div>
+        </div>
+        <span class="cval b" id="cval-shots-b">5</span>
+      </div>
+    </div>
+    <div class="compare-stat-block">
+      <div class="compare-stat-label">Possession %</div>
+      <div class="compare-bar-row">
+        <span class="cval a" id="cval-poss-a">61.5%</span>
+        <div class="cbar-wrap">
+          <div class="cbar-track"><div id="cbar-poss-a" class="cbar-fill gold-bar" style="width:100%;"></div></div>
+          <div class="cbar-track"><div id="cbar-poss-b" class="cbar-fill gray-bar" style="width:61%;"></div></div>
+        </div>
+        <span class="cval b" id="cval-poss-b">37.5%</span>
+      </div>
+    </div>
+    <div class="verdict-card">
+      <div class="verdict-label">📊 Statistical Verdict</div>
+      <div class="verdict-text" id="verdict-text">Arsenal dominates Barcelona in every metric. It wouldn't even be close.</div>
+    </div>
+  </div>
+</div>
+
+<!-- INSIGHTS -->
+
+<div id="screen-insights" class="screen">
+  <div class="insight-section-title">🏆 Title Race</div>
+  <div class="insight-block"><strong>Arsenal is running away with this tournament.</strong> They lead in shots (13/game) AND possession (61.5%). No team has both. That combination wins leagues.</div>
+  <div class="insight-block"><strong>Fenerbahce controls possession better than any team except Arsenal.</strong> 61% is elite. If they convert more chances, they're the biggest threat.</div>
+  <div class="insight-block"><strong>Boca Juniors doesn't need the ball.</strong> 12 shots on 49.5% possession means they're brutally efficient. The kind of team that beats you and you never see it coming.</div>
+  <div class="insight-section-title">⚠️ Teams at Risk</div>
+  <div class="insight-block warning"><strong>Barcelona is in crisis.</strong> 5 shots. 37.5% possession. Worst numbers in the tournament — and it's not close. Major tactical rethink needed.</div>
+  <div class="insight-block warning"><strong>River Plate and Galatasaray are barely competing.</strong> Both under 7 shots and under 45% possession. Getting outplayed in almost every game.</div>
+  <div class="insight-block warning"><strong>Santos and Juventus are too passive.</strong> 7 shots/game won't cut it in a 16-team league. They need to create more.</div>
+  <div class="insight-section-title">🔍 Tactical Patterns</div>
+  <div class="insight-block neutral"><strong>The possession trap:</strong> AC Milan has 60.5% possession but results don't match. High possession doesn't always mean dominance.</div>
+  <div class="insight-block neutral"><strong>Counter-attack kings:</strong> Boca Juniors and Benfica generate high shots despite below-average possession. Speed over control — and it's working.</div>
+  <div class="insight-block neutral"><strong>The quiet middle:</strong> Ajax and Bayern sit in the middle of every metric. Competitive, not dominant. They'll decide the middle of the table.</div>
+</div>
+
+<script>
+const teams=[
+  {name:'Arsenal',manager:'Sir Nacho Ruglio',shots:13,poss:61.5},
+  {name:'Fenerbahce',manager:'adolfis_1',shots:11.5,poss:61},
+  {name:'AC Milan',manager:'Sherito Da Silva',shots:11.5,poss:60.5},
+  {name:'Boca Juniors',manager:'Nivekserolf',shots:12,poss:49.5},
+  {name:'Benfica',manager:'Griche espinosa 70',shots:12.5,poss:53.5},
+  {name:'Ajax',manager:'Myking Guzman',shots:10.5,poss:54.5},
+  {name:'Bayern Munich',manager:'iShowfideo',shots:10.5,poss:49.5},
+  {name:'Manchester United',manager:'ferchu2020',shots:9,poss:53},
+  {name:'Inter Milan',manager:'luis rodriguez_69',shots:8,poss:46.5},
+  {name:'Real Madrid',manager:'Jramos_9',shots:7.5,poss:46},
+  {name:'Liverpool',manager:'Xabi alonso 16_5',shots:7.5,poss:44.5},
+  {name:'Juventus',manager:'matiasc_51',shots:7,poss:48.5},
+  {name:'Galatasaray',manager:'ThCARP',shots:7,poss:41},
+  {name:'Santos',manager:'shoxx11',shots:7,poss:43.5},
+  {name:'River Plate',manager:'fernando18_0',shots:6,poss:44.5},
+  {name:'Barcelona',manager:'kevinp_388',shots:5,poss:37.5},
+];
+let sortKey='shots',sortDir=-1;
+function renderTeams(){
+  const maxS=Math.max(...teams.map(t=>t.shots));
+  const maxP=Math.max(...teams.map(t=>t.poss));
+  const sorted=[...teams].sort((a,b)=>(a[sortKey]-b[sortKey])*sortDir);
+  document.getElementById('teams-tbody').innerHTML=sorted.map((t,i)=>{
+    const first=i===0;
+    return`<tr class="${first?'rank-1':''}">
+      <td><span class="rank-num">${i+1}</span></td>
+      <td><div class="team-name">${t.name}</div><div class="team-mgr">@${t.manager}</div></td>
+      <td><div class="stat-val" style="color:${first?'var(--gold)':'var(--text)'}">${t.shots}</div><div class="stat-bar" style="width:${Math.round(t.shots/maxS*60)}px;opacity:${first?1:0.35};"></div></td>
+      <td><div class="stat-val" style="color:${first?'var(--gold)':'var(--text)'}">${t.poss}%</div><div class="stat-bar" style="width:${Math.round(t.poss/maxP*60)}px;opacity:${first?1:0.35};"></div></td>
+    </tr>`;
+  }).join('');
+  document.querySelectorAll('th[id]').forEach(th=>th.classList.remove('sorted'));
+  const el=document.getElementById('th-'+sortKey);if(el)el.classList.add('sorted');
+}
+function sortTable(key){if(sortKey===key)sortDir*=-1;else{sortKey=key;sortDir=-1;}renderTeams();}
+function updateCompare(){
+  const a=teams.find(t=>t.name===document.getElementById('team-a').value);
+  const b=teams.find(t=>t.name===document.getElementById('team-b').value);
+  if(!a||!b)return;
+  const maxS=13,maxP=61.5;
+  document.getElementById('cbar-shots-a').style.width=(a.shots/maxS*100)+'%';
+  document.getElementById('cbar-shots-b').style.width=(b.shots/maxS*100)+'%';
+  document.getElementById('cval-shots-a').textContent=a.shots;
+  document.getElementById('cval-shots-b').textContent=b.shots;
+  document.getElementById('cbar-poss-a').style.width=(a.poss/maxP*100)+'%';
+  document.getElementById('cbar-poss-b').style.width=(b.poss/maxP*100)+'%';
+  document.getElementById('cval-poss-a').textContent=a.poss+'%';
+  document.getElementById('cval-poss-b').textContent=b.poss+'%';
+  const aScore=a.shots*0.6+a.poss*0.4,bScore=b.shots*0.6+b.poss*0.4;
+  let v='';
+  if(a.name===b.name)v='Select two different teams to compare.';
+  else if(Math.abs(aScore-bScore)<3)v=`<strong>${a.name}</strong> and <strong>${b.name}</strong> are statistically very close. Either could win on the day.`;
+  else if(aScore>bScore)v=`<strong style="color:var(--gold)">${a.name}</strong> has a clear statistical edge. The numbers strongly favor them in this matchup.`;
+  else v=`<strong style="color:var(--gold)">${b.name}</strong> comes out ahead. They'd be the statistical favorite here.`;
+  document.getElementById('verdict-text').innerHTML=v;
+}
+function switchTab(id,btn){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+  const tabs={overview:0,teams:1,compare:2,insights:3};
+  if(btn)btn.classList.add('active');
+  else document.querySelectorAll('.tab-btn')[tabs[id]].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+renderTeams();updateCompare();
+</script>
+
+</body>
+</html>
