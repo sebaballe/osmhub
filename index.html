@@ -435,7 +435,7 @@ footer strong { color:var(–green); }
   </div>
   <div class="nav-badge">FAN-MADE</div>
   <div class="nav-right">
-    <button class="btn-ghost" id="lang-btn" onclick="toggleLang()">🌐 ES / EN</button>
+    <button class="btn-ghost" id="lang-btn" onclick="currentLang = currentLang === 'es' ? 'en' : 'es'; this.textContent = currentLang === 'es' ? '🌐 EN / ES' : '🌐 ES / EN'; applyTranslations(); loadHomeScreen();">🌐 ES / EN</button>
     <div class="user-menu" id="user-menu">
       <button class="btn-ghost" id="auth-btn" onclick="openAuth()">Iniciar sesión</button>
     </div>
