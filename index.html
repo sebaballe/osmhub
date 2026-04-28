@@ -3014,8 +3014,11 @@
     if (h2hOther) h2hOther.textContent = currentLang === 'es' ? 'Otro' : 'Other';
     var h2hOppEl = document.getElementById('h2h-opponent');
     if (h2hOppEl) h2hOppEl.placeholder = currentLang === 'es' ? 'Usuario del rival (ej: hola123)' : 'Rival username (e.g. hola123)';
-    var feedTitleEl = document.querySelector('.feed-title');
-    if (feedTitleEl) feedTitleEl.textContent = t('feed-title');
+    var bnavHome = document.getElementById('bnav-home-label'); if(bnavHome) bnavHome.textContent = currentLang === 'es' ? 'Inicio' : 'Home';
+    var bnavTournament = document.getElementById('bnav-tournament-label'); if(bnavTournament) bnavTournament.textContent = currentLang === 'es' ? 'Torneo' : 'Tournament';
+    var bnavTactics = document.getElementById('bnav-tactics-label'); if(bnavTactics) bnavTactics.textContent = currentLang === 'es' ? 'Tácticas' : 'Tactics';
+    var bnavRankings = document.getElementById('bnav-rankings-label'); if(bnavRankings) bnavRankings.textContent = currentLang === 'es' ? 'Rankings' : 'Rankings';
+    var bnavH2h = document.getElementById('bnav-h2h-label'); if(bnavH2h) bnavH2h.textContent = 'H2H';
     var pills = document.querySelectorAll('.pill');
     if(pills[0]) pills[0].textContent = t('pill-hot');
     if(pills[1]) pills[1].textContent = t('pill-new');
@@ -3374,15 +3377,15 @@
   <div style="display:flex;justify-content:space-around;align-items:center;">
     <button onclick="showScreen('feed',document.getElementById('tab-trending'));loadHomeScreen();" class="bottom-nav-btn" id="bnav-home">
       <div style="font-size:20px;">🏠</div>
-      <div class="bnav-label" id="bnav-home-label">Inicio</div>
+      <div class="bnav-label" id="bnav-home-label">Home</div>
     </button>
     <button onclick="showScreen('tournament',document.getElementById('tab-tournament'));applyTournamentTranslations();loadTournamentComments();" class="bottom-nav-btn" id="bnav-tournament">
       <div style="font-size:20px;">🏆</div>
-      <div class="bnav-label" id="bnav-tournament-label">Torneo</div>
+      <div class="bnav-label" id="bnav-tournament-label">Tournament</div>
     </button>
     <button onclick="showScreen('builder',document.getElementById('tab-builder'));initFormationExplorer();" class="bottom-nav-btn" id="bnav-tactics">
       <div style="font-size:20px;">⚽</div>
-      <div class="bnav-label" id="bnav-tactics-label">Tácticas</div>
+      <div class="bnav-label" id="bnav-tactics-label">Tactics</div>
     </button>
     <button onclick="showScreen('ranking',document.getElementById('tab-ranking'));loadRankings();" class="bottom-nav-btn" id="bnav-rankings">
       <div style="font-size:20px;">🥇</div>
