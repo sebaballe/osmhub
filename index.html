@@ -435,7 +435,7 @@
   </div>
 </nav>
 
-<div class="tabs">
+<div class="tabs" style="display:none;">
   <div class="tab active" onclick="showScreen('feed',this)" id="tab-trending">🔥 Trending</div>
   <div class="tab" onclick="showScreen('detail',this)" id="tab-detail" style="display:none">📋 Tactic Detail</div>
   <div class="tab" onclick="showScreen('tournament',this)" id="tab-tournament">🏆 Copa Nostalgia</div>
@@ -3399,11 +3399,9 @@
 </div>
 
 <script>
-  // Show bottom nav on mobile
-  if (window.innerWidth <= 768) {
-    document.getElementById('bottom-nav').style.display = 'block';
-    document.querySelector('body').style.paddingBottom = '70px';
-  }
+  // Show bottom nav always
+  document.getElementById('bottom-nav').style.display = 'block';
+  document.querySelector('body').style.paddingBottom = '70px';
 </script>
 
 </body>
