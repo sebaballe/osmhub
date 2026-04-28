@@ -2717,6 +2717,7 @@ footer strong { color:var(–green); }
       }
       msg.textContent = currentLang === 'es' ? '¡Cuenta creada! Ya podés usar OSM Hub.' : 'Account created! You can now use OSM Hub.';
       msg.className = 'auth-msg success';
+      if (res.data && res.data.user) { currentUser = res.data.user; updateNavForUser(); updateBanner(); }
       setTimeout(closeAuth, 2000);
     } catch(e) {
       msg.textContent = 'Error: ' + e.message;
@@ -2743,6 +2744,9 @@ footer strong { color:var(–green); }
       }
       msg.textContent = currentLang === 'es' ? '¡Bienvenido!' : 'Welcome!';
       msg.className = 'auth-msg success';
+      currentUser = res.data.user;
+      updateNavForUser();
+      updateBanner();
       setTimeout(closeAuth, 1000);
     } catch(e) {
       msg.textContent = 'Error: ' + e.message;
