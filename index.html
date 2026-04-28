@@ -465,7 +465,7 @@ footer strong { color:var(–green); }
     <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:#FFFFFF;line-height:1.15;margin-bottom:10px;letter-spacing:0.5px;" id="hero-title">Compite en torneos de OSM y demuestra que sos el mejor manager</h1>
     <p style="font-size:14px;color:#9AA5B4;margin-bottom:24px;line-height:1.5;" id="hero-sub">Únete gratis, gana premios y enfréntate a jugadores reales</p>
     <div style="display:flex;flex-direction:column;gap:10px;max-width:320px;margin:0 auto 20px;">
-      <button onclick="showScreen('tournament',document.getElementById('tab-tournament'));applyTournamentTranslations();loadTournamentComments();" style="background:linear-gradient(135deg,#FFD700,#E6C200);color:#000000;border:none;border-radius:12px;padding:16px 24px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;letter-spacing:0.5px;box-shadow:0 4px 20px rgba(255,215,0,0.3);" id="hero-btn-primary">⚡ ENTRAR AL PRÓXIMO TORNEO</button>
+      <button onclick="openSignupModal()" style="background:linear-gradient(135deg,#FFD700,#E6C200);color:#000000;border:none;border-radius:12px;padding:16px 24px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;letter-spacing:0.5px;box-shadow:0 4px 20px rgba(255,215,0,0.3);" id="hero-btn-primary">⚡ ENTRAR AL PRÓXIMO TORNEO</button>
       <button onclick="showScreen('tournament',document.getElementById('tab-tournament'));applyTournamentTranslations();loadTournamentComments();" style="background:transparent;color:#FFD700;border:1px solid rgba(255,215,0,0.4);border-radius:12px;padding:14px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;cursor:pointer;" id="hero-btn-secondary">Ver resultados →</button>
     </div>
     <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:20px;padding:6px 14px;">
@@ -625,7 +625,7 @@ footer strong { color:var(–green); }
       <div style="font-size:11px;color:#4A5A6E;" id="next-cup-prize">Premio PayPal</div>
     </div>
   </div>
-  <button onclick="showScreen('tournament',document.getElementById('tab-tournament'));applyTournamentTranslations();loadTournamentComments();" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000000;border:none;border-radius:12px;padding:16px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;box-shadow:0 4px 20px rgba(255,215,0,0.25);" id="next-cup-btn">⚡ RESERVAR MI LUGAR</button>
+  <button onclick="openSignupModal()" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000000;border:none;border-radius:12px;padding:16px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;box-shadow:0 4px 20px rgba(255,215,0,0.25);" id="next-cup-btn">⚡ RESERVAR MI LUGAR</button>
 </div>
 
 <!-- TOP TACTICS -->
@@ -1613,6 +1613,90 @@ footer strong { color:var(–green); }
     renderStatsTeams();
     updateStatsCompare();
   }
+
+  // ===== SIGNUP MODAL =====
+  async function openSignupModal() {
+    var es = currentLang === 'es';
+    var modal = document.getElementById('signup-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    // Translations
+    document.getElementById('signup-modal-title').textContent = 'COPA NOSTALGIA II';
+    document.getElementById('signup-modal-sub').textContent = es ? 'Dejá tu usuario de OSM y reservá tu lugar' : 'Leave your OSM username and reserve your spot';
+    document.getElementById('signup-modal-btn').textContent = es ? '✅ RESERVAR MI LUGAR' : '✅ RESERVE MY SPOT';
+    document.getElementById('signup-osm-label').textContent = es ? 'Tu usuario de OSM' : 'Your OSM username';
+    document.getElementById('signup-osm-input').placeholder = es ? 'ej: hola123' : 'e.g. hola123';
+    document.getElementById('signup-info-date').textContent = es ? 'Fecha por confirmar' : 'Date TBD';
+    document.getElementById('signup-info-prize').textContent = es ? 'Premio en efectivo vía PayPal' : 'Cash prize via PayPal';
+    document.getElementById('signup-modal-login-btn').textContent = es ? '⚡ CREAR CUENTA GRATIS' : '⚡ CREATE FREE ACCOUNT';
+    document.getElementById('signup-modal-login-note').textContent = es ? 'Solo tu email. Sin spam.' : 'Just your email. No spam.';
+    document.getElementById('signup-modal-login-msg').textContent = es ? 'Necesitás una cuenta para anotarte' : 'You need an account to sign up';
+    document.getElementById('signup-success-title').textContent = es ? '¡Estás anotado!' : 'You\'re in!';
+    document.getElementById('signup-success-sub').textContent = es ? 'Te avisaremos cuando empiece la Copa Nostalgia II.' : 'We\'ll notify you when Copa Nostalgia II starts.';
+    document.getElementById('signup-close-btn').textContent = es ? 'Cerrar' : 'Close';
+    // Get spots count
+    var signups = await db.from('tournament_signups').select('id', { count: 'exact', head: true }).eq('tournament', 'copa-nostalgia-2');
+    var count = signups.count || 0;
+    document.getElementById('signup-info-spots').textContent = es ? (count + '/16 cupos ocupados') : (count + '/16 spots taken');
+    // Show correct state
+    document.getElementById('signup-modal-success').style.display = 'none';
+    if (currentUser) {
+      document.getElementById('signup-modal-guest').style.display = 'none';
+      document.getElementById('signup-modal-logged').style.display = 'block';
+      // Check if already signed up
+      var existing = await db.from('tournament_signups').select('osm_username').eq('user_id', currentUser.id).eq('tournament', 'copa-nostalgia-2').maybeSingle();
+      if (existing.data) {
+        document.getElementById('signup-osm-input').value = existing.data.osm_username;
+        document.getElementById('signup-modal-msg').textContent = es ? '✅ Ya estás anotado con este usuario' : '✅ Already signed up with this username';
+        document.getElementById('signup-modal-msg').style.color = 'var(--gold)';
+      }
+    } else {
+      document.getElementById('signup-modal-guest').style.display = 'block';
+      document.getElementById('signup-modal-logged').style.display = 'none';
+    }
+  }
+
+  function closeSignupModal() {
+    document.getElementById('signup-modal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  async function submitSignupModal() {
+    if (!currentUser) return;
+    var es = currentLang === 'es';
+    var input = document.getElementById('signup-osm-input');
+    var msg = document.getElementById('signup-modal-msg');
+    var text = input ? input.value.trim() : '';
+    if (!text) {
+      msg.textContent = es ? 'Escribí tu usuario de OSM' : 'Enter your OSM username';
+      msg.style.color = 'var(--red)';
+      return;
+    }
+    var btn = document.getElementById('signup-modal-btn');
+    btn.textContent = es ? 'Enviando...' : 'Sending...';
+    // Check if already signed up
+    var existing = await db.from('tournament_signups').select('id').eq('user_id', currentUser.id).eq('tournament', 'copa-nostalgia-2').maybeSingle();
+    if (existing.data) {
+      document.getElementById('signup-modal-logged').style.display = 'none';
+      document.getElementById('signup-modal-success').style.display = 'block';
+      return;
+    }
+    var res = await db.from('tournament_signups').insert({ user_id: currentUser.id, osm_username: text, tournament: 'copa-nostalgia-2' });
+    if (res.error) {
+      msg.textContent = es ? 'Error. Intentá de nuevo.' : 'Error. Please try again.';
+      msg.style.color = 'var(--red)';
+      btn.textContent = es ? '✅ RESERVAR MI LUGAR' : '✅ RESERVE MY SPOT';
+      return;
+    }
+    document.getElementById('signup-modal-logged').style.display = 'none';
+    document.getElementById('signup-modal-success').style.display = 'block';
+    loadHomeScreen();
+  }
+
+  // Close modal on backdrop click
+  document.getElementById('signup-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeSignupModal();
+  });
 
   // ===== STATS HUB =====
   var statsInitialized = false;
@@ -3835,6 +3919,49 @@ footer strong { color:var(–green); }
   document.getElementById('bottom-nav').style.display = 'block';
   document.querySelector('body').style.paddingBottom = '70px';
 </script>
+
+<!-- SIGNUP MODAL -->
+
+<div id="signup-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#0D0D0D;border:1px solid rgba(255,215,0,0.3);border-radius:24px;padding:28px 24px;max-width:380px;width:100%;box-shadow:0 0 60px rgba(255,215,0,0.1);position:relative;">
+    <button onclick="closeSignupModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;line-height:1;">✕</button>
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="font-size:40px;margin-bottom:10px;">🏆</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:#FFFFFF;margin-bottom:6px;" id="signup-modal-title">COPA NOSTALGIA II</div>
+      <div style="font-size:13px;color:var(--text-mid);" id="signup-modal-sub">Dejá tu usuario de OSM y reservá tu lugar</div>
+    </div>
+    <!-- Guest -->
+    <div id="signup-modal-guest" style="display:none;text-align:center;">
+      <div style="font-size:13px;color:var(--text-mid);margin-bottom:14px;" id="signup-modal-login-msg">Necesitás una cuenta para anotarte</div>
+      <button onclick="closeSignupModal();openAuth();" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;" id="signup-modal-login-btn">⚡ CREAR CUENTA GRATIS</button>
+      <div style="margin-top:10px;font-size:11px;color:var(--text-dim);" id="signup-modal-login-note">Solo tu email. Sin spam.</div>
+    </div>
+    <!-- Logged in -->
+    <div id="signup-modal-logged" style="display:none;">
+      <div style="background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.15);border-radius:12px;padding:14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">⚽</span>
+        <div style="flex:1;">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;" id="signup-osm-label">Tu usuario de OSM</div>
+          <input id="signup-osm-input" placeholder="ej: hola123" style="width:100%;background:transparent;border:none;outline:none;color:#FFFFFF;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;" />
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:12px;margin-bottom:16px;font-size:12px;color:var(--text-dim);display:flex;flex-direction:column;gap:4px;">
+        <div>🗓 <span id="signup-info-date">Fecha por confirmar</span></div>
+        <div>👥 <span id="signup-info-spots">Cupos disponibles</span></div>
+        <div>💰 <span id="signup-info-prize">Premio en efectivo vía PayPal</span></div>
+      </div>
+      <button onclick="submitSignupModal()" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:16px;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;cursor:pointer;box-shadow:0 4px 20px rgba(255,215,0,0.25);" id="signup-modal-btn">✅ RESERVAR MI LUGAR</button>
+      <div id="signup-modal-msg" style="text-align:center;font-size:13px;margin-top:10px;min-height:18px;"></div>
+    </div>
+    <!-- Success -->
+    <div id="signup-modal-success" style="display:none;text-align:center;">
+      <div style="font-size:48px;margin-bottom:10px;">🎉</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:#FFD700;margin-bottom:8px;" id="signup-success-title">¡Estás anotado!</div>
+      <div style="font-size:13px;color:var(--text-mid);margin-bottom:20px;" id="signup-success-sub">Te avisaremos cuando empiece la Copa Nostalgia II.</div>
+      <button onclick="closeSignupModal()" style="background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);color:#FFD700;border-radius:10px;padding:10px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="signup-close-btn">Cerrar</button>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
