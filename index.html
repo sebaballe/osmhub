@@ -1687,7 +1687,8 @@ footer strong { color:var(–green); }
   }
 
   // Cerrar modal on backdrop click
-  document.getElementById('signup-modal').addEventListener('click', function(e) {
+  var signupModal = document.getElementById('signup-modal');
+  if(signupModal) signupModal.addEventListener('click', function(e) {
     if (e.target === this) closeSignupModal();
   });
 
@@ -2076,7 +2077,7 @@ footer strong { color:var(–green); }
   }
 
   // ===== LOAD TACTIC DETAIL =====
-  let currentTacticId = null;
+  var currentTacticId = null;
   var previousScreen = 'feed';
 
   async function loadTacticDetail(id) {
