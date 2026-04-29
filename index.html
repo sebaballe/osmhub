@@ -483,16 +483,6 @@ footer strong { color:var(–green); }
   <div style="max-width:700px;margin:0 auto;padding:20px 16px;">
 
 ```
-<div id="welcome-banner" style="display:none;background:linear-gradient(135deg,rgba(255,215,0,0.08),rgba(255,215,0,0.04));border:1px solid rgba(255,215,0,0.25);border-radius:16px;padding:20px;margin-bottom:20px;">
-  <div style="display:flex;gap:16px;align-items:center;flex-wrap:wrap;">
-    <div style="flex:1;min-width:200px;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:#FFFFFF;margin-bottom:4px;" id="banner-title">🏆 Unite a la comunidad táctica</div>
-      <div style="font-size:13px;color:#9AA5B4;line-height:1.5;" id="banner-sub">Registrate gratis para votar tácticas, comentar y competir.</div>
-    </div>
-    <button onclick="openAuth()" style="background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:10px;padding:12px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;white-space:nowrap;flex-shrink:0;" id="banner-btn">⚡ REGISTRARME GRATIS</button>
-  </div>
-</div>
-
 <!-- COPA NOSTALGIA CARD -->
 <div style="background:linear-gradient(135deg,#0D0D0D,#111111);border:1px solid rgba(255,215,0,0.25);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 4px 24px rgba(255,215,0,0.06);">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
@@ -2738,40 +2728,7 @@ footer strong { color:var(–green); }
     }
   }
 
-  async function updateBanner() {
-    var banner = document.getElementById('welcome-banner');
-    if (!banner) return;
-    if (currentUser) { banner.style.display = 'none'; return; }
-    banner.style.display = 'block';
-    // Load real stats
-    var tacticsRes = await db.from('tactics').select('id', { count: 'exact', head: true });
-    var votesRes = await db.from('votes').select('id', { count: 'exact', head: true });
-    var usersRes = await db.from('profiles').select('id', { count: 'exact', head: true });
-    var tCount = tacticsRes.count || 0;
-    var vCount = votesRes.count || 0;
-    var uCount = usersRes.count || 0;
-    var statUsers = document.getElementById('banner-stat-users');
-    var statTactics = document.getElementById('banner-stat-tactics');
-    var statVotes = document.getElementById('banner-stat-votes');
-    if (statUsers) statUsers.textContent = uCount > 0 ? uCount + '+' : '40+';
-    if (statTactics) statTactics.textContent = tCount + '+';
-    if (statVotes) statVotes.textContent = vCount + '+';
-    // Translate
-    var title = document.getElementById('banner-title');
-    var sub = document.getElementById('banner-sub');
-    var btn = document.getElementById('banner-btn');
-    var ul = document.getElementById('banner-stat-users-label');
-    var tl = document.getElementById('banner-stat-tactics-label');
-    var vl = document.getElementById('banner-stat-votes-label');
-    var wl = document.getElementById('banner-stat-world-label');
-    if (title) title.textContent = currentLang === 'es' ? '🏆 Unite a la comunidad de tácticas' : '🏆 Join the tactics community';
-    if (sub) sub.textContent = currentLang === 'es' ? 'Registrate gratis para votar tácticas, comentar y compartir las tuyas. Ya somos managers de todo el mundo.' : 'Sign up free to vote tactics, comment and share yours. Managers from all over the world are already here.';
-    if (btn) btn.textContent = currentLang === 'es' ? '⚡ REGISTRARME' : '⚡ REGISTRARME FREE';
-    if (ul) ul.textContent = currentLang === 'es' ? 'managers activos' : 'active managers';
-    if (tl) tl.textContent = currentLang === 'es' ? 'tácticas publicadas' : 'tactics published';
-    if (vl) vl.textContent = currentLang === 'es' ? 'votos de la comunidad' : 'community votes';
-    if (wl) wl.textContent = currentLang === 'es' ? 'managers de todo el mundo' : 'managers worldwide';
-  }
+  async function updateBanner() { /* banner removed */ }
 
   async function deleteTactic(id) {
     if (!confirm(confirm_msg)) return;
