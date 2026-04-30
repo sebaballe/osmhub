@@ -1794,52 +1794,57 @@
 
   async function loadHomeScreen() {
     var es = currentLang === 'es';
-    // Update hero translations
     var heroTitle = document.getElementById('hero-title');
-    if(heroTitle) heroTitle.textContent = es ? 'Compite en torneos de OSM y demuestra que sos el mejor manager' : 'Compite en torneos de OSM y demostrá que sos el mejor manager';
+    if(heroTitle) heroTitle.textContent = es ? 'Compite en torneos de OSM y demostrá que sos el mejor manager' : 'Compete in OSM tournaments and prove you are the best manager';
     var heroSub = document.getElementById('hero-sub');
-    if(heroSub) heroSub.textContent = es ? 'Únete gratis, gana premios y enfréntate a jugadores reales' : 'Unite gratis, ganá premios y enfrentate a jugadores reales';
+    if(heroSub) heroSub.textContent = es ? 'Unite gratis, ganá premios y enfrentate a jugadores reales' : 'Join free, win prizes and face real players';
     var heroPrimary = document.getElementById('hero-btn-primary');
-    if(heroPrimary) heroPrimary.textContent = es ? '⚡ ENTRAR AL PRÓXIMO TORNEO' : '⚡ ENTRAR AL PRÓXIMO TORNEO';
+    if(heroPrimary) heroPrimary.textContent = es ? '⚡ ENTRAR AL PRÓXIMO TORNEO' : '⚡ JOIN THE NEXT TOURNAMENT';
     var heroSecondary = document.getElementById('hero-btn-secondary');
-    if(heroSecondary) heroSecondary.textContent = es ? 'Ver resultados →' : 'Ver resultados →';
+    if(heroSecondary) heroSecondary.textContent = es ? 'Ver resultados →' : 'See results →';
     var heroProof = document.getElementById('hero-social-proof');
-    if(heroProof) heroProof.textContent = es ? '+500 managers ya compitiendo' : '+500 managers ya compitiendo';
+    if(heroProof) heroProof.textContent = es ? '+500 managers ya compitiendo' : '+500 managers already competing';
     var copaStatus = document.getElementById('copa-status-badge');
-    if(copaStatus) copaStatus.textContent = es ? '🔴 EN JUEGO' : '🔴 EN JUEGO';
+    if(copaStatus) copaStatus.textContent = es ? '🔴 EN JUEGO' : '🔴 LIVE';
     var top4Label = document.getElementById('home-top4-label');
-    if(top4Label) top4Label.textContent = es ? 'TOP 4' : 'TOP 4';
+    if(top4Label) top4Label.textContent = 'TOP 4';
     var resultsLabel = document.getElementById('home-results-label');
-    if(resultsLabel) resultsLabel.textContent = es ? 'ÚLTIMOS RESULTADOS' : 'ÚLTIMOS RESULTADOS';
-    var nextCupTitle = document.getElementById('next-cup-title');
-    if(nextCupTitle) nextCupTitle.textContent = es ? '🚀 COPA NOSTALGIA II' : '🚀 COPA NOSTALGIA II';
-    var nextCupSub = document.getElementById('next-cup-sub');
-    if(nextCupSub) nextCupSub.textContent = es ? 'Únete a la próxima edición — los cupos se llenan rápido' : 'Únete a la próxima edición — los cupos se llenan rápido';
-    var nextCupBtn = document.getElementById('next-cup-btn');
-    if(nextCupBtn) nextCupBtn.textContent = es ? '⚡ RESERVAR MI LUGAR' : '⚡ RESERVAR MI LUGAR';
-    var nextCupDate = document.getElementById('next-cup-date');
-    if(nextCupDate) nextCupDate.textContent = es ? 'Fecha por confirmar' : 'Fecha por confirmar';
-    var nextCupPrize = document.getElementById('next-cup-prize');
-    if(nextCupPrize) nextCupPrize.textContent = es ? 'Premio PayPal' : 'Premio PayPal';
-    var statsTitle = document.getElementById('stats-hub-title'); if(statsTitle) statsTitle.textContent = 'STATS HUB';
-    var statsSub = document.getElementById('stats-hub-sub'); if(statsSub) statsSub.textContent = es ? 'Descubre qué equipos dominan el torneo' : 'Descubrí qué equipos dominan el torneo';
-    var statsBadge = document.getElementById('stats-hub-badge'); if(statsBadge) statsBadge.textContent = es ? '🏆 Arsenal lidera en tiros y posesión' : '🏆 Arsenal lidera en tiros y posesión';
-    var statsCta = document.getElementById('stats-hub-cta'); if(statsCta) statsCta.textContent = es ? 'Ver stats →' : 'Ver stats →';
+    if(resultsLabel) resultsLabel.textContent = es ? 'ÚLTIMOS RESULTADOS' : 'LATEST RESULTS';
+    var roundLabel = document.getElementById('home-round-label');
+    if(roundLabel) roundLabel.textContent = es ? 'JORNADA 4 · 30 RONDAS TOTALES' : 'ROUND 4 · 30 ROUNDS TOTAL';
     var seeTournament = document.getElementById('home-see-tournament');
-    if(seeTournament) seeTournament.textContent = es ? 'Ver tabla →' : 'Ver tabla →';
-    // Load signups count for next cup
+    if(seeTournament) seeTournament.textContent = es ? 'Ver tabla →' : 'See table →';
+    var nextCupSub = document.getElementById('next-cup-sub');
+    if(nextCupSub) nextCupSub.textContent = es ? 'Únete a la próxima edición — los cupos se llenan rápido' : 'Join the next edition — spots fill up fast';
+    var nextCupDate = document.getElementById('next-cup-date');
+    if(nextCupDate) nextCupDate.textContent = es ? 'Fecha por confirmar' : 'Date TBD';
+    var nextCupPrize = document.getElementById('next-cup-prize');
+    if(nextCupPrize) nextCupPrize.textContent = es ? 'Premio PayPal' : 'PayPal prize';
+    var nextCupBtn = document.getElementById('next-cup-btn');
+    if(nextCupBtn) nextCupBtn.textContent = es ? '⚡ RESERVAR MI LUGAR' : '⚡ RESERVE MY SPOT';
+    var statsSub = document.getElementById('stats-hub-sub');
+    if(statsSub) statsSub.textContent = es ? 'Descubrí qué equipos dominan el torneo' : 'Find out which teams are dominating';
+    var statsBadge = document.getElementById('stats-hub-badge');
+    if(statsBadge) statsBadge.textContent = es ? '🏆 Fenerbahce lidera con 12 puntos' : '🏆 Fenerbahce leads with 12 points';
+    var statsCta = document.getElementById('stats-hub-cta');
+    if(statsCta) statsCta.textContent = es ? 'Ver stats →' : 'See stats →';
+    var homeTopTitle = document.getElementById('home-top-title');
+    if(homeTopTitle) homeTopTitle.textContent = es ? '⭐ TÁCTICAS MÁS VOTADAS' : '⭐ TOP TACTICS';
+    var homeSeeRankings = document.getElementById('home-see-rankings');
+    if(homeSeeRankings) homeSeeRankings.textContent = es ? 'Ver todas →' : 'See all →';
+    // Load signups count
     var spotsEl = document.getElementById('next-cup-spots');
-    var spotsLabel = document.getElementById('next-cup-spots-label');
     if(spotsEl) {
       spotsEl.textContent = '...';
       db.from('tournament_signups').select('id').eq('tournament', 'copa-nostalgia-2').then(function(signups) {
         var count = (signups.data && signups.data.length) ? signups.data.length : 0;
         var el = document.getElementById('next-cup-spots');
         if(el) el.textContent = count + '/16';
+        var lbl = document.getElementById('next-cup-spots-label');
+        if(lbl) lbl.textContent = currentLang === 'es' ? 'Cupos ocupados' : 'Spots taken';
       });
     }
     renderCopaResults();
-    updateBanner();
     loadHomeTopTactics();
   }
 
@@ -1849,7 +1854,7 @@
     var seeTournament = document.getElementById('home-see-tournament');
     if(seeTournament) seeTournament.textContent = es ? 'Ver torneo →' : 'See tournament →';
     if (!container) return;
-    var jornada = es ? 'JORNADA 2' : 'JORNADA 2';
+    var jornada = es ? 'JORNADA 4' : 'ROUND 4';
     var html = '<div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:10px;letter-spacing:0.5px;">' + jornada + '</div>';
     copaResults.forEach(function(r) {
       var homeWin = r.homeScore > r.awayScore;
