@@ -2129,7 +2129,7 @@
     // Check if user already voted
     var alreadyVoted = false;
     if (currentUser) {
-      var voteCheck = await db.from('votes').select('id,result').eq('tactic_id', id).eq('user_id', currentUser.id).single();
+      var voteCheck = await db.from('votes').select('id,result').eq('tactic_id', id).eq('user_id', currentUser.id).maybeSingle();
       if (voteCheck.data) {
         alreadyVoted = true;
         var vs1 = document.getElementById('vote-step1');
@@ -2287,7 +2287,7 @@
     if (!currentTacticId) return;
     if (!currentUser) { openAuth(); return; }
     // Check for duplicate vote
-    var existing = await db.from('votes').select('id').eq('tactic_id', currentTacticId).eq('user_id', currentUser.id).single();
+    var existing = await db.from('votes').select('id').eq('tactic_id', currentTacticId).eq('user_id', currentUser.id).maybeSingle();
     if (existing.data) {
       alert(currentLang === 'es' ? 'Ya votaste esta táctica.' : 'You already voted on this tactic.');
       return;
