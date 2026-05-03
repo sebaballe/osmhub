@@ -427,10 +427,11 @@
 <nav>
   <div class="logo-wrap">
     <div class="logo">OSM <span>HUB</span></div>
-    <div class="logo-sub">plataforma táctica creada por fans</div>
+    <div class="logo-sub" id="t-logo-sub">plataforma táctica creada por fans</div>
   </div>
   <div class="nav-badge">FAN-MADE</div>
   <div class="nav-right">
+    <button class="btn-ghost" id="lang-btn" onclick="toggleLang()" style="font-size:11px;padding:5px 8px;">🌐 ES</button>
     <div class="user-menu" id="user-menu">
       <button class="btn-ghost" id="auth-btn" onclick="openAuth()">Iniciar sesión</button>
     </div>
@@ -438,7 +439,7 @@
 </nav>
 
 <div class="tabs">
-  <div class="tab active" onclick="showScreen('home',this)" id="tab-home">🏠 Inicio</div>
+  <div class="tab active" onclick="showScreen('home',this)" id="tab-home"><span id="t-tab-home">🏠 Inicio</span></div>
   <div class="tab" onclick="showScreen('torneo1',this)" id="tab-torneo1">🏆 Copa Nostalgia I</div>
   <div class="tab" onclick="showScreen('torneo2',this)" id="tab-torneo2">🚀 Copa Nostalgia II</div>
 </div>
@@ -448,9 +449,9 @@
   <div style="background:linear-gradient(160deg,#000 0%,#0A0800 100%);padding:40px 20px 32px;text-align:center;border-bottom:1px solid rgba(255,215,0,0.15);position:relative;overflow:hidden;">
     <div style="position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(255,215,0,0.08) 0%,transparent 70%);pointer-events:none;"></div>
     <div style="font-size:64px;margin-bottom:16px;filter:drop-shadow(0 0 20px rgba(255,215,0,0.4));">🏆</div>
-    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:#FFFFFF;line-height:1.15;margin-bottom:10px;">Copa Nostalgia — El torneo de OSM para managers reales</h1>
-    <p style="font-size:14px;color:#9AA5B4;margin-bottom:28px;line-height:1.5;">Unite gratis, ganá premios y demostrá que sos el mejor manager</p>
-    <button onclick="openSignupModal()" style="background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:18px 32px;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;cursor:pointer;box-shadow:0 4px 24px rgba(255,215,0,0.35);width:100%;max-width:320px;">⚡ RESERVAR MI LUGAR</button>
+    <h1 id="t-hero-title" style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:#FFFFFF;line-height:1.15;margin-bottom:10px;">Copa Nostalgia — El torneo de OSM para managers reales</h1>
+    <p id="t-hero-sub" style="font-size:14px;color:#9AA5B4;margin-bottom:28px;line-height:1.5;">Unite gratis, ganá premios y demostrá que sos el mejor manager</p>
+    <button onclick="openSignupModal()" id="t-hero-btn" style="background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:18px 32px;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;cursor:pointer;box-shadow:0 4px 24px rgba(255,215,0,0.35);width:100%;max-width:320px;">⚡ RESERVAR MI LUGAR</button>
     <div style="margin-top:16px;display:inline-flex;align-items:center;gap:8px;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:20px;padding:6px 14px;">
       <span style="font-size:16px;">👥</span>
       <span style="font-size:13px;font-weight:600;color:#FFD700;" id="home-signups-count">cargando cupos...</span>
@@ -461,13 +462,13 @@
 
     <!-- Rules card -->
     <div style="background:#0D0D0D;border:1px solid rgba(255,215,0,0.2);border-radius:16px;padding:20px;margin-bottom:16px;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFD700;margin-bottom:14px;">📋 REGLAS DEL TORNEO</div>
+      <div id="t-rules-title" style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFD700;margin-bottom:14px;">📋 REGLAS DEL TORNEO</div>
       <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:#9AA5B4;"><span style="font-size:20px;">🏆</span>Liga Estrellas de Clubes</div>
-        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:#9AA5B4;"><span style="font-size:20px;">⏱</span>Sin timers</div>
-        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:#9AA5B4;"><span style="font-size:20px;">🏫</span>Sin campus</div>
-        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:#9AA5B4;"><span style="font-size:20px;">🔒</span>Sin entrenamiento secreto</div>
-        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:#9AA5B4;"><span style="font-size:20px;">💰</span>Premio al ganador via PayPal</div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:#9AA5B4;"><span style="font-size:20px;">🏆</span><span id="t-rule1">Liga Estrellas de Clubes</span></div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:#9AA5B4;"><span style="font-size:20px;">⏱</span><span id="t-rule2">Sin timers</span></div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:#9AA5B4;"><span style="font-size:20px;">🏫</span><span id="t-rule3">Sin campus</span></div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:#9AA5B4;"><span style="font-size:20px;">🔒</span><span id="t-rule4">Sin entrenamiento secreto</span></div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:#9AA5B4;"><span style="font-size:20px;">💰</span><span id="t-rule5">Premio al ganador via PayPal</span></div>
       </div>
     </div>
 
@@ -475,7 +476,7 @@
     <div style="background:#0D0D0D;border:1px solid #1E2830;border-radius:16px;padding:20px;margin-bottom:16px;">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
         <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFFFFF;">🏆 COPA NOSTALGIA I</div>
-        <button onclick="showScreen('torneo1',document.getElementById('tab-torneo1'))" style="background:none;border:1px solid rgba(255,215,0,0.3);color:#FFD700;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;">Ver tabla →</button>
+        <button onclick="showScreen('torneo1',document.getElementById('tab-torneo1'))" id="t-view-table" style="background:none;border:1px solid rgba(255,215,0,0.3);color:#FFD700;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;">Ver tabla →</button>
       </div>
       <div style="display:flex;align-items:center;gap:8px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.15);border-radius:8px;padding:10px 14px;margin-bottom:6px;">
         <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFD700;min-width:24px;">1</span>
@@ -504,16 +505,16 @@
 <div id="screen-torneo1" class="screen">
   <div style="max-width:700px;margin:0 auto;padding:20px 16px;">
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#FFD700;margin-bottom:4px;">🏆 COPA NOSTALGIA I</div>
-    <div style="font-size:13px;color:#4A5A6E;margin-bottom:20px;">Jornada 6 de 30 · 3 de mayo 2026</div>
+    <div id="t-j6-label" style="font-size:13px;color:#4A5A6E;margin-bottom:20px;">Jornada 6 de 30 · 3 de mayo 2026</div>
 
     <!-- Standings -->
     <div style="background:#0D0D0D;border:1px solid rgba(255,215,0,0.15);border-radius:16px;overflow:hidden;margin-bottom:16px;">
-      <div style="padding:16px 16px 12px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFF;border-bottom:1px solid #1E2830;">📊 TABLA DE POSICIONES</div>
+      <div id="t-standings-title" style="padding:16px 16px 12px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFF;border-bottom:1px solid #1E2830;">📊 TABLA DE POSICIONES</div>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;font-size:12px;">
           <thead><tr style="border-bottom:1px solid rgba(255,215,0,0.15);">
             <th style="padding:8px 6px 8px 14px;text-align:left;color:#4A5A6E;font-family:'Barlow Condensed',sans-serif;">#</th>
-            <th style="padding:8px 6px;text-align:left;color:#4A5A6E;font-family:'Barlow Condensed',sans-serif;">Equipo</th>
+            <th id="t-th-team" style="padding:8px 6px;text-align:left;color:#4A5A6E;font-family:'Barlow Condensed',sans-serif;">Equipo</th>
             <th style="padding:8px 6px;text-align:center;color:#4A5A6E;font-family:'Barlow Condensed',sans-serif;">PJ</th>
             <th style="padding:8px 6px;text-align:center;color:#4A5A6E;font-family:'Barlow Condensed',sans-serif;">G</th>
             <th style="padding:8px 6px;text-align:center;color:#4A5A6E;font-family:'Barlow Condensed',sans-serif;">E</th>
@@ -530,7 +531,7 @@
 
     <!-- Latest results -->
     <div style="background:#0D0D0D;border:1px solid #1E2830;border-radius:16px;padding:16px;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFF;margin-bottom:14px;">⚽ JORNADA 6 — RESULTADOS</div>
+      <div id="t-results-title" style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFF;margin-bottom:14px;">⚽ JORNADA 6 — RESULTADOS</div>
       <div id="results-list" style="display:flex;flex-direction:column;gap:6px;"></div>
     </div>
   </div>
@@ -540,18 +541,18 @@
 <div id="screen-torneo2" class="screen">
   <div style="max-width:500px;margin:0 auto;padding:20px 16px;">
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#FFD700;margin-bottom:4px;">🚀 COPA NOSTALGIA II</div>
-    <div style="font-size:13px;color:#4A5A6E;margin-bottom:20px;">Próxima edición — inscribite ahora</div>
+    <div id="t-t2-sub" style="font-size:13px;color:#4A5A6E;margin-bottom:20px;">Próxima edición — inscribite ahora</div>
 
     <!-- Signup CTA -->
     <div style="background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,215,0,0.03));border:1px solid rgba(255,215,0,0.3);border-radius:16px;padding:20px;margin-bottom:16px;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFF;margin-bottom:6px;">¿Querés participar?</div>
-      <div style="font-size:13px;color:#9AA5B4;margin-bottom:16px;">Dejá tu usuario de OSM y te avisamos cuando empiece.</div>
-      <button onclick="openSignupModal()" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;">⚡ RESERVAR MI LUGAR</button>
+      <div id="t-t2-cta-title" style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFF;margin-bottom:6px;">¿Querés participar?</div>
+      <div id="t-t2-cta-sub" style="font-size:13px;color:#9AA5B4;margin-bottom:16px;">Dejá tu usuario de OSM y te avisamos cuando empiece.</div>
+      <button onclick="openSignupModal()" id="t-t2-cta-btn" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;">⚡ RESERVAR MI LUGAR</button>
     </div>
 
     <!-- Signed up list -->
     <div style="background:#0D0D0D;border:1px solid #1E2830;border-radius:16px;padding:16px;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFF;margin-bottom:14px;">👥 MANAGERS ANOTADOS <span id="t2-count" style="color:#FFD700;"></span></div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFF;margin-bottom:14px;"><span id="t-t2-list-title">👥 MANAGERS ANOTADOS</span> <span id="t2-count" style="color:#FFD700;"></span></div>
       <div id="t2-signups-list" style="display:flex;flex-direction:column;gap:6px;">
         <div style="font-size:13px;color:#4A5A6E;text-align:center;padding:20px;">Cargando...</div>
       </div>
@@ -636,8 +637,139 @@
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5YXpzZGJtZGJubWpqcGN0dG53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4ODE0MTIsImV4cCI6MjA5MjQ1NzQxMn0.CbmYy-9XILk99DkuKi5CFIqQBDvADcLvozvIX46c5zQ';
   const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  var currentLang = localStorage.getItem('osmhub-lang') || 'es';
+  // Detect browser language, respecting manual override stored in localStorage
+  var _stored = localStorage.getItem('osmhub-lang');
+  var _browser = (navigator.language || navigator.userLanguage || 'es').toLowerCase();
+  var currentLang = _stored ? _stored : (_browser.startsWith('en') ? 'en' : 'es');
   var currentUser = null;
+
+  // ===== TRANSLATIONS =====
+  var T = {
+    es: {
+      'logo-sub':        'plataforma táctica creada por fans',
+      'auth-btn':        'Iniciar sesión',
+      'tab-home':        '🏠 Inicio',
+      'lang-btn':        '🌐 ES',
+      'hero-title':      'Copa Nostalgia — El torneo de OSM para managers reales',
+      'hero-sub':        'Unite gratis, ganá premios y demostrá que sos el mejor manager',
+      'hero-btn':        '⚡ RESERVAR MI LUGAR',
+      'signups-loading': 'cargando cupos...',
+      'rules-title':     '📋 REGLAS DEL TORNEO',
+      'rule1':           'Liga Estrellas de Clubes',
+      'rule2':           'Sin timers',
+      'rule3':           'Sin campus',
+      'rule4':           'Sin entrenamiento secreto',
+      'rule5':           'Premio al ganador via PayPal',
+      'view-table':      'Ver tabla →',
+      'j6-label':        'Jornada 6 de 30 · 3 de mayo 2026',
+      'standings-title': '📊 TABLA DE POSICIONES',
+      'th-team':         'Equipo',
+      'results-title':   '⚽ JORNADA 6 — RESULTADOS',
+      't2-sub':          'Próxima edición — inscribite ahora',
+      't2-cta-title':    '¿Querés participar?',
+      't2-cta-sub':      'Dejá tu usuario de OSM y te avisamos cuando empiece.',
+      't2-cta-btn':      '⚡ RESERVAR MI LUGAR',
+      't2-list-title':   '👥 MANAGERS ANOTADOS',
+      'auth-modal-sub':  'Uníte a la comunidad de tácticas',
+      'tab-login':       'Iniciar sesión',
+      'tab-register':    'Registrarse',
+      'signup-modal-sub':   'Dejá tu usuario de OSM y reservá tu lugar',
+      'signup-modal-login-msg': 'Necesitás una cuenta para anotarte',
+      'signup-modal-login-btn': '⚡ CREAR CUENTA GRATIS',
+      'signup-modal-login-note': 'Solo tu email. Sin spam.',
+      'signup-osm-label':  'Tu usuario de OSM',
+      'rules-title-modal': '📋 REGLAS DEL TORNEO',
+      'signup-modal-btn':  '✅ RESERVAR MI LUGAR',
+      'signup-success-title': '¡Estás anotado!',
+      'signup-success-sub': 'Te avisaremos cuando empiece la Copa Nostalgia II.',
+      'signup-close-btn':  'Cerrar',
+      'slots-remaining':   ' cupos disponibles',
+      'slots-full':        '¡Cupos completos!',
+      'slots-loading':     'cargando cupos...',
+    },
+    en: {
+      'logo-sub':        'fan-made tactics platform',
+      'auth-btn':        'Sign in',
+      'tab-home':        '🏠 Home',
+      'lang-btn':        '🌐 EN',
+      'hero-title':      'Copa Nostalgia — The OSM tournament for real managers',
+      'hero-sub':        'Join for free, win prizes and prove you\'re the best manager',
+      'hero-btn':        '⚡ RESERVE MY SPOT',
+      'signups-loading': 'loading spots...',
+      'rules-title':     '📋 TOURNAMENT RULES',
+      'rule1':           'Club Stars League',
+      'rule2':           'No timers',
+      'rule3':           'No campus',
+      'rule4':           'No secret training',
+      'rule5':           'Prize for the winner via PayPal',
+      'view-table':      'View table →',
+      'j6-label':        'Matchday 6 of 30 · May 3, 2026',
+      'standings-title': '📊 STANDINGS',
+      'th-team':         'Team',
+      'results-title':   '⚽ MATCHDAY 6 — RESULTS',
+      't2-sub':          'Next edition — sign up now',
+      't2-cta-title':    'Want to join?',
+      't2-cta-sub':      'Leave your OSM username and we\'ll notify you when it starts.',
+      't2-cta-btn':      '⚡ RESERVE MY SPOT',
+      't2-list-title':   '👥 REGISTERED MANAGERS',
+      'auth-modal-sub':  'Join the tactics community',
+      'tab-login':       'Sign in',
+      'tab-register':    'Sign up',
+      'signup-modal-sub':   'Leave your OSM username and reserve your spot',
+      'signup-modal-login-msg': 'You need an account to sign up',
+      'signup-modal-login-btn': '⚡ CREATE FREE ACCOUNT',
+      'signup-modal-login-note': 'Just your email. No spam.',
+      'signup-osm-label':  'Your OSM username',
+      'rules-title-modal': '📋 TOURNAMENT RULES',
+      'signup-modal-btn':  '✅ RESERVE MY SPOT',
+      'signup-success-title': 'You\'re in!',
+      'signup-success-sub': 'We\'ll notify you when Copa Nostalgia II starts.',
+      'signup-close-btn':  'Close',
+      'slots-remaining':   ' spots available',
+      'slots-full':        'Spots full!',
+      'slots-loading':     'loading spots...',
+    }
+  };
+
+  function applyTranslations() {
+    var lang = currentLang;
+    var d = T[lang];
+    // Update lang button
+    var lb = document.getElementById('lang-btn'); if(lb) lb.textContent = d['lang-btn'];
+    // Update all t- prefixed elements
+    var keys = Object.keys(d);
+    keys.forEach(function(k) {
+      var el = document.getElementById('t-' + k);
+      if(el) el.textContent = d[k];
+    });
+    // Auth btn (only if not logged in)
+    if(!currentUser) {
+      var ab = document.getElementById('auth-btn'); if(ab) ab.textContent = d['auth-btn'];
+    }
+    // Auth modal
+    var ams = document.getElementById('auth-modal-sub'); if(ams) ams.textContent = d['auth-modal-sub'];
+    var tl = document.getElementById('tab-login'); if(tl) tl.textContent = d['tab-login'];
+    var tr2 = document.getElementById('tab-register'); if(tr2) tr2.textContent = d['tab-register'];
+    // Signup modal
+    var sms = document.getElementById('signup-modal-sub'); if(sms) sms.textContent = d['signup-modal-sub'];
+    var sml = document.getElementById('signup-modal-login-msg'); if(sml) sml.textContent = d['signup-modal-login-msg'];
+    var smb = document.getElementById('signup-modal-login-btn'); if(smb) smb.textContent = d['signup-modal-login-btn'];
+    var smn = document.getElementById('signup-modal-login-note'); if(smn) smn.textContent = d['signup-modal-login-note'];
+    var sol = document.getElementById('signup-osm-label'); if(sol) sol.textContent = d['signup-osm-label'];
+    var srt = document.getElementById('rules-title'); if(srt) srt.textContent = d['rules-title-modal'];
+    var smbt = document.getElementById('signup-modal-btn'); if(smbt) smbt.textContent = d['signup-modal-btn'];
+    var sst = document.getElementById('signup-success-title'); if(sst) sst.textContent = d['signup-success-title'];
+    var sss = document.getElementById('signup-success-sub'); if(sss) sss.textContent = d['signup-success-sub'];
+    var scb = document.getElementById('signup-close-btn'); if(scb) scb.textContent = d['signup-close-btn'];
+    // Reload signups count with correct language
+    loadHomeSignupCount();
+  }
+
+  function toggleLang() {
+    currentLang = currentLang === 'es' ? 'en' : 'es';
+    localStorage.setItem('osmhub-lang', currentLang); // save manual override
+    applyTranslations();
+  }
 
   // ===== NAVIGATION =====
   function showScreen(id, tabEl) {
@@ -911,15 +1043,18 @@
   async function loadHomeSignupCount() {
     var el = document.getElementById('home-signups-count');
     if(!el) return;
+    var d = T[currentLang];
+    el.textContent = d['slots-loading'];
     var res = await db.from('tournament_signups').select('id').eq('tournament','copa-nostalgia-2');
     var count = res.data ? res.data.length : 0;
     var remaining = 16 - count;
-    el.textContent = remaining > 0 ? remaining + ' cupos disponibles' : '¡Cupos completos!';
+    el.textContent = remaining > 0 ? remaining + d['slots-remaining'] : d['slots-full'];
   }
 
   // ===== INIT =====
   document.addEventListener('DOMContentLoaded', function() {
     initAuth();
+    applyTranslations();
     loadHomeSignupCount();
   });
 
