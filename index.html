@@ -455,812 +455,122 @@
   <div class="tab" onclick="showScreen('stats',this)" id="tab-stats">📊 Stats</div><div class="tab" onclick="showScreen('h2h',this)" id="tab-h2h">⚔️ H2H</div>
 </div>
 
-<!-- ===== FEED ===== -->
-<div id="screen-feed" class="screen active">
-
-  <!-- HERO SECTION -->
+<!-- ===== HOME ===== -->
+<div id="screen-home" class="screen active">
   <div style="background:linear-gradient(160deg,#000 0%,#0A0800 100%);padding:40px 20px 32px;text-align:center;border-bottom:1px solid rgba(255,215,0,0.15);position:relative;overflow:hidden;">
     <div style="position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(255,215,0,0.08) 0%,transparent 70%);pointer-events:none;"></div>
     <div style="font-size:64px;margin-bottom:16px;filter:drop-shadow(0 0 20px rgba(255,215,0,0.4));">🏆</div>
-    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:#FFFFFF;line-height:1.15;margin-bottom:10px;" id="hero-title">Compite en torneos de OSM y demostrá que sos el mejor manager</h1>
-    <p style="font-size:14px;color:#9AA5B4;margin-bottom:24px;line-height:1.5;" id="hero-sub">Unite gratis, ganá premios y enfrentate a jugadores reales</p>
-    <div style="display:flex;flex-direction:column;gap:10px;max-width:320px;margin:0 auto 20px;">
-      <button onclick="openSignupModal()" style="background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:16px 24px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;letter-spacing:0.5px;box-shadow:0 4px 20px rgba(255,215,0,0.3);" id="hero-btn-primary">⚡ ENTRAR AL PRÓXIMO TORNEO</button>
-      <button onclick="showScreen('tournament',document.getElementById('tab-tournament'));applyTournamentTranslations();loadTournamentComments();" style="background:transparent;color:#FFD700;border:1px solid rgba(255,215,0,0.4);border-radius:12px;padding:14px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;cursor:pointer;" id="hero-btn-secondary">Ver resultados →</button>
-    </div>
-    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:20px;padding:6px 14px;">
+    <h1 style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:#FFFFFF;line-height:1.15;margin-bottom:10px;">Copa Nostalgia — El torneo de OSM para managers reales</h1>
+    <p style="font-size:14px;color:#9AA5B4;margin-bottom:28px;line-height:1.5;">Unite gratis, ganá premios y demostrá que sos el mejor manager</p>
+    <button onclick="openSignupModal()" style="background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:18px 32px;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;cursor:pointer;box-shadow:0 4px 24px rgba(255,215,0,0.35);width:100%;max-width:320px;">⚡ RESERVAR MI LUGAR</button>
+    <div style="margin-top:16px;display:inline-flex;align-items:center;gap:8px;background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.2);border-radius:20px;padding:6px 14px;">
       <span style="font-size:16px;">👥</span>
-      <span style="font-size:13px;font-weight:600;color:#FFD700;" id="hero-social-proof">+500 managers ya compitiendo</span>
+      <span style="font-size:13px;font-weight:600;color:#FFD700;" id="home-signups-count">cargando cupos...</span>
     </div>
   </div>
 
+  <div style="max-width:500px;margin:0 auto;padding:20px 16px;">
+
+    <!-- Rules card -->
+    <div style="background:#0D0D0D;border:1px solid rgba(255,215,0,0.2);border-radius:16px;padding:20px;margin-bottom:16px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFD700;margin-bottom:14px;">📋 REGLAS DEL TORNEO</div>
+      <div style="display:flex;flex-direction:column;gap:10px;">
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:#9AA5B4;"><span style="font-size:20px;">🏆</span>Liga Estrellas de Clubes</div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:#9AA5B4;"><span style="font-size:20px;">⏱</span>Sin timers</div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:#9AA5B4;"><span style="font-size:20px;">🏫</span>Sin campus</div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:#9AA5B4;"><span style="font-size:20px;">🔒</span>Sin entrenamiento secreto</div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px;color:#9AA5B4;"><span style="font-size:20px;">💰</span>Premio al ganador via PayPal</div>
+      </div>
+    </div>
+
+    <!-- Torneo I preview -->
+    <div style="background:#0D0D0D;border:1px solid #1E2830;border-radius:16px;padding:20px;margin-bottom:16px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFFFFF;">🏆 COPA NOSTALGIA I</div>
+        <button onclick="showScreen('torneo1',document.getElementById('tab-torneo1'))" style="background:none;border:1px solid rgba(255,215,0,0.3);color:#FFD700;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;">Ver tabla →</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.15);border-radius:8px;padding:10px 14px;margin-bottom:6px;">
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFD700;min-width:24px;">1</span>
+        <span style="font-size:14px;font-weight:700;color:#FFF;flex:1;">Fenerbahce</span>
+        <span style="font-size:11px;color:#4A5A6E;">@adolfis_1</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFD700;">12pts</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;background:#0D0D0D;border-radius:8px;padding:8px 14px;margin-bottom:4px;">
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#9AA5B4;min-width:24px;">2</span>
+        <span style="font-size:13px;color:#FFF;flex:1;">Boca Juniors</span>
+        <span style="font-size:11px;color:#4A5A6E;">@Nivekserolf</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;color:#9AA5B4;">8pts</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;background:#0D0D0D;border-radius:8px;padding:8px 14px;">
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#9AA5B4;min-width:24px;">3</span>
+        <span style="font-size:13px;color:#FFF;flex:1;">Santos</span>
+        <span style="font-size:11px;color:#4A5A6E;">@shoxx11</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;color:#9AA5B4;">8pts</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ===== TORNEO I ===== -->
+<div id="screen-torneo1" class="screen">
   <div style="max-width:700px;margin:0 auto;padding:20px 16px;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#FFD700;margin-bottom:4px;">🏆 COPA NOSTALGIA I</div>
+    <div style="font-size:13px;color:#4A5A6E;margin-bottom:20px;">Jornada 4 de 30 · 25 de mayo 2026</div>
 
-
-    <!-- COPA NOSTALGIA CARD -->
-    <div style="background:linear-gradient(135deg,#0D0D0D,#111111);border:1px solid rgba(255,215,0,0.25);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 4px 24px rgba(255,215,0,0.06);">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span style="font-size:22px;">🏆</span>
-          <div>
-            <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:#FFD700;">COPA NOSTALGIA</div>
-            <div style="font-size:11px;color:#4A5A6E;" id="home-round-label">JORNADA 4 · 30 RONDAS TOTALES</div>
-          </div>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;">
-          <div style="background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);color:#FFD700;font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px;" id="copa-status-badge">🔴 EN JUEGO</div>
-          <button onclick="showScreen('tournament',document.getElementById('tab-tournament'));applyTournamentTranslations();loadTournamentComments();" style="background:none;border:none;color:#FFD700;font-size:12px;font-weight:600;cursor:pointer;" id="home-see-tournament">Ver tabla →</button>
-        </div>
-      </div>
-
-      <!-- Top 4 -->
-      <div style="margin-bottom:14px;">
-        <div style="font-size:10px;font-weight:700;color:#4A5A6E;letter-spacing:1px;margin-bottom:8px;">TOP 4</div>
-        <div style="display:flex;flex-direction:column;gap:4px;">
-          <div style="display:flex;align-items:center;gap:8px;background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.15);border-radius:8px;padding:8px 12px;">
-            <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFD700;min-width:20px;">1</span>
-            <span style="font-size:14px;font-weight:700;color:#FFFFFF;flex:1;">Fenerbahce</span>
-            <span style="font-size:11px;color:#4A5A6E;">@adolfis_1</span>
-            <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFD700;">12pts</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;background:#0D0D0D;border-radius:8px;padding:8px 12px;">
-            <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#9AA5B4;min-width:20px;">2</span>
-            <span style="font-size:14px;font-weight:600;color:#FFFFFF;flex:1;">Boca Juniors</span>
-            <span style="font-size:11px;color:#4A5A6E;">@Nivekserolf</span>
-            <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#9AA5B4;">8pts</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;background:#0D0D0D;border-radius:8px;padding:8px 12px;">
-            <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#9AA5B4;min-width:20px;">3</span>
-            <span style="font-size:14px;font-weight:600;color:#FFFFFF;flex:1;">Santos</span>
-            <span style="font-size:11px;color:#4A5A6E;">@shoxx11</span>
-            <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#9AA5B4;">8pts</span>
-          </div>
-          <div style="display:flex;align-items:center;gap:8px;background:#0D0D0D;border-radius:8px;padding:8px 12px;">
-            <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#9AA5B4;min-width:20px;">4</span>
-            <span style="font-size:14px;font-weight:600;color:#FFFFFF;flex:1;">Manchester United</span>
-            <span style="font-size:11px;color:#4A5A6E;">@ferchu2020</span>
-            <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#9AA5B4;">7pts</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Results -->
-      <div>
-        <div style="font-size:10px;font-weight:700;color:#4A5A6E;letter-spacing:1px;margin-bottom:8px;" id="home-results-label">ÚLTIMOS RESULTADOS</div>
-        <div id="home-copa-results">
-          <div style="font-size:10px;font-weight:700;color:#4A5A6E;margin-bottom:6px;letter-spacing:0.5px;">JORNADA 4</div>
-          <div style="display:flex;flex-direction:column;gap:4px;">
-            <div style="background:rgba(0,0,0,0.6);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;"><div style="flex:1;"><div style="font-size:12px;color:#9AA5B4;">⚽ Juventus</div><div style="font-size:9px;color:#4A5A6E;">@matiasc_51</div></div><div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-align:center;white-space:nowrap;"><span style="color:#FFD700;">2</span><span style="color:#4A5A6E;margin:0 4px;">-</span><span style="color:#FFD700;">2</span></div><div style="flex:1;text-align:right;"><div style="font-size:12px;color:#9AA5B4;">⚽ Bayern München</div><div style="font-size:9px;color:#4A5A6E;">@iShowfideo</div></div></div>
-            <div style="background:rgba(0,0,0,0.6);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;"><div style="flex:1;"><div style="font-size:12px;font-weight:700;color:#FFF;">⚽ River Plate</div><div style="font-size:9px;color:#4A5A6E;">@fernando18_0</div></div><div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-align:center;white-space:nowrap;"><span style="color:#FFD700;">1</span><span style="color:#4A5A6E;margin:0 4px;">-</span><span style="color:#4A5A6E;">0</span></div><div style="flex:1;text-align:right;"><div style="font-size:12px;color:#9AA5B4;">⚽ Ajax</div><div style="font-size:9px;color:#4A5A6E;">@Myking Guzman</div></div></div>
-            <div style="background:rgba(0,0,0,0.6);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;"><div style="flex:1;"><div style="font-size:12px;font-weight:700;color:#FFF;">⚽ Manchester United</div><div style="font-size:9px;color:#4A5A6E;">@ferchu2020</div></div><div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-align:center;white-space:nowrap;"><span style="color:#FFD700;">2</span><span style="color:#4A5A6E;margin:0 4px;">-</span><span style="color:#4A5A6E;">0</span></div><div style="flex:1;text-align:right;"><div style="font-size:12px;color:#9AA5B4;">⚽ Arsenal</div><div style="font-size:9px;color:#4A5A6E;">@Sir Nacho Ruglio</div></div></div>
-            <div style="background:rgba(0,0,0,0.6);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;"><div style="flex:1;"><div style="font-size:12px;color:#9AA5B4;">⚽ Benfica</div><div style="font-size:9px;color:#4A5A6E;">@Griche espinosa 70</div></div><div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-align:center;white-space:nowrap;"><span style="color:#4A5A6E;">0</span><span style="color:#4A5A6E;margin:0 4px;">-</span><span style="color:#FFD700;">1</span></div><div style="flex:1;text-align:right;"><div style="font-size:12px;font-weight:700;color:#FFF;">⚽ Fenerbahce</div><div style="font-size:9px;color:#4A5A6E;">@adolfis_1</div></div></div>
-            <div style="background:rgba(0,0,0,0.6);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;"><div style="flex:1;"><div style="font-size:12px;font-weight:700;color:#FFF;">⚽ Santos</div><div style="font-size:9px;color:#4A5A6E;">@shoxx11</div></div><div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-align:center;white-space:nowrap;"><span style="color:#FFD700;">1</span><span style="color:#4A5A6E;margin:0 4px;">-</span><span style="color:#4A5A6E;">0</span></div><div style="flex:1;text-align:right;"><div style="font-size:12px;color:#9AA5B4;">⚽ Inter Milan</div><div style="font-size:9px;color:#4A5A6E;">@luis rodriguez_69</div></div></div>
-            <div style="background:rgba(0,0,0,0.6);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;"><div style="flex:1;"><div style="font-size:12px;color:#9AA5B4;">⚽ Galatasaray</div><div style="font-size:9px;color:#4A5A6E;">@ThCARP</div></div><div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-align:center;white-space:nowrap;"><span style="color:#FFD700;">1</span><span style="color:#4A5A6E;margin:0 4px;">-</span><span style="color:#FFD700;">1</span></div><div style="flex:1;text-align:right;"><div style="font-size:12px;color:#9AA5B4;">⚽ Boca Juniors</div><div style="font-size:9px;color:#4A5A6E;">@Nivekserolf</div></div></div>
-            <div style="background:rgba(0,0,0,0.6);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;"><div style="flex:1;"><div style="font-size:12px;color:#9AA5B4;">⚽ Real Madrid</div><div style="font-size:9px;color:#4A5A6E;">@Jramos_9</div></div><div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-align:center;white-space:nowrap;"><span style="color:#FFD700;">0</span><span style="color:#4A5A6E;margin:0 4px;">-</span><span style="color:#FFD700;">0</span></div><div style="flex:1;text-align:right;"><div style="font-size:12px;color:#9AA5B4;">⚽ AC Milan</div><div style="font-size:9px;color:#4A5A6E;">@Sherito Da Silva</div></div></div>
-            <div style="background:rgba(0,0,0,0.6);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;"><div style="flex:1;"><div style="font-size:12px;font-weight:700;color:#FFF;">⚽ Liverpool</div><div style="font-size:9px;color:#4A5A6E;">@Xabi alonso 16_5</div></div><div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;text-align:center;white-space:nowrap;"><span style="color:#FFD700;">2</span><span style="color:#4A5A6E;margin:0 4px;">-</span><span style="color:#4A5A6E;">0</span></div><div style="flex:1;text-align:right;"><div style="font-size:12px;color:#9AA5B4;">⚽ Barcelona</div><div style="font-size:9px;color:#4A5A6E;">@kevinp_388</div></div></div>
-          </div>
-        </div>        </div>
-      </div>
-    </div>
-
-    <!-- STATS HUB CARD -->
-    <a href="#" onclick="showScreen('stats',document.getElementById('tab-stats'));initStats();return false;" style="text-decoration:none;display:block;margin-bottom:16px;">
-      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.2);border-radius:16px;padding:16px 18px;display:flex;align-items:center;gap:14px;transition:border-color 0.2s,transform 0.2s;" onmouseover="this.style.borderColor='rgba(255,215,0,0.4)';this.style.transform='translateY(-1px)';" onmouseout="this.style.borderColor='rgba(255,215,0,0.2)';this.style.transform='none';">
-        <div style="font-size:32px;flex-shrink:0;">📊</div>
-        <div style="flex:1;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:900;color:var(--text);margin-bottom:2px;">STATS HUB</div>
-          <div style="font-size:12px;color:var(--text-dim);margin-bottom:6px;">Descubrí qué equipos dominan el torneo</div>
-          <div style="display:inline-flex;align-items:center;gap:6px;"><div style="background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.2);border-radius:20px;padding:2px 8px;font-size:11px;font-weight:700;color:var(--gold);">🏆 Fenerbahce lidera con 9 puntos</div></div>
-        </div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:var(--gold);white-space:nowrap;">Ver stats →</div>
-      </div>
-    </a>
-
-    <!-- NEXT TOURNAMENT CTA -->
-    <div style="background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,215,0,0.04));border:1px solid rgba(255,215,0,0.35);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 0 30px rgba(255,215,0,0.08);">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#FFFFFF;margin-bottom:4px;">🚀 COPA NOSTALGIA II</div>
-      <div style="font-size:13px;color:#9AA5B4;margin-bottom:16px;">Únete a la próxima edición — los cupos se llenan rápido</div>
-      <div style="display:flex;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
-        <div style="flex:1;min-width:100px;background:rgba(0,0,0,0.3);border-radius:10px;padding:12px;text-align:center;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#FFD700;">📅</div>
-          <div style="font-size:11px;color:#4A5A6E;">Fecha por confirmar</div>
-        </div>
-        <div style="flex:1;min-width:100px;background:rgba(0,0,0,0.3);border-radius:10px;padding:12px;text-align:center;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#FFD700;" id="next-cup-spots">0/16</div>
-          <div style="font-size:11px;color:#4A5A6E;" id="next-cup-spots-label">Cupos ocupados</div>
-        </div>
-        <div style="flex:1;min-width:100px;background:rgba(0,0,0,0.3);border-radius:10px;padding:12px;text-align:center;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#FFD700;">💰</div>
-          <div style="font-size:11px;color:#4A5A6E;">Premio PayPal</div>
-        </div>
-      </div>
-      <button onclick="openSignupModal()" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:16px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;box-shadow:0 4px 20px rgba(255,215,0,0.25);">⚡ RESERVAR MI LUGAR</button>
-    </div>
-
-    <!-- TOP TACTICS -->
-    <div style="background:#0D0D0D;border:1px solid #1E2830;border-radius:20px;padding:20px;margin-bottom:16px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:#FFFFFF;" id="home-top-title">⭐ TÁCTICAS MÁS VOTADAS</div>
-        <button onclick="showScreen('ranking',document.getElementById('tab-ranking'));loadRankings();" style="background:none;border:1px solid #1E2830;color:#9AA5B4;border-radius:6px;padding:4px 10px;font-size:12px;font-weight:600;cursor:pointer;" id="home-see-rankings">Ver todas →</button>
-      </div>
-      <div id="home-top-tactics"><div style="font-size:13px;color:#4A5A6E;text-align:center;padding:20px;">Cargando...</div></div>
-    </div>
-
-  </div>
-</div>
-
-<!-- ===== DETAIL ===== -->
-<div id="screen-detail" class="screen">
-  <div class="detail-page">
-    <button class="back-btn" onclick="showScreen(previousScreen, document.getElementById('tab-' + previousScreen))" id="back-btn">← Volver</button>
-    <div class="detail-header">
-      <div class="detail-formation" id="detail-formation"></div>
-      <div style="flex:1;">
-        <div class="detail-title" id="detail-title"></div>
-        <div class="detail-author" id="detail-author"></div>
-      </div>
-    </div>
-    <div id="detail-owner-actions" class="detail-owner-actions"></div>
-    <div class="detail-eff">
-      <div class="detail-pct" id="detail-pct">0%</div>
-      <div>
-        <div class="detail-eff-label" id="detail-eff-label">EFECTIVIDAD</div>
-        <div class="detail-eff-sub" id="detail-eff-sub"></div>
-      </div>
-    </div>
-    <div class="detail-stats">
-      <div class="stat-box"><div class="stat-num" id="detail-votes-total">0</div><div class="stat-label" id="detail-total-label">Votos totales</div></div>
-      <div class="stat-box"><div class="stat-num yellow" id="detail-votes-yes">0</div><div class="stat-label" id="detail-works-label">👍 Funcionó</div></div>
-      <div class="stat-box"><div class="stat-num red" id="detail-votes-no">0</div><div class="stat-label" id="detail-didnt-label">👎 No funcionó</div></div>
-    </div>
-    <div id="detail-vs-section"><div id="detail-slider-info"></div></div>
-    <div style="display:flex;gap:16px;margin-bottom:24px;">
-      <div id="detail-pitch" style="width:140px;flex-shrink:0;">
-        <div style="position:relative;width:140px;height:210px;background:#1a5c2a;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.1);">
-          <div style="position:absolute;top:50%;left:5%;right:5%;height:1px;background:rgba(255,255,255,0.2);"></div>
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:40px;height:40px;border:1px solid rgba(255,255,255,0.2);border-radius:50%;"></div>
-          <div id="detail-pitch-players"></div>
-        </div>
-      </div>
-      <div style="flex:1;" id="detail-vote-section">
-        <div class="vote-section">
-          <div id="vote-step1">
-            <div class="vote-question" id="vote-q1">Did this tactic work for you?</div>
-            <div class="vote-sub" id="vote-sub1">Your vote helps the community find the best tactics</div>
-            <div class="vote-buttons">
-              <button class="vote-yes" id="vote-btn-yes" onclick="showVoteContext('yes')">👍 IT WORKED</button>
-              <button class="vote-no" id="vote-btn-no" onclick="showVoteContext('no')">👎 DIDN'T WORK</button>
-            </div>
-          </div>
-          <div id="vote-step-register" style="display:none;text-align:center;padding:20px;">
-            <div style="font-size:32px;margin-bottom:8px;">🏆</div>
-            <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;margin-bottom:8px;" id="vote-reg-title">Your vote matters to the community</div>
-            <div style="font-size:13px;color:var(--text-dim);margin-bottom:16px;" id="vote-reg-sub">Sign up free to vote. Your votes help managers find the best tactics.</div>
-            <button onclick="openAuth()" style="width:100%;background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;" id="vote-reg-btn">⚡ REGISTRARME FREE</button>
-            <div style="margin-top:8px;font-size:12px;color:var(--text-dim);" id="vote-reg-note">Solo tu email. Sin spam. No credit card.</div>
-            <span onclick="var s=document.getElementById('vote-step-register');var s1=document.getElementById('vote-step1');if(s)s.style.display='none';if(s1)s1.style.display='block';" style="font-size:12px;color:var(--text-dim);cursor:pointer;text-decoration:underline;" id="vote-register-back">Go back</span>
-          </div>
-          <div id="vote-step2" style="display:none;">
-            <div class="vote-question" id="vote-result-title">👍 Thanks! Tell us the context</div>
-            <div class="vote-sub" id="vote-sub2">Optional but very helpful for the community</div>
-            <div class="context-grid">
-              <div class="context-group">
-                <div class="context-label" id="vote-ctx-location">📍 Home or away?</div>
-                <div class="context-opts">
-                  <div class="ctx-opt" id="ctx-home" onclick="selectCtx(this,'location')">🏠 Home</div>
-                  <div class="ctx-opt" id="ctx-away" onclick="selectCtx(this,'location')">✈️ Away</div>
-                  <div class="ctx-opt" id="ctx-both" onclick="selectCtx(this,'location')">↔️ Both</div>
-                </div>
-              </div>
-              <div class="context-group">
-                <div class="context-label" id="vote-ctx-strength">⚡ Your team vs rival?</div>
-                <div class="context-opts">
-                  <div class="ctx-opt" id="ctx-superior" onclick="selectCtx(this,'strength')">📈 Superior</div>
-                  <div class="ctx-opt" id="ctx-similar" onclick="selectCtx(this,'strength')">⚖️ Similar</div>
-                  <div class="ctx-opt" id="ctx-inferior" onclick="selectCtx(this,'strength')">📉 Inferior</div>
-                </div>
-              </div>
-              <div class="context-group">
-                <div class="context-label" id="vote-ctx-comp">🏆 What competition?</div>
-                <div class="context-opts">
-                  <div class="ctx-opt" id="ctx-liga" onclick="selectCtx(this,'comp')">🥇 League</div>
-                  <div class="ctx-opt" id="ctx-copa" onclick="selectCtx(this,'comp')">🏆 Cup</div>
-                </div>
-              </div>
-            </div>
-            <button class="btn-submit-vote" id="vote-submit-btn" onclick="submitVote()">Send vote →</button>
-          </div>
-          <div id="vote-step3" style="display:none;">
-            <div class="vote-question" id="vote-q3">✅ Vote registered!</div>
-            <div class="vote-sub" id="vote-sub3" style="margin-bottom:16px">Here's how the tactic looks with your context:</div>
-            <div id="context-stats"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="comments-section">
-      <div class="comments-title" id="comments-title-label">COMMENTS <span id="comments-count">0</span></div>
-      <div id="comments-input-area">
-        <textarea class="comment-input" id="comment-input" placeholder="Share your experience with this tactic..."></textarea>
-        <button class="btn-comment" onclick="submitComment()" id="btn-comment">POST</button>
-      </div>
-      <div id="comments-list"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== LINEUP BUILDER ===== -->
-<div id="screen-builder" class="screen">
-  <div style="max-width:600px;margin:0 auto;padding:24px 16px;">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--text);margin-bottom:4px;" id="builder-title-main">⚽ EXPLORADOR DE FORMACIONES</div>
-    <div style="font-size:13px;color:var(--text-dim);margin-bottom:20px;" id="builder-sub">Seleccioná una formación para ver sus características y tácticas oficiales</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:24px;" id="formation-explorer-grid"></div>
-    <div id="formation-detail" style="display:none;">
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--green);" id="fe-formation-name"></div>
-          <div style="flex:1;"><div style="font-size:13px;color:var(--text-dim);" id="fe-formation-type"></div></div>
-          <button onclick="document.getElementById('formation-detail').style.display='none';" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:18px;">✕</button>
-        </div>
-        <div style="position:relative;width:100%;aspect-ratio:2/3;background:#1a3a1a;border-radius:8px;margin-bottom:16px;overflow:hidden;" id="fe-pitch">
-          <div style="position:absolute;top:50%;left:5%;right:5%;height:1px;background:rgba(255,255,255,0.2);"></div>
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;border:1px solid rgba(255,255,255,0.2);border-radius:50%;"></div>
-          <div id="fe-pitch-players"></div>
-        </div>
-        <div style="border-top:1px solid var(--border);padding-top:12px;">
-          <div style="font-size:12px;font-weight:700;color:var(--text-dim);margin-bottom:8px;" id="fe-tactics-title">✦ TÁCTICAS OFICIALES OSM HUB</div>
-          <div id="fe-tactics-list" style="display:flex;flex-direction:column;gap:6px;"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== RANKINGS ===== -->
-<div id="screen-ranking" class="screen">
-  <div class="ranking-page">
-    <div class="ranking-header">
-      <div class="ranking-title">🏆 RANKING DE FORMACIONES</div>
-      <div class="ranking-sub">Basado en votos reales de jugadores de OSM</div>
-    </div>
-    <div class="ranking-table">
-      <div class="ranking-row header">
-        <div>#</div><div>Formation</div><div style="text-align:center">Eff%</div><div style="text-align:center">Votes</div><div style="text-align:center">↕</div>
-      </div>
-      <div id="rankings-body">
-        <div style="padding:20px;text-align:center;color:var(--text-dim)">Cargando rankings...</div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- EDIT MODAL -->
-<div class="modal-overlay hidden" id="edit-modal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeEditModal()">✕</button>
-    <div class="modal-title">✏️ Editar táctica</div>
-    <div class="modal-sub">Modificá los detalles de tu táctica</div>
-    <input class="auth-input" id="edit-title" type="text" placeholder="Título">
-    <input class="auth-input" id="edit-formation" type="text" placeholder="Formación" readonly style="opacity:0.5;">
-    <div style="margin-bottom:12px;">
-      <div style="font-size:11px;font-weight:700;color:var(--blue);letter-spacing:1px;margin-bottom:6px;">PRESIÓN</div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <input type="range" id="edit-pressing" min="1" max="100" value="50" style="-webkit-appearance:none;flex:1;height:6px;border-radius:3px;background:var(--border2);outline:none;cursor:pointer;">
-        <span id="edit-pressing-num" style="font-size:16px;font-weight:900;min-width:30px;color:var(--text);">50</span>
-      </div>
-    </div>
-    <div style="margin-bottom:12px;">
-      <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:1px;margin-bottom:6px;">ESTILO</div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <input type="range" id="edit-style" min="1" max="100" value="50" style="-webkit-appearance:none;flex:1;height:6px;border-radius:3px;background:var(--border2);outline:none;cursor:pointer;">
-        <span id="edit-style-num" style="font-size:16px;font-weight:900;min-width:30px;color:var(--text);">50</span>
-      </div>
-    </div>
-    <div style="margin-bottom:16px;">
-      <div style="font-size:11px;font-weight:700;color:var(--yellow);letter-spacing:1px;margin-bottom:6px;">RITMO</div>
-      <div style="display:flex;align-items:center;gap:10px;">
-        <input type="range" id="edit-tempo" min="1" max="100" value="50" style="-webkit-appearance:none;flex:1;height:6px;border-radius:3px;background:var(--border2);outline:none;cursor:pointer;">
-        <span id="edit-tempo-num" style="font-size:16px;font-weight:900;min-width:30px;color:var(--text);">50</span>
-      </div>
-    </div>
-    <button class="btn-auth" onclick="saveEdit()">💾 GUARDAR CAMBIOS</button>
-  </div>
-</div>
-
-<!-- AUTH MODAL -->
-<div class="modal-overlay hidden" id="auth-modal">
-  <div class="modal">
-    <button class="modal-close" onclick="closeAuth()">✕</button>
-    <div class="modal-title" id="auth-modal-title">OSM HUB</div>
-    <div class="modal-sub" id="auth-modal-sub">Uníte a la comunidad de tácticas</div>
-    <div class="modal-tabs">
-      <div class="modal-tab active" id="tab-login" onclick="switchAuthTab('login')">Iniciar sesión</div>
-      <div class="modal-tab" id="tab-register" onclick="switchAuthTab('register')">Registrarse</div>
-    </div>
-    <div id="auth-form-login">
-      <input class="auth-input" id="login-email" type="email" placeholder="Email">
-      <input class="auth-input" id="login-password" type="password" placeholder="Password">
-      <button class="btn-auth" id="login-form-btn" onclick="handleLogin()">SIGN IN</button>
-    </div>
-    <div id="auth-form-register" style="display:none">
-      <input class="auth-input" id="reg-username" type="text" placeholder="Username (e.g. TacticMaster_AR)">
-      <input class="auth-input" id="reg-email" type="email" placeholder="Email">
-      <input class="auth-input" id="reg-password" type="password" placeholder="Password (min. 6 characters)">
-      <button class="btn-auth" id="reg-form-btn" onclick="handleRegister()">CREATE ACCOUNT</button>
-    </div>
-    <div class="auth-msg" id="auth-msg"></div>
-  </div>
-</div>
-
-
-<!-- ===== STATS HUB ===== -->
-<!-- ===== STATS HUB ===== -->
-<div id="screen-stats" class="screen">
-  <div style="padding:20px 16px 12px;background:linear-gradient(160deg,#000 0%,#0A0800 100%);border-bottom:1px solid rgba(255,215,0,0.1);text-align:center;position:relative;overflow:hidden;">
-    <div style="position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(255,215,0,0.06) 0%,transparent 65%);pointer-events:none;"></div>
-    <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:#FFD700;text-transform:uppercase;margin-bottom:8px;">Copa Nostalgia · Season 1</div>
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;letter-spacing:1px;margin-bottom:4px;">STATS <span style="color:#FFD700;">HUB</span></div>
-    <div style="font-size:13px;color:var(--text-mid);">¿Quién domina el torneo?</div>
-  </div>
-  <div style="display:flex;border-bottom:1px solid rgba(255,215,0,0.1);background:var(--surface);overflow-x:auto;" id="stats-tab-bar">
-    <button class="stats-tab-btn active" onclick="switchStatsTab('s-overview',this)">📊 Resumen</button>
-    <button class="stats-tab-btn" onclick="switchStatsTab('s-teams',this)">👥 Equipos</button>
-    <button class="stats-tab-btn" onclick="switchStatsTab('s-compare',this)">⚖️ Comparar</button>
-    <button class="stats-tab-btn" onclick="switchStatsTab('s-insights',this)">💡 Análisis</button>
-  </div>
-
-  <!-- OVERVIEW -->
-  <div id="s-overview" class="stats-pane active" style="padding:16px;max-width:700px;margin:0 auto;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:14px;margin-top:4px;" id="stats-top-title">🏆 Mejores del torneo</div>
-    <!-- #1 -->
-    <div style="background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,215,0,0.03));border:1px solid rgba(255,215,0,0.25);border-radius:20px;padding:20px;margin-bottom:10px;box-shadow:0 0 30px rgba(255,215,0,0.08);">
-      <div style="display:inline-flex;align-items:center;gap:4px;background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:#FFD700;margin-bottom:12px;"><span id="stats-dominant-badge">🔥 Dominante</span></div>
-      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <div style="font-size:26px;">🥇</div>
-          <div><div style="font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;">Fenerbahce</div><div style="font-size:11px;color:var(--text-dim);">@adolfis_1</div></div>
-        </div>
-        <div style="text-align:right;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:48px;font-weight:900;color:#FFD700;line-height:1;">13.3</div>
-          <div style="font-size:11px;color:var(--text-dim);" id="stats-shots-unit">tiros / partido</div>
-          <div style="font-size:12px;color:var(--text-mid);margin-top:2px;">📊 62.3% posesión</div>
-        </div>
-      </div>
-    </div>
-    <!-- #2 #3 -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
-      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:14px;padding:14px;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;"><span style="font-size:18px;">🥈</span><div><div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;">Benfica</div><div style="font-size:10px;color:var(--text-dim);">@Griche espinosa 70</div></div></div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--text-mid);">13.7</div>
-        <div style="font-size:10px;color:var(--text-dim);">tiros/p · 59% pos</div>
-      </div>
-      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:14px;padding:14px;">
-        <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;"><span style="font-size:18px;">🥉</span><div><div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;">Arsenal</div><div style="font-size:10px;color:var(--text-dim);">@Sir Nacho Ruglio</div></div></div>
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--text-mid);">13.3</div>
-        <div style="font-size:10px;color:var(--text-dim);">tiros/p · 61% pos</div>
-      </div>
-    </div>
-    <!-- AVG COMPARISON -->
-    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;" id="stats-avg-title">📈 Mejor equipo vs Promedio</div>
-    <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:14px;padding:16px;margin-bottom:16px;">
-      <div style="margin-bottom:14px;">
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;"><span id="stats-shots-label">Tiros por partido</span><div style="display:flex;gap:10px;"><span style="color:#FFD700;">● Arsenal</span><span>● Avg</span></div></div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="top" class="stats-avg-team-label">Arsenal</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#E6C200,#FFD700);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:#FFD700;min-width:36px;text-align:right;">13.3</span></div>
-        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="avg" class="stats-avg-team-label">Promedio liga</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:70%;height:100%;background:rgba(255,255,255,0.15);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--text-dim);min-width:36px;text-align:right;">9.5</span></div>
-      </div>
-      <div>
-        <div style="display:flex;justify-content:space-between;margin-bottom:6px;font-size:10px;font-weight:700;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;"><span id="stats-poss-label">Posesión %</span><div style="display:flex;gap:10px;"><span style="color:#FFD700;">● Arsenal</span><span>● Avg</span></div></div>
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="top" class="stats-avg-team-label">Arsenal</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:100%;height:100%;background:linear-gradient(90deg,#E6C200,#FFD700);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:#FFD700;min-width:40px;text-align:right;">62.3%</span></div>
-        <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;color:var(--text-dim);min-width:70px;" data-key="avg" class="stats-avg-team-label">Promedio liga</span><div style="flex:1;background:rgba(255,255,255,0.06);border-radius:4px;height:7px;overflow:hidden;"><div style="width:81%;height:100%;background:rgba(255,255,255,0.15);border-radius:4px;"></div></div><span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:800;color:var(--text-dim);min-width:40px;text-align:right;">50.1%</span></div>
-      </div>
-    </div>
-    <!-- INSIGHTS -->
-    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:12px;" id="stats-insights-title">⚡ Puntos clave</div>
-    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
-      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">👑</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><span id="stats-i1"><strong style="color:var(--text);">Fenerbahce domina el torneo</strong> — líder en posesión (62.3%) y empata en tiros. Imparable.</span></span></div>
-      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">❌</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><span id="stats-i2"><strong style="color:var(--text);">Barcelona es el equipo más débil hasta ahora</strong> — solo 5 tiros por partido y 37.5% de posesión.</span></span></div>
-      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">🎯</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><span id="stats-i3"><strong style="color:var(--text);">Boca Juniors no necesita la pelota para anotar</strong> — 12 tiros con menos del 50% de posesión.</span></span></div>
-      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:12px;padding:12px 14px;display:flex;gap:10px;"><span style="font-size:16px;">🌑</span><span style="font-size:13px;color:var(--text-mid);line-height:1.5;"><span id="stats-i4"><strong style="color:var(--text);">Boca Juniors sigue siendo letal</strong> — 12 tiros con solo 52% de posesión. Eficiencia pura.</span></span></div>
-    </div>
-    <button onclick="switchStatsTab('s-compare',document.querySelectorAll('.stats-tab-btn')[2])" style="width:100%;background:linear-gradient(135deg,rgba(255,215,0,0.12),rgba(255,215,0,0.06));border:1px solid rgba(255,215,0,0.25);border-radius:12px;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;">
-      <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:#FFD700;" id="stats-compare-cta">Comparar dos equipos →</span>
-      <span style="font-size:18px;">⚖️</span>
-    </button>
-  </div>
-
-  <!-- TEAMS -->
-  <div id="s-teams" class="stats-pane" style="padding:16px;max-width:700px;margin:0 auto;">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;" id="stats-teams-title">Los 16 equipos</div><div style="font-size:11px;color:var(--text-dim);" id="stats-sort-hint">Tocá los títulos para ordenar</div></div>
-    <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:14px;overflow:hidden;">
+    <!-- Standings -->
+    <div style="background:#0D0D0D;border:1px solid rgba(255,215,0,0.15);border-radius:16px;overflow:hidden;margin-bottom:16px;">
+      <div style="padding:16px 16px 12px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFF;border-bottom:1px solid #1E2830;">📊 TABLA DE POSICIONES</div>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;font-size:12px;">
           <thead><tr style="border-bottom:1px solid rgba(255,215,0,0.15);">
-            <th style="padding:10px 8px 10px 14px;text-align:left;color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;">#</th>
-            <th style="padding:10px 8px;text-align:left;color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;">Team</th>
-            <th onclick="sortStatsTable('shots')" id="sth-shots" style="padding:10px 8px;text-align:center;color:#FFD700;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">⚽ Tiros</th>
-            <th onclick="sortStatsTable('poss')" id="sth-poss" style="padding:10px 8px;text-align:center;color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">📊 Pos%</th>
+            <th style="padding:8px 6px 8px 14px;text-align:left;color:#4A5A6E;font-family:'Barlow Condensed',sans-serif;">#</th>
+            <th style="padding:8px 6px;text-align:left;color:#4A5A6E;font-family:'Barlow Condensed',sans-serif;">Equipo</th>
+            <th style="padding:8px 6px;text-align:center;color:#4A5A6E;font-family:'Barlow Condensed',sans-serif;">PJ</th>
+            <th style="padding:8px 6px;text-align:center;color:#4A5A6E;font-family:'Barlow Condensed',sans-serif;">G</th>
+            <th style="padding:8px 6px;text-align:center;color:#4A5A6E;font-family:'Barlow Condensed',sans-serif;">E</th>
+            <th style="padding:8px 6px;text-align:center;color:#4A5A6E;font-family:'Barlow Condensed',sans-serif;">P</th>
+            <th style="padding:8px 6px;text-align:center;color:#4A5A6E;font-family:'Barlow Condensed',sans-serif;">GF</th>
+            <th style="padding:8px 6px;text-align:center;color:#4A5A6E;font-family:'Barlow Condensed',sans-serif;">GC</th>
+            <th style="padding:8px 6px;text-align:center;color:#4A5A6E;font-family:'Barlow Condensed',sans-serif;">DG</th>
+            <th style="padding:8px 6px;text-align:center;color:#FFD700;font-family:'Barlow Condensed',sans-serif;">PTS</th>
           </tr></thead>
-          <tbody id="stats-teams-tbody"></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <!-- COMPARE -->
-  <div id="s-compare" class="stats-pane" style="padding:16px;max-width:700px;margin:0 auto;">
-    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:14px;" id="stats-compare-title">Elegí dos equipos</div>
-    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;margin-bottom:20px;align-items:center;">
-      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.15);border-radius:12px;">
-        <select id="stats-team-a" onchange="updateStatsCompare()" style="width:100%;background:transparent;border:none;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;padding:12px 14px;outline:none;cursor:pointer;">
-          <option>Arsenal</option><option>Fenerbahce</option><option>Boca Juniors</option><option>Manchester United</option><option>Ajax</option><option>AC Milan</option><option>Benfica</option><option>Bayern Munich</option><option>Juventus</option><option>Inter Milan</option><option>Real Madrid</option><option>Liverpool</option><option>Galatasaray</option><option>Santos</option><option>River Plate</option><option>Barcelona</option>
-        </select>
-      </div>
-      <div style="background:var(--surface2);border:1px solid rgba(255,215,0,0.1);border-radius:20px;padding:6px 12px;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:var(--text-dim);text-align:center;">VS</div>
-      <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.15);border-radius:12px;">
-        <select id="stats-team-b" onchange="updateStatsCompare()" style="width:100%;background:transparent;border:none;color:var(--text);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;padding:12px 14px;outline:none;cursor:pointer;">
-          <option>Barcelona</option><option>Arsenal</option><option>Fenerbahce</option><option>Boca Juniors</option><option>Manchester United</option><option>Ajax</option><option>AC Milan</option><option>Benfica</option><option>Bayern Munich</option><option>Juventus</option><option>Inter Milan</option><option>Real Madrid</option><option>Liverpool</option><option>Galatasaray</option><option>Santos</option><option>River Plate</option>
-        </select>
-      </div>
-    </div>
-    <div style="background:var(--surface);border:1px solid rgba(255,215,0,0.1);border-radius:14px;padding:20px;">
-      <div style="margin-bottom:18px;">
-        <div style="font-size:10px;font-weight:700;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">Tiros por partido</div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span id="stats-cval-shots-a" style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:#FFD700;min-width:44px;text-align:right;">13</span>
-          <div style="flex:1;display:flex;flex-direction:column;gap:5px;">
-            <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:8px;overflow:hidden;"><div id="stats-cbar-shots-a" style="width:100%;height:100%;background:linear-gradient(90deg,#E6C200,#FFD700);border-radius:4px;transition:width 0.7s ease;"></div></div>
-            <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:8px;overflow:hidden;"><div id="stats-cbar-shots-b" style="width:38%;height:100%;background:rgba(255,255,255,0.15);border-radius:4px;transition:width 0.7s ease;"></div></div>
-          </div>
-          <span id="stats-cval-shots-b" style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--text-mid);min-width:44px;">5</span>
-        </div>
-      </div>
-      <div style="margin-bottom:18px;">
-        <div style="font-size:10px;font-weight:700;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;">Posesión %</div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span id="stats-cval-poss-a" style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:#FFD700;min-width:44px;text-align:right;">61.5%</span>
-          <div style="flex:1;display:flex;flex-direction:column;gap:5px;">
-            <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:8px;overflow:hidden;"><div id="stats-cbar-poss-a" style="width:100%;height:100%;background:linear-gradient(90deg,#E6C200,#FFD700);border-radius:4px;transition:width 0.7s ease;"></div></div>
-            <div style="background:rgba(255,255,255,0.06);border-radius:4px;height:8px;overflow:hidden;"><div id="stats-cbar-poss-b" style="width:61%;height:100%;background:rgba(255,255,255,0.15);border-radius:4px;transition:width 0.7s ease;"></div></div>
-          </div>
-          <span id="stats-cval-poss-b" style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--text-mid);min-width:44px;">37.5%</span>
-        </div>
-      </div>
-      <div style="background:linear-gradient(135deg,rgba(255,215,0,0.07),rgba(255,215,0,0.02));border:1px solid rgba(255,215,0,0.2);border-radius:14px;padding:16px;text-align:center;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--text-dim);text-transform:uppercase;margin-bottom:10px;" id="stats-verdict-label">📊 Veredicto estadístico</div>
-        <div id="stats-verdict-text" style="font-size:14px;color:var(--text-mid);line-height:1.6;">Arsenal dominates Barcelona in every metric. It wouldn't even be close.</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- INSIGHTS -->
-  <div id="s-insights" class="stats-pane" style="padding:16px;max-width:700px;margin:0 auto;">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFD700;margin:4px 0 10px;" id="stats-insights-page-title">🏆 Lucha por el título</div>
-    <div style="border-left:3px solid #FFD700;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b1">Arsenal se está escapando en el torneo.</strong> Lidera en tiros (13/partido) y posesión (61.5%). Ningún equipo tiene ambos. Esa combinación gana ligas.</div>
-    <div style="border-left:3px solid #FFD700;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b2">Fenerbahce controla la posesión mejor que nadie excepto Arsenal.</strong> 61% es élite. Si convierten más chances, son la mayor amenaza.</div>
-    <div style="border-left:3px solid #FFD700;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:16px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b3">Boca Juniors no necesita la pelota.</strong> 12 tiros con 49.5% de posesión — contraataque brutalmente eficiente.</div>
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FF4D4D;margin-bottom:10px;" id="stats-risk-title">⚠️ Equipos en riesgo</div>
-    <div style="border-left:3px solid #FF4D4D;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b4">Barcelona está en crisis.</strong> 5 tiros. 37.5% posesión. Los peores números del torneo — ni cerca.</div>
-    <div style="border-left:3px solid #FF4D4D;border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:16px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b5">River Plate y Galatasaray apenas compiten.</strong> Ambos con menos de 7 tiros y 45% de posesión. Siendo superados en cada partido.</div>
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--text-dim);margin-bottom:10px;" id="stats-patterns-title">🔍 Patrones tácticos</div>
-    <div style="border-left:3px solid var(--text-dim);border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b6">Reyes del contraataque:</strong> Boca Juniors y Benfica generan muchos tiros con posesión baja. Velocidad sobre control — y está funcionando.</div>
-    <div style="border-left:3px solid var(--text-dim);border-radius:0 12px 12px 0;padding:14px 16px;margin-bottom:10px;font-size:13px;color:var(--text-mid);line-height:1.6;background:var(--surface);"><strong style="color:var(--text);" id="stats-b7">El medio silencioso:</strong> Ajax y Bayern están en el medio de todas las métricas. Competitivos, no dominantes.</div>
-  </div>
-</div>
-
-<!-- ===== EVENTS ===== -->
-<div id="screen-events" class="screen">
-  <div style="max-width:700px;margin:0 auto;padding:24px 16px;">
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:20px;background:linear-gradient(135deg,rgba(0,230,118,0.05),transparent);">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;letter-spacing:0.5px;" id="events-title">🗓️ EVENTOS DE ABRIL 2026</div>
-      <div style="font-size:13px;color:var(--text-dim);margin-top:4px;" id="events-sub">Eventos especiales de OSM este mes</div>
-    </div>
-    <div id="events-list" style="display:flex;flex-direction:column;gap:10px;"></div>
-  </div>
-</div>
-
-<!-- ===== PROFILE ===== -->
-<div id="screen-profile" class="screen">
-  <div style="max-width:700px;margin:0 auto;padding:24px 16px;">
-
-    <!-- Profile header -->
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-bottom:20px;">
-      <div style="background:linear-gradient(135deg,rgba(0,230,118,0.08),transparent);padding:28px 24px;display:flex;gap:20px;align-items:center;">
-        <div id="profile-avatar" style="width:64px;height:64px;border-radius:50%;background:var(--green-glow);border:2px solid var(--green);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:var(--green);flex-shrink:0;">?</div>
-        <div>
-          <div id="profile-username" style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:var(--text);">-</div>
-          <div id="profile-email" style="font-size:13px;color:var(--text-dim);margin-top:2px;">-</div>
-          <div id="profile-joined" style="font-size:12px;color:var(--text-dim);margin-top:4px;">-</div>
-        </div>
-      </div>
-      <!-- Stats row -->
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);">
-        <div style="background:var(--surface);padding:16px;text-align:center;">
-          <div id="profile-tactics-count" style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--green);">0</div>
-          <div id="profile-tactics-label" style="font-size:11px;color:var(--text-dim);margin-top:2px;">Tácticas</div>
-        </div>
-        <div style="background:var(--surface);padding:16px;text-align:center;">
-          <div id="profile-votes-count" style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--yellow);">0</div>
-          <div id="profile-votes-label" style="font-size:11px;color:var(--text-dim);margin-top:2px;">Votos recibidos</div>
-        </div>
-        <div style="background:var(--surface);padding:16px;text-align:center;">
-          <div id="profile-eff" style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--blue);">0%</div>
-          <div id="profile-eff-label" style="font-size:11px;color:var(--text-dim);margin-top:2px;">Eficacia promedio</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- My tactics -->
-    <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;letter-spacing:0.5px;color:var(--text-mid);margin-bottom:12px;" id="profile-my-tactics-label">MIS TÁCTICAS</div>
-    <div id="profile-tactics-list" style="display:flex;flex-direction:column;gap:10px;">
-      <div style="text-align:center;padding:40px;color:var(--text-dim);font-size:13px;" id="profile-empty-msg">Aún no publicaste ninguna táctica.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== H2H ===== -->
-<div id="screen-h2h" class="screen">
-  <div style="max-width:500px;margin:0 auto;padding:24px 16px;">
-
-    <!-- Not logged in -->
-    <div id="h2h-login-prompt" style="display:none;text-align:center;padding:40px 20px;background:var(--surface);border:1px solid var(--border);border-radius:16px;">
-      <div style="font-size:36px;margin-bottom:12px;">⚔️</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--text);margin-bottom:8px;" id="h2h-login-title">Iniciar sesión to see your H2H</div>
-      <div style="font-size:13px;color:var(--text-dim);margin-bottom:20px;" id="h2h-login-sub">Keep track of your matches against other managers</div>
-      <button onclick="openAuth()" style="background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:12px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="h2h-login-btn">⚡ SIGN IN</button>
-    </div>
-
-    <!-- Logged in -->
-    <div id="h2h-content" style="display:none;">
-
-      <!-- Add new result -->
-      <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;color:var(--text);margin-bottom:14px;" id="h2h-add-title">+ Registrar resultado</div>
-        <input id="h2h-opponent" type="text" placeholder="Usuario del rival (ej: hola123)" style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;margin-bottom:8px;">
-        <div style="display:flex;gap:8px;margin-bottom:8px;" id="h2h-result-opts">
-          <button onclick="selectH2HResult(this,'win')" class="h2h-opt" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;cursor:pointer;">Victoria</button>
-          <button onclick="selectH2HResult(this,'draw')" class="h2h-opt" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;cursor:pointer;">Empate</button>
-          <button onclick="selectH2HResult(this,'loss')" class="h2h-opt" style="flex:1;padding:10px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;cursor:pointer;">Derrota</button>
-        </div>
-        <div style="display:flex;gap:8px;margin-bottom:12px;" id="h2h-comp-opts">
-          <button onclick="selectH2HComp(this,'league')" class="h2h-comp" style="flex:1;padding:8px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow',sans-serif;font-size:13px;cursor:pointer;">🥇 Liga</button>
-          <button onclick="selectH2HComp(this,'cup')" class="h2h-comp" style="flex:1;padding:8px;border-radius:8px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow',sans-serif;font-size:13px;cursor:pointer;">🏆 Copa</button>
-        </div>
-        <div style="margin-bottom:12px;">
-          <div style="font-size:11px;font-weight:700;color:var(--text-dim);letter-spacing:0.5px;margin-bottom:8px;" id="h2h-score-label">⚽ SCORE (optional)</div>
-          <div style="display:flex;flex-wrap:wrap;gap:6px;">
-            <div style="font-size:11px;font-weight:600;color:var(--text-dim);width:100%;margin-bottom:2px;" id="h2h-score-draws-label">Draws</div>
-            <button onclick="selectH2HScore(this,'0-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">0-0</button>
-            <button onclick="selectH2HScore(this,'1-1')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">1-1</button>
-            <button onclick="selectH2HScore(this,'2-2')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">2-2</button>
-            <button onclick="selectH2HScore(this,'3-3')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">3-3</button>
-            <button onclick="selectH2HScore(this,'4-4')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">4-4</button>
-            <div style="font-size:11px;font-weight:600;color:var(--text-dim);width:100%;margin-top:4px;margin-bottom:2px;" id="h2h-score-wins-label">Wins</div>
-            <button onclick="selectH2HScore(this,'1-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">1-0</button>
-            <button onclick="selectH2HScore(this,'2-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">2-0</button>
-            <button onclick="selectH2HScore(this,'3-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">3-0</button>
-            <button onclick="selectH2HScore(this,'4-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">4-0</button>
-            <button onclick="selectH2HScore(this,'5-0')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">5-0</button>
-            <button onclick="selectH2HScore(this,'2-1')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">2-1</button>
-            <button onclick="selectH2HScore(this,'3-1')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">3-1</button>
-            <button onclick="selectH2HScore(this,'4-1')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">4-1</button>
-            <button onclick="selectH2HScore(this,'5-1')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">5-1</button>
-            <button onclick="selectH2HScore(this,'3-2')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">3-2</button>
-            <button onclick="selectH2HScore(this,'4-2')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">4-2</button>
-            <button onclick="selectH2HScore(this,'5-2')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">5-2</button>
-            <button onclick="selectH2HScore(this,'4-3')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">4-3</button>
-            <button onclick="selectH2HScore(this,'5-4')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">5-4</button>
-            <button onclick="selectH2HScore(this,'otro')" class="h2h-score" style="padding:5px 10px;border-radius:6px;border:1px solid var(--border2);background:var(--surface2);color:var(--text-dim);font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;cursor:pointer;" id="h2h-score-other">Other</button>
-          </div>
-          <input id="h2h-score-custom" type="text" placeholder="e.g. 6-1" style="display:none;margin-top:8px;width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;">
-        </div>
-        <button onclick="saveH2H()" style="width:100%;background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="h2h-save-btn">SAVE</button>
-        <div id="h2h-msg" style="text-align:center;font-size:13px;margin-top:8px;min-height:16px;"></div>
-      </div>
-
-      <!-- H2H list -->
-      <div id="h2h-list"></div>
-    </div>
-  </div>
-</div>
-
-<!-- ===== TOURNAMENT ===== -->
-<!-- ===== STATS HUB ===== -->
-<!-- ===== STATS HUB ===== -->
-<div id="screen-tournament" class="screen">
-  <div style="max-width:600px;margin:0 auto;padding:24px 16px;">
-
-    <!-- Header -->
-    <div style="background:linear-gradient(135deg,rgba(255,214,0,0.08),rgba(0,230,118,0.06));border:1px solid rgba(255,214,0,0.25);border-radius:16px;padding:24px;margin-bottom:20px;text-align:center;">
-      <div style="font-size:40px;margin-bottom:8px;">🏆</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:32px;font-weight:900;color:var(--yellow);letter-spacing:1px;">COPA NOSTALGIA</div>
-      <div style="font-size:13px;color:var(--text-dim);margin-top:6px;" id="tournament-sub">Primer torneo oficial de OSM Hub · 7 de mayo 2026</div>
-      <div style="display:flex;gap:16px;justify-content:center;margin-top:16px;flex-wrap:wrap;">
-        <div style="text-align:center;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--green);" id="tournament-spots-taken">16</div>
-          <div style="font-size:11px;color:var(--text-dim);" id="tournament-confirmed-label">Confirmados</div>
-        </div>
-        <div style="text-align:center;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--red);" id="tournament-spots-left">🔒</div>
-          <div style="font-size:11px;color:var(--text-dim);" id="tournament-spots-label">Cupos cerrados</div>
-          <div style="font-size:11px;color:var(--text-dim);" id="tournament-spots-label">Cupos libres</div>
-        </div>
-        <div style="text-align:center;">
-          <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:var(--yellow);">$</div>
-          <div style="font-size:11px;color:var(--text-dim);" id="tournament-prize-label">Premio PayPal</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Reglas del torneo -->
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:12px;">📋 REGLAS DEL TORNEO</div>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-mid);">
-          <span style="font-size:16px;">🏆</span> <span>Liga Estrellas de Clubes</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-mid);">
-          <span style="font-size:16px;">⏱</span> <span>Sin timers</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-mid);">
-          <span style="font-size:16px;">🏫</span> <span>Sin campus</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-mid);">
-          <span style="font-size:16px;">🔒</span> <span>Sin entrenamiento secreto</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-mid);">
-          <span style="font-size:16px;">💰</span> <span>Premio al ganador</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Standings Table -->
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--text);margin-bottom:14px;" id="standings-title">📊 TABLA DE POSICIONES</div>
-      <div style="overflow-x:auto;">
-        <table style="width:100%;border-collapse:collapse;font-size:12px;">
-          <thead>
-            <tr style="border-bottom:1px solid var(--border);color:var(--text-dim);">
-              <th style="text-align:left;padding:6px 4px;font-weight:700;" id="th-pos">#</th>
-              <th style="text-align:left;padding:6px 4px;font-weight:700;" id="th-manager">Manager</th>
-              <th style="text-align:center;padding:6px 4px;font-weight:700;" id="th-pj">PJ</th>
-              <th style="text-align:center;padding:6px 4px;font-weight:700;" id="th-g">G</th>
-              <th style="text-align:center;padding:6px 4px;font-weight:700;" id="th-e">E</th>
-              <th style="text-align:center;padding:6px 4px;font-weight:700;" id="th-p">P</th>
-              <th style="text-align:center;padding:6px 4px;font-weight:700;" id="th-gf">GF</th>
-              <th style="text-align:center;padding:6px 4px;font-weight:700;" id="th-gc">GC</th>
-              <th style="text-align:center;padding:6px 4px;font-weight:700;" id="th-dg">DG</th>
-              <th style="text-align:center;padding:6px 4px;font-weight:700;color:var(--green);" id="th-pts">PTS</th>
-            </tr>
-          </thead>
-          <tbody id="standings-body">
-<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 4px;font-weight:700;color:#FFD700;">1</td><td style="padding:7px 4px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);">Fenerbahce</div><div style="font-size:10px;color:var(--text-dim);">@adolfis_1</div></td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--green);">4</td><td style="text-align:center;padding:7px 4px;color:var(--yellow);">0</td><td style="text-align:center;padding:7px 4px;color:var(--red) if 0 else var(--text-mid);">0</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">10</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">1</td><td style="text-align:center;padding:7px 4px;color:var(--green);">+9</td><td style="text-align:center;padding:7px 4px;font-weight:900;color:#FFD700;">12</td></tr>
-<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 4px;font-weight:700;color:#FFD700;">2</td><td style="padding:7px 4px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);">Boca Juniors</div><div style="font-size:10px;color:var(--text-dim);">@Nivekserolf</div></td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--green);">2</td><td style="text-align:center;padding:7px 4px;color:var(--yellow);">2</td><td style="text-align:center;padding:7px 4px;color:var(--red) if 0 else var(--text-mid);">0</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">7</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">5</td><td style="text-align:center;padding:7px 4px;color:var(--green);">+2</td><td style="text-align:center;padding:7px 4px;font-weight:900;color:#FFD700;">8</td></tr>
-<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 4px;font-weight:700;color:#FFD700;">3</td><td style="padding:7px 4px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);">Santos</div><div style="font-size:10px;color:var(--text-dim);">@shoxx11</div></td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--green);">2</td><td style="text-align:center;padding:7px 4px;color:var(--yellow);">2</td><td style="text-align:center;padding:7px 4px;color:var(--red) if 0 else var(--text-mid);">0</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">5</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">3</td><td style="text-align:center;padding:7px 4px;color:var(--green);">+2</td><td style="text-align:center;padding:7px 4px;font-weight:900;color:#FFD700;">8</td></tr>
-<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 4px;font-weight:700;color:var(--text-dim);">4</td><td style="padding:7px 4px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);">Manchester United</div><div style="font-size:10px;color:var(--text-dim);">@ferchu2020</div></td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--green);">2</td><td style="text-align:center;padding:7px 4px;color:var(--yellow);">1</td><td style="text-align:center;padding:7px 4px;color:var(--red) if 1 else var(--text-mid);">1</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">6</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">3</td><td style="text-align:center;padding:7px 4px;color:var(--green);">+3</td><td style="text-align:center;padding:7px 4px;font-weight:900;color:var(--yellow);">7</td></tr>
-<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 4px;font-weight:700;color:var(--text-dim);">5</td><td style="padding:7px 4px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);">Arsenal</div><div style="font-size:10px;color:var(--text-dim);">@Sir Nacho Ruglio</div></td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--green);">2</td><td style="text-align:center;padding:7px 4px;color:var(--yellow);">1</td><td style="text-align:center;padding:7px 4px;color:var(--red) if 1 else var(--text-mid);">1</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">5</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">3</td><td style="text-align:center;padding:7px 4px;color:var(--green);">+2</td><td style="text-align:center;padding:7px 4px;font-weight:900;color:var(--yellow);">7</td></tr>
-<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 4px;font-weight:700;color:var(--text-dim);">6</td><td style="padding:7px 4px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);">Real Madrid</div><div style="font-size:10px;color:var(--text-dim);">@Jramos_9</div></td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--green);">2</td><td style="text-align:center;padding:7px 4px;color:var(--yellow);">1</td><td style="text-align:center;padding:7px 4px;color:var(--red) if 1 else var(--text-mid);">1</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">2</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">1</td><td style="text-align:center;padding:7px 4px;color:var(--green);">+1</td><td style="text-align:center;padding:7px 4px;font-weight:900;color:var(--yellow);">7</td></tr>
-<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 4px;font-weight:700;color:var(--text-dim);">7</td><td style="padding:7px 4px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);">Ajax</div><div style="font-size:10px;color:var(--text-dim);">@Myking Guzman</div></td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--green);">2</td><td style="text-align:center;padding:7px 4px;color:var(--yellow);">0</td><td style="text-align:center;padding:7px 4px;color:var(--red) if 2 else var(--text-mid);">2</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">5</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">3</td><td style="text-align:center;padding:7px 4px;color:var(--green);">+2</td><td style="text-align:center;padding:7px 4px;font-weight:900;color:var(--yellow);">6</td></tr>
-<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 4px;font-weight:700;color:var(--text-dim);">8</td><td style="padding:7px 4px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);">Bayern München</div><div style="font-size:10px;color:var(--text-dim);">@iShowfideo</div></td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--green);">1</td><td style="text-align:center;padding:7px 4px;color:var(--yellow);">2</td><td style="text-align:center;padding:7px 4px;color:var(--red) if 1 else var(--text-mid);">1</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">0</td><td style="text-align:center;padding:7px 4px;font-weight:900;color:var(--yellow);">5</td></tr>
-<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 4px;font-weight:700;color:var(--text-dim);">9</td><td style="padding:7px 4px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);">AC Milan</div><div style="font-size:10px;color:var(--text-dim);">@Sherito Da Silva</div></td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--green);">1</td><td style="text-align:center;padding:7px 4px;color:var(--yellow);">2</td><td style="text-align:center;padding:7px 4px;color:var(--red) if 1 else var(--text-mid);">1</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">2</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">2</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">0</td><td style="text-align:center;padding:7px 4px;font-weight:900;color:var(--yellow);">5</td></tr>
-<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 4px;font-weight:700;color:var(--text-dim);">10</td><td style="padding:7px 4px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);">River Plate</div><div style="font-size:10px;color:var(--text-dim);">@fernando18_0</div></td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--green);">1</td><td style="text-align:center;padding:7px 4px;color:var(--yellow);">1</td><td style="text-align:center;padding:7px 4px;color:var(--red) if 2 else var(--text-mid);">2</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">2</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">3</td><td style="text-align:center;padding:7px 4px;color:var(--red);">-1</td><td style="text-align:center;padding:7px 4px;font-weight:900;color:var(--yellow);">4</td></tr>
-<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 4px;font-weight:700;color:var(--text-dim);">11</td><td style="padding:7px 4px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);">Juventus</div><div style="font-size:10px;color:var(--text-dim);">@matiasc_51</div></td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--green);">1</td><td style="text-align:center;padding:7px 4px;color:var(--yellow);">1</td><td style="text-align:center;padding:7px 4px;color:var(--red) if 2 else var(--text-mid);">2</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">3</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">5</td><td style="text-align:center;padding:7px 4px;color:var(--red);">-2</td><td style="text-align:center;padding:7px 4px;font-weight:900;color:var(--yellow);">4</td></tr>
-<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 4px;font-weight:700;color:var(--text-dim);">12</td><td style="padding:7px 4px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);">Galatasaray</div><div style="font-size:10px;color:var(--text-dim);">@ThCARP</div></td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--green);">1</td><td style="text-align:center;padding:7px 4px;color:var(--yellow);">1</td><td style="text-align:center;padding:7px 4px;color:var(--red) if 2 else var(--text-mid);">2</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">3</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">6</td><td style="text-align:center;padding:7px 4px;color:var(--red);">-3</td><td style="text-align:center;padding:7px 4px;font-weight:900;color:var(--yellow);">4</td></tr>
-<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 4px;font-weight:700;color:var(--text-dim);">13</td><td style="padding:7px 4px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);">Liverpool</div><div style="font-size:10px;color:var(--text-dim);">@Xabi alonso 16_5</div></td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--green);">1</td><td style="text-align:center;padding:7px 4px;color:var(--yellow);">1</td><td style="text-align:center;padding:7px 4px;color:var(--red) if 2 else var(--text-mid);">2</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">2</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">6</td><td style="text-align:center;padding:7px 4px;color:var(--red);">-4</td><td style="text-align:center;padding:7px 4px;font-weight:900;color:var(--yellow);">4</td></tr>
-<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 4px;font-weight:700;color:var(--text-dim);">14</td><td style="padding:7px 4px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);">Benfica</div><div style="font-size:10px;color:var(--text-dim);">@Griche espinosa 70</div></td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--green);">1</td><td style="text-align:center;padding:7px 4px;color:var(--yellow);">0</td><td style="text-align:center;padding:7px 4px;color:var(--red) if 3 else var(--text-mid);">3</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">8</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">7</td><td style="text-align:center;padding:7px 4px;color:var(--green);">+1</td><td style="text-align:center;padding:7px 4px;font-weight:900;color:var(--yellow);">3</td></tr>
-<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 4px;font-weight:700;color:var(--text-dim);">15</td><td style="padding:7px 4px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);">Barcelona</div><div style="font-size:10px;color:var(--text-dim);">@kevinp_388</div></td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--green);">1</td><td style="text-align:center;padding:7px 4px;color:var(--yellow);">0</td><td style="text-align:center;padding:7px 4px;color:var(--red) if 3 else var(--text-mid);">3</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">2</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">7</td><td style="text-align:center;padding:7px 4px;color:var(--red);">-5</td><td style="text-align:center;padding:7px 4px;font-weight:900;color:var(--yellow);">3</td></tr>
-<tr style="border-bottom:1px solid var(--border);"><td style="padding:7px 4px;font-weight:700;color:var(--text-dim);">16</td><td style="padding:7px 4px;"><div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:900;color:var(--text);">Inter Milan</div><div style="font-size:10px;color:var(--text-dim);">@luis rodriguez_69</div></td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">4</td><td style="text-align:center;padding:7px 4px;color:var(--green);">0</td><td style="text-align:center;padding:7px 4px;color:var(--yellow);">1</td><td style="text-align:center;padding:7px 4px;color:var(--red) if 3 else var(--text-mid);">3</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">0</td><td style="text-align:center;padding:7px 4px;color:var(--text-mid);">7</td><td style="text-align:center;padding:7px 4px;color:var(--red);">-7</td><td style="text-align:center;padding:7px 4px;font-weight:900;color:var(--yellow);">1</td></tr>
-</tbody>
+          <tbody id="standings-body-new"></tbody>
         </table>
       </div>
     </div>
 
-    <!-- Participants collapsed -->
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="var p=document.getElementById('participants-list');var btn=document.getElementById('participants-toggle');if(p.style.display==='none'){p.style.display='flex';btn.textContent='▲';}else{p.style.display='none';btn.textContent='▼';}">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);" id="tournament-participants-title">👥 PARTICIPANTES (16/16)</div>
-        <span id="participants-toggle" style="color:var(--text-dim);font-size:14px;">▼</span>
-      </div>
-      <div style="display:none;flex-direction:column;gap:8px;margin-top:12px;" id="participants-list">
-        <!-- Filled spots -->
-        <div class="participant-row confirmed">
-          <div class="p-num">1</div><div class="p-name">@Xabi alonso 16_5</div><div class="p-status confirmed-badge">✓</div>
-        </div>
-        <div class="participant-row confirmed">
-          <div class="p-num">2</div><div class="p-name">@Sherito Da Silva</div><div class="p-status confirmed-badge">✓</div>
-        </div>
-        <div class="participant-row confirmed">
-          <div class="p-num">3</div><div class="p-name">@fernando18_0</div><div class="p-status confirmed-badge">✓</div>
-        </div>
-        <div class="participant-row confirmed">
-          <div class="p-num">4</div><div class="p-name">@Griche espinosa 70</div><div class="p-status confirmed-badge">✓</div>
-        </div>
-        <div class="participant-row confirmed">
-          <div class="p-num">5</div><div class="p-name">@iShowfideo</div><div class="p-status confirmed-badge">✓</div>
-        </div>
-        <div class="participant-row confirmed">
-          <div class="p-num">6</div><div class="p-name">@Myking Guzman</div><div class="p-status confirmed-badge">✓</div>
-        </div>
-        <div class="participant-row confirmed">
-          <div class="p-num">7</div><div class="p-name">@adolfis_1</div><div class="p-status confirmed-badge">✓</div>
-        </div>
-        <div class="participant-row confirmed">
-          <div class="p-num">8</div><div class="p-name">@Sir Nacho Ruglio</div><div class="p-status confirmed-badge">✓</div>
-        </div>
-        <div class="participant-row confirmed">
-          <div class="p-num">9</div><div class="p-name">@Nivekserolf</div><div class="p-status confirmed-badge">✓</div>
-        </div>
-        <div class="participant-row confirmed">
-          <div class="p-num">10</div><div class="p-name">@kevinp_388</div><div class="p-status confirmed-badge">✓</div>
-        </div>
-        <div class="participant-row confirmed">
-          <div class="p-num">11</div><div class="p-name">@matiasc_51</div><div class="p-status confirmed-badge">✓</div>
-        </div>
-        <div class="participant-row confirmed">
-          <div class="p-num">12</div><div class="p-name">@ferchu2020</div><div class="p-status confirmed-badge">✓</div>
-        </div>
-        <div class="participant-row confirmed">
-          <div class="p-num">13</div><div class="p-name">@ThCARP</div><div class="p-status confirmed-badge">✓</div>
-        </div>
-        <div class="participant-row confirmed">
-          <div class="p-num">14</div><div class="p-name">@luis rodriguez_69</div><div class="p-status confirmed-badge">✓</div>
-        </div>
-        <div class="participant-row confirmed">
-          <div class="p-num">15</div><div class="p-name">@Jramos_9</div><div class="p-status confirmed-badge">✓</div>
-        </div>
-        <div class="participant-row confirmed">
-          <div class="p-num">16</div><div class="p-name">@shoxx11</div><div class="p-status confirmed-badge">✓</div>
-        </div>
-      </div>
+    <!-- Latest results -->
+    <div style="background:#0D0D0D;border:1px solid #1E2830;border-radius:16px;padding:16px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFF;margin-bottom:14px;">⚽ JORNADA 4 — RESULTADOS</div>
+      <div id="results-list" style="display:flex;flex-direction:column;gap:6px;"></div>
     </div>
-
-    <!-- Comment to join next cup -->
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);margin-bottom:6px;" id="tournament-comment-title">💬 WANT TO JOIN THE NEXT ONE?</div>
-      <div style="font-size:13px;color:var(--text-dim);margin-bottom:12px;" id="tournament-comment-sub">Dejá tu usuario de OSM para la Copa Nostalgia II</div>
-      <div id="tournament-comment-logged" style="display:none;">
-        <textarea id="tournament-comment-input" placeholder="Escribí tu usuario de OSM..." style="width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:10px 12px;color:var(--text);font-family:'Barlow',sans-serif;font-size:14px;outline:none;resize:none;height:70px;margin-bottom:8px;box-sizing:border-box;"></textarea>
-        <button onclick="submitTournamentComment()" style="width:100%;background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:10px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="tournament-comment-btn">✅ DEJAR MI USUARIO</button>
-        <div id="tournament-comment-msg" style="text-align:center;font-size:13px;margin-top:8px;"></div>
-      </div>
-      <div id="tournament-comment-guest" style="display:none;text-align:center;">
-        <div style="font-size:13px;color:var(--text-dim);margin-bottom:10px;" id="tournament-comment-login-msg">Registrate para dejar tu usuario</div>
-        <button onclick="openAuth()" style="background:var(--green);color:var(--bg);border:none;border-radius:10px;padding:10px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="tournament-comment-login-btn">⚡ REGISTRARME</button>
-      </div>
-      <div id="tournament-comments-list" style="margin-top:14px;display:flex;flex-direction:column;gap:6px;"></div>
-    </div>
-
-    <!-- Draw Results (collapsible) -->
-    <div id="tournament-draw-section" style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;display:none;">
-      <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;margin-bottom:0;" onclick="var bl=document.getElementById('bracket-list');var ba=document.getElementById('draw-animation');var btn=document.getElementById('draw-toggle');var show=bl.style.display==='none';bl.style.display=show?'flex':'none';btn.textContent=show?'▲':'▼';">
-        <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--text);" id="bracket-title">⚽ DRAW — TEAM ASSIGNMENTS</div>
-        <span id="draw-toggle" style="color:var(--text-dim);font-size:14px;">▼</span>
-      </div>
-      <div id="draw-animation" style="display:none;"></div>
-      <!-- Draw button removed - draw already done -->
-      <div id="bracket-list" style="display:none;flex-direction:column;gap:4px;margin-top:12px;"></div>
-    </div>
-
-    <!-- Not logged in draw prompt -->
-    <div id="draw-login-prompt" style="background:linear-gradient(135deg,rgba(255,214,0,0.08),transparent);border:1px solid rgba(255,214,0,0.25);border-radius:12px;padding:20px;margin-bottom:16px;text-align:center;display:none;">
-      <div style="font-size:28px;margin-bottom:8px;">🔒</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:var(--yellow);margin-bottom:6px;" id="draw-locked-title">El sorteo ya está disponible</div>
-      <div style="font-size:13px;color:var(--text-dim);margin-bottom:14px;" id="draw-locked-sub">Registrate para ver tu rival en el bracket</div>
-      <button onclick="openAuth()" style="background:var(--yellow);color:var(--bg);border:none;border-radius:10px;padding:10px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="draw-locked-btn">⚡ VER EL SORTEO</button>
-    </div>
-
-    <!-- CTA closed -->
-    <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;" id="tournament-join-section">
-      <div style="font-size:32px;margin-bottom:8px;">🔒</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;color:var(--text);margin-bottom:6px;" id="tournament-cta-text">¡Cupos completos!</div>
-      <div style="font-size:13px;color:var(--text-dim);" id="tournament-cta-note">El sorteo se realizará próximamente. Registrate para ver los resultados.</div>
-    </div>
-
   </div>
 </div>
 
-<footer>
-  <p id="footer-text"><strong>OSM Hub</strong> · Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM</p>
-</footer>
+<!-- ===== TORNEO II ===== -->
+<div id="screen-torneo2" class="screen">
+  <div style="max-width:500px;margin:0 auto;padding:20px 16px;">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#FFD700;margin-bottom:4px;">🚀 COPA NOSTALGIA II</div>
+    <div style="font-size:13px;color:#4A5A6E;margin-bottom:20px;">Próxima edición — inscribite ahora</div>
+
+    <!-- Signup CTA -->
+    <div style="background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,215,0,0.03));border:1px solid rgba(255,215,0,0.3);border-radius:16px;padding:20px;margin-bottom:16px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFF;margin-bottom:6px;">¿Querés participar?</div>
+      <div style="font-size:13px;color:#9AA5B4;margin-bottom:16px;">Dejá tu usuario de OSM y te avisamos cuando empiece.</div>
+      <button onclick="openSignupModal()" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;">⚡ RESERVAR MI LUGAR</button>
+    </div>
+
+    <!-- Signed up list -->
+    <div style="background:#0D0D0D;border:1px solid #1E2830;border-radius:16px;padding:16px;">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFF;margin-bottom:14px;">👥 MANAGERS ANOTADOS <span id="t2-count" style="color:#FFD700;"></span></div>
+      <div id="t2-signups-list" style="display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:13px;color:#4A5A6E;text-align:center;padding:20px;">Cargando...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -1427,7 +737,7 @@
     var formations = Object.keys(formationData);
     grid.innerHTML = formations.map(function(f) {
       return '<div onclick="showFormationDetail(\'' + f + '\')" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 8px;text-align:center;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor=\'var(--green)\';this.style.background=\'var(--surface2)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.background=\'var(--surface)\'">' +
-        '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:18px;font-weight:900;color:var(--green);">' + f + '</div>' +
+        '<div style="font-family:Barlow Condensed,sans-serif;font-size:18px;font-weight:900;color:var(--green);">' + f + '</div>' +
         '</div>';
     }).join('');
   }
@@ -1452,7 +762,7 @@
     pitchEl.innerHTML = positions.map(function(p) {
       var isGK = p.r === 'GK';
       return '<div style="position:absolute;left:' + p.l + '%;top:' + p.t + '%;transform:translate(-50%,-50%);text-align:center;">' +
-        '<div style="width:28px;height:28px;border-radius:50%;background:' + (isGK ? '#FFD600' : '#00E676') + ';display:flex;align-items:center;justify-content:center;font-family:\'Barlow Condensed\',sans-serif;font-size:9px;font-weight:900;color:#000000;margin:0 auto;">' + p.r + '</div>' +
+        '<div style="width:28px;height:28px;border-radius:50%;background:' + (isGK ? '#FFD600' : '#00E676') + ';display:flex;align-items:center;justify-content:center;font-family:Barlow Condensed,sans-serif;font-size:9px;font-weight:900;color:#000000;margin:0 auto;">' + p.r + '</div>' +
         '</div>';
     }).join('');
     var tacticsList = document.getElementById('fe-tactics-list');
@@ -1669,10 +979,10 @@
     tbody.innerHTML = sorted.map(function(t,i){
       var first = i===0;
       return '<tr style="border-bottom:1px solid rgba(255,255,255,0.04);">' +
-        '<td style="padding:10px 8px 10px 14px;"><span style="font-family:\'Barlow Condensed\',sans-serif;font-size:15px;font-weight:900;color:'+(first?'#FFD700':'var(--text-dim)')+';">'+(i+1)+'</span></td>' +
-        '<td style="padding:10px 8px;text-align:left;"><div style="font-family:\'Barlow Condensed\',sans-serif;font-size:15px;font-weight:900;">'+t.name+'</div><div style="font-size:10px;color:var(--text-dim);">@'+t.manager+'</div></td>' +
-        '<td style="padding:10px 8px;text-align:center;"><div style="font-family:\'Barlow Condensed\',sans-serif;font-size:16px;font-weight:800;color:'+(first?'#FFD700':'var(--text)')+';">'+t.shots+'</div><div style="height:3px;border-radius:2px;background:linear-gradient(90deg,#E6C200,#FFD700);width:'+Math.round(t.shots/maxS*60)+'px;margin:3px auto 0;opacity:'+(first?1:0.35)+';"></div></td>' +
-        '<td style="padding:10px 8px;text-align:center;"><div style="font-family:\'Barlow Condensed\',sans-serif;font-size:16px;font-weight:800;color:'+(first?'#FFD700':'var(--text)')+';">'+t.poss+'%</div><div style="height:3px;border-radius:2px;background:linear-gradient(90deg,#E6C200,#FFD700);width:'+Math.round(t.poss/maxP*60)+'px;margin:3px auto 0;opacity:'+(first?1:0.35)+';"></div></td>' +
+        '<td style="padding:10px 8px 10px 14px;"><span style="font-family:Barlow Condensed,sans-serif;font-size:15px;font-weight:900;color:'+(first?'#FFD700':'var(--text-dim)')+';">'+(i+1)+'</span></td>' +
+        '<td style="padding:10px 8px;text-align:left;"><div style="font-family:Barlow Condensed,sans-serif;font-size:15px;font-weight:900;">'+t.name+'</div><div style="font-size:10px;color:var(--text-dim);">@'+t.manager+'</div></td>' +
+        '<td style="padding:10px 8px;text-align:center;"><div style="font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:800;color:'+(first?'#FFD700':'var(--text)')+';">'+t.shots+'</div><div style="height:3px;border-radius:2px;background:linear-gradient(90deg,#E6C200,#FFD700);width:'+Math.round(t.shots/maxS*60)+'px;margin:3px auto 0;opacity:'+(first?1:0.35)+';"></div></td>' +
+        '<td style="padding:10px 8px;text-align:center;"><div style="font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:800;color:'+(first?'#FFD700':'var(--text)')+';">'+t.poss+'%</div><div style="height:3px;border-radius:2px;background:linear-gradient(90deg,#E6C200,#FFD700);width:'+Math.round(t.poss/maxP*60)+'px;margin:3px auto 0;opacity:'+(first?1:0.35)+';"></div></td>' +
         '</tr>';
     }).join('');
     // Update sort header colors
@@ -1866,7 +1176,7 @@
             '<div style="font-size:13px;font-weight:' + (homeWin?'700':'400') + ';color:' + (homeWin?'var(--text)':'var(--text-dim)') + ';">⚽ ' + r.homeTeam + '</div>' +
             '<div style="font-size:10px;color:var(--text-dim);">@' + r.home + '</div>' +
           '</div>' +
-          '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:22px;font-weight:900;text-align:center;white-space:nowrap;">' +
+          '<div style="font-family:Barlow Condensed,sans-serif;font-size:22px;font-weight:900;text-align:center;white-space:nowrap;">' +
             '<span style="color:' + (homeWin?'var(--green)':isDraw?'var(--yellow)':'var(--text-dim)') + ';">' + r.homeScore + '</span>' +
             '<span style="color:var(--text-dim);margin:0 4px;">-</span>' +
             '<span style="color:' + (awayWin?'var(--green)':isDraw?'var(--yellow)':'var(--text-dim)') + ';">' + r.awayScore + '</span>' +
@@ -1908,10 +1218,10 @@
       return '<div onclick="loadTacticDetail(\'' + t.id + '\')" style="display:flex;align-items:center;gap:12px;background:var(--surface2);border-radius:10px;padding:12px 14px;cursor:pointer;">' +
         '<div style="font-size:20px;">' + medals[i] + '</div>' +
         '<div style="flex:1;">' +
-        '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:16px;font-weight:800;color:var(--green);">' + t.formation + '</div>' +
+        '<div style="font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:800;color:var(--green);">' + t.formation + '</div>' +
         '<div style="font-size:12px;color:var(--text-dim);">' + translated.substring(0,45) + '</div>' +
         '</div>' +
-        '<div style="font-family:\'Barlow Condensed\',sans-serif;font-size:22px;font-weight:900;color:' + (t.pct>=70?'var(--green)':t.pct>=50?'var(--yellow)':'var(--red)') + ';">' + t.pct + '%</div>' +
+        '<div style="font-family:Barlow Condensed,sans-serif;font-size:22px;font-weight:900;color:' + (t.pct>=70?'var(--green)':t.pct>=50?'var(--yellow)':'var(--red)') + ';">' + t.pct + '%</div>' +
         '</div>';
     }).join('');
   }
@@ -2909,7 +2219,7 @@
     list.innerHTML = '<div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:8px;letter-spacing:0.5px;">' + (currentLang === 'es' ? 'ANOTADOS HASTA AHORA' : 'SIGNED UP SO FAR') + ' (' + res.data.length + ')</div>' +
       res.data.map(function(c) {
         return '<div style="background:var(--surface2);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:10px;">' +
-          '<div style="width:32px;height:32px;border-radius:50%;background:rgba(0,230,118,0.15);color:var(--green);display:flex;align-items:center;justify-content:center;font-family:\'Barlow Condensed\',sans-serif;font-size:13px;font-weight:900;flex-shrink:0;">' + (c.osm_username || '?').substring(0,2).toUpperCase() + '</div>' +
+          '<div style="width:32px;height:32px;border-radius:50%;background:rgba(0,230,118,0.15);color:var(--green);display:flex;align-items:center;justify-content:center;font-family:Barlow Condensed,sans-serif;font-size:13px;font-weight:900;flex-shrink:0;">' + (c.osm_username || '?').substring(0,2).toUpperCase() + '</div>' +
           '<div><div style="font-size:13px;font-weight:600;color:var(--text);">⚽ ' + c.osm_username + '</div></div>' +
           '</div>';
       }).join('');
@@ -3690,6 +3000,123 @@
   document.querySelector('body').style.paddingBottom = '70px';
 </script>
 
+<script>
+  // ===== STANDINGS DATA =====
+  var standingsData = [
+    {pos:1,club:'Fenerbahce',manager:'adolfis_1',pj:4,g:4,e:0,p:0,gf:10,gc:1,dg:'+9',pts:12},
+    {pos:2,club:'Boca Juniors',manager:'Nivekserolf',pj:4,g:2,e:2,p:0,gf:7,gc:5,dg:'+2',pts:8},
+    {pos:3,club:'Santos',manager:'shoxx11',pj:4,g:2,e:2,p:0,gf:5,gc:3,dg:'+2',pts:8},
+    {pos:4,club:'Manchester United',manager:'ferchu2020',pj:4,g:2,e:1,p:1,gf:6,gc:3,dg:'+3',pts:7},
+    {pos:5,club:'Arsenal',manager:'Sir Nacho Ruglio',pj:4,g:2,e:1,p:1,gf:5,gc:3,dg:'+2',pts:7},
+    {pos:6,club:'Real Madrid',manager:'Jramos_9',pj:4,g:2,e:1,p:1,gf:2,gc:1,dg:'+1',pts:7},
+    {pos:7,club:'Ajax',manager:'Myking Guzman',pj:4,g:2,e:0,p:2,gf:5,gc:3,dg:'+2',pts:6},
+    {pos:8,club:'Bayern München',manager:'iShowfideo',pj:4,g:1,e:2,p:1,gf:4,gc:4,dg:'0',pts:5},
+    {pos:9,club:'AC Milan',manager:'Sherito Da Silva',pj:4,g:1,e:2,p:1,gf:2,gc:2,dg:'0',pts:5},
+    {pos:10,club:'River Plate',manager:'fernando18_0',pj:4,g:1,e:1,p:2,gf:2,gc:3,dg:'-1',pts:4},
+    {pos:11,club:'Juventus',manager:'matiasc_51',pj:4,g:1,e:1,p:2,gf:3,gc:5,dg:'-2',pts:4},
+    {pos:12,club:'Galatasaray',manager:'ThCARP',pj:4,g:1,e:1,p:2,gf:3,gc:6,dg:'-3',pts:4},
+    {pos:13,club:'Liverpool',manager:'Xabi alonso 16_5',pj:4,g:1,e:1,p:2,gf:2,gc:6,dg:'-4',pts:4},
+    {pos:14,club:'Benfica',manager:'Griche espinosa 70',pj:4,g:1,e:0,p:3,gf:8,gc:7,dg:'+1',pts:3},
+    {pos:15,club:'Barcelona',manager:'kevinp_388',pj:4,g:1,e:0,p:3,gf:2,gc:7,dg:'-5',pts:3},
+    {pos:16,club:'Inter Milan',manager:'luis rodriguez_69',pj:4,g:0,e:1,p:3,gf:0,gc:7,dg:'-7',pts:1},
+  ];
+
+  var j4Results = [
+    {home:'Juventus',homeM:'matiasc_51',hs:2,away:'Bayern München',awayM:'iShowfideo',as:2},
+    {home:'River Plate',homeM:'fernando18_0',hs:1,away:'Ajax',awayM:'Myking Guzman',as:0},
+    {home:'Manchester United',homeM:'ferchu2020',hs:2,away:'Arsenal',awayM:'Sir Nacho Ruglio',as:0},
+    {home:'Benfica',homeM:'Griche espinosa 70',hs:0,away:'Fenerbahce',awayM:'adolfis_1',as:1},
+    {home:'Santos',homeM:'shoxx11',hs:1,away:'Inter Milan',awayM:'luis rodriguez_69',as:0},
+    {home:'Galatasaray',homeM:'ThCARP',hs:1,away:'Boca Juniors',awayM:'Nivekserolf',as:1},
+    {home:'Real Madrid',homeM:'Jramos_9',hs:0,away:'AC Milan',awayM:'Sherito Da Silva',as:0},
+    {home:'Liverpool',homeM:'Xabi alonso 16_5',hs:2,away:'Barcelona',awayM:'kevinp_388',as:0},
+  ];
+
+  function loadTorneo1() {
+    // Render standings
+    var tbody = document.getElementById('standings-body-new');
+    if(tbody) tbody.innerHTML = standingsData.map(function(r) {
+      var gold = r.pos <= 3;
+      var pc = gold ? '#FFD700' : 'var(--text-dim)';
+      var cc = r.pts > 0 ? '#FFF' : 'var(--text-dim)';
+      var dgc = r.dg.indexOf('+') === 0 ? 'var(--green)' : (r.dg.indexOf('-') === 0 ? 'var(--red)' : 'var(--text-mid)');
+      return '<tr style="border-bottom:1px solid #1E2830;">' +
+        '<td style="padding:7px 4px 7px 14px;font-weight:900;color:'+pc+';">'+r.pos+'</td>' +
+        "<td style='padding:7px 4px'><div style='font-family:Barlow Condensed,sans-serif;font-size:15px;font-weight:900;color:"+cc+"'>'"+r.club+"</div><div style='font-size:10px;color:#4A5A6E'>@"+r.manager+"</div></td>" +
+        '<td style="text-align:center;padding:7px 4px;color:#9AA5B4;">'+r.pj+'</td>' +
+        '<td style="text-align:center;padding:7px 4px;color:var(--green);">'+r.g+'</td>' +
+        '<td style="text-align:center;padding:7px 4px;color:#FFD700;">'+r.e+'</td>' +
+        '<td style="text-align:center;padding:7px 4px;color:var(--red);">'+r.p+'</td>' +
+        '<td style="text-align:center;padding:7px 4px;color:#9AA5B4;">'+r.gf+'</td>' +
+        '<td style="text-align:center;padding:7px 4px;color:#9AA5B4;">'+r.gc+'</td>' +
+        '<td style="text-align:center;padding:7px 4px;color:'+dgc+';">'+r.dg+'</td>' +
+        '<td style="text-align:center;padding:7px 4px;font-weight:900;color:'+(gold?'#FFD700':r.pts>0?'#FFF':'var(--text-dim)')+';">'+r.pts+'</td>' +
+        '</tr>';
+    }).join('');
+
+    // Render results
+    var rl = document.getElementById('results-list');
+    if(rl) rl.innerHTML = j4Results.map(function(r) {
+      var hw = r.hs > r.as, aw = r.as > r.hs, draw = r.hs === r.as;
+      return '<div style="background:#111;border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:8px;">' +
+        '<div style="flex:1;"><div style="font-size:13px;font-weight:'+(hw?700:400)+';color:'+(hw?'#FFF':'#9AA5B4')+';">'+r.home+'</div><div style="font-size:10px;color:#4A5A6E;">@'+r.homeM+'</div></div>' +
+        '<div style="font-family:Barlow Condensed,sans-serif;font-size:20px;font-weight:900;text-align:center;min-width:60px;"><span style="color:'+(hw?'#FFD700':draw?'#FFD700':'#4A5A6E')+';">'+r.hs+'</span><span style="color:#4A5A6E;margin:0 4px;">-</span><span style="color:'+(aw?'#FFD700':draw?'#FFD700':'#4A5A6E')+';">'+r.as+'</span></div>' +
+        '<div style="flex:1;text-align:right;"><div style="font-size:13px;font-weight:'+(aw?700:400)+';color:'+(aw?'#FFF':'#9AA5B4')+';">'+r.away+'</div><div style="font-size:10px;color:#4A5A6E;">@'+r.awayM+'</div></div>' +
+        '</div>';
+    }).join('');
+  }
+
+  async function loadTorneo2() {
+    var countEl = document.getElementById('t2-count');
+    var listEl = document.getElementById('t2-signups-list');
+    if(!listEl) return;
+    var res = await db.from('tournament_signups').select('*').eq('tournament','copa-nostalgia-2').order('created_at',{ascending:true});
+    var data = res.data || [];
+    if(countEl) countEl.textContent = '(' + data.length + '/16)';
+    if(data.length === 0) {
+      listEl.innerHTML = '<div style="font-size:13px;color:#4A5A6E;text-align:center;padding:20px;">Sé el primero en anotarte 🚀</div>';
+      return;
+    }
+    listEl.innerHTML = data.map(function(s,i) {
+      return '<div style="display:flex;align-items:center;gap:12px;background:#111;border-radius:10px;padding:10px 14px;">' +
+        '<div style="font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:900;color:#FFD700;min-width:24px;">'+(i+1)+'</div>' +
+        '<div style="width:36px;height:36px;border-radius:50%;background:rgba(255,215,0,0.12);display:flex;align-items:center;justify-content:center;font-family:Barlow Condensed,sans-serif;font-size:14px;font-weight:900;color:#FFD700;">'+(s.osm_username||'?').substring(0,2).toUpperCase()+'</div>' +
+        '<div style="font-size:14px;font-weight:600;color:#FFF;">'+s.osm_username+'</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  async function loadHomeSignupCount() {
+    var el = document.getElementById('home-signups-count');
+    if(!el) return;
+    var res = await db.from('tournament_signups').select('id').eq('tournament','copa-nostalgia-2');
+    var count = res.data ? res.data.length : 0;
+    var remaining = 16 - count;
+    el.textContent = remaining > 0 ? remaining + ' cupos disponibles' : '¡Cupos completos!';
+  }
+
+  // Override showScreen for new screens
+  var origShowScreen = showScreen;
+  function showScreen(id, tabEl) {
+    document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+    document.querySelectorAll('.bottom-nav-btn').forEach(function(b){b.style.color='#4A5A6E';});
+    var screen = document.getElementById('screen-' + id);
+    if(screen) screen.classList.add('active');
+    var btn = document.getElementById('bnav-'+id+'-btn') || document.getElementById('bnav-'+id.replace('torneo','t')+'-btn');
+    if(btn) btn.style.color = '#FFD700';
+  }
+
+  // Init
+  document.addEventListener('DOMContentLoaded', function() {
+    loadHomeSignupCount();
+    // Set home active
+    document.querySelectorAll('.bottom-nav-btn').forEach(function(b){b.style.color='#4A5A6E';});
+    var hBtn = document.getElementById('bnav-home-btn');
+    if(hBtn) hBtn.style.color = '#FFD700';
+  });
+</script>
+
+
 <!-- SIGNUP MODAL -->
 <div id="signup-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;">
   <div style="background:#0D0D0D;border:1px solid rgba(255,215,0,0.3);border-radius:24px;padding:28px 24px;max-width:380px;width:100%;box-shadow:0 0 60px rgba(255,215,0,0.1);position:relative;">
@@ -3734,6 +3161,7 @@
     </div>
   </div>
 </div>
+
 
 </body>
 </html>
