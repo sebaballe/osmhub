@@ -456,6 +456,8 @@
 </div>
 
 <!-- ===== HOME ===== -->
+
+
 <div id="screen-home" class="screen active">
   <div style="background:linear-gradient(160deg,#000 0%,#0A0800 100%);padding:40px 20px 32px;text-align:center;border-bottom:1px solid rgba(255,215,0,0.15);position:relative;overflow:hidden;">
     <div style="position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(255,215,0,0.08) 0%,transparent 70%);pointer-events:none;"></div>
@@ -572,57 +574,60 @@
 </div>
 
 
+
+
+
+<!-- SIGNUP MODAL -->
+<div id="signup-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#0D0D0D;border:1px solid rgba(255,215,0,0.3);border-radius:24px;padding:28px 24px;max-width:380px;width:100%;box-shadow:0 0 60px rgba(255,215,0,0.1);position:relative;">
+    <button onclick="closeSignupModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;line-height:1;">✕</button>
+    <div style="text-align:center;margin-bottom:20px;">
+      <div style="font-size:40px;margin-bottom:10px;">🏆</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:#FFFFFF;margin-bottom:6px;" id="signup-modal-title">COPA NOSTALGIA II</div>
+      <div style="font-size:13px;color:var(--text-mid);" id="signup-modal-sub">Dejá tu usuario de OSM y reservá tu lugar</div>
+    </div>
+    <!-- Guest -->
+    <div id="signup-modal-guest" style="display:none;text-align:center;">
+      <div style="font-size:13px;color:var(--text-mid);margin-bottom:14px;" id="signup-modal-login-msg">Necesitás una cuenta para anotarte</div>
+      <button onclick="closeSignupModal();openAuth();" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;" id="signup-modal-login-btn">⚡ CREAR CUENTA GRATIS</button>
+      <div style="margin-top:10px;font-size:11px;color:var(--text-dim);" id="signup-modal-login-note">Solo tu email. Sin spam.</div>
+    </div>
+    <!-- Logged in -->
+    <div id="signup-modal-logged" style="display:none;">
+      <div style="background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.15);border-radius:12px;padding:14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:20px;">⚽</span>
+        <div style="flex:1;">
+          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;" id="signup-osm-label">Tu usuario de OSM</div>
+          <input id="signup-osm-input" placeholder="ej: hola123" style="width:100%;background:transparent;border:none;outline:none;color:#FFFFFF;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;" />
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:12px;margin-bottom:16px;font-size:12px;color:var(--text-dim);display:flex;flex-direction:column;gap:6px;">
+        <div style="font-size:11px;font-weight:700;color:var(--gold);letter-spacing:0.5px;margin-bottom:2px;" id="rules-title">📋 REGLAS DEL TORNEO</div>
+        <div>🏆 <span id="rules-1">Liga Estrellas de Clubes</span></div>
+        <div>⏱ <span id="rules-2">Sin timers</span></div>
+        <div>🏫 <span id="rules-3">Sin campus</span></div>
+        <div>🔒 <span id="rules-4">Sin entrenamiento secreto</span></div>
+        <div>💰 <span id="rules-5">Premio al ganador</span></div>
+      </div>
+      <button onclick="submitSignupModal()" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:16px;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;cursor:pointer;box-shadow:0 4px 20px rgba(255,215,0,0.25);" id="signup-modal-btn">✅ RESERVAR MI LUGAR</button>
+      <div id="signup-modal-msg" style="text-align:center;font-size:13px;margin-top:10px;min-height:18px;"></div>
+    </div>
+    <!-- Success -->
+    <div id="signup-modal-success" style="display:none;text-align:center;">
+      <div style="font-size:48px;margin-bottom:10px;">🎉</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:#FFD700;margin-bottom:8px;" id="signup-success-title">¡Estás anotado!</div>
+      <div style="font-size:13px;color:var(--text-mid);margin-bottom:20px;" id="signup-success-sub">Te avisaremos cuando empiece la Copa Nostalgia II.</div>
+      <button onclick="closeSignupModal()" style="background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);color:#FFD700;border-radius:10px;padding:10px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="signup-close-btn">Cerrar</button>
+    </div>
+  </div>
+</div>
+
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 
-  // ===== PWA MANIFEST =====
-  (function() {
-    var manifest = {
-      name: "OSM Hub",
-      short_name: "OSM Hub",
-      description: "Fan-made tactic platform for OSM",
-      start_url: "/",
-      display: "standalone",
-      background_color: "#000000",
-      theme_color: "#000000",
-      orientation: "portrait-primary",
-      icons: [
-        { src: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxOTIiIGhlaWdodD0iMTkyIiB2aWV3Qm94PSIwIDAgMTkyIDE5MiI+CiAgPHJlY3Qgd2lkdGg9IjE5MiIgaGVpZ2h0PSIxOTIiIHJ4PSI0MCIgZmlsbD0iIzBBMEUxNCIvPgogIDxyZWN0IHg9IjgiIHk9IjgiIHdpZHRoPSIxNzYiIGhlaWdodD0iMTc2IiByeD0iMzYiIGZpbGw9IiMxMTE3MjAiLz4KICA8dGV4dCB4PSI5NiIgeT0iODAiIGZvbnQtZmFtaWx5PSJBcmlhbCBCbGFjaywgQXJpYWwiIGZvbnQtd2VpZ2h0PSI5MDAiIGZvbnQtc2l6ZT0iNTIiIGZpbGw9IiMwMEU2NzYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPk9TTTwvdGV4dD4KICA8dGV4dCB4PSI5NiIgeT0iMTQwIiBmb250LWZhbWlseT0iQXJpYWwgQmxhY2ssIEFyaWFsIiBmb250LXdlaWdodD0iOTAwIiBmb250LXNpemU9IjUyIiBmaWxsPSIjRkZGRkZGIiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5IVUI8L3RleHQ+CiAgPHJlY3QgeD0iMjAiIHk9IjkwIiB3aWR0aD0iMTUyIiBoZWlnaHQ9IjQiIHJ4PSIyIiBmaWxsPSIjMDBFNjc2IiBvcGFjaXR5PSIwLjQiLz4KPC9zdmc+", sizes: "192x192", type: "image/svg+xml" },
-        { src: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MTIiIGhlaWdodD0iNTEyIiB2aWV3Qm94PSIwIDAgNTEyIDUxMiI+CiAgPHJlY3Qgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHJ4PSIxMDAiIGZpbGw9IiMwQTBFMTQiLz4KICA8cmVjdCB4PSIxNiIgeT0iMTYiIHdpZHRoPSI0ODAiIGhlaWdodD0iNDgwIiByeD0iOTAiIGZpbGw9IiMxMTE3MjAiLz4KICA8dGV4dCB4PSIyNTYiIHk9IjIxMCIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLCBBcmlhbCIgZm9udC13ZWlnaHQ9IjkwMCIgZm9udC1zaXplPSIxNDAiIGZpbGw9IiMwMEU2NzYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPk9TTTwvdGV4dD4KICA8dGV4dCB4PSIyNTYiIHk9IjM3MCIgZm9udC1mYW1pbHk9IkFyaWFsIEJsYWNrLCBBcmlhbCIgZm9udC13ZWlnaHQ9IjkwMCIgZm9udC1zaXplPSIxNDAiIGZpbGw9IiNGRkZGRkYiIHRleHQtYW5jaG9yPSJtaWRkbGUiPkhVQjwvdGV4dD4KICA8cmVjdCB4PSI1MCIgeT0iMjQwIiB3aWR0aD0iNDEyIiBoZWlnaHQ9IjgiIHJ4PSI0IiBmaWxsPSIjMDBFNjc2IiBvcGFjaXR5PSIwLjQiLz4KPC9zdmc+", sizes: "512x512", type: "image/svg+xml", purpose: "any maskable" }
-      ]
-    };
-    var blob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
-    var url = URL.createObjectURL(blob);
-    document.getElementById('pwa-manifest').setAttribute('href', url);
-  })();
-
-  // ===== SERVICE WORKER =====
-  if ('serviceWorker' in navigator) {
-    var swContent = `
-      var CACHE = 'osmhub-v1';
-      var URLS = ['/'];
-      self.addEventListener('install', function(e) {
-        e.waitUntil(caches.open(CACHE).then(function(c) { return c.addAll(URLS); }));
-        self.skipWaiting();
-      });
-      self.addEventListener('activate', function(e) {
-        e.waitUntil(caches.keys().then(function(keys) {
-          return Promise.all(keys.filter(function(k) { return k !== CACHE; }).map(function(k) { return caches.delete(k); }));
-        }));
-        self.clients.claim();
-      });
-      self.addEventListener('fetch', function(e) {
-        if (e.request.mode === 'navigate') {
-          e.respondWith(fetch(e.request).catch(function() { return caches.match('/'); }));
-        }
-      });
-    `;
-    var swBlob = new Blob([swContent], {type: 'application/javascript'});
-    var swUrl = URL.createObjectURL(swBlob);
-    navigator.serviceWorker.register(swUrl).catch(function(e) { console.log('SW error:', e); });
-  }
-
-  // ===== SUPABASE CONFIG =====
   const SUPABASE_URL = 'https://dyazsdbmdbnmjjpcttnw.supabase.co';
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5YXpzZGJtZGJubWpqcGN0dG53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4ODE0MTIsImV4cCI6MjA5MjQ1NzQxMn0.CbmYy-9XILk99DkuKi5CFIqQBDvADcLvozvIX46c5zQ';
   const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -869,1011 +874,6 @@
     updateStatsCompare();
   }
 
-  // ===== SIGNUP MODAL =====
-  async function openSignupModal() {
-    var es = currentLang === 'es';
-    var modal = document.getElementById('signup-modal');
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    // Translations
-    document.getElementById('signup-modal-title').textContent = 'COPA NOSTALGIA II';
-    document.getElementById('signup-modal-sub').textContent = es ? 'Dejá tu usuario de OSM y reservá tu lugar' : 'Dejá tu usuario de OSM y reservá tu lugar';
-    document.getElementById('rules-title').textContent = es ? '📋 REGLAS DEL TORNEO' : '📋 REGLAS DEL TORNEO';
-    document.getElementById('rules-1').textContent = es ? 'Liga Estrellas de Clubes' : 'Liga Estrellas de Clubes';
-    document.getElementById('rules-2').textContent = es ? 'Sin timers' : 'Sin timers';
-    document.getElementById('rules-3').textContent = es ? 'Sin campus' : 'Sin campus';
-    document.getElementById('rules-4').textContent = es ? 'Sin entrenamiento secreto' : 'Sin entrenamiento secreto';
-    document.getElementById('rules-5').textContent = es ? 'Premio al ganador' : 'Premio al ganador';
-    document.getElementById('signup-modal-btn').textContent = es ? '✅ RESERVAR MI LUGAR' : '✅ RESERVAR MI LUGAR';
-    var osmInput = document.getElementById('signup-osm-input'); if(osmInput) osmInput.placeholder = es ? 'ej: hola123' : 'ej: hola123';
-    document.getElementById('signup-modal-login-btn').textContent = es ? '⚡ CREAR CUENTA GRATIS' : '⚡ CREAR CUENTA GRATIS';
-    document.getElementById('signup-modal-login-note').textContent = es ? 'Solo tu email. Sin spam.' : 'Solo tu email. Sin spam.';
-    document.getElementById('signup-modal-login-msg').textContent = es ? 'Necesitás una cuenta para anotarte' : 'Necesitás una cuenta para anotarte';
-    document.getElementById('signup-success-title').textContent = es ? '¡Estás anotado!' : 'You\'re in!';
-    document.getElementById('signup-success-sub').textContent = es ? 'Te avisaremos cuando empiece la Copa Nostalgia II.' : 'We\'ll notify you when Copa Nostalgia II starts.';
-    document.getElementById('signup-close-btn').textContent = es ? 'Cerrar' : 'Cerrar';
-    // Get spots count
-    var signups = await db.from('tournament_signups').select('id').eq('tournament', 'copa-nostalgia-2');
-    var count = (signups.data && signups.data.length) ? signups.data.length : 0;
-    // spots shown in next-cup-spots on home screen
-    // Show correct state
-    document.getElementById('signup-modal-success').style.display = 'none';
-    if (currentUser) {
-      document.getElementById('signup-modal-guest').style.display = 'none';
-      document.getElementById('signup-modal-logged').style.display = 'block';
-      // Check if already signed up
-      var existing = await db.from('tournament_signups').select('osm_username').eq('user_id', currentUser.id).eq('tournament', 'copa-nostalgia-2').maybeSingle();
-      if (existing.data) {
-        document.getElementById('signup-osm-input').value = existing.data.osm_username;
-        document.getElementById('signup-modal-msg').textContent = es ? '✅ Ya estás anotado con este usuario' : '✅ Already signed up with this username';
-        document.getElementById('signup-modal-msg').style.color = 'var(--gold)';
-      }
-    } else {
-      document.getElementById('signup-modal-guest').style.display = 'block';
-      document.getElementById('signup-modal-logged').style.display = 'none';
-    }
-  }
-
-  function closeSignupModal() {
-    document.getElementById('signup-modal').style.display = 'none';
-    document.body.style.overflow = '';
-  }
-
-  async function submitSignupModal() {
-    if (!currentUser) return;
-    var es = currentLang === 'es';
-    var input = document.getElementById('signup-osm-input');
-    var msg = document.getElementById('signup-modal-msg');
-    var text = input ? input.value.trim() : '';
-    if (!text) {
-      msg.textContent = es ? 'Escribí tu usuario de OSM' : 'Enter your OSM username';
-      msg.style.color = 'var(--red)';
-      return;
-    }
-    var btn = document.getElementById('signup-modal-btn');
-    btn.textContent = es ? 'Enviando...' : 'Sending...';
-    // Check if already signed up
-    var existing = await db.from('tournament_signups').select('id').eq('user_id', currentUser.id).eq('tournament', 'copa-nostalgia-2').maybeSingle();
-    if (existing.data) {
-      document.getElementById('signup-modal-logged').style.display = 'none';
-      document.getElementById('signup-modal-success').style.display = 'block';
-      return;
-    }
-    var res = await db.from('tournament_signups').insert({ user_id: currentUser.id, osm_username: text, tournament: 'copa-nostalgia-2' });
-    if (res.error) {
-      msg.textContent = es ? 'Error. Intentá de nuevo.' : 'Error. Please try again.';
-      msg.style.color = 'var(--red)';
-      btn.textContent = es ? '✅ RESERVAR MI LUGAR' : '✅ RESERVAR MI LUGAR';
-      return;
-    }
-    document.getElementById('signup-modal-logged').style.display = 'none';
-    document.getElementById('signup-modal-success').style.display = 'block';
-    loadHomeScreen();
-  }
-
-  // Cerrar modal on backdrop click
-  var signupModal = document.getElementById('signup-modal');
-  if(signupModal) signupModal.addEventListener('click', function(e) {
-    if (e.target === this) closeSignupModal();
-  });
-
-  // ===== STATS HUB =====
-  var statsInitialized = false;
-  var statsSortKey = 'shots', statsSortDir = -1;
-  function switchStatsTab(id, btn) {
-    document.querySelectorAll('.stats-pane').forEach(function(s){s.classList.remove('active');});
-    document.querySelectorAll('.stats-tab-btn').forEach(function(b){b.classList.remove('active');});
-    var el = document.getElementById(id); if(el) el.classList.add('active');
-    if(btn) btn.classList.add('active');
-    applyStatsTranslations();
-  }
-  function sortStatsTable(key) {
-    if(statsSortKey===key) statsSortDir*=-1; else{statsSortKey=key;statsSortDir=-1;}
-    renderStatsTeams();
-  }
-  function renderStatsTeams() {
-    var tbody = document.getElementById('stats-teams-tbody'); if(!tbody) return;
-    var maxS = Math.max.apply(null, statsTeams.map(function(t){return t.shots;}));
-    var maxP = Math.max.apply(null, statsTeams.map(function(t){return t.poss;}));
-    var sorted = statsTeams.slice().sort(function(a,b){return (a[statsSortKey]-b[statsSortKey])*statsSortDir;});
-    tbody.innerHTML = sorted.map(function(t,i){
-      var first = i===0;
-      return '<tr style="border-bottom:1px solid rgba(255,255,255,0.04);">' +
-        '<td style="padding:10px 8px 10px 14px;"><span style="font-family:Barlow Condensed,sans-serif;font-size:15px;font-weight:900;color:'+(first?'#FFD700':'var(--text-dim)')+';">'+(i+1)+'</span></td>' +
-        '<td style="padding:10px 8px;text-align:left;"><div style="font-family:Barlow Condensed,sans-serif;font-size:15px;font-weight:900;">'+t.name+'</div><div style="font-size:10px;color:var(--text-dim);">@'+t.manager+'</div></td>' +
-        '<td style="padding:10px 8px;text-align:center;"><div style="font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:800;color:'+(first?'#FFD700':'var(--text)')+';">'+t.shots+'</div><div style="height:3px;border-radius:2px;background:linear-gradient(90deg,#E6C200,#FFD700);width:'+Math.round(t.shots/maxS*60)+'px;margin:3px auto 0;opacity:'+(first?1:0.35)+';"></div></td>' +
-        '<td style="padding:10px 8px;text-align:center;"><div style="font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:800;color:'+(first?'#FFD700':'var(--text)')+';">'+t.poss+'%</div><div style="height:3px;border-radius:2px;background:linear-gradient(90deg,#E6C200,#FFD700);width:'+Math.round(t.poss/maxP*60)+'px;margin:3px auto 0;opacity:'+(first?1:0.35)+';"></div></td>' +
-        '</tr>';
-    }).join('');
-    // Update sort header colors
-    var shS = document.getElementById('sth-shots'); if(shS) shS.style.color = statsSortKey==='shots'?'#FFD700':'var(--text-dim)';
-    var shP = document.getElementById('sth-poss'); if(shP) shP.style.color = statsSortKey==='poss'?'#FFD700':'var(--text-dim)';
-  }
-  function updateStatsCompare() {
-    var aEl = document.getElementById('stats-team-a');
-    var bEl = document.getElementById('stats-team-b');
-    if(!aEl||!bEl) return;
-    var a = statsTeams.find(function(t){return t.name===aEl.value;});
-    var b = statsTeams.find(function(t){return t.name===bEl.value;});
-    if(!a||!b) return;
-    var es = currentLang === 'es';
-    var maxS=13, maxP=61.5;
-    var csA=document.getElementById('stats-cbar-shots-a'); if(csA) csA.style.width=(a.shots/maxS*100)+'%';
-    var csB=document.getElementById('stats-cbar-shots-b'); if(csB) csB.style.width=(b.shots/maxS*100)+'%';
-    var cvSA=document.getElementById('stats-cval-shots-a'); if(cvSA) cvSA.textContent=a.shots;
-    var cvSB=document.getElementById('stats-cval-shots-b'); if(cvSB) cvSB.textContent=b.shots;
-    var cpA=document.getElementById('stats-cbar-poss-a'); if(cpA) cpA.style.width=(a.poss/maxP*100)+'%';
-    var cpB=document.getElementById('stats-cbar-poss-b'); if(cpB) cpB.style.width=(b.poss/maxP*100)+'%';
-    var cvPA=document.getElementById('stats-cval-poss-a'); if(cvPA) cvPA.textContent=a.poss+'%';
-    var cvPB=document.getElementById('stats-cval-poss-b'); if(cvPB) cvPB.textContent=b.poss+'%';
-    var aScore=a.shots*0.6+a.poss*0.4, bScore=b.shots*0.6+b.poss*0.4;
-    var v='';
-    if(a.name===b.name) {
-      v = es ? 'Elegí dos equipos diferentes.' : 'Select two different teams.';
-    } else if(Math.abs(aScore-bScore)<3) {
-      v = es
-        ? '<strong>'+a.name+'</strong> y <strong>'+b.name+'</strong> están muy parejos estadísticamente. Cualquiera puede ganar.'
-        : '<strong>'+a.name+'</strong> and <strong>'+b.name+'</strong> are statistically very close. Either could win.';
-    } else if(aScore>bScore) {
-      v = es
-        ? '<strong style="color:#FFD700">'+a.name+'</strong> tiene una ventaja estadística clara. Los números los favorecen.'
-        : '<strong style="color:#FFD700">'+a.name+'</strong> has a clear statistical edge. The numbers strongly favor them.';
-    } else {
-      v = es
-        ? '<strong style="color:#FFD700">'+b.name+'</strong> sale adelante. Serían el favorito estadístico.'
-        : '<strong style="color:#FFD700">'+b.name+'</strong> comes out ahead. They would be the statistical favorite.';
-    }
-    var vEl=document.getElementById('stats-verdict-text'); if(vEl) vEl.innerHTML=v;
-    // Update verdict label
-    var vlEl=document.getElementById('stats-verdict-label'); if(vlEl) vlEl.textContent=es?'📊 Veredicto estadístico':'📊 Veredicto estadístico';
-  }
-  function applyStatsTranslations() {
-    var es = currentLang === 'es';
-    // Header
-    var statsHeader = document.querySelector('#screen-stats .stats-pane.active');
-    // Tabs
-    var tabBtns = document.querySelectorAll('.stats-tab-btn');
-    if(tabBtns[0]) tabBtns[0].textContent = es ? '📊 Resumen' : '📊 Resumen';
-    if(tabBtns[1]) tabBtns[1].textContent = es ? '👥 Equipos' : '👥 Equipos';
-    if(tabBtns[2]) tabBtns[2].textContent = es ? '⚖️ Comparar' : '⚖️ Comparar';
-    if(tabBtns[3]) tabBtns[3].textContent = es ? '💡 Análisis' : '💡 Análisis';
-    // Overview labels
-    var els = {
-      'stats-top-title': [es?'🏆 Mejores del torneo':'🏆 Mejores del torneo'],
-      'stats-avg-title': [es?'📈 Mejor equipo vs Promedio':'📈 Mejor equipo vs Promedio'],
-      'stats-insights-title': [es?'⚡ Puntos clave':'⚡ Puntos clave'],
-      'stats-compare-cta': [es?'Comparar dos equipos →':'Comparar dos equipos →'],
-      'stats-teams-title': [es?'Los 16 equipos':'Los 16 equipos'],
-      'stats-sort-hint': [es?'Toca los títulos para ordenar':'Tocá los títulos para ordenar'],
-      'stats-compare-title': [es?'Elegí dos equipos':'Elegí dos equipos'],
-      'stats-shots-label': [es?'Tiros por partido':'Tiros por partido'],
-      'stats-poss-label': [es?'Posesión %':'Posesión %'],
-      'stats-verdict-label': [es?'📊 Veredicto estadístico':'📊 Veredicto estadístico'],
-      'stats-insights-page-title': [es?'🏆 Lucha por el título':'🏆 Lucha por el título'],
-      'stats-risk-title': [es?'⚠️ Equipos en riesgo':'⚠️ Equipos en riesgo'],
-      'stats-patterns-title': [es?'🔍 Patrones tácticos':'🔍 Patrones tácticos'],
-      'stats-dominant-badge': [es?'🔥 Dominante':'🔥 Dominante'],
-      'stats-shots-unit': [es?'tiros / partido':'tiros / partido'],
-      'stats-i1': [es?'<strong style="color:var(--text);">Fenerbahce domina el torneo</strong> — líder en posesión (62.3%) y empata en tiros. Imparable.':'<strong style="color:var(--text);">Fenerbahce domina el torneo</strong> — líder en posesión (62.3%) y empata en tiros. Imparable.'],
-      'stats-i2': [es?'<strong style="color:var(--text);">Barcelona es el equipo más débil</strong> — solo 5 tiros por partido y 37.5% de posesión.':'<strong style="color:var(--text);">Barcelona es el equipo más débil</strong> — solo 5 tiros por partido y 37.5% de posesión.'],
-      'stats-i3': [es?'<strong style="color:var(--text);">Boca Juniors no necesita la pelota para anotar</strong> — 12 tiros con menos del 50% de posesión.':'<strong style="color:var(--text);">Boca Juniors doesn\'t need the ball to score</strong> — 12 tiros con menos del 50% de posesión.'],
-      'stats-i4': [es?'<strong style="color:var(--text);">AC Milan es el caballo negro</strong> — 11.5 tiros y 60.5% de posesión. Peligrosamente silencioso.':'<strong style="color:var(--text);">Boca Juniors sigue siendo letal</strong> — 12 tiros con solo 52% de posesión. Eficiencia pura.'],
-    };
-    for(var id in els) {
-      var el = document.getElementById(id);
-      if(el) el.innerHTML = els[id][0];
-    }
-    // Compare labels
-    var slEl = document.getElementById('stats-shots-label'); if(slEl) slEl.textContent = es ? 'Tiros por partido' : 'Tiros por partido';
-    var plEl = document.getElementById('stats-poss-label'); if(plEl) plEl.textContent = es ? 'Posesión %' : 'Posesión %';
-    // Insights blocks
-    var blocks = {
-      'stats-b1': es ? 'Arsenal se está escapando en el torneo.' : 'Arsenal se está escapando en el torneo.',
-      'stats-b2': es ? 'Fenerbahce controla la posesión mejor que nadie excepto Arsenal.' : 'Fenerbahce controla la posesión mejor que nadie excepto Arsenal.',
-      'stats-b3': es ? 'Boca Juniors no necesita la pelota.' : "Boca Juniors no necesita la pelota.",
-      'stats-b4': es ? 'Barcelona está en crisis.' : 'Barcelona está en crisis.',
-      'stats-b5': es ? 'River Plate y Galatasaray apenas compiten.' : 'River Plate y Galatasaray apenas compiten.',
-      'stats-b6': es ? 'Reyes del contraataque:' : 'Reyes del contraataque:',
-      'stats-b7': es ? 'El medio silencioso:' : 'El medio silencioso:',
-    };
-    for(var bid in blocks) {
-      var bel = document.getElementById(bid); if(bel) bel.textContent = blocks[bid];
-    }
-    avgLabels.forEach(function(l){ if(l.dataset.key==='top') l.textContent='Arsenal'; if(l.dataset.key==='avg') l.textContent=es?'Promedio liga':'Promedio liga'; });
-    updateStatsCompare();
-  }
-
-  function initStats() {
-    if(statsInitialized) return;
-    statsInitialized = true;
-    renderStatsTeams();
-    updateStatsCompare();
-  }
-
-  // ===== HOME SCREEN =====
-  var copaResults = [
-    { home: 'matiasc_51', homeTeam: 'Juventus', homeScore: 2, away: 'iShowfideo', awayTeam: 'Bayern München', awayScore: 2 },
-    { home: 'fernando18_0', homeTeam: 'River Plate', homeScore: 1, away: 'Myking Guzman', awayTeam: 'Ajax', awayScore: 0 },
-    { home: 'ferchu2020', homeTeam: 'Manchester United', homeScore: 2, away: 'Sir Nacho Ruglio', awayTeam: 'Arsenal', awayScore: 0 },
-    { home: 'Griche espinosa 70', homeTeam: 'Benfica', homeScore: 0, away: 'adolfis_1', awayTeam: 'Fenerbahce', awayScore: 1 },
-    { home: 'shoxx11', homeTeam: 'Santos', homeScore: 1, away: 'luis rodriguez_69', awayTeam: 'Inter Milan', awayScore: 0 },
-    { home: 'ThCARP', homeTeam: 'Galatasaray', homeScore: 1, away: 'Nivekserolf', awayTeam: 'Boca Juniors', awayScore: 1 },
-    { home: 'Jramos_9', homeTeam: 'Real Madrid', homeScore: 0, away: 'Sherito Da Silva', awayTeam: 'AC Milan', awayScore: 0 },
-    { home: 'Xabi alonso 16_5', homeTeam: 'Liverpool', homeScore: 2, away: 'kevinp_388', awayTeam: 'Barcelona', awayScore: 0 },
-  ];
-
-  async function loadHomeScreen() {
-    var es = currentLang === 'es';
-    var heroTitle = document.getElementById('hero-title');
-    if(heroTitle) heroTitle.textContent = es ? 'Compite en torneos de OSM y demostrá que sos el mejor manager' : 'Compete in OSM tournaments and prove you are the best manager';
-    var heroSub = document.getElementById('hero-sub');
-    if(heroSub) heroSub.textContent = es ? 'Unite gratis, ganá premios y enfrentate a jugadores reales' : 'Join free, win prizes and face real players';
-    var heroPrimary = document.getElementById('hero-btn-primary');
-    if(heroPrimary) heroPrimary.textContent = es ? '⚡ ENTRAR AL PRÓXIMO TORNEO' : '⚡ JOIN THE NEXT TOURNAMENT';
-    var heroSecondary = document.getElementById('hero-btn-secondary');
-    if(heroSecondary) heroSecondary.textContent = es ? 'Ver resultados →' : 'See results →';
-    var heroProof = document.getElementById('hero-social-proof');
-    if(heroProof) heroProof.textContent = es ? '+500 managers ya compitiendo' : '+500 managers already competing';
-    var copaStatus = document.getElementById('copa-status-badge');
-    if(copaStatus) copaStatus.textContent = es ? '🔴 EN JUEGO' : '🔴 LIVE';
-    var top4Label = document.getElementById('home-top4-label');
-    if(top4Label) top4Label.textContent = 'TOP 4';
-    var resultsLabel = document.getElementById('home-results-label');
-    if(resultsLabel) resultsLabel.textContent = es ? 'ÚLTIMOS RESULTADOS' : 'LATEST RESULTS';
-    var roundLabel = document.getElementById('home-round-label');
-    if(roundLabel) roundLabel.textContent = es ? 'JORNADA 4 · 30 RONDAS TOTALES' : 'ROUND 4 · 30 ROUNDS TOTAL';
-    var seeTournament = document.getElementById('home-see-tournament');
-    if(seeTournament) seeTournament.textContent = es ? 'Ver tabla →' : 'See table →';
-    var nextCupSub = document.getElementById('next-cup-sub');
-    if(nextCupSub) nextCupSub.textContent = es ? 'Únete a la próxima edición — los cupos se llenan rápido' : 'Join the next edition — spots fill up fast';
-    var nextCupDate = document.getElementById('next-cup-date');
-    if(nextCupDate) nextCupDate.textContent = es ? 'Fecha por confirmar' : 'Date TBD';
-    var nextCupPrize = document.getElementById('next-cup-prize');
-    if(nextCupPrize) nextCupPrize.textContent = es ? 'Premio PayPal' : 'PayPal prize';
-    var nextCupBtn = document.getElementById('next-cup-btn');
-    if(nextCupBtn) nextCupBtn.textContent = es ? '⚡ RESERVAR MI LUGAR' : '⚡ RESERVE MY SPOT';
-    var statsSub = document.getElementById('stats-hub-sub');
-    if(statsSub) statsSub.textContent = es ? 'Descubrí qué equipos dominan el torneo' : 'Find out which teams are dominating';
-    var statsBadge = document.getElementById('stats-hub-badge');
-    if(statsBadge) statsBadge.textContent = es ? '🏆 Fenerbahce lidera con 12 puntos' : '🏆 Fenerbahce leads with 12 points';
-    var statsCta = document.getElementById('stats-hub-cta');
-    if(statsCta) statsCta.textContent = es ? 'Ver stats →' : 'See stats →';
-    var homeTopTitle = document.getElementById('home-top-title');
-    if(homeTopTitle) homeTopTitle.textContent = es ? '⭐ TÁCTICAS MÁS VOTADAS' : '⭐ TOP TACTICS';
-    var homeSeeRankings = document.getElementById('home-see-rankings');
-    if(homeSeeRankings) homeSeeRankings.textContent = es ? 'Ver todas →' : 'See all →';
-    // Load signups count
-    var spotsEl = document.getElementById('next-cup-spots');
-    if(spotsEl) {
-      spotsEl.textContent = '...';
-      db.from('tournament_signups').select('id').eq('tournament', 'copa-nostalgia-2').then(function(signups) {
-        var count = (signups.data && signups.data.length) ? signups.data.length : 0;
-        var el = document.getElementById('next-cup-spots');
-        if(el) el.textContent = count + '/16';
-        var lbl = document.getElementById('next-cup-spots-label');
-        if(lbl) lbl.textContent = currentLang === 'es' ? 'Cupos ocupados' : 'Spots taken';
-      });
-    }
-    renderCopaResults();
-    loadHomeTopTactics();
-  }
-
-  function renderCopaResults() {
-    var es = currentLang === 'es';
-    var container = document.getElementById('home-copa-results');
-    var seeTournament = document.getElementById('home-see-tournament');
-    if(seeTournament) seeTournament.textContent = es ? 'Ver torneo →' : 'See tournament →';
-    if (!container) return;
-    var jornada = es ? 'JORNADA 4' : 'ROUND 4';
-    var html = '<div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:10px;letter-spacing:0.5px;">' + jornada + '</div>';
-    copaResults.forEach(function(r) {
-      var homeWin = r.homeScore > r.awayScore;
-      var awayWin = r.awayScore > r.homeScore;
-      var isDraw = r.homeScore === r.awayScore;
-      html += '<div style="background:var(--surface2);border-radius:8px;padding:10px 14px;margin-bottom:6px;">' +
-        '<div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">' +
-          '<div style="flex:1;">' +
-            '<div style="font-size:13px;font-weight:' + (homeWin?'700':'400') + ';color:' + (homeWin?'var(--text)':'var(--text-dim)') + ';">⚽ ' + r.homeTeam + '</div>' +
-            '<div style="font-size:10px;color:var(--text-dim);">@' + r.home + '</div>' +
-          '</div>' +
-          '<div style="font-family:Barlow Condensed,sans-serif;font-size:22px;font-weight:900;text-align:center;white-space:nowrap;">' +
-            '<span style="color:' + (homeWin?'var(--green)':isDraw?'var(--yellow)':'var(--text-dim)') + ';">' + r.homeScore + '</span>' +
-            '<span style="color:var(--text-dim);margin:0 4px;">-</span>' +
-            '<span style="color:' + (awayWin?'var(--green)':isDraw?'var(--yellow)':'var(--text-dim)') + ';">' + r.awayScore + '</span>' +
-          '</div>' +
-          '<div style="flex:1;text-align:right;">' +
-            '<div style="font-size:13px;font-weight:' + (awayWin?'700':'400') + ';color:' + (awayWin?'var(--text)':'var(--text-dim)') + ';">⚽ ' + r.awayTeam + '</div>' +
-            '<div style="font-size:10px;color:var(--text-dim);">@' + r.away + '</div>' +
-          '</div>' +
-        '</div>' +
-      '</div>';
-    });
-    container.innerHTML = html;
-  }
-
-  async function loadHomeTopTactics() {
-    var es = currentLang === 'es';
-    var titleEl = document.getElementById('home-top-title');
-    var seeAll = document.getElementById('home-see-rankings');
-    if(titleEl) titleEl.textContent = es ? '⭐ TÁCTICAS MÁS VOTADAS' : '⭐ TOP TACTICS';
-    if(seeAll) seeAll.textContent = es ? 'Ver todas →' : 'Ver todas →';
-    var container = document.getElementById('home-top-tactics');
-    if (!container) return;
-    var res = await db.from('tactics').select('*').gt('votes_yes', 0).limit(20);
-    if (!res.data || res.data.length === 0) {
-      container.innerHTML = '<div style="font-size:13px;color:var(--text-dim);">' + (es ? 'Aún no hay votos. ¡Sé el primero!' : 'No votes yet. Be the first!') + '</div>';
-      return;
-    }
-    var sorted = res.data.map(function(t) {
-      var total = t.votes_yes + t.votes_no;
-      var pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
-      return Object.assign({}, t, { pct: pct, total: total });
-    }).filter(function(t) { return t.total > 0; })
-      .sort(function(a,b) { return b.pct - a.pct || b.total - a.total; })
-      .slice(0, 3);
-    var medals = ['🥇','🥈','🥉'];
-    container.innerHTML = sorted.map(function(t, i) {
-      var titleParts = t.title ? t.title.split(' · ') : [t.formation];
-      var translated = titleParts.map(function(p) { return p.indexOf(' vs ') !== -1 ? p : translateVsValue(p); }).join(' · ');
-      return '<div onclick="loadTacticDetail(\'' + t.id + '\')" style="display:flex;align-items:center;gap:12px;background:var(--surface2);border-radius:10px;padding:12px 14px;cursor:pointer;">' +
-        '<div style="font-size:20px;">' + medals[i] + '</div>' +
-        '<div style="flex:1;">' +
-        '<div style="font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:800;color:var(--green);">' + t.formation + '</div>' +
-        '<div style="font-size:12px;color:var(--text-dim);">' + translated.substring(0,45) + '</div>' +
-        '</div>' +
-        '<div style="font-family:Barlow Condensed,sans-serif;font-size:22px;font-weight:900;color:' + (t.pct>=70?'var(--green)':t.pct>=50?'var(--yellow)':'var(--red)') + ';">' + t.pct + '%</div>' +
-        '</div>';
-    }).join('');
-  }
-
-  // ===== LOAD TACTICS FEED =====
-  var tacticsPage = 0;
-  var tacticsPageSize = 10;
-  var tacticsHasMore = true;
-  var tacticsLoading = false;
-
-  async function loadTactics(append) {
-    if (tacticsLoading) return;
-    tacticsLoading = true;
-    const feed = document.getElementById('tactics-feed');
-    if (!feed) { tacticsLoading = false; return; }
-    if (!append) {
-      tacticsPage = 0;
-      tacticsHasMore = true;
-      feed.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-dim)">' + (currentLang === 'es' ? 'Cargando...' : 'Loading...') + '</div>';
-    }
-    var oldBtn = document.getElementById('load-more-btn');
-    if (oldBtn) oldBtn.remove();
-    var filterFormation = document.getElementById('filter-formation') ? document.getElementById('filter-formation').value : '';
-    var filterStyle = document.getElementById('filter-style') ? document.getElementById('filter-style').value : '';
-    var filterSituation = document.getElementById('filter-situation') ? document.getElementById('filter-situation').value : '';
-    var sortField = currentSort === 'new' ? 'created_at' : 'votes_yes';
-    var from = tacticsPage * tacticsPageSize;
-    var to = from + tacticsPageSize - 1;
-    var query = db.from('tactics').select('*').order(sortField, { ascending: false }).range(from, to);
-    if (filterFormation) query = query.eq('formation', filterFormation);
-    if (filterStyle === '__official__') query = query.eq('author', 'OSM Hub');
-    else if (filterStyle) query = query.eq('own_style', filterStyle);
-    if (filterSituation) query = query.eq('best_situation', filterSituation);
-    const { data, error } = await query;
-    tacticsLoading = false;
-    if (error || !data) return;
-    if (!append && data.length === 0) {
-      feed.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-dim)">' + (currentLang === 'es' ? 'Aún no hay tácticas. ¡Sé el primero en compartir una!' : 'No tactics yet. Be the first to share one!') + '</div>';
-      return;
-    }
-    if (!append) feed.innerHTML = '';
-    // Append new cards
-    var html = data.map(function(t) {
-      var total = t.votes_yes + t.votes_no;
-      var pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
-      var effClass = pct >= 70 ? 'high' : pct >= 50 ? 'mid' : 'low';
-      var effLbl = currentLang === 'es' ? 'EFICACIA' : 'EFFECTIVENESS';
-      var html = '<div class="tactic-card" onclick="loadTacticDetail(\'' + t.id + '\')">';
-      html += '<div class="card-top">';
-      html += '<div class="vote-col">';
-      html += '<button class="vote-btn up">&#9650;</button>';
-      html += '<div class="vote-count ' + (pct >= 70 ? 'positive' : '') + '">' + t.votes_yes + '</div>';
-      html += '<button class="vote-btn down">&#9660;</button>';
-      html += '</div>';
-      html += '<div class="card-body">';
-      html += '<div class="card-header">';
-      html += '<div class="formation-badge">' + t.formation + '</div>';
-      if (t.own_style) html += '<div style="font-size:12px;font-weight:700;color:var(--text-mid);padding:4px 8px;background:var(--surface2);border-radius:6px;border:1px solid var(--border2);">🎮 ' + translateVsValue(t.own_style) + '</div>';
-      if (t.author === 'OSM Hub') html += '<div style="font-size:11px;font-weight:800;color:#000000;background:var(--green);padding:3px 8px;border-radius:6px;letter-spacing:0.5px;">✦ OFFICIAL</div>';
-      html += '<div>';
-      if (t.title && t.title !== t.formation && !t.title.startsWith(t.formation)) {
-        var titlePts = t.title.split(' · ').map(function(p) { return p.indexOf(' vs ') !== -1 ? p : translateVsValue(p); }).join(' · ');
-        html += '<div class="card-title">' + titlePts + '</div>';
-      }
-      if (t.title && (t.title === t.formation || t.title.startsWith(t.formation))) {
-        var titlePts2 = t.title.split(' · ').map(function(p) { return p.indexOf(' vs ') !== -1 ? p : translateVsValue(p); }).join(' · ');
-        html += '<div class="card-meta" style="font-size:11px;color:var(--text-dim);">' + titlePts2 + '</div>';
-      }
-      html += '<div class="card-meta">by @' + t.author + ' &middot; ' + timeAgo(t.created_at) + '</div></div>';
-      html += '</div>';
-      html += '<div class="effectiveness-bar">';
-      html += '<span class="eff-label">' + effLbl + '</span>';
-      html += '<div class="bar-track"><div class="bar-fill ' + effClass + '" style="width:' + pct + '%"></div></div>';
-      html += '<span class="eff-pct ' + effClass + '">' + pct + '%</span>';
-      html += '</div>';
-      if (t.vs_formation || t.vs_style || t.best_situation) {
-        html += '<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);display:flex;gap:6px;flex-wrap:wrap;">';
-        if (t.vs_formation) html += '<span style="font-size:11px;background:rgba(255,61,87,0.12);color:var(--red);padding:2px 8px;border-radius:4px;font-weight:600;">⚔️ vs ' + t.vs_formation + '</span>';
-        if (t.vs_style) html += '<span style="font-size:11px;background:rgba(41,121,255,0.12);color:var(--blue);padding:2px 8px;border-radius:4px;font-weight:600;">🎮 ' + translateVsValue(t.vs_style) + '</span>';
-        html += '</div>';
-        if (t.best_situation) {
-          html += '<div style="margin-top:4px;display:flex;gap:6px;align-items:center;">';
-          html += '<span style="font-size:10px;font-weight:700;color:var(--text-dim);letter-spacing:0.5px;">' + (currentLang === 'es' ? 'TU SIT:' : 'YOUR SIT:') + '</span>';
-          html += '<span style="font-size:11px;background:rgba(0,230,118,0.1);color:var(--green);padding:2px 8px;border-radius:4px;font-weight:600;">📍 ' + translateVsValue(t.best_situation) + '</span>';
-          html += '</div>';
-        }
-      }
-      if (t.pressing || t.style || t.tempo) {
-        html += '<span style="font-size:11px;background:rgba(41,121,255,0.15);color:#2979FF;padding:2px 8px;border-radius:4px;">&#128293; ' + (t.pressing || 50) + '</span>';
-        html += '<span style="font-size:11px;background:rgba(0,230,118,0.1);color:#00E676;padding:2px 8px;border-radius:4px;">&#9889; ' + (t.style || 50) + '</span>';
-        html += '<span style="font-size:11px;background:rgba(255,214,0,0.15);color:#FFD600;padding:2px 8px;border-radius:4px;">&#9201; ' + (t.tempo || 50) + '</span>';
-        if (t.fwd_tactic) html += '<span style="font-size:11px;background:rgba(255,61,87,0.15);color:#FF3D57;padding:2px 8px;border-radius:4px;">&#9650; ' + translateTacticValue(t.fwd_tactic) + '</span>';
-        html += '</div>';
-      }
-      html += '</div></div>';
-      html += '<div class="card-footer">';
-      html += '<span>&#128077; ' + t.votes_yes + '</span>';
-      html += '<span>&#128078; ' + t.votes_no + '</span>';
-      html += '<span>&#128065; ' + (t.views || 0) + '</span>';
-      if (currentUser && t.user_id === currentUser.id) {
-        html += '<span style="margin-left:auto;display:flex;gap:8px;">';
-        html += '<button onclick="event.stopPropagation();editTactic(\'' + t.id + '\')" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:13px;padding:2px 6px;border-radius:4px;" title="Editar">✏️</button>';
-        html += '<button onclick="event.stopPropagation();deleteTactic(\'' + t.id + '\')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:13px;padding:2px 6px;border-radius:4px;" title="Eliminar">🗑️</button>';
-        html += '</span>';
-      }
-      html += '</div></div>';
-      return html;
-    }).join('');
-    if (!append) {
-      feed.innerHTML = html;
-    } else {
-      feed.insertAdjacentHTML('beforeend', html);
-    }
-    tacticsPage++;
-    tacticsHasMore = data.length === tacticsPageSize;
-    if (tacticsHasMore) {
-      var btn = document.createElement('div');
-      btn.id = 'load-more-btn';
-      btn.style.cssText = 'text-align:center;padding:20px 0;';
-      btn.innerHTML = '<button onclick="loadTactics(true)" style="background:var(--surface);border:1px solid var(--border2);color:var(--text-mid);padding:12px 32px;border-radius:10px;font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:700;cursor:pointer;" onmouseover="this.style.borderColor=\'var(--green)\';this.style.color=\'var(--green)\'" onmouseout="this.style.borderColor=\'var(--border2)\';this.style.color=\'var(--text-mid)\'">' + (currentLang === 'es' ? '⬇️ Ver más tácticas' : '⬇️ Load more tactics') + '</button>';
-      feed.appendChild(btn);
-    }
-  }
-
-  // ===== LOAD TACTIC DETAIL =====
-  var currentTacticId = null;
-  var previousScreen = 'feed';
-
-  async function loadTacticDetail(id) {
-    // Remember where we came from
-    var activeScreen = document.querySelector('.screen.active');
-    if (activeScreen && activeScreen.id) previousScreen = activeScreen.id.replace('screen-', '');
-    currentTacticId = id;
-    showScreen('detail', document.getElementById('tab-detail'));
-    const { data: t } = await db.from('tactics').select('*').eq('id', id).single();
-    if (!t) return;
-    const total = t.votes_yes + t.votes_no;
-    const pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
-    var detForm = document.getElementById('detail-formation'); if(detForm) detForm.textContent = t.formation;
-    // Translate title parts if auto-generated
-    var titleParts = t.title ? t.title.split(' · ') : [];
-    var translatedTitle = titleParts.map(function(part) {
-      if (part.indexOf(' vs ') !== -1) {
-        var vsParts = part.split(' vs ');
-        return vsParts[0] + ' vs ' + vsParts[1];
-      }
-      return translateVsValue(part);
-    }).join(' · ');
-    var detTitle = document.getElementById('detail-title'); if(detTitle) detTitle.textContent = translatedTitle;
-    var detAuthor = document.getElementById('detail-author'); if(detAuthor) detAuthor.textContent = 'by @' + t.author + ' · ' + timeAgo(t.created_at) + ' · ' + (t.views || 0) + ' views';
-    var detPct = document.getElementById('detail-pct'); if(detPct) detPct.textContent = pct + '%';
-    var detEffSub = document.getElementById('detail-eff-sub'); if(detEffSub) detEffSub.textContent = (currentLang === 'es' ? 'Basado en ' : 'Based on ') + total + (currentLang === 'es' ? ' votos reales de jugadores de OSM' : ' votes from real OSM players');
-    var detVotesTotal = document.getElementById('detail-votes-total'); if(detVotesTotal) detVotesTotal.textContent = total;
-    var detVotesYes = document.getElementById('detail-votes-yes'); if(detVotesYes) detVotesYes.textContent = t.votes_yes;
-    var detVotesNo = document.getElementById('detail-votes-no'); if(detVotesNo) detVotesNo.textContent = t.votes_no;
-    // Show slider values in detail
-    var sliderHtml = '';
-    if (t.pressing !== null || t.style !== null || t.tempo !== null) {
-      var pLbl = currentLang === 'es' ? 'Presión' : 'Pressing';
-      var sLbl = currentLang === 'es' ? 'Estilo' : 'Style';
-      var tLbl = currentLang === 'es' ? 'Ritmo' : 'Tempo';
-      var fLbl = currentLang === 'es' ? 'Delanteros' : 'Forwards';
-      var mLbl = currentLang === 'es' ? 'Mediocampistas' : 'Midfielders';
-      var dLbl = currentLang === 'es' ? 'Defensores' : 'Defenders';
-      sliderHtml = '<div style="background:var(--surface2);border-radius:12px;padding:16px;margin:16px 0;">';
-      sliderHtml += '<div style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:1px;margin-bottom:12px;">' + (currentLang === 'es' ? 'CONFIGURACIÓN TÁCTICA' : 'TACTIC SETTINGS') + '</div>';
-      sliderHtml += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;">';
-      sliderHtml += '<div style="text-align:center;background:var(--surface);border-radius:8px;padding:10px;"><div style="font-size:10px;color:#2979FF;font-weight:700;">' + pLbl.toUpperCase() + '</div><div style="font-size:24px;font-weight:900;color:var(--text);font-family:Barlow Condensed,sans-serif;">' + (t.pressing || 50) + '</div></div>';
-      sliderHtml += '<div style="text-align:center;background:var(--surface);border-radius:8px;padding:10px;"><div style="font-size:10px;color:var(--green);font-weight:700;">' + sLbl.toUpperCase() + '</div><div style="font-size:24px;font-weight:900;color:var(--text);font-family:Barlow Condensed,sans-serif;">' + (t.style || 50) + '</div></div>';
-      sliderHtml += '<div style="text-align:center;background:var(--surface);border-radius:8px;padding:10px;"><div style="font-size:10px;color:var(--yellow);font-weight:700;">' + tLbl.toUpperCase() + '</div><div style="font-size:24px;font-weight:900;color:var(--text);font-family:Barlow Condensed,sans-serif;">' + (t.tempo || 50) + '</div></div>';
-      sliderHtml += '</div>';
-      sliderHtml += '<div style="display:flex;flex-direction:column;gap:6px;">';
-      if (t.fwd_tactic) sliderHtml += '<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--red);font-weight:700;">&#9650; ' + fLbl + '</span><span style="color:var(--text);">' + translateTacticValue(t.fwd_tactic) + '</span></div>';
-      if (t.mid_tactic) sliderHtml += '<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:#2979FF;font-weight:700;">&#9670; ' + mLbl + '</span><span style="color:var(--text);">' + translateTacticValue(t.mid_tactic) + '</span></div>';
-      if (t.def_tactic) sliderHtml += '<div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--green);font-weight:700;">&#9660; ' + dLbl + '</span><span style="color:var(--text);">' + translateTacticValue(t.def_tactic) + '</span></div>';
-      sliderHtml += '</div></div>';
-    }
-    var sliderContainer = document.getElementById('detail-slider-info');
-    if (sliderContainer) {
-      var vsHtml = '';
-      if (t.vs_formation || t.vs_style || t.best_situation) {
-        vsHtml += '<div style="background:var(--surface2);border-radius:12px;padding:14px 16px;margin-bottom:16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">';
-        vsHtml += '<span style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;">' + (currentLang === 'es' ? 'ESTILO PROPIO:' : 'OWN STYLE:') + '</span>';
-        if (t.own_style) vsHtml += '<span style="font-size:13px;background:var(--surface2);border:1px solid var(--border2);color:var(--text-mid);padding:4px 10px;border-radius:6px;font-weight:700;">🎮 ' + translateVsValue(t.own_style) + '</span>';
-        vsHtml += '</div>';
-        if (t.vs_formation || t.vs_style) {
-          vsHtml += '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">';
-          vsHtml += '<span style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;">' + (currentLang === 'es' ? 'MEJOR CONTRA:' : 'BEST AGAINST:') + '</span>';
-          if (t.vs_formation) vsHtml += '<span style="font-size:13px;background:rgba(255,61,87,0.12);color:var(--red);padding:4px 10px;border-radius:6px;font-weight:700;">⚔️ ' + t.vs_formation + '</span>';
-          if (t.vs_style) vsHtml += '<span style="font-size:13px;background:rgba(41,121,255,0.12);color:var(--blue);padding:4px 10px;border-radius:6px;font-weight:700;">🎮 ' + translateVsValue(t.vs_style) + '</span>';
-          vsHtml += '</div>';
-        }
-        if (t.best_situation) {
-          vsHtml += '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;">';
-          vsHtml += '<span style="font-size:11px;font-weight:700;color:var(--text-mid);letter-spacing:0.5px;">' + (currentLang === 'es' ? 'TU SITUACIÓN:' : 'YOUR SITUATION:') + '</span>';
-          vsHtml += '<span style="font-size:13px;background:rgba(0,230,118,0.1);color:var(--green);padding:4px 10px;border-radius:6px;font-weight:700;">📍 ' + translateVsValue(t.best_situation) + '</span>';
-          vsHtml += '</div>';
-        }
-      }
-      sliderContainer.innerHTML = vsHtml + sliderHtml;
-    }
-    // Show edit/delete if owner
-    var ownerActions = document.getElementById('detail-owner-actions');
-    if (ownerActions) {
-      if (currentUser && t.user_id === currentUser.id) {
-        ownerActions.innerHTML =
-          '<button onclick="editTactic(\'' + t.id + '\')" style="background:var(--surface2);border:1px solid var(--border2);color:var(--text-mid);padding:7px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;margin-right:8px;">✏️ ' + (currentLang === 'es' ? 'Editar' : 'Edit') + '</button>' +
-          '<button onclick="deleteTactic(\'' + t.id + '\')" style="background:rgba(255,61,87,0.1);border:1px solid var(--red);color:var(--red);padding:7px 14px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;">🗑️ ' + (currentLang === 'es' ? 'Eliminar' : 'Delete') + '</button>';
-      } else {
-        ownerActions.innerHTML = '';
-      }
-    }
-    // Update pitch with correct formation
-    var pitchPlayers = document.getElementById('detail-pitch-players');
-    if (pitchPlayers && formations[t.formation]) {
-      pitchPlayers.innerHTML = formations[t.formation].map(function(p) {
-        return '<div class="player-dot' + (p.gk ? ' gk' : '') + '" style="left:' + p.x + '%;top:' + p.y + '%">' + p.pos + '</div>';
-      }).join('');
-    }
-    // Check if user already voted
-    var alreadyVoted = false;
-    if (currentUser) {
-      var voteCheck = await db.from('votes').select('id,result').eq('tactic_id', id).eq('user_id', currentUser.id).maybeSingle();
-      if (voteCheck.data) {
-        alreadyVoted = true;
-        var vs1 = document.getElementById('vote-step1');
-        var vs2 = document.getElementById('vote-step2');
-        var vs3 = document.getElementById('vote-step3');
-        var vsr = document.getElementById('vote-step-register');
-        if (vs2) vs2.style.display = 'none';
-        if (vs3) vs3.style.display = 'none';
-        if (vsr) vsr.style.display = 'none';
-        if (vs1) {
-          var prevResult = voteCheck.data.result;
-          vs1.innerHTML = '<div style="text-align:center;padding:16px 0;">' +
-            '<div style="font-size:28px;margin-bottom:8px;">' + (prevResult === 'yes' ? '👍' : '👎') + '</div>' +
-            '<div style="font-family:Barlow Condensed,sans-serif;font-size:18px;font-weight:800;color:var(--text);">' +
-            (currentLang === 'es' ? 'Ya votaste esta táctica' : 'You already voted on this tactic') + '</div>' +
-            '<div style="font-size:13px;color:var(--text-dim);margin-top:6px;">' +
-            (currentLang === 'es' ? 'Tu voto: ' : 'Your vote: ') +
-            (prevResult === 'yes'
-              ? (currentLang === 'es' ? '✅ Funcionó' : '✅ It worked')
-              : (currentLang === 'es' ? '❌ No funcionó' : '❌ Didn\'t work')) +
-            '</div></div>';
-        }
-      }
-    }
-    // Reset vote steps
-    var vs1 = document.getElementById('vote-step1');
-    var vs2 = document.getElementById('vote-step2');
-    var vs3 = document.getElementById('vote-step3');
-    var vsr = document.getElementById('vote-step-register');
-    if (vs1) vs1.style.display = 'block';
-    if (vs2) vs2.style.display = 'none';
-    if (vs3) vs3.style.display = 'none';
-    if (vsr) vsr.style.display = 'none';
-    // Update DB views
-    await db.from('tactics').update({ views: (t.views || 0) + 1 }).eq('id', id);
-    loadComments(id);
-    loadContextStats(id);
-  }
-
-  // ===== LOAD COMMENTS =====
-  async function loadComments(tacticId) {
-    const container = document.getElementById('comments-list');
-    const countEl = document.getElementById('comments-count');
-    if (!container) return;
-    // Show/hide comment form based on login
-    var form = document.getElementById('comment-form');
-    var loginPrompt = document.getElementById('comment-login-prompt');
-    if (form) form.style.display = currentUser ? 'block' : 'none';
-    if (loginPrompt) loginPrompt.style.display = currentUser ? 'none' : 'block';
-    const { data } = await db.from('comments').select('*').eq('tactic_id', tacticId).order('created_at', { ascending: false }).limit(50);
-    if (countEl) countEl.textContent = data ? data.length : 0;
-    if (!data || data.length === 0) {
-      container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-dim);font-size:13px">' + (currentLang === 'es' ? 'Sé el primero en comentar esta táctica' : 'Be the first to comment on this tactic') + '</div>';
-      return;
-    }
-    container.innerHTML = data.map(function(c) {
-      var isOwn = currentUser && c.user_id === currentUser.id;
-      var h = '<div class="comment"><div class="comment-header">';
-      h += '<div class="avatar" style="background:rgba(0,230,118,0.2);color:var(--green)">' + c.author.substring(0,2).toUpperCase() + '</div>';
-      h += '<div class="comment-user">@' + c.author + '</div>';
-      h += '<div class="comment-time">' + timeAgo(c.created_at) + '</div>';
-      if (isOwn) h += '<button onclick="deleteComment(\'' + c.id + '\')" style="margin-left:auto;background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:12px;padding:2px 6px;" title="Eliminar">🗑️</button>';
-      h += '</div>';
-      if (c.location || c.strength || c.competition) {
-        h += '<div class="comment-context">' + [c.location, c.strength, c.competition].filter(Boolean).join(' · ') + '</div>';
-      }
-      h += '<div class="comment-text">' + c.text + '</div>';
-      h += '</div>';
-      return h;
-    }).join('');
-  }
-
-  async function submitComment() {
-    if (!currentUser || !currentTacticId) return;
-    var input = document.getElementById('comment-input');
-    var text = input ? input.value.trim() : '';
-    if (!text) return;
-    var author = currentUser.user_metadata && currentUser.user_metadata.username
-      ? currentUser.user_metadata.username
-      : currentUser.email.split('@')[0];
-    var btn = document.getElementById('comment-submit-btn');
-    if (btn) btn.textContent = currentLang === 'es' ? 'Enviando...' : 'Sending...';
-    var res = await db.from('comments').insert({
-      tactic_id: currentTacticId,
-      author: author,
-      text: text,
-      user_id: currentUser.id
-    });
-    if (res.error) { alert('Error al enviar comentario'); return; }
-    if (input) input.value = '';
-    if (btn) btn.textContent = currentLang === 'es' ? '💬 COMENTAR' : '💬 COMMENT';
-    loadComments(currentTacticId);
-  }
-
-  async function deleteComment(commentId) {
-    var confirm_msg = currentLang === 'es' ? '¿Eliminar este comentario?' : 'Delete this comment?';
-    if (!confirm(confirm_msg)) return;
-    await db.from('comments').delete().eq('id', commentId).eq('user_id', currentUser.id);
-    loadComments(currentTacticId);
-  }
-
-  // ===== LOAD CONTEXT STATS =====
-  async function loadContextStats(tacticId) {
-    const { data } = await db.from('votes').select('*').eq('tactic_id', tacticId);
-    if (!data || data.length === 0) return;
-    const calc = (filter) => {
-      const filtered = data.filter(filter);
-      const yes = filtered.filter(v => v.result === 'yes').length;
-      return filtered.length > 0 ? Math.round((yes / filtered.length) * 100) : 0;
-    };
-    const stats = [
-      { label: '🏠 De local', pct: calc(v => v.location === '🏠 Local') },
-      { label: '✈️ De visitante', pct: calc(v => v.location === '✈️ Visitante') },
-      { label: '📈 Equipo superior', pct: calc(v => v.strength === '📈 Superior') },
-      { label: '⚖️ Equipo similar', pct: calc(v => v.strength === '⚖️ Similar') },
-      { label: '📉 Equipo inferior', pct: calc(v => v.strength === '📉 Inferior') },
-    ];
-    document.getElementById('context-stats-detail').innerHTML = stats.map(function(s, i) {
-      var html = i === 2 ? '<div class="cstat-divider"></div>' : '';
-      var cls = s.pct >= 70 ? 'high' : s.pct >= 50 ? 'mid' : 'low';
-      html += '<div class="cstat">';
-      html += '<div class="cstat-label">' + s.label + '</div>';
-      html += '<div class="cstat-bar"><div class="cstat-fill" style="width:' + s.pct + '%"></div></div>';
-      html += '<div class="cstat-val ' + cls + '">' + s.pct + '%</div>';
-      html += '</div>';
-      return html;
-    }).join('');
-  }
-
-  // ===== VOTE FLOW =====
-  let currentVoteResult = null;
-  function showVoteContext(result) {
-    if (!currentUser) {
-      var step1 = document.getElementById('vote-step1');
-      var stepReg = document.getElementById('vote-step-register');
-      if (step1) step1.style.display = 'none';
-      if (stepReg) stepReg.style.display = 'block';
-      return;
-    }
-    currentVoteResult = result;
-    var step1 = document.getElementById('vote-step1');
-    var step2 = document.getElementById('vote-step2');
-    if (step1) step1.style.display = 'none';
-    if (step2) step2.style.display = 'block';
-    var title = document.getElementById('vote-result-title');
-    if (title) title.textContent = result === 'yes'
-      ? (currentLang === 'es' ? '👍 ¡Gracias! Contanos el contexto' : '👍 Thanks! Tell us the context')
-      : (currentLang === 'es' ? '👎 Gracias igual. ¿En qué contexto?' : '👎 Thanks anyway. What was the context?');
-  }
-  function selectCtx(el, group) {
-    el.closest('.context-opts').querySelectorAll('.ctx-opt').forEach(o => o.classList.remove('selected'));
-    el.classList.add('selected');
-  }
-  async function submitVote() {
-    if (!currentTacticId) return;
-    if (!currentUser) { openAuth(); return; }
-    // Check for duplicate vote
-    var existing = await db.from('votes').select('id').eq('tactic_id', currentTacticId).eq('user_id', currentUser.id).maybeSingle();
-    if (existing.data) {
-      alert(currentLang === 'es' ? 'Ya votaste esta táctica.' : 'You already voted on this tactic.');
-      return;
-    }
-    const getSelected = (group) => {
-      const el = document.querySelector('.context-opts [data-group="' + group + '"].selected');
-      return el ? el.textContent.trim() : null;
-    };
-    const location = document.querySelector('.ctx-opt[onclick*="location"].selected')?.textContent.trim() || null;
-    const strength = document.querySelector('.ctx-opt[onclick*="strength"].selected')?.textContent.trim() || null;
-    const comp = document.querySelector('.ctx-opt[onclick*="comp"].selected')?.textContent.trim() || null;
-    // Save vote
-    await db.from('votes').insert({ tactic_id: currentTacticId, result: currentVoteResult, location, strength, competition: comp, user_id: currentUser ? currentUser.id : null });
-    // Update tactic counts
-    const field = currentVoteResult === 'yes' ? 'votes_yes' : 'votes_no';
-    const { data: t } = await db.from('tactics').select(field).eq('id', currentTacticId).single();
-    await db.from('tactics').update({ [field]: (t[field] || 0) + 1 }).eq('id', currentTacticId);
-    var step2 = document.getElementById('vote-step2');
-    var step3 = document.getElementById('vote-step3');
-    if (step2) step2.style.display = 'none';
-    if (step3) step3.style.display = 'block';
-    loadContextStats(currentTacticId);
-  }
-
-  // ===== SHARE TACTIC =====
-  async function shareTactic() {
-    var formation = document.querySelector('.form-btn.active') ? document.querySelector('.form-btn.active').textContent.trim() : '';
-    var tip = document.getElementById('tactic-title-input') ? document.getElementById('tactic-title-input').value.trim() : '';
-    var author = currentUser
-      ? (currentUser.user_metadata && currentUser.user_metadata.username ? currentUser.user_metadata.username : currentUser.email.split('@')[0])
-      : (document.getElementById('tactic-author-input') ? document.getElementById('tactic-author-input').value.trim() : '');
-    var pressing = parseInt(document.getElementById('pressing-num') ? document.getElementById('pressing-num').textContent : 50);
-    var style = parseInt(document.getElementById('style-num') ? document.getElementById('style-num').textContent : 50);
-    var tempo = parseInt(document.getElementById('tempo-num') ? document.getElementById('tempo-num').textContent : 50);
-    var fwd_tactic = document.getElementById('fwd-label') ? toEnglish(document.getElementById('fwd-label').textContent.trim()) : '';
-    var mid_tactic = document.getElementById('mid-label') ? toEnglish(document.getElementById('mid-label').textContent.trim()) : '';
-    var def_tactic = document.getElementById('def-label') ? toEnglish(document.getElementById('def-label').textContent.trim()) : '';
-    var vs_formation = document.getElementById('vs-formation') ? document.getElementById('vs-formation').value : '';
-    var vs_style = document.getElementById('vs-style') ? document.getElementById('vs-style').value : '';
-    var best_situation = document.getElementById('best-situation') ? document.getElementById('best-situation').value : '';
-    // Auto-generate title from formation + context if no tip provided
-    var autoTitle = formation;
-    if (vs_formation) autoTitle += ' vs ' + vs_formation;
-    if (vs_style) autoTitle += ' · ' + vs_style;
-    if (best_situation) autoTitle += ' · ' + best_situation;
-    var title = tip || autoTitle;
-    if (!author) { alert(currentLang === 'es' ? 'Por favor ingresá tu nombre de usuario' : 'Please enter your username'); return; }
-    var payload = { formation: formation, title: title, author: author, pressing: pressing, style: style, tempo: tempo, fwd_tactic: fwd_tactic, mid_tactic: mid_tactic, def_tactic: def_tactic, user_id: currentUser ? currentUser.id : null, vs_formation: vs_formation || null, vs_style: vs_style || null, best_situation: best_situation || null, own_style: selectedOwnStyle || null };
-    var res = await db.from('tactics').insert(payload);
-    if (res.error) { alert(currentLang === 'es' ? 'Error al guardar. Intentá de nuevo.' : 'Error saving. Please try again.'); return; }
-    alert(currentLang === 'es' ? '¡Táctica compartida! Ya aparece en el feed.' : 'Tactic shared! It now appears in the feed.');
-    document.getElementById('tactic-title-input').value = '';
-    document.getElementById('tactic-author-input').value = '';
-    if (document.getElementById('vs-formation')) document.getElementById('vs-formation').value = '';
-    if (document.getElementById('vs-style')) document.getElementById('vs-style').value = '';
-    if (document.getElementById('best-situation')) document.getElementById('best-situation').value = '';
-    showScreen('feed', document.querySelectorAll('.tab')[0]);
-    loadTactics();
-  }
-
-  // ===== LOAD RANKINGS =====
-  async function loadRankings() {
-    const table = document.getElementById('rankings-body');
-    if (!table) return;
-    // Load more tactics to sort by percentage
-    const { data } = await db.from('tactics').select('*').gt('votes_yes', 0).limit(50);
-    if (!data || data.length === 0) {
-      table.innerHTML = '<div style="padding:20px;text-align:center;color:var(--text-dim)">' + (currentLang === 'es' ? 'Aún no hay datos suficientes' : 'Not enough data yet') + '</div>';
-      return;
-    }
-    // Sort by effectiveness percentage, minimum 1 vote
-    var sorted = data
-      .map(function(t) {
-        var total = t.votes_yes + t.votes_no;
-        var pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
-        return Object.assign({}, t, { pct: pct, total: total });
-      })
-      .filter(function(t) { return t.total > 0; })
-      .sort(function(a, b) { return b.pct - a.pct || b.total - a.total; })
-      .slice(0, 10);
-    const medals = ['p1','p2','p3'];
-    table.innerHTML = sorted.map(function(t, i) {
-      const effClass = t.pct >= 70 ? 'var(--green)' : t.pct >= 50 ? 'var(--yellow)' : 'var(--red)';
-      var h2 = '<div class="ranking-row" onclick="loadTacticDetail(\'' + t.id + '\')">';
-      h2 += '<div class="rank-pos ' + (medals[i] || '') + '">' + (i+1) + '</div>';
-      h2 += '<div><div class="rank-formation">' + t.formation + '</div><div class="rank-sub">' + t.title.substring(0,30) + '...</div></div>';
-      h2 += '<div class="rank-eff" style="color:' + effClass + '">' + t.pct + '%</div>';
-      h2 += '<div class="rank-votes">' + t.total + ' ' + (currentLang === 'es' ? 'votos' : 'votes') + '</div>';
-      h2 += '</div>';
-      return h2;
-    }).join('');
-  }
-
-  // ===== HELPERS =====
-  function timeAgo(dateStr) {
-    const diff = Date.now() - new Date(dateStr).getTime();
-    const mins = Math.floor(diff/60000);
-    if (mins < 60) return 'hace ' + mins + ' min';
-    const hrs = Math.floor(mins/60);
-    if (hrs < 24) return 'hace ' + hrs + 'h';
-    const days = Math.floor(hrs/24);
-    return 'hace ' + days + ' días';
-  }
-
-  // ===== SLIDERS =====
-  var sliderLabelsEs = {
-    pressing: ['Replegado','Defensivo','Equilibrado','Presionando','Alta presión'],
-    style: ['Muy defensivo','Defensivo','Equilibrado','Atacante','Muy atacante'],
-    tempo: ['Pase corto','Construcción lenta','Equilibrado','Pase rápido','Pase veloz']
-  };
-  var sliderLabelsEn = {
-    pressing: ['Retreating','Defending','Balanced','Pressing','High pressing'],
-    style: ['Very defensive','Defensive','Balanced','Attacking','Very attacking'],
-    tempo: ['Short passing','Slow build-up','Balanced','Fast passing','High-speed passing']
-  };
-  var lineTacticsEs = {
-    fwd: ['Quedarse atras','Apoyar mediocampo','Solo ataque'],
-    mid: ['Proteger defensa','Quedarse en posicion','Empujar adelante'],
-    def: ['Defensa profunda','Laterales atacantes','Apoyar mediocampo']
-  };
-  var lineTacticsEn = {
-    fwd: ['Drop deep','Support midfield','Attack only'],
-    mid: ['Protect the defence','Stay in position','Push forward'],
-    def: ['Defend deep','Attacking full backs','Support midfield']
-  };
-
-  function getSliderLabels() { return currentLang === 'es' ? sliderLabelsEs : sliderLabelsEn; }
-  function getLineTactics() { return currentLang === 'es' ? lineTacticsEs : lineTacticsEn; }
-
-  function translateVsValue(value) {
-    var esToEn = {
-      'Cualquiera': 'Any',
-      'Balon largo': 'Long ball', 'Balón largo': 'Long ball', 'Balon Largo': 'Long ball',
-      'Juego de bandas': 'Wing play', 'Bandas': 'Wing play',
-      'Posesion': 'Possession', 'Posesión': 'Possession', 'Pases': 'Possession',
-      'Contraataque': 'Counter-attack', 'Contra': 'Counter-attack',
-      'Tiros de repente': 'Shoot on sight', 'Tiros': 'Shoot on sight',
-      'Mixto': 'Mixed',
-      'De local': 'Home', 'De visitante': 'Away', 'Ambos': 'Both',
-      'Local': 'Home', 'Visitante': 'Away',
-      'Con equipo superior': 'Superior team', 'Con equipo inferior': 'Inferior team',
-      'Equipo superior': 'Superior team', 'Equipo inferior': 'Inferior team',
-      'Local · Superior': 'Home · Superior', 'Local · Inferior': 'Home · Inferior',
-      'Visitante · Superior': 'Away · Superior', 'Visitante · Inferior': 'Away · Inferior'
-    };
-    var enToEs = {
-      'Any': 'Cualquiera',
-      'Long ball': 'Balón largo', 'Wing play': 'Juego de bandas', 'Bandas': 'Juego de bandas',
-      'Possession': 'Posesión', 'Counter-attack': 'Contraataque',
-      'Long shots': 'Tiros de repente', 'Shoot on sight': 'Tiros de repente', 'Mixed': 'Mixto',
-      'Home': 'De local', 'Away': 'De visitante', 'Both': 'Ambos',
-      'Superior team': 'Con equipo superior', 'Inferior team': 'Con equipo inferior',
-      'Home · Superior': 'Local · Superior', 'Home · Inferior': 'Local · Inferior',
-      'Away · Superior': 'Visitante · Superior', 'Away · Inferior': 'Visitante · Inferior'
-    };
-    if (currentLang === 'en') return esToEn[value] || value;
-    return enToEs[value] || value;
-  }
-
-  function toEnglish(value) {
-    var map = {
-      'Quedarse atras': 'Drop deep', 'Apoyar mediocampo': 'Support midfield', 'Solo ataque': 'Attack only',
-      'Proteger defensa': 'Protect the defence', 'Quedarse en posicion': 'Stay in position', 'Empujar adelante': 'Push forward',
-      'Defensa profunda': 'Defend deep', 'Laterales atacantes': 'Attacking full backs',
-      'Atacar y defender': 'Attack & defend', 'Apoyo': 'Support', 'Mixto': 'Mixed',
-      'Atacar': 'Attack', 'Normal': 'Normal', 'Línea alta': 'High line'
-    };
-    return map[value] || value;
-  }
-
-  function translateTacticValue(value) {
-    var enToEs = {
-      'Drop deep': 'Quedarse atras', 'Support midfield': 'Apoyar mediocampo', 'Attack only': 'Solo ataque',
-      'Protect the defence': 'Proteger defensa', 'Stay in position': 'Quedarse en posicion', 'Push forward': 'Empujar adelante',
-      'Defend deep': 'Defensa profunda', 'Attacking full backs': 'Laterales atacantes',
-      'Attack & defend': 'Atacar y defender', 'Support': 'Apoyo', 'Mixed': 'Mixto',
-      'Attack': 'Atacar', 'Normal': 'Normal', 'High line': 'Linea alta'
-    };
-    var esToEn = {
-      'Quedarse atras': 'Drop deep', 'Apoyar mediocampo': 'Support midfield', 'Solo ataque': 'Attack only',
-      'Proteger defensa': 'Protect the defence', 'Quedarse en posicion': 'Stay in position', 'Empujar adelante': 'Push forward',
-      'Defensa profunda': 'Defend deep', 'Laterales atacantes': 'Attacking full backs',
-      'Atacar y defender': 'Attack & defend', 'Apoyo': 'Support', 'Mixto': 'Mixed',
-      'Atacar': 'Attack', 'Normal': 'Normal', 'Linea alta': 'High line', 'Línea alta': 'High line'
-    };
-    if (currentLang === 'es') return enToEs[value] !== undefined ? enToEs[value] : value;
-    return esToEn[value] !== undefined ? esToEn[value] : value;
-  }
-
-  function updateSlider(type, val) {
-    val = parseInt(val);
-    document.getElementById(type+'-num').textContent = val;
-    const idx = Math.min(4, Math.floor((val-1)/20));
-    var sliderLabel = document.getElementById(type+'-label'); if(sliderLabel) sliderLabel.textContent = getSliderLabels()[type][idx];
-    var sliderEl = document.getElementById(type+'-slider'); if(sliderEl) sliderEl.style.background = 'linear-gradient(to right, #2979FF 0%, #2979FF ' + val + '%, #243040 ' + val + '%, #243040 100%)';
-  }
-  function setLineTactic(type, idx, options) {
-    var row = document.getElementById(type+'-row');
-    if(row) row.querySelectorAll('.lt-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
-    var lbl = document.getElementById(type+'-label'); if(lbl) lbl.textContent = options[idx];
-  }
-  function updateSliderLabels() {
-    ['pressing','style','tempo'].forEach(function(type) {
-      var slider = document.getElementById(type+'-slider');
-      if (slider) {
-        var val = parseInt(slider.value);
-        var idx = Math.min(4, Math.floor((val-1)/20));
-        var slLbl = document.getElementById(type+'-label'); if(slLbl) slLbl.textContent = getSliderLabels()[type][idx];
-      }
-    });
-    ['fwd','mid','def'].forEach(function(type) {
-      var dots = document.getElementById(type+'-row') ? document.getElementById(type+'-row').querySelectorAll('.lt-dot') : [];
-      var activeIdx = 0;
-      dots.forEach(function(d,i) { if(d.classList.contains('active')) activeIdx = i; });
-      var labelEl = document.getElementById(type+'-label');
-      if (labelEl) labelEl.textContent = getLineTactics()[type][activeIdx];
-      dots.forEach(function(dot, i) {
-        var lt = getLineTactics()[type];
-        dot.setAttribute('onclick', "setLineTactic('" + type + "'," + i + "," + JSON.stringify(lt) + ")");
-      });
-    });
-  }
-
-  // ===== FORMATION POSITIONS =====
-  var formations = {
-    '4-3-3-A': [{r:'GK',x:50,y:88},{r:'LB',x:15,y:72},{r:'CB',x:37,y:72},{r:'CB',x:63,y:72},{r:'RB',x:85,y:72},{r:'CM',x:22,y:50},{r:'CM',x:50,y:46},{r:'CM',x:78,y:50},{r:'LW',x:15,y:22},{r:'ST',x:50,y:14},{r:'RW',x:85,y:22}],
-    '4-3-3-B': [{r:'GK',x:50,y:88},{r:'LB',x:15,y:72},{r:'CB',x:37,y:72},{r:'CB',x:63,y:72},{r:'RB',x:85,y:72},{r:'DM',x:50,y:55},{r:'CM',x:25,y:42},{r:'CM',x:75,y:42},{r:'LW',x:15,y:22},{r:'ST',x:50,y:14},{r:'RW',x:85,y:22}],
-    '4-5-1':   [{r:'GK',x:50,y:88},{r:'LB',x:15,y:72},{r:'CB',x:37,y:72},{r:'CB',x:63,y:72},{r:'RB',x:85,y:72},{r:'LM',x:10,y:48},{r:'CM',x:30,y:42},{r:'CM',x:50,y:40},{r:'CM',x:70,y:42},{r:'RM',x:90,y:48},{r:'ST',x:50,y:14}],
-    '4-2-3-1': [{r:'GK',x:50,y:88},{r:'LB',x:15,y:72},{r:'CB',x:37,y:72},{r:'CB',x:63,y:72},{r:'RB',x:85,y:72},{r:'DM',x:35,y:58},{r:'DM',x:65,y:58},{r:'LM',x:15,y:36},{r:'AM',x:50,y:34},{r:'RM',x:85,y:36},{r:'ST',x:50,y:14}],
-    '4-4-2-A': [{r:'GK',x:50,y:88},{r:'LB',x:15,y:72},{r:'CB',x:37,y:72},{r:'CB',x:63,y:72},{r:'RB',x:85,y:72},{r:'LM',x:12,y:50},{r:'CM',x:37,y:46},{r:'CM',x:63,y:46},{r:'RM',x:88,y:50},{r:'ST',x:35,y:18},{r:'ST',x:65,y:18}],
-    '4-4-2-B': [{r:'GK',x:50,y:88},{r:'LB',x:15,y:72},{r:'CB',x:37,y:72},{r:'CB',x:63,y:72},{r:'RB',x:85,y:72},{r:'LM',x:12,y:50},{r:'DM',x:37,y:56},{r:'CM',x:63,y:44},{r:'RM',x:88,y:50},{r:'ST',x:35,y:18},{r:'ST',x:65,y:18}],
-    '3-2-5':   [{r:'GK',x:50,y:88},{r:'CB',x:25,y:74},{r:'CB',x:50,y:74},{r:'CB',x:75,y:74},{r:'DM',x:35,y:58},{r:'DM',x:65,y:58},{r:'LW',x:10,y:22},{r:'CF',x:30,y:16},{r:'ST',x:50,y:12},{r:'CF',x:70,y:16},{r:'RW',x:90,y:22}],
-    '3-2-3-2': [{r:'GK',x:50,y:88},{r:'CB',x:25,y:74},{r:'CB',x:50,y:74},{r:'CB',x:75,y:74},{r:'DM',x:35,y:58},{r:'DM',x:65,y:58},{r:'LM',x:15,y:38},{r:'AM',x:50,y:36},{r:'RM',x:85,y:38},{r:'ST',x:35,y:18},{r:'ST',x:65,y:18}],
-    '3-3-4-A': [{r:'GK',x:50,y:88},{r:'CB',x:25,y:74},{r:'CB',x:50,y:74},{r:'CB',x:75,y:74},{r:'LM',x:20,y:54},{r:'CM',x:50,y:52},{r:'RM',x:80,y:54},{r:'LW',x:12,y:24},{r:'CF',x:37,y:18},{r:'CF',x:63,y:18},{r:'RW',x:88,y:24}],
-    '3-3-4-B': [{r:'GK',x:50,y:88},{r:'CB',x:25,y:74},{r:'CB',x:50,y:74},{r:'CB',x:75,y:74},{r:'DM',x:30,y:56},{r:'CM',x:50,y:50},{r:'DM',x:70,y:56},{r:'LW',x:12,y:24},{r:'CF',x:37,y:18},{r:'CF',x:63,y:18},{r:'RW',x:88,y:24}],
-    '3-4-3-A': [{r:'GK',x:50,y:88},{r:'CB',x:25,y:74},{r:'CB',x:50,y:74},{r:'CB',x:75,y:74},{r:'LM',x:12,y:50},{r:'CM',x:37,y:46},{r:'CM',x:63,y:46},{r:'RM',x:88,y:50},{r:'LW',x:15,y:22},{r:'ST',x:50,y:14},{r:'RW',x:85,y:22}],
-    '3-4-3-B': [{r:'GK',x:50,y:88},{r:'CB',x:25,y:74},{r:'CB',x:50,y:74},{r:'CB',x:75,y:74},{r:'LM',x:12,y:50},{r:'DM',x:37,y:56},{r:'AM',x:63,y:40},{r:'RM',x:88,y:50},{r:'LW',x:15,y:22},{r:'ST',x:50,y:14},{r:'RW',x:85,y:22}],
-    '3-3-2-2': [{r:'GK',x:50,y:88},{r:'CB',x:25,y:74},{r:'CB',x:50,y:74},{r:'CB',x:75,y:74},{r:'LM',x:20,y:56},{r:'CM',x:50,y:54},{r:'RM',x:80,y:56},{r:'SS',x:35,y:36},{r:'SS',x:65,y:36},{r:'ST',x:35,y:18},{r:'ST',x:65,y:18}],
-    '3-5-2':   [{r:'GK',x:50,y:88},{r:'CB',x:25,y:74},{r:'CB',x:50,y:74},{r:'CB',x:75,y:74},{r:'LM',x:10,y:48},{r:'CM',x:30,y:44},{r:'CM',x:50,y:42},{r:'CM',x:70,y:44},{r:'RM',x:90,y:48},{r:'ST',x:35,y:18},{r:'ST',x:65,y:18}],
-    '4-2-4-A': [{r:'GK',x:50,y:88},{r:'LB',x:15,y:72},{r:'CB',x:37,y:72},{r:'CB',x:63,y:72},{r:'RB',x:85,y:72},{r:'DM',x:35,y:56},{r:'DM',x:65,y:56},{r:'LW',x:10,y:22},{r:'CF',x:35,y:16},{r:'CF',x:65,y:16},{r:'RW',x:90,y:22}],
-    '4-2-4-B': [{r:'GK',x:50,y:88},{r:'LB',x:15,y:72},{r:'CB',x:37,y:72},{r:'CB',x:63,y:72},{r:'RB',x:85,y:72},{r:'CM',x:35,y:52},{r:'CM',x:65,y:52},{r:'LW',x:10,y:22},{r:'CF',x:35,y:16},{r:'CF',x:65,y:16},{r:'RW',x:90,y:22}],
-    '5-2-3-A': [{r:'GK',x:50,y:88},{r:'LWB',x:8,y:66},{r:'CB',x:28,y:74},{r:'CB',x:50,y:74},{r:'CB',x:72,y:74},{r:'RWB',x:92,y:66},{r:'CM',x:35,y:52},{r:'CM',x:65,y:52},{r:'LW',x:15,y:22},{r:'ST',x:50,y:14},{r:'RW',x:85,y:22}],
-    '5-2-3-B': [{r:'GK',x:50,y:88},{r:'LWB',x:8,y:66},{r:'CB',x:28,y:74},{r:'CB',x:50,y:74},{r:'CB',x:72,y:74},{r:'RWB',x:92,y:66},{r:'DM',x:35,y:56},{r:'DM',x:65,y:56},{r:'LW',x:15,y:22},{r:'ST',x:50,y:14},{r:'RW',x:85,y:22}],
-    '5-3-2-A': [{r:'GK',x:50,y:88},{r:'LWB',x:8,y:66},{r:'CB',x:28,y:74},{r:'CB',x:50,y:74},{r:'CB',x:72,y:74},{r:'RWB',x:92,y:66},{r:'LM',x:20,y:48},{r:'CM',x:50,y:44},{r:'RM',x:80,y:48},{r:'ST',x:35,y:18},{r:'ST',x:65,y:18}],
-    '5-3-1-1': [{r:'GK',x:50,y:88},{r:'LWB',x:8,y:66},{r:'CB',x:28,y:74},{r:'CB',x:50,y:74},{r:'CB',x:72,y:74},{r:'RWB',x:92,y:66},{r:'LM',x:20,y:50},{r:'CM',x:50,y:48},{r:'RM',x:80,y:50},{r:'SS',x:50,y:30},{r:'ST',x:50,y:14}],
-    '5-4-1-A': [{r:'GK',x:50,y:88},{r:'LWB',x:8,y:66},{r:'CB',x:28,y:74},{r:'CB',x:50,y:74},{r:'CB',x:72,y:74},{r:'RWB',x:92,y:66},{r:'LM',x:12,y:48},{r:'CM',x:37,y:44},{r:'CM',x:63,y:44},{r:'RM',x:88,y:48},{r:'ST',x:50,y:14}],
-    '5-4-1-B': [{r:'GK',x:50,y:88},{r:'LWB',x:8,y:66},{r:'CB',x:28,y:74},{r:'CB',x:50,y:74},{r:'CB',x:72,y:74},{r:'RWB',x:92,y:66},{r:'LM',x:12,y:48},{r:'DM',x:37,y:54},{r:'AM',x:63,y:38},{r:'RM',x:88,y:48},{r:'ST',x:50,y:14}],
-    '6-3-1-A': [{r:'GK',x:50,y:88},{r:'LWB',x:8,y:70},{r:'CB',x:25,y:76},{r:'CB',x:40,y:76},{r:'CB',x:60,y:76},{r:'CB',x:75,y:76},{r:'RWB',x:92,y:70},{r:'LM',x:20,y:48},{r:'CM',x:50,y:46},{r:'RM',x:80,y:48},{r:'ST',x:50,y:14}],
-    '6-3-1-B': [{r:'GK',x:50,y:88},{r:'LWB',x:8,y:70},{r:'CB',x:25,y:76},{r:'CB',x:40,y:76},{r:'CB',x:60,y:76},{r:'CB',x:75,y:76},{r:'RWB',x:92,y:70},{r:'DM',x:30,y:52},{r:'DM',x:70,y:52},{r:'AM',x:50,y:36},{r:'ST',x:50,y:14}],
-  };
-
-  function updatePitch(formationName) {
-    var pitch = document.getElementById('big-pitch-players');
-    if (!pitch) return;
-    var players = formations[formationName] || formations['4-3-3-A'];
-    pitch.innerHTML = players.map(function(p) {
-      var isGK = p.r === 'GK';
-      return '<div class="big-player" style="left:' + p.x + '%;top:' + p.y + '%">' +
-        '<div class="bp-dot' + (isGK ? ' gk' : '') + '">' + p.r + '</div>' +
-        '<div class="bp-name">' + p.r + '</div></div>';
-    }).join('');
-  }
-  // ===== AUTH =====
-  // ===== LANGUAGE FROM STORAGE =====
-  var currentLang = localStorage.getItem('osmhub-lang') || 'es';
-  (function() {
-    document.documentElement.lang = currentLang;
-    var btn = document.getElementById('lang-btn');
-    if(btn) btn.textContent = currentLang === 'es' ? '🌐 ES / EN' : '🌐 EN / ES';
-  })();
-  var currentUser = null;
 
   async function initAuth() {
     var res = await db.auth.getSession();
@@ -2008,999 +1008,149 @@
     }
   }
 
-  async function updateBanner() { /* banner removed */ }
 
-  async function deleteTactic(id) {
-    if (!confirm(confirm_msg)) return;
-    var res = await db.rpc('delete_tactic_cascade', { tactic_uuid: id, user_uuid: currentUser.id });
-    if (res.error) { alert('Error al eliminar: ' + res.error.message); return; }
-    showScreen('feed', document.querySelectorAll('.tab')[0]);
-    loadTactics();
-  }
-
-  var editingTacticId = null;
-  async function editTactic(id) {
-    var res = await db.from('tactics').select('*').eq('id', id).single();
-    if (!res.data) return;
-    var t = res.data;
-    editingTacticId = id;
-    document.getElementById('edit-title').value = t.title || '';
-    document.getElementById('edit-formation').value = t.formation || '';
-    document.getElementById('edit-pressing').value = t.pressing || 50;
-    document.getElementById('edit-style').value = t.style || 50;
-    document.getElementById('edit-tempo').value = t.tempo || 50;
-    document.getElementById('edit-modal').classList.remove('hidden');
-  }
-
-  async function saveEdit() {
-    var title = document.getElementById('edit-title').value.trim();
-    var pressing = parseInt(document.getElementById('edit-pressing').value);
-    var style = parseInt(document.getElementById('edit-style').value);
-    var tempo = parseInt(document.getElementById('edit-tempo').value);
-    if (!title) { alert(currentLang === 'es' ? 'El título no puede estar vacío' : 'Title cannot be empty'); return; }
-    var res = await db.from('tactics').update({ title: title, pressing: pressing, style: style, tempo: tempo }).eq('id', editingTacticId).eq('user_id', currentUser.id);
-    if (res.error) { alert('Error al guardar'); return; }
-    document.getElementById('edit-modal').classList.add('hidden');
-    loadTactics();
-    if (currentTacticId === editingTacticId) loadTacticDetail(editingTacticId);
-  }
-
-  function closeEditModal() {
-    document.getElementById('edit-modal').classList.add('hidden');
-  }
-
-  async function loadProfile() {
-    if (!currentUser) { openAuth(); return; }
-    var username = currentUser.user_metadata && currentUser.user_metadata.username
-      ? currentUser.user_metadata.username : currentUser.email.split('@')[0];
-    var initials = username.substring(0,2).toUpperCase();
-    // Set header
-    document.getElementById('profile-avatar').textContent = initials;
-    document.getElementById('profile-username').textContent = '@' + username;
-    document.getElementById('profile-email').textContent = currentUser.email;
-    var joined = new Date(currentUser.created_at);
-    var joinedStr = currentLang === 'es'
-      ? 'Miembro desde ' + joined.toLocaleDateString('es', {month:'long', year:'numeric'})
-      : 'Member since ' + joined.toLocaleDateString('en', {month:'long', year:'numeric'});
-    document.getElementById('profile-joined').textContent = joinedStr;
-    // Update labels
-    document.getElementById('profile-tactics-label').textContent = currentLang === 'es' ? 'Tácticas' : 'Tactics';
-    document.getElementById('profile-votes-label').textContent = currentLang === 'es' ? 'Votos recibidos' : 'Votes received';
-    document.getElementById('profile-eff-label').textContent = currentLang === 'es' ? 'Eficacia promedio' : 'Avg effectiveness';
-    document.getElementById('profile-my-tactics-label').textContent = currentLang === 'es' ? 'MIS TÁCTICAS' : 'MY TACTICS';
-    // Load tactics
-    var res = await db.from('tactics').select('*').eq('user_id', currentUser.id).order('created_at', {ascending: false});
-    var tactics = res.data || [];
-    document.getElementById('profile-tactics-count').textContent = tactics.length;
-    // Calculate total votes and avg effectiveness
-    var totalVotes = 0, totalYes = 0;
-    tactics.forEach(function(t) { totalVotes += t.votes_yes + t.votes_no; totalYes += t.votes_yes; });
-    document.getElementById('profile-votes-count').textContent = totalVotes;
-    var avgEff = totalVotes > 0 ? Math.round((totalYes / totalVotes) * 100) : 0;
-    document.getElementById('profile-eff').textContent = avgEff + '%';
-    document.getElementById('profile-eff').style.color = avgEff >= 70 ? 'var(--green)' : avgEff >= 50 ? 'var(--yellow)' : 'var(--red)';
-    // Render tactics list
-    var list = document.getElementById('profile-tactics-list');
-    if (tactics.length === 0) {
-      list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-dim);font-size:13px;">' + (currentLang === 'es' ? 'Aún no publicaste ninguna táctica.' : 'You haven\'t published any tactics yet.') + '</div>';
-      return;
-    }
-    list.innerHTML = tactics.map(function(t) {
-      var total = t.votes_yes + t.votes_no;
-      var pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
-      var effClass = pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--yellow)' : 'var(--red)';
-      return '<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:center;cursor:pointer;" onclick="loadTacticDetail(\'' + t.id + '\')">' +
-        '<div style="font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:900;background:var(--green-glow);color:var(--green);border:1px solid rgba(0,230,118,0.3);padding:4px 8px;border-radius:6px;white-space:nowrap;">' + t.formation + '</div>' +
-        '<div style="flex:1;">' +
-        '<div style="font-size:14px;font-weight:600;color:var(--text);">' + t.title + '</div>' +
-        '<div style="font-size:12px;color:var(--text-dim);margin-top:2px;">' + timeAgo(t.created_at) + ' · ' + total + (currentLang === 'es' ? ' votos' : ' votes') + '</div>' +
-        '</div>' +
-        '<div style="font-family:Barlow Condensed,sans-serif;font-size:22px;font-weight:900;color:' + effClass + ';">' + pct + '%</div>' +
-        '<div style="display:flex;gap:6px;">' +
-        '<button onclick="event.stopPropagation();editTactic(\'' + t.id + '\')" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:14px;padding:4px;">✏️</button>' +
-        '<button onclick="event.stopPropagation();deleteTactic(\'' + t.id + '\')" style="background:none;border:none;color:var(--red);cursor:pointer;font-size:14px;padding:4px;">🗑️</button>' +
-        '</div></div>';
-    }).join('');
-  }
-
-  async function handleLogout() {
-    await db.auth.signOut();
-  }
-
-  function handleShareClick() {
-    if (!currentUser) {
-      openAuth();
-      setTimeout(function() {
-        var msg = document.getElementById('auth-msg');
-        if (msg) { msg.textContent = currentLang === 'es' ? 'Iniciá sesión para compartir tácticas' : 'Iniciar sesión to share tactics'; msg.className = 'auth-msg error'; }
-      }, 100);
-      return;
-    }
-    showScreen('builder', document.querySelectorAll('.tab')[2]);
-  }
-
-  document.addEventListener('click', function(e) {
-    if (!e.target.closest('.user-menu')) {
-      var dd = document.getElementById('user-dropdown');
-      if (dd) dd.classList.remove('open');
-    }
-  });
-
-  // Bracket data — Copa Nostalgia draw results
-  var bracketData = [
-    ["Xabi alonso 16_5", "Liverpool"],
-    ["Sherito Da Silva", "AC Milan"],
-    ["fernando18_0", "River Plate"],
-    ["Griche espinosa 70", "Benfica"],
-    ["iShowfideo", "Bayern München"],
-    ["Myking Guzman", "Ajax"],
-    ["adolfis_1", "Fenerbahce"],
-    ["Sir Nacho Ruglio", "Arsenal"],
-    ["Nivekserolf", "Boca Juniors"],
-    ["kevinp_388", "Barcelona"],
-    ["matiasc_51", "Juventus"],
-    ["ferchu2020", "Manchester United"],
-    ["ThCARP", "Galatasaray"],
-    ["luis rodriguez_69", "Inter Milan"],
-    ["Jramos_9", "Real Madrid"],
-    ["shoxx11", "Santos"]
-  ];
-
-  // Draw animation — 24h expiry
-  var DRAW_EXPIRY = new Date('2026-04-27T12:00:00').getTime(); // 24h after draw
-  var drawAnimationDone = false;
-
-  function startDrawAnimation() {
-    var startBtn = document.getElementById('draw-start-section');
-    var animArea = document.getElementById('draw-animation');
-    var bracketList = document.getElementById('bracket-list');
-    var spinning = document.getElementById('draw-spinning');
-    var animLabel = document.getElementById('draw-anim-label');
-    if(startBtn) startBtn.style.display = 'none';
-    if(animArea) animArea.style.display = 'block';
-    if(bracketList) bracketList.innerHTML = '';
-    var teams = bracketData.map(function(m) { return m[1]; });
-    var idx = 0;
-    var spinCount = 0;
-    var maxSpin = 30;
-    // Spin animation
-    var spinInterval = setInterval(function() {
-      var randomTeam = teams[Math.floor(Math.random() * teams.length)];
-      if(spinning) spinning.textContent = '⚽ ' + randomTeam;
-      spinCount++;
-      if(spinCount >= maxSpin) {
-        clearInterval(spinInterval);
-        if(animLabel) animLabel.textContent = currentLang === 'es' ? 'Revelando equipos...' : 'Revealing teams...';
-        // Reveal one by one
-        var revealInterval = setInterval(function() {
-          if(idx >= bracketData.length) {
-            clearInterval(revealInterval);
-            if(animArea) animArea.style.display = 'none';
-            drawAnimationDone = true;
-            return;
-          }
-          var match = bracketData[idx];
-          if(spinning) spinning.textContent = '⚽ ' + match[1];
-          var row = document.createElement('div');
-          row.style.cssText = 'display:flex;align-items:center;gap:10px;background:var(--surface2);border-radius:8px;padding:10px 14px;margin-bottom:4px;animation:fadeIn 0.3s ease;';
-          row.innerHTML = '<span style="font-size:12px;color:var(--text-dim);min-width:24px;font-weight:700;">' + (idx+1) + '</span>' +
-            '<span style="flex:1;font-size:14px;font-weight:600;color:var(--text);">@' + match[0] + '</span>' +
-            '<span style="font-size:13px;color:var(--text-dim);padding:0 8px;">→</span>' +
-            '<span style="font-size:14px;font-weight:800;color:var(--yellow);">⚽ ' + match[1] + '</span>';
-          if(bracketList) bracketList.appendChild(row);
-          idx++;
-        }, 600);
-      }
-    }, 80);
-  }
-
-  function checkDrawExpiry() {
-    var drawSection = document.getElementById('tournament-draw-section');
-    var drawStart = document.getElementById('draw-start-section');
-    if (!drawSection) return;
-    var now = new Date().getTime();
-    if (now > DRAW_EXPIRY) {
-      // 24h passed — hide draw section, show only results
-      if(drawStart) drawStart.style.display = 'none';
-      var animArea = document.getElementById('draw-animation');
-      if(animArea) animArea.style.display = 'none';
+  function updateNavForUser() {
+    var menu = document.getElementById('user-menu');
+    if (!menu) return;
+    // Show/hide author input based on login state
+    var authorInput = document.getElementById('tactic-author-input');
+    if (authorInput) authorInput.style.display = currentUser ? 'none' : 'block';
+    if (currentUser) {
+      var username = currentUser.user_metadata && currentUser.user_metadata.username
+        ? currentUser.user_metadata.username
+        : currentUser.email.split('@')[0];
+      menu.innerHTML = '<button class="user-btn" onclick="toggleUserMenu()">👤 ' + username + ' ▾</button>' +
+        '<div class="user-dropdown" id="user-dropdown">' +
+        '<div class="dropdown-item" onclick="showScreen(\'profile\',null);loadProfile();toggleUserMenu()">👤 ' + (currentLang === 'es' ? 'Mi perfil' : 'My profile') + '</div>' +
+        '<div class="dropdown-item danger" onclick="handleLogout()">' + (currentLang === 'es' ? 'Cerrar sesión' : 'Sign out') + '</div>'
+        '</div>';
+    } else {
+      menu.innerHTML = '<button class="btn-ghost" id="auth-btn" onclick="openAuth()">' +
+        (currentLang === 'es' ? 'Iniciar sesión' : 'Iniciar sesión') + '</button>';
     }
   }
 
-  async function loadTournamentComments() {
-    var logged = document.getElementById('tournament-comment-logged');
-    var guest = document.getElementById('tournament-comment-guest');
-    if (currentUser) { if(logged) logged.style.display='block'; if(guest) guest.style.display='none'; }
-    else { if(logged) logged.style.display='none'; if(guest) guest.style.display='block'; }
-    var list = document.getElementById('tournament-comments-list');
-    if (!list) return;
-    var res = await db.from('tournament_signups').select('*').eq('tournament', 'copa-nostalgia-2').order('created_at', { ascending: false });
-    if (!res.data || res.data.length === 0) { list.innerHTML = ''; return; }
-    list.innerHTML = '<div style="font-size:11px;font-weight:700;color:var(--text-dim);margin-bottom:8px;letter-spacing:0.5px;">' + (currentLang === 'es' ? 'ANOTADOS HASTA AHORA' : 'SIGNED UP SO FAR') + ' (' + res.data.length + ')</div>' +
-      res.data.map(function(c) {
-        return '<div style="background:var(--surface2);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:10px;">' +
-          '<div style="width:32px;height:32px;border-radius:50%;background:rgba(0,230,118,0.15);color:var(--green);display:flex;align-items:center;justify-content:center;font-family:Barlow Condensed,sans-serif;font-size:13px;font-weight:900;flex-shrink:0;">' + (c.osm_username || '?').substring(0,2).toUpperCase() + '</div>' +
-          '<div><div style="font-size:13px;font-weight:600;color:var(--text);">⚽ ' + c.osm_username + '</div></div>' +
-          '</div>';
-      }).join('');
+  function toggleUserMenu() {
+    var dd = document.getElementById('user-dropdown');
+    if (dd) dd.classList.toggle('open');
   }
 
-  async function submitTournamentComment() {
-    if (!currentUser) return;
-    var input = document.getElementById('tournament-comment-input');
-    var msg = document.getElementById('tournament-comment-msg');
-    var text = input ? input.value.trim() : '';
-    if (!text) { if(msg) { msg.textContent = currentLang === 'es' ? 'Escribí tu usuario de OSM' : 'Enter your OSM username'; msg.style.color = 'var(--red)'; } return; }
-    var btn = document.getElementById('tournament-comment-btn');
-    if(btn) btn.textContent = currentLang === 'es' ? 'Enviando...' : 'Sending...';
-    // Check if already signed up
-    var existing = await db.from('tournament_signups').select('id').eq('user_id', currentUser.id).eq('tournament', 'copa-nostalgia-2').single();
-    if (existing.data) {
-      if(msg) { msg.textContent = currentLang === 'es' ? 'Ya estás anotado!' : 'Already signed up!'; msg.style.color = 'var(--yellow)'; }
-      if(btn) btn.textContent = currentLang === 'es' ? '✅ DEJAR MI USUARIO' : '✅ DEJAR MI USUARIO';
-      return;
-    }
-    await db.from('tournament_signups').insert({ user_id: currentUser.id, osm_username: text, tournament: 'copa-nostalgia-2' });
-    if(msg) { msg.textContent = currentLang === 'es' ? '✅ ¡Usuario registrado!' : '✅ Username registered!'; msg.style.color = 'var(--green)'; }
-    if(btn) btn.textContent = currentLang === 'es' ? '✅ DEJAR MI USUARIO' : '✅ DEJAR MI USUARIO';
-    if(input) input.value = '';
-    loadTournamentComments();
-  }
 
-  function applyTournamentTranslations() {
+  function openAuth() {
+    document.getElementById('auth-modal').classList.remove('hidden');
+    var authMsg = document.getElementById('auth-msg'); if(authMsg) authMsg.textContent = '';
+    // Apply current language to modal
     var es = currentLang === 'es';
-    var sub = document.getElementById('tournament-sub'); if(sub) sub.textContent = es ? 'Primer torneo oficial de OSM Hub · Mayo 2026' : 'First official OSM Hub tournament · May 2026';
-    var cl = document.getElementById('tournament-confirmed-label'); if(cl) cl.textContent = es ? 'Confirmados' : 'Confirmed';
-    var sl = document.getElementById('tournament-spots-label'); if(sl) sl.textContent = es ? 'Cupos cerrados' : 'Registration closed';
-    var pl = document.getElementById('tournament-prize-label'); if(pl) pl.textContent = es ? 'Premio PayPal' : 'Premio PayPal';
-    var rt = document.getElementById('tournament-req-title'); if(rt) rt.textContent = es ? '✅ REQUISITOS' : '✅ REQUIREMENTS';
-    var r1 = document.getElementById('req-1'); if(r1) r1.textContent = es ? 'Registrarse gratis en OSM Hub' : 'Sign up free on OSM Hub';
-    var r2 = document.getElementById('req-2'); if(r2) r2.textContent = es ? 'Tener cuenta de PayPal para recibir el premio' : 'Have a PayPal account to receive the prize';
-    var r3 = document.getElementById('req-3'); if(r3) r3.textContent = es ? 'Confirmar inscripción comentando en el grupo' : 'Confirm registration by commenting in the group';
-    var st = document.getElementById('standings-title'); if(st) st.textContent = es ? '📊 TABLA DE POSICIONES' : '📊 TABLA DE POSICIONES';
-    var pt = document.getElementById('tournament-participants-title'); if(pt) pt.textContent = es ? '👥 PARTICIPANTES (16/16)' : '👥 PARTICIPANTES (16/16)';
-    var cta = document.getElementById('tournament-cta-text'); if(cta) cta.textContent = es ? '¡Cupos completos!' : 'Registration closed!';
-    var ctan = document.getElementById('tournament-cta-note'); if(ctan) ctan.textContent = es ? 'El sorteo se realizará próximamente. Registrate para ver los resultados.' : 'The draw will take place soon. Sign up to see the results.';
-    var tct = document.getElementById('tournament-comment-title'); if(tct) tct.textContent = es ? '💬 ¿QUERÉS PARTICIPAR EN LA PRÓXIMA?' : '💬 WANT TO JOIN THE NEXT ONE?';
-    var tcs = document.getElementById('tournament-comment-sub'); if(tcs) tcs.textContent = es ? 'Dejá tu usuario de OSM para ser considerado en la Copa Nostalgia II' : 'Dejá tu usuario de OSM para la Copa Nostalgia II';
-    var tcb = document.getElementById('tournament-comment-btn'); if(tcb) tcb.textContent = es ? '✅ DEJAR MI USUARIO' : '✅ DEJAR MI USUARIO';
-    var tci = document.getElementById('tournament-comment-input'); if(tci) tci.placeholder = es ? 'Escribí tu usuario de OSM...' : 'Escribí tu usuario de OSM...';
-    var tclm = document.getElementById('tournament-comment-login-msg'); if(tclm) tclm.textContent = es ? 'Registrate para dejar tu usuario' : 'Registrate para dejar tu usuario';
-    var tclb = document.getElementById('tournament-comment-login-btn'); if(tclb) tclb.textContent = es ? '⚡ REGISTRARME' : '⚡ REGISTRARME';
-    var dlt = document.getElementById('draw-locked-title'); if(dlt) dlt.textContent = es ? 'El sorteo ya está disponible' : 'The draw is now available';
-    var dls = document.getElementById('draw-locked-sub'); if(dls) dls.textContent = es ? 'Registrate para ver tu rival en el bracket' : 'Sign up to see your rival in the bracket';
-    var dlb = document.getElementById('draw-locked-btn'); if(dlb) dlb.textContent = es ? '⚡ VER EL SORTEO' : '⚡ SEE THE DRAW';
-    // Show bracket if draw is done
-    var drawSection = document.getElementById('tournament-draw-section');
-    var drawPrompt = document.getElementById('draw-login-prompt');
-    var joinSection = document.getElementById('tournament-join-section');
-    if (bracketData) {
-      joinSection.style.display = 'none';
-      if (currentUser) {
-        if(drawPrompt) drawPrompt.style.display = 'none';
-        if(drawSection) {
-          drawSection.style.display = 'block';
-          checkDrawExpiry();
-          var bracketList = document.getElementById('bracket-list');
-          var now = new Date().getTime();
-          // If 24h passed, show full results directly without animation button
-          if (now > DRAW_EXPIRY) {
-            var startSection = document.getElementById('draw-start-section');
-            if(startSection) startSection.style.display = 'none';
-            if(bracketList) {
-              bracketList.innerHTML = bracketData.map(function(match, i) {
-                return '<div style="display:flex;align-items:center;gap:10px;background:var(--surface2);border-radius:8px;padding:10px 14px;margin-bottom:4px;">' +
-                  '<span style="font-size:12px;color:var(--text-dim);min-width:24px;font-weight:700;">' + (i+1) + '</span>' +
-                  '<span style="flex:1;font-size:14px;font-weight:600;color:var(--text);">@' + match[0] + '</span>' +
-                  '<span style="font-size:13px;color:var(--text-dim);padding:0 8px;">→</span>' +
-                  '<span style="font-size:14px;font-weight:800;color:var(--yellow);">⚽ ' + match[1] + '</span>' +
-                  '</div>';
-              }).join('');
-            }
-          }
-        }
-      } else {
-        if(drawSection) drawSection.style.display = 'none';
-        if(drawPrompt) drawPrompt.style.display = 'block';
+    document.getElementById('auth-modal-sub').textContent = es ? 'Uníte a la comunidad de tácticas' : 'Join the tactics community';
+    document.getElementById('tab-login').textContent = es ? 'Iniciar sesión' : 'Iniciar sesión';
+    document.getElementById('tab-register').textContent = es ? 'Registrarse' : 'Sign up';
+    document.getElementById('login-email').placeholder = 'Email';
+    document.getElementById('login-password').placeholder = es ? 'Contraseña' : 'Password';
+    document.getElementById('login-form-btn').textContent = es ? 'ENTRAR' : 'SIGN IN';
+    document.getElementById('reg-username').placeholder = es ? 'Nombre de usuario (ej: TacticMaster_AR)' : 'Username (e.g. TacticMaster_AR)';
+    document.getElementById('reg-email').placeholder = 'Email';
+    document.getElementById('reg-password').placeholder = es ? 'Contraseña (mín. 6 caracteres)' : 'Password (min. 6 characters)';
+    document.getElementById('reg-form-btn').textContent = es ? 'CREAR CUENTA' : 'CREATE ACCOUNT';
+  }
+
+
+  function closeAuth() {
+    document.getElementById('auth-modal').classList.add('hidden');
+  }
+
+
+
+
+  // ===== SIGNUP MODAL =====
+  async function openSignupModal() {
+    var es = currentLang === 'es';
+    var modal = document.getElementById('signup-modal');
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    // Translations
+    document.getElementById('signup-modal-title').textContent = 'COPA NOSTALGIA II';
+    document.getElementById('signup-modal-sub').textContent = es ? 'Dejá tu usuario de OSM y reservá tu lugar' : 'Dejá tu usuario de OSM y reservá tu lugar';
+    document.getElementById('rules-title').textContent = es ? '📋 REGLAS DEL TORNEO' : '📋 REGLAS DEL TORNEO';
+    document.getElementById('rules-1').textContent = es ? 'Liga Estrellas de Clubes' : 'Liga Estrellas de Clubes';
+    document.getElementById('rules-2').textContent = es ? 'Sin timers' : 'Sin timers';
+    document.getElementById('rules-3').textContent = es ? 'Sin campus' : 'Sin campus';
+    document.getElementById('rules-4').textContent = es ? 'Sin entrenamiento secreto' : 'Sin entrenamiento secreto';
+    document.getElementById('rules-5').textContent = es ? 'Premio al ganador' : 'Premio al ganador';
+    document.getElementById('signup-modal-btn').textContent = es ? '✅ RESERVAR MI LUGAR' : '✅ RESERVAR MI LUGAR';
+    var osmInput = document.getElementById('signup-osm-input'); if(osmInput) osmInput.placeholder = es ? 'ej: hola123' : 'ej: hola123';
+    document.getElementById('signup-modal-login-btn').textContent = es ? '⚡ CREAR CUENTA GRATIS' : '⚡ CREAR CUENTA GRATIS';
+    document.getElementById('signup-modal-login-note').textContent = es ? 'Solo tu email. Sin spam.' : 'Solo tu email. Sin spam.';
+    document.getElementById('signup-modal-login-msg').textContent = es ? 'Necesitás una cuenta para anotarte' : 'Necesitás una cuenta para anotarte';
+    document.getElementById('signup-success-title').textContent = es ? '¡Estás anotado!' : 'You\'re in!';
+    document.getElementById('signup-success-sub').textContent = es ? 'Te avisaremos cuando empiece la Copa Nostalgia II.' : 'We\'ll notify you when Copa Nostalgia II starts.';
+    document.getElementById('signup-close-btn').textContent = es ? 'Cerrar' : 'Cerrar';
+    // Get spots count
+    var signups = await db.from('tournament_signups').select('id').eq('tournament', 'copa-nostalgia-2');
+    var count = (signups.data && signups.data.length) ? signups.data.length : 0;
+    // spots shown in next-cup-spots on home screen
+    // Show correct state
+    document.getElementById('signup-modal-success').style.display = 'none';
+    if (currentUser) {
+      document.getElementById('signup-modal-guest').style.display = 'none';
+      document.getElementById('signup-modal-logged').style.display = 'block';
+      // Check if already signed up
+      var existing = await db.from('tournament_signups').select('osm_username').eq('user_id', currentUser.id).eq('tournament', 'copa-nostalgia-2').maybeSingle();
+      if (existing.data) {
+        document.getElementById('signup-osm-input').value = existing.data.osm_username;
+        document.getElementById('signup-modal-msg').textContent = es ? '✅ Ya estás anotado con este usuario' : '✅ Already signed up with this username';
+        document.getElementById('signup-modal-msg').style.color = 'var(--gold)';
       }
     } else {
-      if(drawSection) drawSection.style.display = 'none';
-      if(drawPrompt) drawPrompt.style.display = 'none';
+      document.getElementById('signup-modal-guest').style.display = 'block';
+      document.getElementById('signup-modal-logged').style.display = 'none';
     }
   }
-  var selectedH2HResult = null;
-  var selectedH2HComp = null;
 
-  function selectH2HResult(el, value) {
-    document.querySelectorAll('.h2h-opt').forEach(function(b) {
-      b.style.background = 'var(--surface2)';
-      b.style.color = 'var(--text-dim)';
-      b.style.borderColor = 'var(--border2)';
-    });
-    el.style.background = value === 'win' ? 'rgba(0,230,118,0.15)' : value === 'loss' ? 'rgba(255,61,87,0.15)' : 'rgba(255,214,0,0.15)';
-    el.style.color = value === 'win' ? 'var(--green)' : value === 'loss' ? 'var(--red)' : 'var(--yellow)';
-    el.style.borderColor = value === 'win' ? 'var(--green)' : value === 'loss' ? 'var(--red)' : 'var(--yellow)';
-    selectedH2HResult = value;
+  function closeSignupModal() {
+    document.getElementById('signup-modal').style.display = 'none';
+    document.body.style.overflow = '';
   }
 
-  function selectH2HComp(el, value) {
-    document.querySelectorAll('.h2h-comp').forEach(function(b) {
-      b.style.background = 'var(--surface2)';
-      b.style.color = 'var(--text-dim)';
-      b.style.borderColor = 'var(--border2)';
-    });
-    el.style.background = 'rgba(41,121,255,0.12)';
-    el.style.color = 'var(--blue)';
-    el.style.borderColor = 'var(--blue)';
-    selectedH2HComp = value;
-  }
-
-  var selectedH2HScore = null;
-
-  function selectH2HScore(el, value) {
-    document.querySelectorAll('.h2h-score').forEach(function(b) {
-      b.style.background = 'var(--surface2)';
-      b.style.color = 'var(--text-dim)';
-      b.style.borderColor = 'var(--border2)';
-    });
-    el.style.background = 'rgba(41,121,255,0.12)';
-    el.style.color = 'var(--blue)';
-    el.style.borderColor = 'var(--blue)';
-    selectedH2HScore = value;
-    var custom = document.getElementById('h2h-score-custom');
-    if (value === 'otro') { custom.style.display = 'block'; custom.focus(); }
-    else { custom.style.display = 'none'; }
-  }
-
-  async function saveH2H() {
+  async function submitSignupModal() {
     if (!currentUser) return;
-    var opponent = document.getElementById('h2h-opponent').value.trim();
-    var msg = document.getElementById('h2h-msg');
-    if (!opponent) { msg.textContent = currentLang === 'es' ? 'Ingresá el usuario del rival' : 'Enter the rival username'; msg.style.color = 'var(--red)'; return; }
-    if (!selectedH2HResult) { msg.textContent = currentLang === 'es' ? 'Elegí el resultado' : 'Select the result'; msg.style.color = 'var(--red)'; return; }
-    if (!selectedH2HComp) { msg.textContent = currentLang === 'es' ? 'Elegí la competición' : 'Select the competition'; msg.style.color = 'var(--red)'; return; }
-    var score = selectedH2HScore === 'otro' ? document.getElementById('h2h-score-custom').value.trim() : selectedH2HScore;
-    var btn = document.getElementById('h2h-save-btn');
-    btn.textContent = currentLang === 'es' ? 'Guardando...' : 'Saving...';
-    var res = await db.from('h2h').insert({ user_id: currentUser.id, opponent_username: opponent, result: selectedH2HResult, competition: selectedH2HComp, score: score || null });
-    if (res.error) { msg.textContent = 'Error: ' + res.error.message; msg.style.color = 'var(--red)'; btn.textContent = currentLang === 'es' ? 'GUARDAR' : 'SAVE'; return; }
-    msg.textContent = currentLang === 'es' ? '✅ Resultado guardado!' : '✅ Result saved!';
-    msg.style.color = 'var(--green)';
-    btn.textContent = currentLang === 'es' ? 'GUARDAR' : 'SAVE';
-    document.getElementById('h2h-opponent').value = '';
-    document.getElementById('h2h-score-custom').style.display = 'none';
-    selectedH2HResult = null; selectedH2HComp = null; selectedH2HScore = null;
-    document.querySelectorAll('.h2h-opt,.h2h-comp,.h2h-score').forEach(function(b) { b.style.background = 'var(--surface2)'; b.style.color = 'var(--text-dim)'; b.style.borderColor = 'var(--border2)'; });
-    setTimeout(function() { msg.textContent = ''; }, 2000);
-    loadH2H();
-  }
-
-  async function loadH2H() {
-    if (!currentUser) {
-      document.getElementById('h2h-login-prompt').style.display = 'block';
-      document.getElementById('h2h-content').style.display = 'none';
+    var es = currentLang === 'es';
+    var input = document.getElementById('signup-osm-input');
+    var msg = document.getElementById('signup-modal-msg');
+    var text = input ? input.value.trim() : '';
+    if (!text) {
+      msg.textContent = es ? 'Escribí tu usuario de OSM' : 'Enter your OSM username';
+      msg.style.color = 'var(--red)';
       return;
     }
-    document.getElementById('h2h-login-prompt').style.display = 'none';
-    document.getElementById('h2h-content').style.display = 'block';
-    var res = await db.from('h2h').select('*').eq('user_id', currentUser.id).order('played_at', { ascending: false });
-    var data = res.data || [];
-    var list = document.getElementById('h2h-list');
-    if (data.length === 0) { list.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-dim);font-size:13px;">' + (currentLang === 'es' ? 'Aún no registraste ningún partido.' : 'No matches recorded yet.') + '</div>'; return; }
-    // Group by opponent
-    var opponents = {};
-    data.forEach(function(m) {
-      var opp = m.opponent_username.toLowerCase();
-      if (!opponents[opp]) opponents[opp] = { name: m.opponent_username, wins: 0, losses: 0, draws: 0, matches: [] };
-      if (m.result === 'win') opponents[opp].wins++;
-      else if (m.result === 'loss') opponents[opp].losses++;
-      else opponents[opp].draws++;
-      opponents[opp].matches.push(m);
-    });
-    var compLabel = { league: currentLang === 'es' ? 'Liga' : 'League', cup: currentLang === 'es' ? 'Copa' : 'Cup' };
-    var resultLabel = { win: currentLang === 'es' ? 'Victoria' : 'Win', loss: currentLang === 'es' ? 'Derrota' : 'Loss', draw: currentLang === 'es' ? 'Empate' : 'Draw' };
-    var resultColor = { win: 'var(--green)', loss: 'var(--red)', draw: 'var(--yellow)' };
-    list.innerHTML = Object.values(opponents).map(function(opp) {
-      var total = opp.wins + opp.losses + opp.draws;
-      var winPct = Math.round((opp.wins / total) * 100);
-      var initials = opp.name.substring(0, 2).toUpperCase();
-      var myUser = currentUser.user_metadata && currentUser.user_metadata.username ? currentUser.user_metadata.username : currentUser.email.split('@')[0];
-      var myInitials = myUser.substring(0, 2).toUpperCase();
-      var html = '<div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:12px;">';
-      // Header
-      html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">';
-      html += '<div style="text-align:center;flex:1;"><div style="width:44px;height:44px;border-radius:50%;background:rgba(41,121,255,0.15);color:var(--blue);display:flex;align-items:center;justify-content:center;font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:900;margin:0 auto 4px;">' + myInitials + '</div><div style="font-size:12px;font-weight:600;color:var(--text);">@' + myUser + '</div></div>';
-      html += '<div style="font-size:18px;color:var(--text-dim);font-weight:500;padding:0 12px;">vs</div>';
-      html += '<div style="text-align:center;flex:1;"><div style="width:44px;height:44px;border-radius:50%;background:var(--surface2);color:var(--text-mid);display:flex;align-items:center;justify-content:center;font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:900;margin:0 auto 4px;">' + initials + '</div><div style="font-size:12px;font-weight:600;color:var(--text);">@' + opp.name + '</div></div>';
-      html += '</div>';
-      // Stats
-      html += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px;">';
-      html += '<div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-family:Barlow Condensed,sans-serif;font-size:24px;font-weight:900;color:var(--green);">' + opp.wins + '</div><div style="font-size:11px;color:var(--text-dim);">' + (currentLang === 'es' ? 'Victorias' : 'Wins') + '</div></div>';
-      html += '<div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-family:Barlow Condensed,sans-serif;font-size:24px;font-weight:900;color:var(--text);">' + total + '</div><div style="font-size:11px;color:var(--text-dim);">' + (currentLang === 'es' ? 'Partidos' : 'Matches') + '</div></div>';
-      html += '<div style="background:var(--surface2);border-radius:8px;padding:10px;text-align:center;"><div style="font-family:Barlow Condensed,sans-serif;font-size:24px;font-weight:900;color:var(--red);">' + opp.losses + '</div><div style="font-size:11px;color:var(--text-dim);">' + (currentLang === 'es' ? 'Derrotas' : 'Losses') + '</div></div>';
-      html += '</div>';
-      // Bar
-      html += '<div style="margin-bottom:14px;">';
-      html += '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-dim);margin-bottom:4px;"><span>' + winPct + '%</span><span>' + (100-winPct) + '%</span></div>';
-      html += '<div style="height:8px;border-radius:4px;background:var(--surface2);overflow:hidden;display:flex;">';
-      html += '<div style="width:' + winPct + '%;background:var(--green);height:100%;"></div>';
-      html += '</div></div>';
-      // Last matches
-      html += '<div style="border-top:1px solid var(--border);padding-top:10px;">';
-      html += '<div style="font-size:12px;color:var(--text-dim);margin-bottom:6px;font-weight:600;">' + (currentLang === 'es' ? 'Últimos partidos' : 'Recent matches') + '</div>';
-      opp.matches.slice(0, 3).forEach(function(m) {
-        var d = new Date(m.played_at);
-        var dateStr = d.getDate() + ' ' + ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'][d.getMonth()];
-        html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);">';
-        html += '<span style="font-size:11px;color:var(--text-dim);min-width:50px;">' + dateStr + '</span>';
-        html += '<span style="font-size:13px;font-weight:600;color:' + resultColor[m.result] + ';">' + resultLabel[m.result] + '</span>';
-        html += '<span style="font-size:11px;color:var(--text-dim);">' + (compLabel[m.competition] || m.competition) + '</span>';
-        if (m.score) html += '<span style="font-size:12px;font-weight:700;color:var(--text-mid);background:var(--surface2);padding:2px 6px;border-radius:4px;">' + m.score + '</span>';
-        html += '<button onclick="deleteH2H(\'' + m.id + '\')" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:12px;padding:0 4px;">🗑️</button>';
-        html += '</div>';
-      });
-      // Show all button if more than 3 matches
-      if (opp.matches.length > 3) {
-        var histId = 'hist-' + opp.name.replace(/[^a-zA-Z0-9]/g,'');
-        var hiddenHtml = opp.matches.slice(3).map(function(m2) {
-          var d2 = new Date(m2.played_at);
-          var months = currentLang === 'es' ? ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'] : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-          var dateStr2 = d2.getDate() + ' ' + months[d2.getMonth()];
-          return '<div style="display:flex;align-items:center;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);">' +
-            '<span style="font-size:11px;color:var(--text-dim);min-width:50px;">' + dateStr2 + '</span>' +
-            '<span style="font-size:13px;font-weight:600;color:' + resultColor[m2.result] + ';">' + resultLabel[m2.result] + '</span>' +
-            '<span style="font-size:11px;color:var(--text-dim);">' + (compLabel[m2.competition] || m2.competition) + '</span>' +
-            (m2.score ? '<span style="font-size:12px;font-weight:700;color:var(--text-mid);background:var(--surface2);padding:2px 6px;border-radius:4px;">' + m2.score + '</span>' : '<span></span>') +
-            '<button onclick="deleteH2H(\'' + m2.id + '\')" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:12px;padding:0 4px;">🗑️</button>' +
-            '</div>';
-        }).join('');
-        var showAllLabel = currentLang === 'es' ? '▼ Ver historial completo (' + opp.matches.length + ')' : '▼ Full history (' + opp.matches.length + ')';
-        var showLessLabel = currentLang === 'es' ? '▲ Ver menos' : '▲ Show less';
-        html += '<div id="' + histId + '" style="display:none;">' + hiddenHtml + '</div>';
-        html += '<div style="text-align:center;margin-top:8px;"><button onclick="var el=document.getElementById(\'' + histId + '\');if(el.style.display===\'none\'){el.style.display=\'block\';this.textContent=\'' + showLessLabel + '\';}else{el.style.display=\'none\';this.textContent=\'' + showAllLabel + '\';}" style="background:none;border:none;color:var(--text-dim);font-size:12px;cursor:pointer;font-weight:600;">' + showAllLabel + '</button></div>';
-      }
-      html += '</div></div>';
-      return html;
-    }).join('');
-  }
-
-  async function deleteH2H(id) {
-    if (!confirm(currentLang === 'es' ? '¿Eliminar este resultado?' : 'Delete this result?')) return;
-    await db.from('h2h').delete().eq('id', id).eq('user_id', currentUser.id);
-    loadH2H();
-  }
-  var eventsData = [
-    { dates: '1-2', name_es: 'Extreme Progression', name_en: 'Extreme Progression',
-      desc_es: 'Mayor progresión de entrenamiento con cada entrenamiento y amistoso.',
-      desc_en: 'Higher training progression with every training and friendly.',
-      tags: ['Entrenamiento'] },
-    { dates: '4', name_es: 'Bargain Scout', name_en: 'Bargain Scout',
-      desc_es: 'Comisión de scout menor, jugadores más baratos, scout en 2h.',
-      desc_en: 'Smaller scout fee, cheaper players, faster scout: 2h.',
-      tags: ['Scout'] },
-    { dates: '6-7', name_es: 'Training Camp Mania', name_en: 'Training Camp Mania',
-      desc_es: 'Campo de entrenamiento más barato y poderoso. Scout en 2h.',
-      desc_en: 'Training camp cheaper and more powerful. Scout in 2h.',
-      tags: ['Entrenamiento', 'Scout'] },
-    { dates: '9', name_es: 'Transfer Rush', name_en: 'Transfer Rush',
-      desc_es: 'Mayor chance de venta, hasta 6 jugadores en lista. Scout en 2h.',
-      desc_en: 'Higher sale chance, up to 6 players on list. Scout in 2h.',
-      tags: ['Transferencias', 'Scout'] },
-    { dates: '11-12', name_es: 'Golden Oldies x Legends', name_en: 'Golden Oldies x Legends',
-      desc_es: 'Mayor progresión para jugadores viejos. Jugadores leyenda en lista de transferencias.',
-      desc_en: 'Higher progression for old players. Legend players on transfer list.',
-      tags: ['Entrenamiento', 'Transferencias'] },
-    { dates: '14', name_es: 'Friendly Frenzy', name_en: 'Friendly Frenzy',
-      desc_es: 'Progresión extra con cada amistoso. Evento de 1 día.',
-      desc_en: 'Extra training progression with every friendly. 1 day event.',
-      tags: ['Amistosos'] },
-    { dates: '16', name_es: 'Guaranteed Training Boost', name_en: 'Guaranteed Training Boost',
-      desc_es: 'Mayor chance de obtener boost Raro, Épico, Élite o Legendario.',
-      desc_en: 'Higher chance of getting Rare, Epic, Elite or Legendary boost.',
-      tags: ['Entrenamiento'] },
-    { dates: '18', name_es: 'Extraordinary Scout', name_en: 'Extraordinary Scout',
-      desc_es: 'Scout en 2h. Jugadores buscados más baratos.',
-      desc_en: 'Faster scout: 2h. Scouted players less expensive.',
-      tags: ['Scout'] },
-    { dates: '20-21', name_es: 'Intense Friendlies', name_en: 'Intense Friendlies',
-      desc_es: 'Progresión extra de entrenamiento con cada amistoso.',
-      desc_en: 'Extra training progression with every friendly.',
-      tags: ['Amistosos'] },
-    { dates: '23', name_es: 'Super Staff', name_en: 'Super Staff',
-      desc_es: 'Doctor y abogado en 3h. Scout en 4h. Analista en 15min. Entrenadores más rápidos.',
-      desc_en: 'Doctor and lawyer 3h. Scout 4h. Analyst 15min. Faster trainers.',
-      tags: ['Staff', 'Scout'] },
-    { dates: '23-24', name_es: 'Legends', name_en: 'Legends',
-      desc_es: 'Jugadores leyenda agregados a la lista de transferencias.',
-      desc_en: 'Legend players added on transfer list.',
-      tags: ['Transferencias'] },
-    { dates: '25', name_es: 'Booming Stadium', name_en: 'Booming Stadium',
-      desc_es: 'Timers del estadio reducidos a 4h.',
-      desc_en: 'Shorter stadium timers (4h).',
-      tags: ['Estadio'] },
-    { dates: '27-28', name_es: 'Transfer Madness', name_en: 'Transfer Madness',
-      desc_es: 'Mayor chance de venta, hasta 6 jugadores en lista. Scout en 2h.',
-      desc_en: 'Higher sale chance, up to 6 players on list. Scout in 2h.',
-      tags: ['Transferencias', 'Scout'] },
-    { dates: '30', name_es: 'Top Facilities', name_en: 'Top Facilities',
-      desc_es: 'Timers de estadio en 4h. Entrenadores normales 4h, Universal 3h.',
-      desc_en: 'Stadium timers 4h. Normal trainers 4h, Universal Trainer 3h.',
-      tags: ['Estadio', 'Entrenamiento'] },
-  ];
-
-  var tagColors = {
-    'Entrenamiento': { bg: 'rgba(0,230,118,0.1)', color: 'var(--green)', en: 'Training' },
-    'Scout': { bg: 'rgba(41,121,255,0.12)', color: 'var(--blue)', en: 'Scout' },
-    'Transferencias': { bg: 'rgba(255,214,0,0.12)', color: 'var(--yellow)', en: 'Transfers' },
-    'Amistosos': { bg: 'rgba(147,90,255,0.12)', color: '#935aff', en: 'Friendlies' },
-    'Staff': { bg: 'rgba(0,200,150,0.12)', color: '#00c896', en: 'Staff' },
-    'Estadio': { bg: 'rgba(255,107,53,0.12)', color: '#ff6b35', en: 'Stadium' },
-  };
-
-  function renderEvents() {
-    var container = document.getElementById('events-list');
-    if (!container) return;
-    var title = document.getElementById('events-title');
-    var sub = document.getElementById('events-sub');
-    if (title) title.textContent = currentLang === 'es' ? '🗓️ EVENTOS DE ABRIL 2026' : '🗓️ APRIL 2026 EVENTS';
-    if (sub) sub.textContent = currentLang === 'es' ? 'Eventos especiales de OSM este mes' : 'Special OSM events this month';
-    container.innerHTML = eventsData.map(function(e) {
-      var name = currentLang === 'es' ? e.name_es : e.name_en;
-      var desc = currentLang === 'es' ? e.desc_es : e.desc_en;
-      var tags = e.tags.map(function(tag) {
-        var c = tagColors[tag];
-        var label = currentLang === 'es' ? tag : c.en;
-        return '<span style="font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;background:' + c.bg + ';color:' + c.color + ';">' + label + '</span>';
-      }).join('');
-      return '<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;gap:14px;align-items:flex-start;">' +
-        '<div style="min-width:48px;text-align:center;background:var(--surface2);border-radius:8px;padding:8px 4px;flex-shrink:0;">' +
-        '<div style="font-family:Barlow Condensed,sans-serif;font-size:20px;font-weight:900;color:var(--green);line-height:1;">' + e.dates + '</div>' +
-        '<div style="font-size:10px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.5px;">' + (currentLang === 'es' ? 'ABR' : 'APR') + '</div>' +
-        '</div>' +
-        '<div style="flex:1;">' +
-        '<div style="font-family:Barlow Condensed,sans-serif;font-size:17px;font-weight:800;color:var(--text);margin-bottom:4px;">' + name + '</div>' +
-        '<div style="font-size:12px;color:var(--text-mid);margin-bottom:8px;line-height:1.5;">' + desc + '</div>' +
-        '<div style="display:flex;gap:6px;flex-wrap:wrap;">' + tags + '</div>' +
-        '</div></div>';
-    }).join('');
-  }
-  var translations = {
-    es: {
-      'nav-share': '+ Compartir Táctica',
-      'tab-trending': '🔥 Tendencia',
-      'tab-detail': '📋 Detalle',
-      'tab-builder': '⚽ Alineaciones',
-      'tab-ranking': '🥇 Rankings',
-      'tab-events': '📅 Eventos',
-      'tab-h2h': '⚔️ H2H',
-      'tab-tournament': '🏆 Copa Nostalgia',
-      'feed-title': 'TÁCTICAS DE MODA',
-      'pill-hot': 'Caliente',
-      'pill-new': 'Nuevo',
-      'pill-top': 'Arriba',
-      'no-tactics': 'Aún no hay tácticas. ¡Sé el primero en compartir una!',
-      'effectiveness': 'EFICACIA',
-      'total-votes': 'Total Votos',
-      'it-works': '👍 Funcionó',
-      'didnt-work': '👎 No Funcionó',
-      'vote-question': '¿Te funcionó esta táctica?',
-      'vote-sub': 'Tu voto ayuda a la comunidad a encontrar las mejores tácticas',
-      'vote-yes': '👍 SÍ, FUNCIONÓ',
-      'vote-no': '👎 NO FUNCIONÓ',
-      'ctx-local': '🏠 Local',
-      'ctx-away': '✈️ Visitante',
-      'ctx-both': '↔️ Ambos',
-      'ctx-superior': '📈 Superior',
-      'ctx-similar': '⚖️ Similar',
-      'ctx-inferior': '📉 Inferior',
-      'ctx-league': '🥇 Liga',
-      'ctx-cup': '🏆 Copa',
-      'ctx-key': '⭐ Partido clave',
-      'ctx-q-location': '📍 ¿De local o visitante?',
-      'ctx-q-strength': '⚡ ¿Tu equipo vs el rival?',
-      'ctx-q-comp': '🏆 ¿En qué competición?',
-      'vote-submit': 'Enviar voto →',
-      'vote-registered': '✅ ¡Voto registrado!',
-      'vote-registered-sub': 'Así se ve la táctica con tu contexto:',
-      'comments-title': 'COMENTARIOS',
-      'builder-title': '⚽ CREADOR DE ALINEACIONES',
-      'share-tactic-btn': '🚀 COMPARTIR TÁCTICA',
-      'tactic-title-ph': '💡 Tip extra (opcional): ej. Necesitás extremos rápidos...',
-      'tactic-author-ph': 'Tu nombre / usuario...',
-      'ranking-title': '🏆 RANKING DE FORMACIONES',
-      'ranking-sub': 'Basado en votos reales de jugadores de OSM',
-      'top-formations': '🏆 Top Formaciones',
-      'stats-title': '📊 Stats',
-      'be-first': '¡Sé el primero!',
-      'footer': 'OSM Hub · Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM',
-      'logo-sub': 'plataforma táctica creada por fans',
-      'loading': 'Cargando tácticas...',
-      'local-home': '🏠 De local',
-      'local-away': '✈️ De visitante',
-      'superior': '📈 Equipo superior',
-      'similar': '⚖️ Equipo similar',
-      'inferior': '📉 Equipo inferior',
-      'label-pressing': 'PRESIÓN',
-      'label-style': 'ESTILO',
-      'label-tempo': 'RITMO',
-      'label-linetactics': 'TÁCTICAS DE LÍNEA',
-      'label-fwd': 'DELANTEROS',
-      'label-mid': 'MEDIOCAMPISTAS',
-      'label-def': 'DEFENSORES',
-    },
-    en: {
-      'nav-share': '+ Share Tactic',
-      'tab-trending': '🔥 Trending',
-      'tab-detail': '📋 Detail',
-      'tab-builder': '⚽ Lineup Builder',
-      'tab-ranking': '🥇 Rankings',
-      'tab-events': '📅 Events',
-      'tab-h2h': '⚔️ H2H',
-      'tab-tournament': '🏆 Copa Nostalgia',
-      'feed-title': 'TRENDING TACTICS',
-      'pill-hot': 'Hot',
-      'pill-new': 'New',
-      'pill-top': 'Top',
-      'no-tactics': 'No tactics yet. Be the first!',
-      'effectiveness': 'EFFECTIVENESS',
-      'total-votes': 'Total Votes',
-      'works': '👍 It Works',
-      'doesnt': '👎 Didnt Work',
-      'vote-question': 'Did this tactic work for you?',
-      'vote-sub': 'Your vote helps the community',
-      'vote-yes': '👍 IT WORKED',
-      'vote-no': '👎 DIDNT WORK',
-      'comments-title': 'COMMENTS',
-      'builder-title': '⚽ FORMATION EXPLORER',
-      'share-tactic-btn': '+ Share Tactic',
-      'tactic-title-ph': 'Tactic title...',
-      'tactic-author-ph': 'Your username...',
-      'ranking-title': '🥇 RANKINGS',
-      'ranking-sub': 'Sorted by effectiveness',
-      'footer': 'OSM Hub · Fan-made tactic platform · Not affiliated with GameBasics or OSM',
-      'logo-sub': 'fan-made tactic platform',
-      'back-btn': '← Back',
-      'detail-eff-label': 'EFFECTIVENESS RATE',
-      'detail-total-label': 'Total Votes',
-      'detail-works-label': '👍 It Works',
-      'detail-didnt-label': '👎 Didnt Work',
-      'vote-q3': '✅ Vote registered!',
-      'vote-sub3': 'Here is how the tactic looks with your context:',
-      'vote-ctx-location': '📍 Home or away?',
-      'vote-ctx-strength': '⚡ Your team vs rival?',
-      'vote-ctx-comp': '🏆 What competition?',
-      'ctx-home': '🏠 Home',
-      'ctx-away': '✈️ Away',
-      'ctx-both': '↔️ Both',
-      'ctx-superior': '📈 Superior',
-      'ctx-similar': '⚖️ Similar',
-      'ctx-inferior': '📉 Inferior',
-      'ctx-liga': '🥇 League',
-      'ctx-copa': '🏆 Cup',
-      'send-vote': 'Send vote →',
-      'h2h-title': '⚔️ HEAD TO HEAD',
-      'h2h-add': 'ADD MATCH',
-      'h2h-opponent': 'Rival username',
-      'h2h-wins': 'Wins',
-      'h2h-score-other': 'Other',
-      'tournament-title': '🏆 COPA NOSTALGIA I',
-      'standings-title': '📊 STANDINGS',
-      'superior': '📈 Superior team',
-      'similar': '⚖️ Similar team',
-      'inferior': '📉 Inferior team',
-      'label-pressing': 'PRESSING',
-      'label-style': 'STYLE',
-      'label-tempo': 'TEMPO',
-      'label-linetactics': 'LINE TACTICS',
-      'label-fwd': 'FORWARDS',
-      'label-mid': 'MIDFIELDERS',
-      'label-def': 'DEFENDERS',
+    var btn = document.getElementById('signup-modal-btn');
+    btn.textContent = es ? 'Enviando...' : 'Sending...';
+    // Check if already signed up
+    var existing = await db.from('tournament_signups').select('id').eq('user_id', currentUser.id).eq('tournament', 'copa-nostalgia-2').maybeSingle();
+    if (existing.data) {
+      document.getElementById('signup-modal-logged').style.display = 'none';
+      document.getElementById('signup-modal-success').style.display = 'block';
+      return;
     }
-  };
-
-  function t(key) {
-    return translations[currentLang][key] || key;
-  }
-
-  function toggleLang() {
-    try {
-      currentLang = currentLang === 'es' ? 'en' : 'es';
-      var btn = document.getElementById('lang-btn');
-      if(btn) btn.textContent = currentLang === 'es' ? '🌐 EN / ES' : '🌐 ES / EN';
-      applyTranslations();
-      loadHomeScreen();
-    } catch(e) {
-      console.error('toggleLang error:', e);
+    var res = await db.from('tournament_signups').insert({ user_id: currentUser.id, osm_username: text, tournament: 'copa-nostalgia-2' });
+    if (res.error) {
+      msg.textContent = es ? 'Error. Intentá de nuevo.' : 'Error. Please try again.';
+      msg.style.color = 'var(--red)';
+      btn.textContent = es ? '✅ RESERVAR MI LUGAR' : '✅ RESERVAR MI LUGAR';
+      return;
     }
-  }
-
-  function applyTranslations() {
-    var logoSub = document.querySelector('.logo-sub'); if(logoSub) logoSub.textContent = t('logo-sub');
-    var btnShareNav = document.getElementById('btn-share-nav'); if(btnShareNav) btnShareNav.textContent = t('nav-share');
-    var tabTrending = document.getElementById('tab-trending'); if(tabTrending) tabTrending.textContent = t('tab-trending');
-    var tabDetail = document.getElementById('tab-detail'); if(tabDetail) tabDetail.textContent = t('tab-detail');
-    var tabBuilder = document.getElementById('tab-builder'); if(tabBuilder) tabBuilder.textContent = t('tab-builder');
-    var tabRanking = document.getElementById('tab-ranking'); if(tabRanking) tabRanking.textContent = t('tab-ranking');
-    var tabEvents = document.getElementById('tab-events');
-    if (tabEvents) tabEvents.textContent = t('tab-events');
-    var tabH2h = document.getElementById('tab-h2h');
-    if (tabH2h) tabH2h.textContent = t('tab-h2h');
-    var tabTournament = document.getElementById('tab-tournament');
-    if (tabTournament) tabTournament.textContent = '🏆 ' + (currentLang === 'es' ? 'Copa Nostalgia' : 'Tournament');
-    applyTournamentTranslations();
-    var h2hLoginTitle = document.getElementById('h2h-login-title');
-    if (h2hLoginTitle) h2hLoginTitle.textContent = currentLang === 'es' ? 'Iniciá sesión para ver tu H2H' : 'Iniciar sesión to see your H2H';
-    var h2hLoginSub = document.getElementById('h2h-login-sub');
-    if (h2hLoginSub) h2hLoginSub.textContent = currentLang === 'es' ? 'Llevá el registro de tus partidos contra otros managers' : 'Keep track of your matches against other managers';
-    var h2hLoginBtn = document.getElementById('h2h-login-btn');
-    if (h2hLoginBtn) h2hLoginBtn.textContent = currentLang === 'es' ? '⚡ INICIAR SESIÓN' : '⚡ SIGN IN';
-    var h2hAddTitle = document.getElementById('h2h-add-title');
-    if (h2hAddTitle) h2hAddTitle.textContent = currentLang === 'es' ? '+ Registrar resultado' : '+ Record result';
-    var h2hSaveBtn = document.getElementById('h2h-save-btn');
-    if (h2hSaveBtn) h2hSaveBtn.textContent = currentLang === 'es' ? 'GUARDAR' : 'SAVE';
-    var h2hOpts = document.querySelectorAll('.h2h-opt');
-    if (h2hOpts.length === 3) {
-      h2hOpts[0].textContent = currentLang === 'es' ? 'Victoria' : 'Win';
-      h2hOpts[1].textContent = currentLang === 'es' ? 'Empate' : 'Draw';
-      h2hOpts[2].textContent = currentLang === 'es' ? 'Derrota' : 'Loss';
-    }
-    var h2hComps = document.querySelectorAll('.h2h-comp');
-    if (h2hComps.length >= 2) {
-      h2hComps[0].textContent = currentLang === 'es' ? '🥇 Liga' : '🥇 League';
-      h2hComps[1].textContent = currentLang === 'es' ? '🏆 Copa' : '🏆 Cup';
-    }
-    // Reload H2H if open
-    var h2hScreen = document.getElementById('screen-h2h');
-    if (h2hScreen && h2hScreen.classList.contains('active')) loadH2H();
-    var h2hScoreLabel = document.getElementById('h2h-score-label');
-    if (h2hScoreLabel) h2hScoreLabel.textContent = currentLang === 'es' ? '⚽ MARCADOR (opcional)' : '⚽ SCORE (optional)';
-    var h2hDrawsLabel = document.getElementById('h2h-score-draws-label');
-    if (h2hDrawsLabel) h2hDrawsLabel.textContent = currentLang === 'es' ? 'Empates' : 'Draws';
-    var h2hWinsLabel = document.getElementById('h2h-score-wins-label');
-    if (h2hWinsLabel) h2hWinsLabel.textContent = currentLang === 'es' ? 'Victorias' : 'Wins';
-    var h2hOther = document.getElementById('h2h-score-other');
-    if (h2hOther) h2hOther.textContent = currentLang === 'es' ? 'Otro' : 'Other';
-    var h2hOppEl = document.getElementById('h2h-opponent');
-    if (h2hOppEl) h2hOppEl.placeholder = currentLang === 'es' ? 'Usuario del rival (ej: hola123)' : 'Rival username (ej: hola123)';
-    var bnavHome = document.getElementById('bnav-home-label'); if(bnavHome) bnavHome.textContent = currentLang === 'es' ? 'Inicio' : 'Home';
-    var bnavTournament = document.getElementById('bnav-tournament-label'); if(bnavTournament) bnavTournament.textContent = currentLang === 'es' ? 'Torneo' : 'Tournament';
-    var bnavTactics = document.getElementById('bnav-tactics-label'); if(bnavTactics) bnavTactics.textContent = currentLang === 'es' ? 'Tácticas' : 'Tactics';
-    var bnavRankings = document.getElementById('bnav-rankings-label'); if(bnavRankings) bnavRankings.textContent = currentLang === 'es' ? 'Rankings' : 'Rankings';
-    var bnavH2h = document.getElementById('bnav-h2h-label'); if(bnavH2h) bnavH2h.textContent = 'H2H';
-    var pills = document.querySelectorAll('.pill');
-    if(pills[0]) pills[0].textContent = t('pill-hot');
-    if(pills[1]) pills[1].textContent = t('pill-new');
-    if(pills[2]) pills[2].textContent = t('pill-top');
-    var voteQ = document.querySelector('.vote-question'); if(voteQ) voteQ.textContent = t('vote-question');
-    var voteSub = document.querySelector('.vote-sub'); if(voteSub) voteSub.textContent = t('vote-sub');
-    var voteYesEl = document.querySelector('.vote-yes'); if(voteYesEl) voteYesEl.textContent = t('vote-yes');
-    var voteNoEl = document.querySelector('.vote-no'); if(voteNoEl) voteNoEl.textContent = t('vote-no');
-    var commentsTitleEl = document.querySelector('.comments-title'); if(commentsTitleEl) commentsTitleEl.textContent = t('comments-title');
-    var builderTitleMain = document.getElementById('builder-title-main');
-    if (builderTitleMain) builderTitleMain.textContent = currentLang === 'es' ? '⚽ EXPLORADOR DE FORMACIONES' : '⚽ EXPLORADOR DE FORMACIONES';
-    var builderSubEl = document.getElementById('builder-sub');
-    if (builderSubEl) builderSubEl.textContent = currentLang === 'es' ? 'Seleccioná una formación para ver sus características y tácticas oficiales' : 'Seleccioná una formación para ver sus características y tácticas oficiales';
-    var btnShareEl = document.querySelector('.btn-share'); if(btnShareEl) btnShareEl.textContent = t('share-tactic-btn');
-    var tacticTitleInput = document.getElementById('tactic-title-input'); if(tacticTitleInput) tacticTitleInput.placeholder = t('tactic-title-ph');
-    var tacticAuthorInput = document.getElementById('tactic-author-input'); if(tacticAuthorInput) tacticAuthorInput.placeholder = t('tactic-author-ph');
-    var rankingTitleEl = document.querySelector('.ranking-title'); if(rankingTitleEl) rankingTitleEl.textContent = t('ranking-title');
-    var rankingSubEl = document.querySelector('.ranking-sub'); if(rankingSubEl) rankingSubEl.textContent = t('ranking-sub');
-    var footerEl = document.getElementById('footer-text');
-    if (footerEl) footerEl.innerHTML = '<strong>OSM Hub</strong> · ' + (currentLang === 'es' ? 'Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM' : 'Plataforma táctica creada por fans · No afiliada con GameBasics ni OSM');
-    if (document.getElementById('detail-eff-title')) document.getElementById('detail-eff-title').textContent = currentLang === 'es' ? 'Tasa de Eficacia' : 'Effectiveness Rate';
-    if (document.getElementById('lbl-total-votes')) document.getElementById('lbl-total-votes').textContent = currentLang === 'es' ? 'Total Votos' : 'Votos totales';
-    if (document.getElementById('lbl-it-works')) document.getElementById('lbl-it-works').textContent = currentLang === 'es' ? '👍 Funcionó' : '👍 Funcionó';
-    if (document.getElementById('lbl-didnt-work')) document.getElementById('lbl-didnt-work').textContent = currentLang === 'es' ? '👎 No Funcionó' : "👎 No funcionó";
-    // Context labels
-    var ctxLabels = document.querySelectorAll('.context-label');
-    if (ctxLabels[0]) ctxLabels[0].textContent = t('ctx-q-location');
-    if (ctxLabels[1]) ctxLabels[1].textContent = t('ctx-q-strength');
-    if (ctxLabels[2]) ctxLabels[2].textContent = t('ctx-q-comp');
-    var ownStyleLabel = document.getElementById('own-style-label');
-    if (ownStyleLabel) ownStyleLabel.textContent = currentLang === 'es' ? '🎮 ESTILO DE JUEGO PROPIO' : '🎮 OWN PLAY STYLE';
-    var ownStyleBtns = document.querySelectorAll('.own-style-btn');
-    var ownStyleEs = ['⚽ Balón largo','↔️ Juego de bandas','🔄 Posesión','⚡ Contraataque','🎯 Tiros de repente'];
-    var ownStyleEn = ['⚽ Long ball','↔️ Wing play','🔄 Possession','⚡ Counter-attack','🎯 Shoot on sight'];
-    ownStyleBtns.forEach(function(btn, i) { btn.textContent = currentLang === 'es' ? ownStyleEs[i] : ownStyleEn[i]; });
-    // VS section
-    var vsLabel = document.getElementById('vs-section-label');
-    if (vsLabel) vsLabel.textContent = currentLang === 'es' ? '⚔️ CONTEXTO DEL RIVAL (opcional)' : '⚔️ RIVAL CONTEXT (optional)';
-    var vsForm = document.getElementById('vs-formation');
-    if (vsForm) vsForm.options[0].text = currentLang === 'es' ? '¿Contra qué formación funciona?' : 'Works best against which formation?';
-    var vsStyleEl = document.getElementById('vs-style');
-    if (vsStyleEl) {
-      vsStyleEl.options[0].text = currentLang === 'es' ? '¿Contra qué estilo de juego?' : 'Against which play style?';
-      var styleMap = currentLang === 'es'
-        ? ['Balón largo','Juego de bandas','Posesión','Contraataque','Tiros de repente']
-        : ['Long ball','Wing play','Possession','Counter-attack','Long shots'];
-      for (var i = 1; i < vsStyleEl.options.length; i++) vsStyleEl.options[i].text = styleMap[i-1];
-    }
-    var bestSit = document.getElementById('best-situation');
-    if (bestSit) {
-      bestSit.options[0].text = currentLang === 'es' ? '¿Cuándo usarla?' : 'When to use it?';
-      var sitMap = currentLang === 'es'
-        ? ['🏠 Local · Superior','🏠 Local · Inferior','✈️ Visitante · Superior','✈️ Visitante · Inferior']
-        : ['🏠 Home · Superior','🏠 Home · Inferior','✈️ Away · Superior','✈️ Away · Inferior'];
-      for (var j = 1; j < bestSit.options.length; j++) bestSit.options[j].text = sitMap[j-1];
-    }
-    var commentInput = document.getElementById('comment-input');
-    if (commentInput) commentInput.placeholder = currentLang === 'es' ? 'Compartí tu experiencia con esta táctica...' : 'Share your experience with this tactic...';
-    var commentBtn = document.getElementById('comment-submit-btn');
-    if (commentBtn) commentBtn.textContent = currentLang === 'es' ? '💬 COMENTAR' : '💬 COMMENT';
-    var commentLoginMsg = document.getElementById('comment-login-msg');
-    if (commentLoginMsg) commentLoginMsg.textContent = currentLang === 'es' ? 'Iniciá sesión para comentar' : 'Iniciar sesión to comment';
-    var commentLoginLink = document.getElementById('comment-login-link');
-    if (commentLoginLink) commentLoginLink.textContent = currentLang === 'es' ? 'Entrar' : 'Iniciar sesión';
-    // Update Cualquiera/Any option in vs-formation and filter
-    var vsFormEl = document.getElementById('vs-formation');
-    if (vsFormEl && vsFormEl.options[1]) vsFormEl.options[1].text = currentLang === 'es' ? '🌐 Cualquiera' : '🌐 Any';
-    var filterFormEl = document.getElementById('filter-formation');
-    if (filterFormEl && filterFormEl.options[1]) filterFormEl.options[1].text = currentLang === 'es' ? '🌐 Cualquiera / Any' : '🌐 Any / Cualquiera';
-    var filterFormPh = document.getElementById('filter-formation-ph');
-    if (filterFormPh) filterFormPh.text = currentLang === 'es' ? '🏟️ Formación' : '🏟️ Formation';
-    var filterStylePh = document.getElementById('filter-style-ph');
-    if (filterStylePh) filterStylePh.text = currentLang === 'es' ? '🎮 Estilo' : '🎮 Style';
-    var filterSitPh = document.getElementById('filter-situation-ph');
-    if (filterSitPh) filterSitPh.text = currentLang === 'es' ? '📍 Situación' : '📍 Situation';
-    // Update filter style options
-    var fsEl = document.getElementById('filter-style');
-    if (fsEl) {
-      var fsEs = ['✦ OSM Hub Official', '⚽ Balón largo','↔️ Juego de bandas','🔄 Posesión','⚡ Contraataque','🎯 Tiros de repente'];
-      var fsEn = ['✦ OSM Hub Official', '⚽ Long ball','↔️ Wing play','🔄 Possession','⚡ Counter-attack','🎯 Shoot on sight'];
-      for (var i = 1; i < fsEl.options.length; i++) fsEl.options[i].text = currentLang === 'es' ? fsEs[i-1] : fsEn[i-1];
-    }
-    // Update filter situation options
-    var fsiEl = document.getElementById('filter-situation');
-    if (fsiEl) {
-      var fsiEs = ['🏠 Local · Superior','🏠 Local · Inferior','✈️ Visitante · Superior','✈️ Visitante · Inferior'];
-      var fsiEn = ['🏠 Home · Superior','🏠 Home · Inferior','✈️ Away · Superior','✈️ Away · Inferior'];
-      for (var k = 1; k < fsiEl.options.length; k++) fsiEl.options[k].text = currentLang === 'es' ? fsiEs[k-1] : fsiEn[k-1];
-    }
-    var clearBtn = document.getElementById('clear-filters-btn');
-    if (clearBtn) clearBtn.textContent = currentLang === 'es' ? '✕ Limpiar' : '✕ Clear';
-    var feedTitleLabel = document.getElementById('feed-title-label');
-    if (feedTitleLabel) feedTitleLabel.textContent = currentLang === 'es' ? 'TÁCTICAS DE MODA' : 'TRENDING TACTICS';
-    var voteRegTitle = document.getElementById('vote-register-title');
-    if (voteRegTitle) voteRegTitle.textContent = currentLang === 'es' ? 'Tu voto vale para la comunidad' : 'Your vote matters to the community';
-    var voteRegSub = document.getElementById('vote-register-sub');
-    if (voteRegSub) voteRegSub.textContent = currentLang === 'es' ? 'Registrate gratis para votar. Tus votos ayudan a miles de managers a encontrar las mejores tácticas para cada situación.' : 'Sign up free to vote. Your votes help thousands of managers find the best tactics for every situation.';
-    var voteRegBtn = document.getElementById('vote-register-btn');
-    if (voteRegBtn) voteRegBtn.textContent = currentLang === 'es' ? '⚡ REGISTRARME GRATIS' : '⚡ REGISTRARME FREE';
-    var voteRegNote = document.getElementById('vote-register-note');
-    if (voteRegNote) voteRegNote.textContent = currentLang === 'es' ? 'Solo tu email. Sin spam. Sin tarjeta.' : 'Solo tu email. Sin spam. No credit card.';
-    var voteRegBack = document.getElementById('vote-register-back');
-    if (voteRegBack) voteRegBack.textContent = currentLang === 'es' ? 'Volver' : 'Go back';
-    var backFeedLabel = document.getElementById('back-feed-label');
-    if (backFeedLabel) backFeedLabel.textContent = currentLang === 'es' ? 'Volver al feed' : 'Back to feed';
-    // Vote section translations
-    var es = currentLang === 'es';
-    var vq1 = document.getElementById('vote-q1'); if(vq1) vq1.textContent = es ? '¿Te funcionó esta táctica?' : 'Did this tactic work for you?';
-    var vs1 = document.getElementById('vote-sub1'); if(vs1) vs1.textContent = es ? 'Tu voto ayuda a la comunidad a encontrar las mejores tácticas' : 'Your vote helps the community find the best tactics';
-    var vby = document.getElementById('vote-btn-yes'); if(vby) vby.textContent = es ? '👍 SÍ, FUNCIONÓ' : '👍 IT WORKED';
-    var vbn = document.getElementById('vote-btn-no'); if(vbn) vbn.textContent = es ? '👎 NO FUNCIONÓ' : "👎 DIDN'T WORK";
-    var vs2 = document.getElementById('vote-sub2'); if(vs2) vs2.textContent = es ? 'Opcional pero muy útil para la comunidad' : 'Optional but very helpful for the community';
-    var vcl = document.getElementById('vote-ctx-location'); if(vcl) vcl.textContent = es ? '📍 ¿De local o visitante?' : '📍 Home or away?';
-    var vcs = document.getElementById('vote-ctx-strength'); if(vcs) vcs.textContent = es ? '⚡ ¿Tu equipo vs el rival?' : '⚡ Your team vs rival?';
-    var vcc = document.getElementById('vote-ctx-comp'); if(vcc) vcc.textContent = es ? '🏆 ¿En qué competición?' : '🏆 What competition?';
-    var ch = document.getElementById('ctx-home'); if(ch) ch.textContent = es ? '🏠 Local' : '🏠 Home';
-    var ca = document.getElementById('ctx-away'); if(ca) ca.textContent = es ? '✈️ Visitante' : '✈️ Away';
-    var cb = document.getElementById('ctx-both'); if(cb) cb.textContent = es ? '↔️ Ambos' : '↔️ Both';
-    var csup = document.getElementById('ctx-superior'); if(csup) csup.textContent = es ? '📈 Superior' : '📈 Superior';
-    var csim = document.getElementById('ctx-similar'); if(csim) csim.textContent = es ? '⚖️ Similar' : '⚖️ Similar';
-    var cinf = document.getElementById('ctx-inferior'); if(cinf) cinf.textContent = es ? '📉 Inferior' : '📉 Inferior';
-    var clig = document.getElementById('ctx-liga'); if(clig) clig.textContent = es ? '🥇 Liga' : '🥇 League';
-    var ccop = document.getElementById('ctx-copa'); if(ccop) ccop.textContent = es ? '🏆 Copa' : '🏆 Cup';
-    var ckey = document.getElementById('ctx-key'); if(ckey) ckey.textContent = es ? '⭐ Partido clave' : '⭐ Key match';
-    var vsb = document.getElementById('vote-submit-btn'); if(vsb) vsb.textContent = es ? 'Enviar voto →' : 'Send vote →';
-    var vq3 = document.getElementById('vote-q3'); if(vq3) vq3.textContent = es ? '✅ ¡Voto registrado!' : '✅ Vote registered!';
-    var vs3 = document.getElementById('vote-sub3'); if(vs3) vs3.textContent = es ? 'Así se ve la táctica con tu contexto:' : "Here's how the tactic looks with your context:";
-    var commentsTitleLabel = document.getElementById('comments-title-label');
-    if (commentsTitleLabel) commentsTitleLabel.textContent = currentLang === 'es' ? 'COMENTARIOS' : 'COMMENTS';
-    // Builder labels
-    ['pressing','style','tempo','linetactics','fwd','mid','def'].forEach(function(k) {
-      var el = document.getElementById('label-' + k);
-      if (el) el.textContent = t('label-' + k);
-    });
-    // Reload screens based on which is active
-    var statsScreen = document.getElementById('screen-stats');
-    if (statsScreen && statsScreen.classList.contains('active')) applyStatsTranslations();
-    var tournamentScreen = document.getElementById('screen-tournament');
-    if (tournamentScreen && tournamentScreen.classList.contains('active')) applyTournamentTranslations();
-    var detailScreen = document.getElementById('screen-detail');
-    if (currentTacticId && detailScreen && detailScreen.classList.contains('active')) loadTacticDetail(currentTacticId);
-    updateSliderLabels();
-    renderEvents();
-    updateBanner();
-    // Reload profile if open
-    var profileScreen = document.getElementById('screen-profile');
-    if (profileScreen && profileScreen.classList.contains('active')) loadProfile();
-    // Update nav user menu language
-    updateNavForUser();
-    updateBanner();
-  }
-
-  function updatePitch(formationName) {
-    var players = formations[formationName];
-    if (!players) return;
-    var container = document.getElementById('big-pitch-players');
-    if (!container) return;
-    container.innerHTML = players.map(function(p) {
-      return '<div class="big-player" style="left:' + p.x + '%;top:' + p.y + '%">' +
-        '<div class="bp-dot' + (p.gk ? ' gk' : '') + '">' + p.pos + '</div>' +
-        '<div class="bp-name">' + p.name + '</div></div>';
-    }).join('');
-  }
-
-  var selectedOwnStyle = 'Balon largo';
-  function selectOwnStyle(el, value) {
-    document.querySelectorAll('.own-style-btn').forEach(function(b) { b.classList.remove('active'); });
-    el.classList.add('active');
-    selectedOwnStyle = value;
-  }
-
-  // ===== INIT =====
-  document.querySelectorAll('.form-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.form-btn').forEach(function(b) { b.classList.remove('active'); });
-      this.classList.add('active');
-      updatePitch(this.textContent.trim());
-    });
-  });
-  // Pills handled by setSortPill inline onclick
-
-  // Edit modal sliders
-  ['pressing','style','tempo'].forEach(function(type) {
-    var slider = document.getElementById('edit-' + type);
-    var num = document.getElementById('edit-' + type + '-num');
-    if (slider && num) {
-      slider.addEventListener('input', function() { num.textContent = this.value; });
-    }
-  });
-
-  // Load home on start
-  initAuth();
-  if (currentLang === 'en') applyTranslations();
-  setTimeout(updateBanner, 500);
-  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('signup-modal-logged').style.display = 'none';
+    document.getElementById('signup-modal-success').style.display = 'block';
     loadHomeScreen();
-  });
-  if (document.readyState === 'complete' || document.readyState === 'interactive') {
-    setTimeout(loadHomeScreen, 200);
   }
-</script>
-<!-- MOBILE BOTTOM NAV -->
-<div id="bottom-nav" style="display:none;position:fixed;bottom:0;left:0;right:0;background:rgba(0,0,0,0.97);backdrop-filter:blur(16px);border-top:1px solid rgba(255,215,0,0.15);z-index:200;padding:8px 0 env(safe-area-inset-bottom,8px);">
-  <div style="display:flex;justify-content:space-around;align-items:center;">
-    <button onclick="showScreen('feed',document.getElementById('tab-trending'));loadHomeScreen();" class="bottom-nav-btn" id="bnav-home">
-      <div style="font-size:20px;">🏠</div>
-      <div class="bnav-label" id="bnav-home-label">Inicio</div>
-    </button>
-    <button onclick="showScreen('tournament',document.getElementById('tab-tournament'));applyTournamentTranslations();loadTournamentComments();" class="bottom-nav-btn" id="bnav-tournament">
-      <div style="font-size:20px;">🏆</div>
-      <div class="bnav-label" id="bnav-tournament-label">Torneo</div>
-    </button>
-    <button onclick="showScreen('builder',document.getElementById('tab-builder'));initFormationExplorer();" class="bottom-nav-btn" id="bnav-tactics">
-      <div style="font-size:20px;">⚽</div>
-      <div class="bnav-label" id="bnav-tactics-label">Tácticas</div>
-    </button>
-    <button onclick="showScreen('ranking',document.getElementById('tab-ranking'));loadRankings();" class="bottom-nav-btn" id="bnav-rankings">
-      <div style="font-size:20px;">🥇</div>
-      <div class="bnav-label" id="bnav-rankings-label">Rankings</div>
-    </button>
-    <button onclick="showScreen('stats',document.getElementById('tab-stats'));" class="bottom-nav-btn" id="bnav-stats"><div style="font-size:20px;">📊</div><div class="bnav-label" id="bnav-stats-label">Stats</div></button><button onclick="showScreen('h2h',document.getElementById('tab-h2h'));loadH2H();" class="bottom-nav-btn" id="bnav-h2h">
-      <div style="font-size:20px;">⚔️</div>
-      <div class="bnav-label" id="bnav-h2h-label">H2H</div>
-    </button>
-  </div>
-</div>
 
-<script>
-  // Show bottom nav always
-  document.getElementById('bottom-nav').style.display = 'block';
-  document.querySelector('body').style.paddingBottom = '70px';
+  // Cerrar modal on backdrop click
+  var signupModal = document.getElementById('signup-modal');
+  if(signupModal) signupModal.addEventListener('click', function(e) {
+    if (e.target === this) closeSignupModal();
+  });
+
 </script>
 
-<script>
   // ===== STANDINGS DATA =====
   var standingsData = [
     {pos:1,club:'Fenerbahce',manager:'adolfis_1',pj:4,g:4,e:0,p:0,gf:10,gc:1,dg:'+9',pts:12},
@@ -3115,53 +1265,6 @@
     if(hBtn) hBtn.style.color = '#FFD700';
   });
 </script>
-
-
-<!-- SIGNUP MODAL -->
-<div id="signup-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;">
-  <div style="background:#0D0D0D;border:1px solid rgba(255,215,0,0.3);border-radius:24px;padding:28px 24px;max-width:380px;width:100%;box-shadow:0 0 60px rgba(255,215,0,0.1);position:relative;">
-    <button onclick="closeSignupModal()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text-dim);font-size:20px;cursor:pointer;line-height:1;">✕</button>
-    <div style="text-align:center;margin-bottom:20px;">
-      <div style="font-size:40px;margin-bottom:10px;">🏆</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:26px;font-weight:900;color:#FFFFFF;margin-bottom:6px;" id="signup-modal-title">COPA NOSTALGIA II</div>
-      <div style="font-size:13px;color:var(--text-mid);" id="signup-modal-sub">Dejá tu usuario de OSM y reservá tu lugar</div>
-    </div>
-    <!-- Guest -->
-    <div id="signup-modal-guest" style="display:none;text-align:center;">
-      <div style="font-size:13px;color:var(--text-mid);margin-bottom:14px;" id="signup-modal-login-msg">Necesitás una cuenta para anotarte</div>
-      <button onclick="closeSignupModal();openAuth();" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;" id="signup-modal-login-btn">⚡ CREAR CUENTA GRATIS</button>
-      <div style="margin-top:10px;font-size:11px;color:var(--text-dim);" id="signup-modal-login-note">Solo tu email. Sin spam.</div>
-    </div>
-    <!-- Logged in -->
-    <div id="signup-modal-logged" style="display:none;">
-      <div style="background:rgba(255,215,0,0.06);border:1px solid rgba(255,215,0,0.15);border-radius:12px;padding:14px;margin-bottom:14px;display:flex;align-items:center;gap:10px;">
-        <span style="font-size:20px;">⚽</span>
-        <div style="flex:1;">
-          <div style="font-size:11px;color:var(--text-dim);margin-bottom:4px;" id="signup-osm-label">Tu usuario de OSM</div>
-          <input id="signup-osm-input" placeholder="ej: hola123" style="width:100%;background:transparent;border:none;outline:none;color:#FFFFFF;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:700;" />
-        </div>
-      </div>
-      <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:12px;margin-bottom:16px;font-size:12px;color:var(--text-dim);display:flex;flex-direction:column;gap:6px;">
-        <div style="font-size:11px;font-weight:700;color:var(--gold);letter-spacing:0.5px;margin-bottom:2px;" id="rules-title">📋 REGLAS DEL TORNEO</div>
-        <div>🏆 <span id="rules-1">Liga Estrellas de Clubes</span></div>
-        <div>⏱ <span id="rules-2">Sin timers</span></div>
-        <div>🏫 <span id="rules-3">Sin campus</span></div>
-        <div>🔒 <span id="rules-4">Sin entrenamiento secreto</span></div>
-        <div>💰 <span id="rules-5">Premio al ganador</span></div>
-      </div>
-      <button onclick="submitSignupModal()" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:16px;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;cursor:pointer;box-shadow:0 4px 20px rgba(255,215,0,0.25);" id="signup-modal-btn">✅ RESERVAR MI LUGAR</button>
-      <div id="signup-modal-msg" style="text-align:center;font-size:13px;margin-top:10px;min-height:18px;"></div>
-    </div>
-    <!-- Success -->
-    <div id="signup-modal-success" style="display:none;text-align:center;">
-      <div style="font-size:48px;margin-bottom:10px;">🎉</div>
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:24px;font-weight:900;color:#FFD700;margin-bottom:8px;" id="signup-success-title">¡Estás anotado!</div>
-      <div style="font-size:13px;color:var(--text-mid);margin-bottom:20px;" id="signup-success-sub">Te avisaremos cuando empiece la Copa Nostalgia II.</div>
-      <button onclick="closeSignupModal()" style="background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.3);color:#FFD700;border-radius:10px;padding:10px 24px;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;cursor:pointer;" id="signup-close-btn">Cerrar</button>
-    </div>
-  </div>
-</div>
-
 
 </body>
 </html>
