@@ -452,12 +452,11 @@
   <div class="tab" onclick="showScreen('builder',this)" id="tab-builder">⚽ Lineup Builder</div>
   <div class="tab" onclick="showScreen('ranking',this)" id="tab-ranking">🥇 Rankings</div>
   <div class="tab" onclick="showScreen('events',this)" id="tab-events">📅 Events</div>
-  <div class="tab" onclick="showScreen('stats',this)" id="tab-stats">📊 Stats</div><div class="tab" onclick="showScreen('h2h',this)" id="tab-h2h">⚔️ H2H</div>
+  <div class="tab" onclick="showScreen('stats',this)" id="tab-stats">📊 Stats</div>
+  <div class="tab" onclick="showScreen('h2h',this)" id="tab-h2h">⚔️ H2H</div>
 </div>
 
 <!-- ===== HOME ===== -->
-
-
 <div id="screen-home" class="screen active">
   <div style="background:linear-gradient(160deg,#000 0%,#0A0800 100%);padding:40px 20px 32px;text-align:center;border-bottom:1px solid rgba(255,215,0,0.15);position:relative;overflow:hidden;">
     <div style="position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(255,215,0,0.08) 0%,transparent 70%);pointer-events:none;"></div>
@@ -573,10 +572,6 @@
   </div>
 </div>
 
-
-
-
-
 <!-- SIGNUP MODAL -->
 <div id="signup-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;">
   <div style="background:#0D0D0D;border:1px solid rgba(255,215,0,0.3);border-radius:24px;padding:28px 24px;max-width:380px;width:100%;box-shadow:0 0 60px rgba(255,215,0,0.1);position:relative;">
@@ -622,9 +617,6 @@
   </div>
 </div>
 
-
-
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 
@@ -632,249 +624,23 @@
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR5YXpzZGJtZGJubWpqcGN0dG53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY4ODE0MTIsImV4cCI6MjA5MjQ1NzQxMn0.CbmYy-9XILk99DkuKi5CFIqQBDvADcLvozvIX46c5zQ';
   const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+  var currentLang = localStorage.getItem('osmhub-lang') || 'es';
+  var currentUser = null;
+
   // ===== NAVIGATION =====
   function showScreen(id, tabEl) {
-    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    document.getElementById('screen-' + id).classList.add('active');
-    if (tabEl) tabEl.classList.add('active');
+    document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+    document.querySelectorAll('.bottom-nav-btn').forEach(function(b){ b.style.color='#4A5A6E'; });
+    var screen = document.getElementById('screen-' + id);
+    if(screen) screen.classList.add('active');
+    var btn = document.getElementById('bnav-'+id+'-btn');
+    if(btn) btn.style.color = '#FFD700';
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    if (id === 'feed') { loadHomeScreen(); }
-    if (id === 'builder') initFormationExplorer();
-    if (id === 'ranking') loadRankings();
-    if (id === 'events') renderEvents();
-    if (id === 'profile') loadProfile();
-    if (id === 'h2h') loadH2H();
-    if (id === 'tournament') { applyTournamentTranslations(); loadTournamentComments(); }
-    if (id === 'stats') { initStats(); applyStatsTranslations(); }
+    if (id === 'torneo1') loadTorneo1();
+    if (id === 'torneo2') loadTorneo2();
   }
 
-  var currentSort = 'hot';
-
-  function setSortPill(el, sort) {
-    document.querySelectorAll('.pill').forEach(function(p) { p.classList.remove('active'); });
-    el.classList.add('active');
-    currentSort = sort;
-    loadTactics();
-  }
-
-  function applyFilters() {
-    var clearBtn = document.getElementById('clear-filters-btn');
-    var f = document.getElementById('filter-formation').value;
-    var s = document.getElementById('filter-style').value;
-    var sit = document.getElementById('filter-situation').value;
-    if (clearBtn) clearBtn.style.display = (f || s || sit) ? 'block' : 'none';
-    loadTactics();
-  }
-
-  function clearFilters() {
-    document.getElementById('filter-formation').value = '';
-    document.getElementById('filter-style').value = '';
-    document.getElementById('filter-situation').value = '';
-    var clearBtn = document.getElementById('clear-filters-btn');
-    if (clearBtn) clearBtn.style.display = 'none';
-    loadTactics();
-  }
-
-  // ===== FORMATION EXPLORER =====
-  var formationData = {
-    '4-3-3-A': { type: 'Ataque', pros: ['Presión alta', 'Extremos desequilibrantes', 'Ideal contraataque'], cons: ['Vulnerable flancos', 'Mediocampo corto', 'Requiere extremos rápidos'] },
-    '4-3-3-B': { type: 'Ataque', pros: ['Dominio bandas', 'Muchos goles', 'Presión constante'], cons: ['Flancos expuestos', 'Mediocampo débil', 'Gasta mucho'] },
-    '4-5-1': { type: 'Equilibrio', pros: ['Mediocampo dominante', 'Sólido defensivamente', 'Versátil'], cons: ['Poco ofensivo', 'Delantero aislado', 'Difícil crear chances'] },
-    '4-2-3-1': { type: 'Equilibrio', pros: ['Muy completo', 'Doble pivote protege', 'Variedad ofensiva'], cons: ['Complejo de usar', 'Requiere buenos CM', 'Lento en transición'] },
-    '4-4-2-A': { type: 'Equilibrio', pros: ['Clásica y sólida', 'Dos delanteros', 'Fácil de usar'], cons: ['Predecible', 'Mediocampo estrecho', 'Poco creativa'] },
-    '4-4-2-B': { type: 'Equilibrio', pros: ['Balanceada', 'Buena presión', 'Dos puntas'], cons: ['Mediocampo limitado', 'Pocos extremos', 'Contra 4-5-1 sufre'] },
-    '3-2-5': { type: 'Ataque extremo', pros: ['Muy ofensiva', '5 atacantes', 'Abruma rivales'], cons: ['Muy vulnerable atrás', 'Solo 3 defensores', 'Arriesgada'] },
-    '3-5-2': { type: 'Equilibrio', pros: ['Mediocampo amplio', 'Dos delanteros', 'Carrilleros'], cons: ['Solo 3 defensores', 'Vulnerable extremos', 'Necesita carrilleros buenos'] },
-    '5-2-3-A': { type: 'Defensivo', pros: ['5 defensores', 'Muy sólida atrás', 'Buen contraataque'], cons: ['Poco posesión', 'Mediocampo pequeño', 'Ofensiva limitada'] },
-    '5-2-3-B': { type: 'Defensivo', pros: ['Súper defensiva', 'Ideal visitante inferior', 'Contraataque letal'], cons: ['Muy pasiva', 'Difícil mantener posesión', 'Poco creativa'] },
-    '5-3-2-A': { type: 'Defensivo', pros: ['Muy sólida', 'Dos delanteros', 'Mediocampo decente'], cons: ['Lenta en ataque', 'Poca amplitud', 'Depende de delanteros'] },
-    '5-4-1-A': { type: 'Ultra defensivo', pros: ['Muy difícil de superar', '9 jugadores atrás', 'Ideal inferior'], cons: ['Casi sin ataque', 'Un delantero solo', 'Muy pasiva'] },
-    '5-4-1-B': { type: 'Defensivo', pros: ['Sólida y organizada', 'Buenos contraataques', 'Mediocampo amplio'], cons: ['Poco ofensiva', 'Delantero aislado', 'Necesita velocidad'] },
-    '6-3-1-A': { type: 'Ultra defensivo', pros: ['Máxima defensa', 'Ideal visitante inferior', 'Muy difícil de penetrar'], cons: ['Casi sin ataque', 'Un solo delantero', 'Necesita parking del bus'] },
-    '6-3-1-B': { type: 'Ultra defensivo', pros: ['Impenetrable atrás', 'Contraataque rápido', 'Ideal equipos débiles'], cons: ['Muy defensiva', 'Poca creatividad', 'Depende del contragolpe'] },
-    '3-4-3-A': { type: 'Ataque', pros: ['Muy ofensiva', 'Amplitud total', 'Presión alta'], cons: ['Solo 3 defensores', 'Vulnerable bandas', 'Riesgosa'] },
-    '3-4-3-B': { type: 'Ataque', pros: ['Gran presión', 'Muchos atacantes', 'Desequilibrante'], cons: ['Solo 3 defensores', 'Costosa de mantener', 'Necesita calidad'] },
-    '3-3-4-A': { type: 'Ataque extremo', pros: ['4 atacantes', 'Arrolladoras', 'Ideal superior local'], cons: ['3 defensores', 'Muy expuesta', 'Solo para ganar'] },
-    '3-3-4-B': { type: 'Ataque extremo', pros: ['Máximo ataque', 'Muy agresiva', 'Desequilibra'], cons: ['Defensivamente frágil', '3 defensores solos', 'Solo con ventaja'] },
-    '3-2-3-2': { type: 'Ataque', pros: ['Dos puntas', 'Creatividad amplia', 'Muchas opciones ofensivas'], cons: ['Solo 3 defensores', 'Vulnerable atrás', 'Necesita calidad total'] },
-    '3-3-2-2': { type: 'Equilibrio', pros: ['Dos delanteros', 'Amplio mediocampo', 'Flexible'], cons: ['Solo 3 atrás', 'Complicada de organizar', 'Necesita carrilleros'] },
-    '4-2-4-A': { type: 'Ataque', pros: ['4 atacantes', 'Muy ofensiva', 'Ideal local superior'], cons: ['Mediocampo solo 2', 'Vulnerable al contraataque', 'Riesgosa'] },
-    '4-2-4-B': { type: 'Ataque', pros: ['Muy ofensiva', 'Amplitud total', 'Arrolla rivales inferiores'], cons: ['2 mediocampistas solos', 'Expuesta al contragolpe', 'Solo cuando ganás'] },
-    '5-3-1-1': { type: 'Defensivo', pros: ['Sólida defensivamente', 'Buen pressing medio', '5+1 detrás'], cons: ['Poco ofensiva', 'Limitada arriba', 'Necesita delantero referencia'] },
-  };
-
-  var formationPositions = {
-    '4-3-3-A': [{l:50,t:88,r:'GK'},{l:15,t:72,r:'LB'},{l:37,t:72,r:'CB'},{l:63,t:72,r:'CB'},{l:85,t:72,r:'RB'},{l:22,t:50,r:'CM'},{l:50,t:46,r:'CM'},{l:78,t:50,r:'CM'},{l:15,t:22,r:'LW'},{l:50,t:14,r:'ST'},{l:85,t:22,r:'RW'}],
-    '4-3-3-B': [{l:50,t:88,r:'GK'},{l:15,t:72,r:'LB'},{l:37,t:72,r:'CB'},{l:63,t:72,r:'CB'},{l:85,t:72,r:'RB'},{l:28,t:50,r:'CM'},{l:50,t:46,r:'CM'},{l:72,t:50,r:'CM'},{l:15,t:20,r:'LW'},{l:50,t:14,r:'ST'},{l:85,t:20,r:'RW'}],
-    '4-5-1': [{l:50,t:88,r:'GK'},{l:15,t:72,r:'LB'},{l:37,t:72,r:'CB'},{l:63,t:72,r:'CB'},{l:85,t:72,r:'RB'},{l:10,t:50,r:'LM'},{l:28,t:48,r:'CM'},{l:50,t:44,r:'CM'},{l:72,t:48,r:'CM'},{l:90,t:50,r:'RM'},{l:50,t:16,r:'ST'}],
-    '4-4-2-A': [{l:50,t:88,r:'GK'},{l:15,t:72,r:'LB'},{l:37,t:72,r:'CB'},{l:63,t:72,r:'CB'},{l:85,t:72,r:'RB'},{l:15,t:50,r:'LM'},{l:37,t:48,r:'CM'},{l:63,t:48,r:'CM'},{l:85,t:50,r:'RM'},{l:33,t:20,r:'ST'},{l:67,t:20,r:'ST'}],
-    '4-4-2-B': [{l:50,t:88,r:'GK'},{l:15,t:72,r:'LB'},{l:37,t:72,r:'CB'},{l:63,t:72,r:'CB'},{l:85,t:72,r:'RB'},{l:15,t:50,r:'LM'},{l:37,t:48,r:'CM'},{l:63,t:48,r:'CM'},{l:85,t:50,r:'RM'},{l:33,t:20,r:'ST'},{l:67,t:20,r:'ST'}],
-    '4-2-3-1': [{l:50,t:88,r:'GK'},{l:15,t:72,r:'LB'},{l:37,t:72,r:'CB'},{l:63,t:72,r:'CB'},{l:85,t:72,r:'RB'},{l:33,t:55,r:'DM'},{l:67,t:55,r:'DM'},{l:15,t:35,r:'LM'},{l:50,t:32,r:'AM'},{l:85,t:35,r:'RM'},{l:50,t:14,r:'ST'}],
-    '5-2-3-A': [{l:50,t:88,r:'GK'},{l:8,t:72,r:'LB'},{l:27,t:72,r:'CB'},{l:50,t:72,r:'CB'},{l:73,t:72,r:'CB'},{l:92,t:72,r:'RB'},{l:33,t:50,r:'DM'},{l:67,t:50,r:'DM'},{l:15,t:18,r:'LW'},{l:50,t:14,r:'ST'},{l:85,t:18,r:'RW'}],
-    '5-2-3-B': [{l:50,t:88,r:'GK'},{l:8,t:72,r:'LB'},{l:27,t:72,r:'CB'},{l:50,t:72,r:'CB'},{l:73,t:72,r:'CB'},{l:92,t:72,r:'RB'},{l:33,t:50,r:'DM'},{l:67,t:50,r:'DM'},{l:15,t:18,r:'LW'},{l:50,t:14,r:'ST'},{l:85,t:18,r:'RW'}],
-    '5-3-2-A': [{l:50,t:88,r:'GK'},{l:8,t:72,r:'LB'},{l:27,t:72,r:'CB'},{l:50,t:72,r:'CB'},{l:73,t:72,r:'CB'},{l:92,t:72,r:'RB'},{l:22,t:48,r:'CM'},{l:50,t:44,r:'CM'},{l:78,t:48,r:'CM'},{l:33,t:20,r:'ST'},{l:67,t:20,r:'ST'}],
-    '5-4-1-A': [{l:50,t:88,r:'GK'},{l:8,t:72,r:'LB'},{l:27,t:72,r:'CB'},{l:50,t:72,r:'CB'},{l:73,t:72,r:'CB'},{l:92,t:72,r:'RB'},{l:15,t:50,r:'LM'},{l:35,t:48,r:'CM'},{l:65,t:48,r:'CM'},{l:85,t:50,r:'RM'},{l:50,t:16,r:'ST'}],
-    '5-4-1-B': [{l:50,t:88,r:'GK'},{l:8,t:72,r:'LB'},{l:27,t:72,r:'CB'},{l:50,t:72,r:'CB'},{l:73,t:72,r:'CB'},{l:92,t:72,r:'RB'},{l:15,t:50,r:'LM'},{l:35,t:48,r:'CM'},{l:65,t:48,r:'CM'},{l:85,t:50,r:'RM'},{l:50,t:16,r:'ST'}],
-    '6-3-1-A': [{l:50,t:88,r:'GK'},{l:8,t:75,r:'LB'},{l:24,t:72,r:'CB'},{l:38,t:70,r:'CB'},{l:62,t:70,r:'CB'},{l:76,t:72,r:'CB'},{l:92,t:75,r:'RB'},{l:22,t:48,r:'CM'},{l:50,t:44,r:'CM'},{l:78,t:48,r:'CM'},{l:50,t:16,r:'ST'}],
-    '6-3-1-B': [{l:50,t:88,r:'GK'},{l:8,t:75,r:'LB'},{l:24,t:72,r:'CB'},{l:38,t:70,r:'CB'},{l:62,t:70,r:'CB'},{l:76,t:72,r:'CB'},{l:92,t:75,r:'RB'},{l:22,t:48,r:'CM'},{l:50,t:44,r:'CM'},{l:78,t:48,r:'CM'},{l:50,t:16,r:'ST'}],
-    '3-5-2': [{l:50,t:88,r:'GK'},{l:22,t:72,r:'CB'},{l:50,t:70,r:'CB'},{l:78,t:72,r:'CB'},{l:10,t:50,r:'LM'},{l:28,t:48,r:'CM'},{l:50,t:44,r:'CM'},{l:72,t:48,r:'CM'},{l:90,t:50,r:'RM'},{l:33,t:20,r:'ST'},{l:67,t:20,r:'ST'}],
-    '3-4-3-A': [{l:50,t:88,r:'GK'},{l:22,t:72,r:'CB'},{l:50,t:70,r:'CB'},{l:78,t:72,r:'CB'},{l:15,t:50,r:'LM'},{l:38,t:48,r:'CM'},{l:62,t:48,r:'CM'},{l:85,t:50,r:'RM'},{l:15,t:20,r:'LW'},{l:50,t:14,r:'ST'},{l:85,t:20,r:'RW'}],
-    '3-4-3-B': [{l:50,t:88,r:'GK'},{l:22,t:72,r:'CB'},{l:50,t:70,r:'CB'},{l:78,t:72,r:'CB'},{l:15,t:50,r:'LM'},{l:38,t:48,r:'CM'},{l:62,t:48,r:'CM'},{l:85,t:50,r:'RM'},{l:15,t:20,r:'LW'},{l:50,t:14,r:'ST'},{l:85,t:20,r:'RW'}],
-    '3-3-4-A': [{l:50,t:88,r:'GK'},{l:22,t:72,r:'CB'},{l:50,t:70,r:'CB'},{l:78,t:72,r:'CB'},{l:22,t:52,r:'CM'},{l:50,t:48,r:'CM'},{l:78,t:52,r:'CM'},{l:10,t:20,r:'LW'},{l:35,t:16,r:'ST'},{l:65,t:16,r:'ST'},{l:90,t:20,r:'RW'}],
-    '3-3-4-B': [{l:50,t:88,r:'GK'},{l:22,t:72,r:'CB'},{l:50,t:70,r:'CB'},{l:78,t:72,r:'CB'},{l:22,t:52,r:'CM'},{l:50,t:48,r:'CM'},{l:78,t:52,r:'CM'},{l:10,t:20,r:'LW'},{l:35,t:16,r:'ST'},{l:65,t:16,r:'ST'},{l:90,t:20,r:'RW'}],
-    '3-3-2-2': [{l:50,t:88,r:'GK'},{l:22,t:72,r:'CB'},{l:50,t:70,r:'CB'},{l:78,t:72,r:'CB'},{l:22,t:52,r:'CM'},{l:50,t:48,r:'CM'},{l:78,t:52,r:'CM'},{l:33,t:28,r:'AM'},{l:67,t:28,r:'AM'},{l:33,t:14,r:'ST'},{l:67,t:14,r:'ST'}],
-    '3-2-5': [{l:50,t:88,r:'GK'},{l:22,t:72,r:'CB'},{l:50,t:70,r:'CB'},{l:78,t:72,r:'CB'},{l:33,t:52,r:'DM'},{l:67,t:52,r:'DM'},{l:10,t:20,r:'LW'},{l:28,t:16,r:'ST'},{l:50,t:14,r:'ST'},{l:72,t:16,r:'ST'},{l:90,t:20,r:'RW'}],
-    '3-2-3-2': [{l:50,t:88,r:'GK'},{l:22,t:72,r:'CB'},{l:50,t:70,r:'CB'},{l:78,t:72,r:'CB'},{l:33,t:52,r:'DM'},{l:67,t:52,r:'DM'},{l:15,t:28,r:'LW'},{l:50,t:26,r:'AM'},{l:85,t:28,r:'RW'},{l:33,t:14,r:'ST'},{l:67,t:14,r:'ST'}],
-    '4-2-4-A': [{l:50,t:88,r:'GK'},{l:15,t:72,r:'LB'},{l:37,t:72,r:'CB'},{l:63,t:72,r:'CB'},{l:85,t:72,r:'RB'},{l:33,t:52,r:'DM'},{l:67,t:52,r:'DM'},{l:10,t:20,r:'LW'},{l:35,t:16,r:'ST'},{l:65,t:16,r:'ST'},{l:90,t:20,r:'RW'}],
-    '4-2-4-B': [{l:50,t:88,r:'GK'},{l:15,t:72,r:'LB'},{l:37,t:72,r:'CB'},{l:63,t:72,r:'CB'},{l:85,t:72,r:'RB'},{l:33,t:52,r:'DM'},{l:67,t:52,r:'DM'},{l:10,t:20,r:'LW'},{l:35,t:16,r:'ST'},{l:65,t:16,r:'ST'},{l:90,t:20,r:'RW'}],
-    '5-3-1-1': [{l:50,t:88,r:'GK'},{l:8,t:72,r:'LB'},{l:27,t:72,r:'CB'},{l:50,t:72,r:'CB'},{l:73,t:72,r:'CB'},{l:92,t:72,r:'RB'},{l:22,t:50,r:'CM'},{l:50,t:46,r:'CM'},{l:78,t:50,r:'CM'},{l:50,t:28,r:'AM'},{l:50,t:14,r:'ST'}],
-  };
-
-  function getDefaultPositions(formation) {
-    if (formationPositions[formation]) return formationPositions[formation];
-    return [{l:50,t:88,r:'GK'},{l:25,t:65,r:'CB'},{l:50,t:65,r:'CB'},{l:75,t:65,r:'CB'},{l:50,t:40,r:'CM'},{l:50,t:18,r:'ST'}];
-  }
-
-  function initFormationExplorer() {
-    var grid = document.getElementById('formation-explorer-grid');
-    if (!grid) return;
-    var formations = Object.keys(formationData);
-    grid.innerHTML = formations.map(function(f) {
-      return '<div onclick="showFormationDetail(\'' + f + '\')" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 8px;text-align:center;cursor:pointer;transition:all 0.15s;" onmouseover="this.style.borderColor=\'var(--green)\';this.style.background=\'var(--surface2)\'" onmouseout="this.style.borderColor=\'var(--border)\';this.style.background=\'var(--surface)\'">' +
-        '<div style="font-family:Barlow Condensed,sans-serif;font-size:18px;font-weight:900;color:var(--green);">' + f + '</div>' +
-        '</div>';
-    }).join('');
-  }
-
-  async function showFormationDetail(formation) {
-    var detail = document.getElementById('formation-detail');
-    if (!detail) return;
-    detail.style.display = 'block';
-    detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    var es = currentLang === 'es';
-    var data = formationData[formation] || { pros: [], cons: [] };
-    var feName = document.getElementById('fe-formation-name'); if(feName) feName.textContent = formation;
-    var feType = document.getElementById('fe-formation-type'); if(feType) feType.textContent = data.type || '';
-    var feProsTitle = document.getElementById('fe-pros-title'); if(feProsTitle) feProsTitle.textContent = es ? '✅ VENTAJAS' : '✅ STRENGTHS';
-    var feConsTitle = document.getElementById('fe-cons-title'); if(feConsTitle) feConsTitle.textContent = es ? '❌ DESVENTAJAS' : '❌ WEAKNESSES';
-    var feTacticsTitle = document.getElementById('fe-tactics-title'); if(feTacticsTitle) feTacticsTitle.textContent = es ? '✦ TÁCTICAS OFICIALES OSM HUB' : '✦ TÁCTICAS OFICIALES OSM HUB';
-    var fePros = document.getElementById('fe-pros'); if(fePros) fePros.innerHTML = data.pros.map(function(p) { return '• ' + p; }).join('<br>');
-    var feCons = document.getElementById('fe-cons'); if(feCons) feCons.innerHTML = data.cons.map(function(c) { return '• ' + c; }).join('<br>');
-    var pitchEl = document.getElementById('fe-pitch-players');
-    if (!pitchEl) return;
-    var positions = getDefaultPositions(formation);
-    pitchEl.innerHTML = positions.map(function(p) {
-      var isGK = p.r === 'GK';
-      return '<div style="position:absolute;left:' + p.l + '%;top:' + p.t + '%;transform:translate(-50%,-50%);text-align:center;">' +
-        '<div style="width:28px;height:28px;border-radius:50%;background:' + (isGK ? '#FFD600' : '#00E676') + ';display:flex;align-items:center;justify-content:center;font-family:Barlow Condensed,sans-serif;font-size:9px;font-weight:900;color:#000000;margin:0 auto;">' + p.r + '</div>' +
-        '</div>';
-    }).join('');
-    var tacticsList = document.getElementById('fe-tactics-list');
-    tacticsList.innerHTML = '<div style="font-size:12px;color:var(--text-dim);">' + (es ? 'Cargando...' : 'Loading...') + '</div>';
-    var res = await db.from('tactics').select('id,title,best_situation,votes_yes,votes_no').eq('formation', formation).eq('author', 'OSM Hub').limit(5);
-    if (!res.data || res.data.length === 0) {
-      tacticsList.innerHTML = '<div style="font-size:12px;color:var(--text-dim);">' + (es ? 'Próximamente tácticas oficiales para esta formación' : 'Official tactics for this formation coming soon') + '</div>';
-      return;
-    }
-    tacticsList.innerHTML = res.data.map(function(t) {
-      var total = t.votes_yes + t.votes_no;
-      var pct = total > 0 ? Math.round((t.votes_yes / total) * 100) : 0;
-      var titleParts = t.title ? t.title.split(' · ') : [t.formation];
-      var translated = titleParts.map(function(p) {
-        if (p.indexOf(' vs ') !== -1) return p;
-        return translateVsValue(p);
-      }).join(' · ');
-      var shortTitle = translated.length > 40 ? translated.substring(0, 40) + '...' : translated;
-      return '<div onclick="loadTacticDetail(\'' + t.id + '\')" style="display:flex;align-items:center;gap:10px;background:var(--surface2);border-radius:8px;padding:10px 12px;cursor:pointer;">' +
-        '<div style="flex:1;font-size:13px;font-weight:600;color:var(--text);">' + shortTitle + '</div>' +
-        '<div style="font-size:13px;font-weight:800;color:' + (pct>=70?'var(--green)':pct>=50?'var(--yellow)':'var(--red)') + ';">' + pct + '%</div>' +
-        '</div>';
-    }).join('');
-  }
-
-
-  function switchStatsTab(id, btn) {
-    document.querySelectorAll('.stats-screen').forEach(s=>s.classList.remove('active'));
-    document.querySelectorAll('.stats-tab-btn').forEach(b=>b.classList.remove('active'));
-    document.getElementById('stats-screen-'+id).classList.add('active');
-    if(btn) btn.classList.add('active');
-  }
-  function sortStatsTable(key){
-    if(statsSortKey===key) statsSortDir*=-1; else{statsSortKey=key;statsSortDir=-1;}
-    renderStatsTeams();
-  }
-  var statsSortKey='shots', statsSortDir=-1;
-  var statsTeams=[
-    {name:'Arsenal',manager:'Sir Nacho Ruglio',shots:13.3,poss:61.0},
-    {name:'Fenerbahce',manager:'adolfis_1',shots:13.3,poss:62.3},
-    {name:'Benfica',manager:'Griche espinosa 70',shots:13.7,poss:59.0},
-    {name:'Boca Juniors',manager:'Nivekserolf',shots:12.0,poss:52.3},
-    {name:'AC Milan',manager:'Sherito Da Silva',shots:10.7,poss:59.7},
-    {name:'Ajax',manager:'Myking Guzman',shots:10.7,poss:55.0},
-    {name:'Bayern Munich',manager:'iShowfideo',shots:9.3,poss:46.3},
-    {name:'Manchester United',manager:'ferchu2020',shots:9.3,poss:53.7},
-    {name:'Galatasaray',manager:'ThCARP',shots:8.0,poss:42.0},
-    {name:'Inter Milan',manager:'luis rodriguez_69',shots:7.7,poss:41.0},
-    {name:'Real Madrid',manager:'Jramos_9',shots:7.7,poss:45.7},
-    {name:'Santos',manager:'shoxx11',shots:7.7,poss:43.0},
-    {name:'Liverpool',manager:'Xabi alonso 16_5',shots:7.3,poss:41.3},
-    {name:'Juventus',manager:'matiasc_51',shots:7.0,poss:50.7},
-    {name:'River Plate',manager:'fernando18_0',shots:5.3,poss:43.7},
-    {name:'Barcelona',manager:'kevinp_388',shots:5.0,poss:40.0},
-  ];
-  function renderStatsTeams(){
-    var maxS=Math.max.apply(null,statsTeams.map(function(t){return t.shots;}));
-    var maxP=Math.max.apply(null,statsTeams.map(function(t){return t.poss;}));
-    var sorted=statsTeams.slice().sort(function(a,b){return(a[statsSortKey]-b[statsSortKey])*statsSortDir;});
-    var tbody=document.getElementById('stats-teams-tbody');
-    if(!tbody)return;
-    tbody.innerHTML=sorted.map(function(t,i){
-      var first=i===0;
-      return '<tr class="'+(first?'rank-1':'')+'">' +
-        '<td><span class="rank-num">'+(i+1)+'</span></td>' +
-        '<td><div class="team-name">'+t.name+'</div><div class="team-mgr">@'+t.manager+'</div></td>' +
-        '<td><div class="stat-val" style="color:'+(first?'var(--gold)':'var(--text)')+'">'+t.shots+'</div><div class="stat-bar" style="width:'+Math.round(t.shots/maxS*60)+'px;opacity:'+(first?1:0.35)+';"></div></td>' +
-        '<td><div class="stat-val" style="color:'+(first?'var(--gold)':'var(--text)')+'">'+t.poss+'%</div><div class="stat-bar" style="width:'+Math.round(t.poss/maxP*60)+'px;opacity:'+(first?1:0.35)+';"></div></td>' +
-        '</tr>';
-    }).join('');
-    document.querySelectorAll('th[id^="sth-"]').forEach(function(th){th.classList.remove('sorted');});
-    var el=document.getElementById('sth-'+statsSortKey);if(el)el.classList.add('sorted');
-  }
-  function updateStatsCompare(){
-    var aEl=document.getElementById('stats-team-a');
-    var bEl=document.getElementById('stats-team-b');
-    if(!aEl||!bEl)return;
-    var a=statsTeams.find(function(t){return t.name===aEl.value;});
-    var b=statsTeams.find(function(t){return t.name===bEl.value;});
-    if(!a||!b)return;
-    var maxS=13,maxP=61.5;
-    var csA=document.getElementById('stats-cbar-shots-a');if(csA)csA.style.width=(a.shots/maxS*100)+'%';
-    var csB=document.getElementById('stats-cbar-shots-b');if(csB)csB.style.width=(b.shots/maxS*100)+'%';
-    var cvSA=document.getElementById('stats-cval-shots-a');if(cvSA)cvSA.textContent=a.shots;
-    var cvSB=document.getElementById('stats-cval-shots-b');if(cvSB)cvSB.textContent=b.shots;
-    var cpA=document.getElementById('stats-cbar-poss-a');if(cpA)cpA.style.width=(a.poss/maxP*100)+'%';
-    var cpB=document.getElementById('stats-cbar-poss-b');if(cpB)cpB.style.width=(b.poss/maxP*100)+'%';
-    var cvPA=document.getElementById('stats-cval-poss-a');if(cvPA)cvPA.textContent=a.poss+'%';
-    var cvPB=document.getElementById('stats-cval-poss-b');if(cvPB)cvPB.textContent=b.poss+'%';
-    var aScore=a.shots*0.6+a.poss*0.4,bScore=b.shots*0.6+b.poss*0.4;
-    var v='';
-    if(a.name===b.name)v='Select two different teams.';
-    else if(Math.abs(aScore-bScore)<3)v='<strong>'+a.name+'</strong> and <strong>'+b.name+'</strong> are statistically very close. Either could win on the day.';
-    else if(aScore>bScore)v='<strong style="color:var(--gold)">'+a.name+'</strong> has a clear statistical edge. The numbers strongly favor them.';
-    else v='<strong style="color:var(--gold)">'+b.name+'</strong> comes out ahead. They would be the statistical favorite here.';
-    var vEl=document.getElementById('stats-verdict-text');if(vEl)vEl.innerHTML=v;
-  }
-  // Init stats when tab opens
-  var statsInitialized = false;
-  function initStats(){
-    if(statsInitialized)return;
-    statsInitialized=true;
-    renderStatsTeams();
-    updateStatsCompare();
-  }
-
-
+  // ===== AUTH =====
   async function initAuth() {
     var res = await db.auth.getSession();
     if (res.data && res.data.session) {
@@ -890,21 +656,16 @@
   function updateNavForUser() {
     var menu = document.getElementById('user-menu');
     if (!menu) return;
-    // Show/hide author input based on login state
-    var authorInput = document.getElementById('tactic-author-input');
-    if (authorInput) authorInput.style.display = currentUser ? 'none' : 'block';
     if (currentUser) {
       var username = currentUser.user_metadata && currentUser.user_metadata.username
         ? currentUser.user_metadata.username
         : currentUser.email.split('@')[0];
       menu.innerHTML = '<button class="user-btn" onclick="toggleUserMenu()">👤 ' + username + ' ▾</button>' +
         '<div class="user-dropdown" id="user-dropdown">' +
-        '<div class="dropdown-item" onclick="showScreen(\'profile\',null);loadProfile();toggleUserMenu()">👤 ' + (currentLang === 'es' ? 'Mi perfil' : 'My profile') + '</div>' +
-        '<div class="dropdown-item danger" onclick="handleLogout()">' + (currentLang === 'es' ? 'Cerrar sesión' : 'Sign out') + '</div>'
+        '<div class="dropdown-item danger" onclick="handleLogout()">Cerrar sesión</div>' +
         '</div>';
     } else {
-      menu.innerHTML = '<button class="btn-ghost" id="auth-btn" onclick="openAuth()">' +
-        (currentLang === 'es' ? 'Iniciar sesión' : 'Iniciar sesión') + '</button>';
+      menu.innerHTML = '<button class="btn-ghost" id="auth-btn" onclick="openAuth()">Iniciar sesión</button>';
     }
   }
 
@@ -913,21 +674,16 @@
     if (dd) dd.classList.toggle('open');
   }
 
+  async function handleLogout() {
+    await db.auth.signOut();
+    currentUser = null;
+    updateNavForUser();
+  }
+
   function openAuth() {
     document.getElementById('auth-modal').classList.remove('hidden');
-    var authMsg = document.getElementById('auth-msg'); if(authMsg) authMsg.textContent = '';
-    // Apply current language to modal
-    var es = currentLang === 'es';
-    document.getElementById('auth-modal-sub').textContent = es ? 'Uníte a la comunidad de tácticas' : 'Join the tactics community';
-    document.getElementById('tab-login').textContent = es ? 'Iniciar sesión' : 'Iniciar sesión';
-    document.getElementById('tab-register').textContent = es ? 'Registrarse' : 'Sign up';
-    document.getElementById('login-email').placeholder = 'Email';
-    document.getElementById('login-password').placeholder = es ? 'Contraseña' : 'Password';
-    document.getElementById('login-form-btn').textContent = es ? 'ENTRAR' : 'SIGN IN';
-    document.getElementById('reg-username').placeholder = es ? 'Nombre de usuario (ej: TacticMaster_AR)' : 'Username (e.g. TacticMaster_AR)';
-    document.getElementById('reg-email').placeholder = 'Email';
-    document.getElementById('reg-password').placeholder = es ? 'Contraseña (mín. 6 caracteres)' : 'Password (min. 6 characters)';
-    document.getElementById('reg-form-btn').textContent = es ? 'CREAR CUENTA' : 'CREATE ACCOUNT';
+    var authMsg = document.getElementById('auth-msg');
+    if(authMsg) authMsg.textContent = '';
   }
 
   function closeAuth() {
@@ -939,7 +695,25 @@
     document.getElementById('tab-register').classList.toggle('active', tab === 'register');
     document.getElementById('auth-form-login').style.display = tab === 'login' ? 'block' : 'none';
     document.getElementById('auth-form-register').style.display = tab === 'register' ? 'block' : 'none';
-    var authMsg = document.getElementById('auth-msg'); if(authMsg) authMsg.textContent = '';
+    var authMsg = document.getElementById('auth-msg');
+    if(authMsg) authMsg.textContent = '';
+  }
+
+  async function handleLogin() {
+    var email = document.getElementById('login-email').value.trim();
+    var password = document.getElementById('login-password').value;
+    var msg = document.getElementById('auth-msg');
+    msg.textContent = '';
+    if (!email || !password) { msg.textContent = 'Completá todos los campos'; msg.className = 'auth-msg error'; return; }
+    msg.textContent = 'Entrando...'; msg.className = 'auth-msg';
+    try {
+      var res = await db.auth.signInWithPassword({ email: email, password: password });
+      if (res.error) { msg.textContent = 'Email o contraseña incorrectos'; msg.className = 'auth-msg error'; return; }
+      msg.textContent = '¡Bienvenido!'; msg.className = 'auth-msg success';
+      currentUser = res.data.user;
+      updateNavForUser();
+      setTimeout(closeAuth, 1000);
+    } catch(e) { msg.textContent = 'Error: ' + e.message; msg.className = 'auth-msg error'; }
   }
 
   async function handleRegister() {
@@ -948,157 +722,34 @@
     var password = document.getElementById('reg-password').value;
     var msg = document.getElementById('auth-msg');
     msg.textContent = '';
-    if (!username || !email || !password) {
-      msg.textContent = currentLang === 'es' ? 'Completá todos los campos' : 'Fill in all fields';
-      msg.className = 'auth-msg error'; return;
-    }
-    if (password.length < 6) {
-      msg.textContent = currentLang === 'es' ? 'La contraseña debe tener al menos 6 caracteres' : 'Password must be at least 6 characters';
-      msg.className = 'auth-msg error'; return;
-    }
-    msg.textContent = currentLang === 'es' ? 'Creando cuenta...' : 'Creating account...';
-    msg.className = 'auth-msg';
+    if (!username || !email || !password) { msg.textContent = 'Completá todos los campos'; msg.className = 'auth-msg error'; return; }
+    if (password.length < 6) { msg.textContent = 'La contraseña debe tener al menos 6 caracteres'; msg.className = 'auth-msg error'; return; }
+    msg.textContent = 'Creando cuenta...'; msg.className = 'auth-msg';
     try {
-      var res = await db.auth.signUp({
-        email: email,
-        password: password,
-        options: { data: { username: username } }
-      });
-      if (res.error) {
-        msg.textContent = res.error.message;
-        msg.className = 'auth-msg error';
-        return;
-      }
-      msg.textContent = currentLang === 'es' ? '¡Cuenta creada! Ya podés usar OSM Hub.' : 'Account created! You can now use OSM Hub.';
-      msg.className = 'auth-msg success';
-      if (res.data && res.data.user) { currentUser = res.data.user; updateNavForUser(); updateBanner(); }
+      var res = await db.auth.signUp({ email: email, password: password, options: { data: { username: username } } });
+      if (res.error) { msg.textContent = res.error.message; msg.className = 'auth-msg error'; return; }
+      msg.textContent = '¡Cuenta creada! Ya podés usar OSM Hub.'; msg.className = 'auth-msg success';
+      if (res.data && res.data.user) { currentUser = res.data.user; updateNavForUser(); }
       setTimeout(closeAuth, 2000);
-    } catch(e) {
-      msg.textContent = 'Error: ' + e.message;
-      msg.className = 'auth-msg error';
-    }
+    } catch(e) { msg.textContent = 'Error: ' + e.message; msg.className = 'auth-msg error'; }
   }
-
-  async function handleLogin() {
-    var email = document.getElementById('login-email').value.trim();
-    var password = document.getElementById('login-password').value;
-    var msg = document.getElementById('auth-msg');
-    msg.textContent = '';
-    if (!email || !password) {
-      msg.textContent = currentLang === 'es' ? 'Completá todos los campos' : 'Fill in all fields';
-      msg.className = 'auth-msg error'; return;
-    }
-    msg.textContent = currentLang === 'es' ? 'Entrando...' : 'Signing in...';
-    msg.className = 'auth-msg';
-    try {
-      var res = await db.auth.signInWithPassword({ email: email, password: password });
-      if (res.error) {
-        msg.textContent = currentLang === 'es' ? 'Email o contraseña incorrectos' : 'Wrong email or password';
-        msg.className = 'auth-msg error'; return;
-      }
-      msg.textContent = currentLang === 'es' ? '¡Bienvenido!' : 'Welcome!';
-      msg.className = 'auth-msg success';
-      currentUser = res.data.user;
-      updateNavForUser();
-      updateBanner();
-      setTimeout(closeAuth, 1000);
-    } catch(e) {
-      msg.textContent = 'Error: ' + e.message;
-      msg.className = 'auth-msg error';
-    }
-  }
-
-
-  function updateNavForUser() {
-    var menu = document.getElementById('user-menu');
-    if (!menu) return;
-    // Show/hide author input based on login state
-    var authorInput = document.getElementById('tactic-author-input');
-    if (authorInput) authorInput.style.display = currentUser ? 'none' : 'block';
-    if (currentUser) {
-      var username = currentUser.user_metadata && currentUser.user_metadata.username
-        ? currentUser.user_metadata.username
-        : currentUser.email.split('@')[0];
-      menu.innerHTML = '<button class="user-btn" onclick="toggleUserMenu()">👤 ' + username + ' ▾</button>' +
-        '<div class="user-dropdown" id="user-dropdown">' +
-        '<div class="dropdown-item" onclick="showScreen(\'profile\',null);loadProfile();toggleUserMenu()">👤 ' + (currentLang === 'es' ? 'Mi perfil' : 'My profile') + '</div>' +
-        '<div class="dropdown-item danger" onclick="handleLogout()">' + (currentLang === 'es' ? 'Cerrar sesión' : 'Sign out') + '</div>'
-        '</div>';
-    } else {
-      menu.innerHTML = '<button class="btn-ghost" id="auth-btn" onclick="openAuth()">' +
-        (currentLang === 'es' ? 'Iniciar sesión' : 'Iniciar sesión') + '</button>';
-    }
-  }
-
-  function toggleUserMenu() {
-    var dd = document.getElementById('user-dropdown');
-    if (dd) dd.classList.toggle('open');
-  }
-
-
-  function openAuth() {
-    document.getElementById('auth-modal').classList.remove('hidden');
-    var authMsg = document.getElementById('auth-msg'); if(authMsg) authMsg.textContent = '';
-    // Apply current language to modal
-    var es = currentLang === 'es';
-    document.getElementById('auth-modal-sub').textContent = es ? 'Uníte a la comunidad de tácticas' : 'Join the tactics community';
-    document.getElementById('tab-login').textContent = es ? 'Iniciar sesión' : 'Iniciar sesión';
-    document.getElementById('tab-register').textContent = es ? 'Registrarse' : 'Sign up';
-    document.getElementById('login-email').placeholder = 'Email';
-    document.getElementById('login-password').placeholder = es ? 'Contraseña' : 'Password';
-    document.getElementById('login-form-btn').textContent = es ? 'ENTRAR' : 'SIGN IN';
-    document.getElementById('reg-username').placeholder = es ? 'Nombre de usuario (ej: TacticMaster_AR)' : 'Username (e.g. TacticMaster_AR)';
-    document.getElementById('reg-email').placeholder = 'Email';
-    document.getElementById('reg-password').placeholder = es ? 'Contraseña (mín. 6 caracteres)' : 'Password (min. 6 characters)';
-    document.getElementById('reg-form-btn').textContent = es ? 'CREAR CUENTA' : 'CREATE ACCOUNT';
-  }
-
-
-  function closeAuth() {
-    document.getElementById('auth-modal').classList.add('hidden');
-  }
-
-
-
 
   // ===== SIGNUP MODAL =====
   async function openSignupModal() {
-    var es = currentLang === 'es';
     var modal = document.getElementById('signup-modal');
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
-    // Translations
-    document.getElementById('signup-modal-title').textContent = 'COPA NOSTALGIA II';
-    document.getElementById('signup-modal-sub').textContent = es ? 'Dejá tu usuario de OSM y reservá tu lugar' : 'Dejá tu usuario de OSM y reservá tu lugar';
-    document.getElementById('rules-title').textContent = es ? '📋 REGLAS DEL TORNEO' : '📋 REGLAS DEL TORNEO';
-    document.getElementById('rules-1').textContent = es ? 'Liga Estrellas de Clubes' : 'Liga Estrellas de Clubes';
-    document.getElementById('rules-2').textContent = es ? 'Sin timers' : 'Sin timers';
-    document.getElementById('rules-3').textContent = es ? 'Sin campus' : 'Sin campus';
-    document.getElementById('rules-4').textContent = es ? 'Sin entrenamiento secreto' : 'Sin entrenamiento secreto';
-    document.getElementById('rules-5').textContent = es ? 'Premio al ganador' : 'Premio al ganador';
-    document.getElementById('signup-modal-btn').textContent = es ? '✅ RESERVAR MI LUGAR' : '✅ RESERVAR MI LUGAR';
-    var osmInput = document.getElementById('signup-osm-input'); if(osmInput) osmInput.placeholder = es ? 'ej: hola123' : 'ej: hola123';
-    document.getElementById('signup-modal-login-btn').textContent = es ? '⚡ CREAR CUENTA GRATIS' : '⚡ CREAR CUENTA GRATIS';
-    document.getElementById('signup-modal-login-note').textContent = es ? 'Solo tu email. Sin spam.' : 'Solo tu email. Sin spam.';
-    document.getElementById('signup-modal-login-msg').textContent = es ? 'Necesitás una cuenta para anotarte' : 'Necesitás una cuenta para anotarte';
-    document.getElementById('signup-success-title').textContent = es ? '¡Estás anotado!' : 'You\'re in!';
-    document.getElementById('signup-success-sub').textContent = es ? 'Te avisaremos cuando empiece la Copa Nostalgia II.' : 'We\'ll notify you when Copa Nostalgia II starts.';
-    document.getElementById('signup-close-btn').textContent = es ? 'Cerrar' : 'Cerrar';
-    // Get spots count
     var signups = await db.from('tournament_signups').select('id').eq('tournament', 'copa-nostalgia-2');
-    var count = (signups.data && signups.data.length) ? signups.data.length : 0;
-    // spots shown in next-cup-spots on home screen
-    // Show correct state
     document.getElementById('signup-modal-success').style.display = 'none';
     if (currentUser) {
       document.getElementById('signup-modal-guest').style.display = 'none';
       document.getElementById('signup-modal-logged').style.display = 'block';
-      // Check if already signed up
       var existing = await db.from('tournament_signups').select('osm_username').eq('user_id', currentUser.id).eq('tournament', 'copa-nostalgia-2').maybeSingle();
       if (existing.data) {
         document.getElementById('signup-osm-input').value = existing.data.osm_username;
-        document.getElementById('signup-modal-msg').textContent = es ? '✅ Ya estás anotado con este usuario' : '✅ Already signed up with this username';
-        document.getElementById('signup-modal-msg').style.color = 'var(--gold)';
+        var msgEl = document.getElementById('signup-modal-msg');
+        msgEl.textContent = '✅ Ya estás anotado con este usuario';
+        msgEl.style.color = 'var(--gold)';
       }
     } else {
       document.getElementById('signup-modal-guest').style.display = 'block';
@@ -1113,18 +764,12 @@
 
   async function submitSignupModal() {
     if (!currentUser) return;
-    var es = currentLang === 'es';
     var input = document.getElementById('signup-osm-input');
     var msg = document.getElementById('signup-modal-msg');
     var text = input ? input.value.trim() : '';
-    if (!text) {
-      msg.textContent = es ? 'Escribí tu usuario de OSM' : 'Enter your OSM username';
-      msg.style.color = 'var(--red)';
-      return;
-    }
+    if (!text) { msg.textContent = 'Escribí tu usuario de OSM'; msg.style.color = 'var(--red)'; return; }
     var btn = document.getElementById('signup-modal-btn');
-    btn.textContent = es ? 'Enviando...' : 'Sending...';
-    // Check if already signed up
+    btn.textContent = 'Enviando...';
     var existing = await db.from('tournament_signups').select('id').eq('user_id', currentUser.id).eq('tournament', 'copa-nostalgia-2').maybeSingle();
     if (existing.data) {
       document.getElementById('signup-modal-logged').style.display = 'none';
@@ -1133,23 +778,19 @@
     }
     var res = await db.from('tournament_signups').insert({ user_id: currentUser.id, osm_username: text, tournament: 'copa-nostalgia-2' });
     if (res.error) {
-      msg.textContent = es ? 'Error. Intentá de nuevo.' : 'Error. Please try again.';
-      msg.style.color = 'var(--red)';
-      btn.textContent = es ? '✅ RESERVAR MI LUGAR' : '✅ RESERVAR MI LUGAR';
+      msg.textContent = 'Error. Intentá de nuevo.'; msg.style.color = 'var(--red)';
+      btn.textContent = '✅ RESERVAR MI LUGAR';
       return;
     }
     document.getElementById('signup-modal-logged').style.display = 'none';
     document.getElementById('signup-modal-success').style.display = 'block';
-    loadHomeScreen();
+    loadHomeSignupCount();
   }
 
-  // Cerrar modal on backdrop click
   var signupModal = document.getElementById('signup-modal');
   if(signupModal) signupModal.addEventListener('click', function(e) {
     if (e.target === this) closeSignupModal();
   });
-
-</script>
 
   // ===== STANDINGS DATA =====
   var standingsData = [
@@ -1183,7 +824,6 @@
   ];
 
   function loadTorneo1() {
-    // Render standings
     var tbody = document.getElementById('standings-body-new');
     if(tbody) tbody.innerHTML = standingsData.map(function(r) {
       var gold = r.pos <= 3;
@@ -1192,7 +832,7 @@
       var dgc = r.dg.indexOf('+') === 0 ? 'var(--green)' : (r.dg.indexOf('-') === 0 ? 'var(--red)' : 'var(--text-mid)');
       return '<tr style="border-bottom:1px solid #1E2830;">' +
         '<td style="padding:7px 4px 7px 14px;font-weight:900;color:'+pc+';">'+r.pos+'</td>' +
-        "<td style='padding:7px 4px'><div style='font-family:Barlow Condensed,sans-serif;font-size:15px;font-weight:900;color:"+cc+"'>'"+r.club+"</div><div style='font-size:10px;color:#4A5A6E'>@"+r.manager+"</div></td>" +
+        '<td style="padding:7px 4px"><div style="font-family:Barlow Condensed,sans-serif;font-size:15px;font-weight:900;color:'+cc+'">'+r.club+'</div><div style="font-size:10px;color:#4A5A6E">@'+r.manager+'</div></td>' +
         '<td style="text-align:center;padding:7px 4px;color:#9AA5B4;">'+r.pj+'</td>' +
         '<td style="text-align:center;padding:7px 4px;color:var(--green);">'+r.g+'</td>' +
         '<td style="text-align:center;padding:7px 4px;color:#FFD700;">'+r.e+'</td>' +
@@ -1204,7 +844,6 @@
         '</tr>';
     }).join('');
 
-    // Render results
     var rl = document.getElementById('results-list');
     if(rl) rl.innerHTML = j4Results.map(function(r) {
       var hw = r.hs > r.as, aw = r.as > r.hs, draw = r.hs === r.as;
@@ -1245,26 +884,15 @@
     el.textContent = remaining > 0 ? remaining + ' cupos disponibles' : '¡Cupos completos!';
   }
 
-  // Override showScreen for new screens
-  var origShowScreen = showScreen;
-  function showScreen(id, tabEl) {
-    document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
-    document.querySelectorAll('.bottom-nav-btn').forEach(function(b){b.style.color='#4A5A6E';});
-    var screen = document.getElementById('screen-' + id);
-    if(screen) screen.classList.add('active');
-    var btn = document.getElementById('bnav-'+id+'-btn') || document.getElementById('bnav-'+id.replace('torneo','t')+'-btn');
-    if(btn) btn.style.color = '#FFD700';
-  }
-
-  // Init
+  // ===== INIT =====
   document.addEventListener('DOMContentLoaded', function() {
+    initAuth();
     loadHomeSignupCount();
-    // Set home active
-    document.querySelectorAll('.bottom-nav-btn').forEach(function(b){b.style.color='#4A5A6E';});
+    document.querySelectorAll('.bottom-nav-btn').forEach(function(b){ b.style.color='#4A5A6E'; });
     var hBtn = document.getElementById('bnav-home-btn');
     if(hBtn) hBtn.style.color = '#FFD700';
   });
-</script>
 
+</script>
 </body>
 </html>
