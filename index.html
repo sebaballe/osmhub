@@ -481,19 +481,19 @@
         <span style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFD700;min-width:24px;">1</span>
         <span style="font-size:14px;font-weight:700;color:#FFF;flex:1;">Fenerbahce</span>
         <span style="font-size:11px;color:#4A5A6E;">@adolfis_1</span>
-        <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFD700;">12pts</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFD700;">15pts</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px;background:#0D0D0D;border-radius:8px;padding:8px 14px;margin-bottom:4px;">
         <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#9AA5B4;min-width:24px;">2</span>
         <span style="font-size:13px;color:#FFF;flex:1;">Boca Juniors</span>
         <span style="font-size:11px;color:#4A5A6E;">@Nivekserolf</span>
-        <span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;color:#9AA5B4;">8pts</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;color:#9AA5B4;">11pts</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px;background:#0D0D0D;border-radius:8px;padding:8px 14px;">
         <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#9AA5B4;min-width:24px;">3</span>
-        <span style="font-size:13px;color:#FFF;flex:1;">Santos</span>
-        <span style="font-size:11px;color:#4A5A6E;">@shoxx11</span>
-        <span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;color:#9AA5B4;">8pts</span>
+        <span style="font-size:13px;color:#FFF;flex:1;">Arsenal</span>
+        <span style="font-size:11px;color:#4A5A6E;">@Sir Nacho Ruglio</span>
+        <span style="font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:900;color:#9AA5B4;">10pts</span>
       </div>
     </div>
 
@@ -504,7 +504,7 @@
 <div id="screen-torneo1" class="screen">
   <div style="max-width:700px;margin:0 auto;padding:20px 16px;">
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#FFD700;margin-bottom:4px;">🏆 COPA NOSTALGIA I</div>
-    <div style="font-size:13px;color:#4A5A6E;margin-bottom:20px;">Jornada 4 de 30 · 25 de mayo 2026</div>
+    <div style="font-size:13px;color:#4A5A6E;margin-bottom:20px;">Jornada 5 de 30 · 3 de mayo 2026</div>
 
     <!-- Standings -->
     <div style="background:#0D0D0D;border:1px solid rgba(255,215,0,0.15);border-radius:16px;overflow:hidden;margin-bottom:16px;">
@@ -530,7 +530,7 @@
 
     <!-- Latest results -->
     <div style="background:#0D0D0D;border:1px solid #1E2830;border-radius:16px;padding:16px;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFF;margin-bottom:14px;">⚽ JORNADA 4 — RESULTADOS</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFF;margin-bottom:14px;">⚽ JORNADA 5 — RESULTADOS</div>
       <div id="results-list" style="display:flex;flex-direction:column;gap:6px;"></div>
     </div>
   </div>
@@ -803,24 +803,24 @@
     if (e.target === this) closeSignupModal();
   });
 
-  // ===== STANDINGS DATA =====
+  // ===== STANDINGS DATA (actualizado J5) =====
   var standingsData = [
-    {pos:1,club:'Fenerbahce',manager:'adolfis_1',pj:4,g:4,e:0,p:0,gf:10,gc:1,dg:'+9',pts:12},
-    {pos:2,club:'Boca Juniors',manager:'Nivekserolf',pj:4,g:2,e:2,p:0,gf:7,gc:5,dg:'+2',pts:8},
-    {pos:3,club:'Santos',manager:'shoxx11',pj:4,g:2,e:2,p:0,gf:5,gc:3,dg:'+2',pts:8},
-    {pos:4,club:'Manchester United',manager:'ferchu2020',pj:4,g:2,e:1,p:1,gf:6,gc:3,dg:'+3',pts:7},
-    {pos:5,club:'Arsenal',manager:'Sir Nacho Ruglio',pj:4,g:2,e:1,p:1,gf:5,gc:3,dg:'+2',pts:7},
-    {pos:6,club:'Real Madrid',manager:'Jramos_9',pj:4,g:2,e:1,p:1,gf:2,gc:1,dg:'+1',pts:7},
-    {pos:7,club:'Ajax',manager:'Myking Guzman',pj:4,g:2,e:0,p:2,gf:5,gc:3,dg:'+2',pts:6},
-    {pos:8,club:'Bayern München',manager:'iShowfideo',pj:4,g:1,e:2,p:1,gf:4,gc:4,dg:'0',pts:5},
-    {pos:9,club:'AC Milan',manager:'Sherito Da Silva',pj:4,g:1,e:2,p:1,gf:2,gc:2,dg:'0',pts:5},
-    {pos:10,club:'River Plate',manager:'fernando18_0',pj:4,g:1,e:1,p:2,gf:2,gc:3,dg:'-1',pts:4},
-    {pos:11,club:'Juventus',manager:'matiasc_51',pj:4,g:1,e:1,p:2,gf:3,gc:5,dg:'-2',pts:4},
-    {pos:12,club:'Galatasaray',manager:'ThCARP',pj:4,g:1,e:1,p:2,gf:3,gc:6,dg:'-3',pts:4},
-    {pos:13,club:'Liverpool',manager:'Xabi alonso 16_5',pj:4,g:1,e:1,p:2,gf:2,gc:6,dg:'-4',pts:4},
-    {pos:14,club:'Benfica',manager:'Griche espinosa 70',pj:4,g:1,e:0,p:3,gf:8,gc:7,dg:'+1',pts:3},
-    {pos:15,club:'Barcelona',manager:'kevinp_388',pj:4,g:1,e:0,p:3,gf:2,gc:7,dg:'-5',pts:3},
-    {pos:16,club:'Inter Milan',manager:'luis rodriguez_69',pj:4,g:0,e:1,p:3,gf:0,gc:7,dg:'-7',pts:1},
+    {pos:1, club:'Fenerbahce',        manager:'adolfis_1',         pj:5,g:5,e:0,p:0, gf:12,gc:2,  dg:'+10',pts:15},
+    {pos:2, club:'Boca Juniors',      manager:'Nivekserolf',       pj:5,g:3,e:2,p:0, gf:8, gc:5,  dg:'+3', pts:11},
+    {pos:3, club:'Arsenal',           manager:'Sir Nacho Ruglio',  pj:5,g:3,e:1,p:1, gf:7, gc:3,  dg:'+4', pts:10},
+    {pos:4, club:'Manchester United', manager:'ferchu2020',        pj:5,g:3,e:1,p:1, gf:7, gc:3,  dg:'+4', pts:10},
+    {pos:5, club:'Bayern München',    manager:'iShowfideo',        pj:5,g:2,e:2,p:1, gf:7, gc:4,  dg:'+3', pts:8},
+    {pos:6, club:'Ajax',              manager:'Myking Guzman',     pj:5,g:3,e:0,p:2, gf:6, gc:3,  dg:'+3', pts:9},
+    {pos:7, club:'Galatasaray',       manager:'ThCARP',            pj:5,g:2,e:1,p:2, gf:6, gc:6,  dg:'0',  pts:7},
+    {pos:8, club:'Benfica',           manager:'Griche espinosa 70',pj:5,g:2,e:0,p:3, gf:11,gc:8,  dg:'+3', pts:6},
+    {pos:9, club:'Real Madrid',       manager:'Jramos_9',          pj:5,g:2,e:1,p:2, gf:2, gc:2,  dg:'0',  pts:7},
+    {pos:10,club:'Santos',            manager:'shoxx11',           pj:5,g:2,e:2,p:1, gf:6, gc:5,  dg:'+1', pts:8},
+    {pos:11,club:'AC Milan',          manager:'Sherito Da Silva',  pj:5,g:1,e:2,p:2, gf:2, gc:3,  dg:'-1', pts:5},
+    {pos:12,club:'River Plate',       manager:'fernando18_0',      pj:5,g:1,e:1,p:3, gf:2, gc:4,  dg:'-2', pts:4},
+    {pos:13,club:'Juventus',          manager:'matiasc_51',        pj:5,g:1,e:1,p:3, gf:3, gc:7,  dg:'-4', pts:4},
+    {pos:14,club:'Liverpool',         manager:'Xabi alonso 16_5',  pj:5,g:1,e:1,p:3, gf:2, gc:9,  dg:'-7', pts:4},
+    {pos:15,club:'Barcelona',         manager:'kevinp_388',        pj:5,g:1,e:0,p:4, gf:3, gc:10, dg:'-7', pts:3},
+    {pos:16,club:'Inter Milan',       manager:'luis rodriguez_69', pj:5,g:0,e:1,p:4, gf:0, gc:10, dg:'-10',pts:1},
   ];
 
   var j4Results = [
@@ -832,6 +832,17 @@
     {home:'Galatasaray',homeM:'ThCARP',hs:1,away:'Boca Juniors',awayM:'Nivekserolf',as:1},
     {home:'Real Madrid',homeM:'Jramos_9',hs:0,away:'AC Milan',awayM:'Sherito Da Silva',as:0},
     {home:'Liverpool',homeM:'Xabi alonso 16_5',hs:2,away:'Barcelona',awayM:'kevinp_388',as:0},
+  ];
+
+  var j5Results = [
+    {home:'Arsenal',        homeM:'Sir Nacho Ruglio',  hs:2, away:'Juventus',        awayM:'matiasc_51',         as:0},
+    {home:'Fenerbahce',     homeM:'adolfis_1',         hs:2, away:'Santos',           awayM:'shoxx11',            as:1},
+    {home:'Inter Milan',    homeM:'luis rodriguez_69', hs:0, away:'Galatasaray',      awayM:'ThCARP',             as:3},
+    {home:'Ajax',           homeM:'Myking Guzman',     hs:1, away:'Real Madrid',      awayM:'Jramos_9',           as:0},
+    {home:'Boca Juniors',   homeM:'Nivekserolf',       hs:1, away:'River Plate',      awayM:'fernando18_0',       as:0},
+    {home:'Barcelona',      homeM:'kevinp_388',        hs:1, away:'Benfica',          awayM:'Griche espinosa 70', as:3},
+    {home:'Bayern München', homeM:'iShowfideo',        hs:3, away:'Liverpool',        awayM:'Xabi alonso 16_5',   as:0},
+    {home:'AC Milan',       homeM:'Sherito Da Silva',  hs:0, away:'Manchester United',awayM:'ferchu2020',         as:1},
   ];
 
   function loadTorneo1() {
@@ -856,7 +867,7 @@
     }).join('');
 
     var rl = document.getElementById('results-list');
-    if(rl) rl.innerHTML = j4Results.map(function(r) {
+    if(rl) rl.innerHTML = j5Results.map(function(r) {
       var hw = r.hs > r.as, aw = r.as > r.hs, draw = r.hs === r.as;
       return '<div style="background:#111;border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:8px;">' +
         '<div style="flex:1;"><div style="font-size:13px;font-weight:'+(hw?700:400)+';color:'+(hw?'#FFF':'#9AA5B4')+';">'+r.home+'</div><div style="font-size:10px;color:#4A5A6E;">@'+r.homeM+'</div></div>' +
