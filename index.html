@@ -541,22 +541,37 @@
 <div id="screen-torneo2" class="screen">
   <div style="max-width:500px;margin:0 auto;padding:20px 16px;">
     <div style="font-family:'Barlow Condensed',sans-serif;font-size:28px;font-weight:900;color:#FFD700;margin-bottom:4px;">🚀 COPA NOSTALGIA II</div>
-    <div id="t-t2-sub" style="font-size:13px;color:#4A5A6E;margin-bottom:20px;">Próxima edición — inscribite ahora</div>
+    <div id="t-t2-sub" style="font-size:13px;color:#4A5A6E;margin-bottom:20px;">Próxima edición — sorteo de equipos</div>
 
-    <!-- Signup CTA -->
-    <div style="background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,215,0,0.03));border:1px solid rgba(255,215,0,0.3);border-radius:16px;padding:20px;margin-bottom:16px;">
+    <!-- Sorteo card -->
+    <div id="sorteo-pending" style="background:linear-gradient(135deg,rgba(255,215,0,0.08),rgba(255,215,0,0.02));border:1px solid rgba(255,215,0,0.3);border-radius:16px;padding:24px;margin-bottom:16px;text-align:center;display:none;">
+      <div style="font-size:40px;margin-bottom:12px;">🎲</div>
+      <div id="t-sorteo-title" style="font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:#FFF;margin-bottom:8px;">Sorteo de equipos</div>
+      <div id="t-sorteo-sub" style="font-size:13px;color:#9AA5B4;margin-bottom:20px;">A cada manager le toca un equipo al azar</div>
+      <button onclick="ejecutarSorteo()" id="sorteo-btn" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:16px;font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;cursor:pointer;box-shadow:0 4px 20px rgba(255,215,0,0.25);">🎲 REALIZAR SORTEO</button>
+    </div>
+
+    <!-- Resultado del sorteo -->
+    <div id="sorteo-results" style="background:#0D0D0D;border:1px solid rgba(255,215,0,0.15);border-radius:16px;overflow:hidden;display:none;">
+      <div style="padding:16px;border-bottom:1px solid #1E2830;display:flex;align-items:center;justify-content:space-between;">
+        <div id="t-sorteo-results-title" style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFF;">🎲 EQUIPOS SORTEADOS</div>
+        <div id="t-sorteo-results-count" style="font-size:12px;color:#4A5A6E;"></div>
+      </div>
+      <div id="sorteo-list" style="display:flex;flex-direction:column;gap:0;"></div>
+    </div>
+
+    <!-- Loading -->
+    <div id="sorteo-loading" style="text-align:center;padding:40px;display:none;">
+      <div style="font-size:13px;color:#4A5A6E;">Cargando...</div>
+    </div>
+
+    <!-- Signup CTA (shown only if not full) -->
+    <div id="sorteo-cta" style="background:linear-gradient(135deg,rgba(255,215,0,0.1),rgba(255,215,0,0.03));border:1px solid rgba(255,215,0,0.3);border-radius:16px;padding:20px;margin-bottom:16px;display:none;">
       <div id="t-t2-cta-title" style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:900;color:#FFF;margin-bottom:6px;">¿Querés participar?</div>
       <div id="t-t2-cta-sub" style="font-size:13px;color:#9AA5B4;margin-bottom:16px;">Dejá tu usuario de OSM y te avisamos cuando empiece.</div>
       <button onclick="openSignupModal()" id="t-t2-cta-btn" style="width:100%;background:linear-gradient(135deg,#FFD700,#E6C200);color:#000;border:none;border-radius:12px;padding:14px;font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:900;cursor:pointer;">⚡ RESERVAR MI LUGAR</button>
     </div>
 
-    <!-- Signed up list -->
-    <div style="background:#0D0D0D;border:1px solid #1E2830;border-radius:16px;padding:16px;">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:900;color:#FFF;margin-bottom:14px;"><span id="t-t2-list-title">👥 MANAGERS ANOTADOS</span> <span id="t2-count" style="color:#FFD700;"></span></div>
-      <div id="t2-signups-list" style="display:flex;flex-direction:column;gap:6px;">
-        <div style="font-size:13px;color:#4A5A6E;text-align:center;padding:20px;">Cargando...</div>
-      </div>
-    </div>
   </div>
 </div>
 
@@ -1020,22 +1035,112 @@
     }).join('');
   }
 
+  var t2Teams = [
+    'Fenerbahce','Boca Juniors','Manchester United','Galatasaray','Arsenal',
+    'Ajax','Bayern München','Juventus','Benfica','Santos',
+    'Real Madrid','River Plate','Barcelona','AC Milan','Liverpool','Inter Milan'
+  ];
+
+  function shuffleArray(arr) {
+    var a = arr.slice();
+    for (var i = a.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+    return a;
+  }
+
   async function loadTorneo2() {
-    var countEl = document.getElementById('t2-count');
-    var listEl = document.getElementById('t2-signups-list');
-    if(!listEl) return;
-    var res = await db.from('tournament_signups').select('*').eq('tournament','copa-nostalgia-2').order('created_at',{ascending:true});
-    var data = res.data || [];
-    if(countEl) countEl.textContent = '(' + data.length + '/16)';
-    if(data.length === 0) {
-      listEl.innerHTML = '<div style="font-size:13px;color:#4A5A6E;text-align:center;padding:20px;">Sé el primero en anotarte 🚀</div>';
+    var loadingEl = document.getElementById('sorteo-loading');
+    var pendingEl = document.getElementById('sorteo-pending');
+    var resultsEl = document.getElementById('sorteo-results');
+    var ctaEl     = document.getElementById('sorteo-cta');
+
+    loadingEl.style.display = 'block';
+    pendingEl.style.display = 'none';
+    resultsEl.style.display = 'none';
+    ctaEl.style.display = 'none';
+
+    // Check if draw already exists
+    var drawn = await db.from('tournament_draw').select('*').eq('tournament','copa-nostalgia-2').order('created_at',{ascending:true});
+
+    loadingEl.style.display = 'none';
+
+    if (drawn.data && drawn.data.length > 0) {
+      renderSorteoResults(drawn.data);
+    } else {
+      // No draw yet
+      var signups = await db.from('tournament_signups').select('*').eq('tournament','copa-nostalgia-2').order('created_at',{ascending:true});
+      var count = signups.data ? signups.data.length : 0;
+
+      if (count < 16) ctaEl.style.display = 'block';
+
+      pendingEl.style.display = 'block';
+      pendingEl.dataset.signups = JSON.stringify(signups.data || []);
+
+      var btn = document.getElementById('sorteo-btn');
+      var subEl = document.getElementById('t-sorteo-sub');
+      if (currentUser) {
+        btn.style.display = 'block';
+        subEl.textContent = currentLang === 'es'
+          ? 'A cada manager le toca un equipo al azar'
+          : 'Each manager gets a random team';
+      } else {
+        btn.style.display = 'none';
+        subEl.textContent = currentLang === 'es'
+          ? 'Iniciá sesión para realizar el sorteo'
+          : 'Sign in to run the draw';
+      }
+    }
+  }
+
+  async function ejecutarSorteo() {
+    var btn = document.getElementById('sorteo-btn');
+    var pendingEl = document.getElementById('sorteo-pending');
+    var signups = JSON.parse(pendingEl.dataset.signups || '[]');
+
+    if (signups.length === 0) {
+      alert('No hay managers registrados.');
       return;
     }
-    listEl.innerHTML = data.map(function(s,i) {
-      return '<div style="display:flex;align-items:center;gap:12px;background:#111;border-radius:10px;padding:10px 14px;">' +
-        '<div style="font-family:Barlow Condensed,sans-serif;font-size:16px;font-weight:900;color:#FFD700;min-width:24px;">'+(i+1)+'</div>' +
-        '<div style="width:36px;height:36px;border-radius:50%;background:rgba(255,215,0,0.12);display:flex;align-items:center;justify-content:center;font-family:Barlow Condensed,sans-serif;font-size:14px;font-weight:900;color:#FFD700;">'+(s.osm_username||'?').substring(0,2).toUpperCase()+'</div>' +
-        '<div style="font-size:14px;font-weight:600;color:#FFF;">'+s.osm_username+'</div>' +
+
+    btn.textContent = 'Sorteando...';
+    btn.disabled = true;
+
+    var shuffledTeams = shuffleArray(t2Teams.slice(0, signups.length));
+    var rows = signups.map(function(s, i) {
+      return { tournament: 'copa-nostalgia-2', user_id: s.user_id, osm_username: s.osm_username, team: shuffledTeams[i] };
+    });
+
+    var res = await db.from('tournament_draw').insert(rows);
+    if (res.error) {
+      btn.textContent = 'Error. Intentá de nuevo.';
+      btn.disabled = false;
+      return;
+    }
+
+    // Reload to show results
+    loadTorneo2();
+  }
+
+  function renderSorteoResults(data) {
+    var resultsEl  = document.getElementById('sorteo-results');
+    var listEl     = document.getElementById('sorteo-list');
+    var countEl    = document.getElementById('t-sorteo-results-count');
+
+    resultsEl.style.display = 'block';
+    if (countEl) countEl.textContent = data.length + ' managers';
+
+    listEl.innerHTML = data.map(function(r, i) {
+      var isMe = currentUser && currentUser.id === r.user_id;
+      var bg = isMe ? 'rgba(255,215,0,0.08)' : 'transparent';
+      var border = isMe ? 'border-left:3px solid #FFD700;' : 'border-left:3px solid transparent;';
+      return '<div style="display:flex;align-items:center;gap:12px;padding:10px 16px;background:'+bg+';'+border+'">' +
+        '<div style="font-family:Barlow Condensed,sans-serif;font-size:15px;font-weight:900;color:#4A5A6E;min-width:20px;">'+(i+1)+'</div>' +
+        '<div style="width:32px;height:32px;border-radius:50%;background:rgba(255,215,0,0.12);display:flex;align-items:center;justify-content:center;font-family:Barlow Condensed,sans-serif;font-size:12px;font-weight:900;color:#FFD700;flex-shrink:0;">'+(r.osm_username||'?').substring(0,2).toUpperCase()+'</div>' +
+        '<div style="font-size:14px;font-weight:500;color:#9AA5B4;flex:1;">@'+r.osm_username+'</div>' +
+        '<div style="font-family:Barlow Condensed,sans-serif;font-size:15px;font-weight:700;color:#FFD700;">'+r.team+'</div>' +
+        (isMe ? '<div style="font-size:10px;font-weight:700;color:#FFD700;background:rgba(255,215,0,0.15);padding:2px 6px;border-radius:4px;">TÚ</div>' : '') +
         '</div>';
     }).join('');
   }
